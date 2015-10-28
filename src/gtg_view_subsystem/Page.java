@@ -1,0 +1,140 @@
+package gtg_view_subsystem;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Page extends JFrame {
+	private JPanel mainPanel, headerPanel;
+	private JLabel wpiLogoHolder, lblGoattogo;
+	private ImageIcon wpiLogoImage, minimizeBtnImage, closeBtnImage;
+	private JButton minimizeBtn, closeBtn, adminBtn, logoutBtn;
+	private MainView parent;
+	/**
+	 * Create the frame.
+	 * @param mainView 
+	 */
+	public Page(MainView mainView) {
+		this.parent = mainView;
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(500, 200, 1057, 601);
+		this.setUndecorated(true);
+		this.getContentPane().setLayout(null);
+		
+		this.headerPanel = new JPanel();
+		this.headerPanel.setBounds(0, 0, 1057, 67);
+		this.headerPanel.setBackground(new Color(0xc30e2d));
+		this.headerPanel.setLayout(null);
+		this.getContentPane().add(this.headerPanel);
+
+		this.wpiLogoHolder = new JLabel();
+		this.wpiLogoHolder.setBounds(10, 6, 64, 56);
+		this.wpiLogoImage = new ImageIcon(ImageURLS.WPI_SMALL_LOGO);
+		this.wpiLogoHolder.setIcon(this.wpiLogoImage);
+		this.headerPanel.add(this.wpiLogoHolder);
+		
+		this.lblGoattogo = new JLabel("GOAT-TO-GO");
+		this.lblGoattogo.setFont(new Font("Meiryo", Font.PLAIN, 36));
+		this.lblGoattogo.setForeground(Color.WHITE);
+		this.lblGoattogo.setBounds(89, 16, 277, 46);
+		this.headerPanel.add(this.lblGoattogo);
+
+		this.minimizeBtn = new JButton();
+		this.minimizeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setState(Frame.ICONIFIED);
+			}
+		});
+		this.minimizeBtn.setBounds(975, 45, 22, 4);
+		this.minimizeBtn.setContentAreaFilled(false);
+		this.minimizeBtn.setBorder(null);
+		this.minimizeBtnImage = new ImageIcon(ImageURLS.MINIMIZE_BUTTON);
+		this.minimizeBtn.setIcon(this.minimizeBtnImage);
+		this.headerPanel.add(this.minimizeBtn);
+
+		this.closeBtn = new JButton();
+		this.closeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		this.closeBtn.setBounds(1012, 22, 29, 27);
+		this.closeBtn.setContentAreaFilled(false);
+		this.closeBtn.setBorder(null);
+		this.closeBtnImage = new ImageIcon(ImageURLS.CLOSE_BUTTON);
+		this.closeBtn.setIcon(this.closeBtnImage);
+		this.headerPanel.add(this.closeBtn);
+		
+		String adminText = "<html><u>" + ViewStringLiterals.ADMIN +"</u></html>";
+		this.adminBtn = new JButton(adminText);
+		this.adminBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parent.showAdminLoginPage();
+			}
+		});
+		this.adminBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.adminBtn.setBackground(null);
+		this.adminBtn.setForeground(Color.WHITE);
+		this.adminBtn.setBounds(870, 18, 70, 44);
+		this.adminBtn.setBorder(null);
+		this.adminBtn.setFocusPainted(false);
+		headerPanel.add(this.adminBtn);
+		
+		String logoutText = "<html><u>" + ViewStringLiterals.LOGOUT +"</u></html>";
+		this.logoutBtn = new JButton(logoutText);
+		this.logoutBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parent.showWelcomePage();
+			}
+		});
+		this.logoutBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.logoutBtn.setBackground(null);
+		this.logoutBtn.setForeground(Color.WHITE);
+		this.logoutBtn.setBounds(870, 18, 70, 44);
+		this.logoutBtn.setBorder(null);
+		this.logoutBtn.setFocusPainted(false);
+		this.logoutBtn.setVisible(false);
+		headerPanel.add(this.logoutBtn);
+
+		this.mainPanel = new JPanel();
+		mainPanel.setBackground(Color.WHITE);
+		this.mainPanel.setBounds(0, 67, 1057, 534);
+		this.getContentPane().add(mainPanel);
+
+		this.setVisible(true);
+	}
+	
+	public void addPage(JPanel page){
+		this.mainPanel.setLayout(new java.awt.GridLayout());
+		this.mainPanel.add(page);
+		this.mainPanel.revalidate();
+	}
+	
+	public void removePage(JPanel page){
+		this.mainPanel.remove(page);
+		this.mainPanel.revalidate();
+		this.mainPanel.repaint();
+	}
+	
+	public void hideAdminButton(){
+		this.adminBtn.setVisible(false);
+	}
+	
+	public void showAdminButton(){
+		this.adminBtn.setVisible(true);
+	}
+	
+	public void showLogoutButton(){
+		this.logoutBtn.setVisible(true);
+	}
+	
+	public void hideLogoutButton(){
+		this.logoutBtn.setVisible(false);
+	}
+}
