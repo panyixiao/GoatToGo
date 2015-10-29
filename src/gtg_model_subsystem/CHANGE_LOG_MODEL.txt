@@ -1,0 +1,8 @@
+LOG FILE MODEL SUBSYSTEM
+
+
+** CHANGE COMMENTS MADE **
+10/29/2015 - Joshua 
+Added basic features for model subsystem, can effectively read in from file and create nodes and edges. 
+As well as calculate distances between points.
+Any changes that are made to subsystem please Update Model Diagram  THANK YOU!-JP
