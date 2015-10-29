@@ -33,23 +33,23 @@ public class MapPage extends JPanel {
 	 */
 	public MapPage(MainView mainView) {
 		this.parent = mainView;
-		this.setBounds(0, 67, 1057, 534);
+		this.setBounds(0, 67, 1366, 661);
 		this.setBackground(new Color(0xf0e6e6));
 		this.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 5));
 		this.setLayout(null);
 
 		this.leftPanel = new JPanel();
-		this.leftPanel.setBounds(5, 5, 671, 524);
+		this.leftPanel.setBounds(5, 5, 950, 650);
 		this.leftPanel.setLayout(null);
 		this.leftPanel.setBackground(new Color(0xe0dede));
 		this.add(leftPanel);
 
 		this.layeredPane = new JLayeredPane();
-		this.layeredPane.setBounds(0, 0, 671, 524);
+		this.layeredPane.setBounds(0, 0, 950, 650);
 		this.leftPanel.add(this.layeredPane);
 
 		this.zoomInBtn = new JButton();
-		this.zoomInBtn.setBounds(615, 5, 50, 50);
+		this.zoomInBtn.setBounds(895, 5, 50, 50);
 		this.zoomInBtn.setContentAreaFilled(false);
 		this.zoomInBtn.setBorder(null);
 		this.zoomInBtnImage = new ImageIcon(ImageURLS.ZOOM_IN_BUTTON);
@@ -57,7 +57,7 @@ public class MapPage extends JPanel {
 		this.layeredPane.add(this.zoomInBtn, new Integer(1));
 
 		this.zoomOutBtn = new JButton();
-		this.zoomOutBtn.setBounds(615, 60, 51, 50);
+		this.zoomOutBtn.setBounds(895, 60, 51, 50);
 		this.zoomOutBtn.setContentAreaFilled(false);
 		this.zoomOutBtn.setBorder(null);
 		this.zoomOutBtnImage = new ImageIcon(ImageURLS.ZOOM_OUT_BUTTON);
@@ -65,7 +65,7 @@ public class MapPage extends JPanel {
 		this.layeredPane.add(this.zoomOutBtn, new Integer(1));
 
 		this.mapPanelHolder = new JScrollPane();
-		this.mapPanelHolder.setBounds(0, 0, 670, 525);
+		this.mapPanelHolder.setBounds(0, 0, 950, 650);
 		this.mapPanelHolder.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.mapPanelHolder.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		this.layeredPane.add(this.mapPanelHolder, new Integer(0));
@@ -78,14 +78,14 @@ public class MapPage extends JPanel {
 		//this.mapPanelHolder.setViewportView(mapDisplayPanel);
 		
 		this.rightPanel = new JPanel();
-		this.rightPanel.setBounds(677, 5, 375, 524);
+		this.rightPanel.setBounds(955, 5, 405, 650);
 		this.rightPanel.setLayout(null);
 		this.rightPanel.setBackground(null);
 		this.add(this.rightPanel);
 		
 		this.dropDownLabel = new JLabel(ViewStringLiterals.SELECT_BUILDING + ": ");
 		this.dropDownLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.dropDownLabel.setBounds(15, 16, 253, 25);
+		this.dropDownLabel.setBounds(50, 54, 253, 25);
 		this.dropDownLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.dropDownLabel);
 
@@ -102,18 +102,18 @@ public class MapPage extends JPanel {
 		this.comboBox.setBackground(null);
 		this.comboBox.setSelectedIndex(0);
 		this.comboBox.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
-		this.comboBox.setBounds(25, 57, 307, 53);
+		this.comboBox.setBounds(60, 95, 307, 53);
 		this.rightPanel.add(this.comboBox);
 		
 		this.fromLabel = new JLabel(ViewStringLiterals.FROM + " :");
 		this.fromLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.fromLabel.setBounds(15, 194, 98, 25);
+		this.fromLabel.setBounds(50, 222, 98, 25);
 		this.fromLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.fromLabel);
 
 		this.toLabel = new JLabel(ViewStringLiterals.TO + " :");
 		this.toLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.toLabel.setBounds(15, 314, 57, 25);
+		this.toLabel.setBounds(50, 342, 57, 25);
 		this.toLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.toLabel);
 
@@ -125,7 +125,7 @@ public class MapPage extends JPanel {
 		});
 		this.getDirectionsBtn.setContentAreaFilled(false);
 		this.getDirectionsBtn.setBorder(null);
-		this.getDirectionsBtn.setBounds(110, 471, 173, 42);
+		this.getDirectionsBtn.setBounds(128, 558, 173, 42);
 		this.getDirectionsBtnImage = new ImageIcon(ImageURLS.GET_DIRECTIONS_BUTTON);
 		this.getDirectionsBtn.setIcon(this.getDirectionsBtnImage);
 		this.rightPanel.add(this.getDirectionsBtn);
@@ -133,14 +133,14 @@ public class MapPage extends JPanel {
 		this.fromTextField = new JTextField();
 		this.fromTextField.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.fromTextField.setEditable(false);
-		this.fromTextField.setBounds(25, 235, 292, 47);
+		this.fromTextField.setBounds(60, 263, 292, 47);
 		this.fromTextField.setColumns(10);
 		this.fromTextField.setForeground(new Color(0x5b1010));
 		this.fromTextField.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 		this.rightPanel.add(this.fromTextField);
 
 		this.fromClearBtn = new JButton();
-		this.fromClearBtn.setBounds(325, 248, 20, 20);
+		this.fromClearBtn.setBounds(364, 275, 20, 20);
 		this.fromClearBtn.setContentAreaFilled(false);
 		this.fromClearBtn.setBorder(null);
 		this.fromClearBtnImage = new ImageIcon(ImageURLS.CLEAR_BUTTON);
@@ -152,12 +152,12 @@ public class MapPage extends JPanel {
 		this.toTextField.setForeground(new Color(0x5b1010));
 		this.toTextField.setEditable(false);
 		this.toTextField.setColumns(10);
-		this.toTextField.setBounds(25, 355, 292, 47);
+		this.toTextField.setBounds(60, 383, 292, 47);
 		this.toTextField.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 		this.rightPanel.add(this.toTextField);
 
 		this.toClearBtn = new JButton();
-		this.toClearBtn.setBounds(325, 370, 20, 20);
+		this.toClearBtn.setBounds(364, 395, 20, 20);
 		this.toClearBtn.setContentAreaFilled(false);
 		this.toClearBtn.setBorder(null);
 		this.toClearBtnImage = new ImageIcon(ImageURLS.CLEAR_BUTTON);
