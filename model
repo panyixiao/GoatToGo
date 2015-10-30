@@ -1,0 +1,570 @@
+package Model;
+
+import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Vector;
+
+public class Model {
+	
+	//test here
+	public static void main(String args[]) {
+		
+	String mapName;
+	Map map=new Map(mapName);
+	Node start=new Node();
+	Node end=new Node();
+	start.setAttritube(1,345,586,"Campus",0,1,0);
+	end.setAttritube(2,372,688,"Campus",0,1,0);
+	map.getGraph().getPath().calculatePathinCampus(start,end,map.getGraph().nodes);
+	
+	
+	}
+	
+	public class Map
+	{
+		/**The background image is loaded into Map
+		*/
+		private Image img;
+	    
+		private String mapName;
+
+	    /**The graph contains the nodes in a map which
+		*will be used to calculate the path
+		*/
+		private CoordinateGraph graph;
+
+	    
+		
+		public Map(String mapName) {
+			graph=new CoordinateGraph(mapName);
+		}
+
+		/**Load the image into the map 
+		*according to the image's path
+		*@pre image exists
+		*@post img!=NULL
+		*/
+		public void drawMap(String filePath){}
+		
+		/**return img
+		*/
+		public Image getImg() {
+			return img;
+		}
+
+		
+
+	    /**
+	     * return the graph
+	     */
+		public CoordinateGraph getGraph() {
+			return graph;
+		}
+	
+	}
+	public class CoordinateGraph
+	{
+		/**All the nodes stored in a particular graph. 
+		*/
+		private ArrayList nodes;
+		
+		/**Store the path that is going to be drawed
+		 */
+		private Path path;
+		
+		
+		
+		public CoordinateGraph(String mapName) {
+			 
+		FileReader fr=new FileReader(mapName);
+	    BufferedReader br=new BufferedReader(fr);	
+		String temp;
+		Node temp3;
+		while ((temp=br.readLine())!=null)
+		{
+		  String[] temp2=new String[8];
+		  temp2=temp.split(" ");
+		  temp3.setAttritube
+		  (Integer.parseInt(temp2[0]), Integer.parseInt(temp2[1]), Integer.parseInt(temp2[2]), temp2[3], 
+		   Integer.parseInt(temp2[4]), Integer.parseInt(temp2[5]), Integer.parseInt(temp2[6]));
+		  nodes.add(temp3);
+		}
+		path=new Path();
+	   }
+
+		/**add a new Node to the graph
+		@pre Node is not NULL
+		@post return true
+		@post a Node is added into the nodes
+		*/
+		public boolean addNode(Node node){}
+
+		/**return the path that is going to be drwaed 
+		 */
+		public Path getPath() {}
+		
+	}
+	public class Node
+	{
+	    /** the node's x coordinate in the graph
+		*/
+		private int x;
+		
+		/** the node's y coordinate in the graph
+		*/
+		private int y;
+		
+		/** the information about the node
+		*such as its name and location
+		*/
+		private NodeAttritube attritube;
+
+		public float getX() {
+			return x;
+		}
+		public float getY() {
+			return y;
+		}
+		public void setAttritube(int ID,int x,int Y,String BuildingName,int FloorNum,int Attributes,int EntranceID) 
+		{
+			attritube.setID(ID);
+			attritube.setX(x);
+			attritube.setY(y);
+			attritube.setBuildingName(BuildingName);
+			attritube.setFloorNum(FloorNum);
+			attritube.setAttributes(Attributes);
+			attritube.setEntranceID(EntranceID);
+		
+		}
+	}
+	public class NodeType {
+
+	    /**specify if it is a start node
+	     */
+		private int start;
+		
+		/**
+		 * specify if it is a end node
+		 */
+		private int end;
+		
+		/**
+		 * specify if it is a way node
+		 */
+		private int waypoint;
+		
+		/**
+		 *return the type of this Node
+		 *indicate if it is a start,end or waypoint
+		 */
+		public String getType(){}
+	
+	}
+	public class NodeAttritube
+	{
+		private int ID;
+		private int X;	
+		private int Y;
+		private String BuildingName;
+		private int FloorNum;
+		private int Attributes;
+		private int EntranceID;
+		
+		/**nodetype specifies what type of the node is
+		*a start point,end point or way point
+		*/
+		private NodeType nodeType;
+		
+		/** specify the floor it belongs to
+		*/
+		private String belongFloor;
+		
+		/** specify the building it belongs to
+		*/
+		private String belongBuilding;
+		
+		/**return NodeType
+		*/
+		public NodeType getType(){}
+		
+		/**return floor
+		*/
+		public String getFloor(){}
+		
+		/**return building
+		*/
+		public String getBuilding(){}
+
+		public void setNodeType(NodeType nodeType) {
+			this.nodeType = nodeType;
+		}
+
+		public void setBelongFloor(String belongFloor) {
+			this.belongFloor = belongFloor;
+		}
+
+		public void setBelongBuilding(String belongBuilding) {
+			this.belongBuilding = belongBuilding;
+		}
+
+		public int getID() {
+			return ID;
+		}
+
+		public void setID(int iD) {
+			ID = iD;
+		}
+
+		public int getX() {
+			return X;
+		}
+
+		public void setX(int x) {
+			X = x;
+		}
+
+		public int getY() {
+			return Y;
+		}
+
+		public void setY(int y) {
+			Y = y;
+		}
+
+		public String getBuildingName() {
+			return BuildingName;
+		}
+
+		public void setBuildingName(String buildingName) {
+			BuildingName = buildingName;
+		}
+
+		public int getFloorNum() {
+			return FloorNum;
+		}
+
+		public void setFloorNum(int floorNum) {
+			FloorNum = floorNum;
+		}
+
+		public int getAttributes() {
+			return Attributes;
+		}
+
+		public void setAttributes(int attributes) {
+			Attributes = attributes;
+		}
+
+		public int getEntranceID() {
+			return EntranceID;
+		}
+
+		public void setEntranceID(int entranceID) {
+			EntranceID = entranceID;
+		}
+
+		public NodeType getNodeType() {
+			return nodeType;
+		}
+
+		public String getBelongFloor() {
+			return belongFloor;
+		}
+
+		public String getBelongBuilding() {
+			return belongBuilding;
+		}	
+	}
+	public class Path
+	{
+		/**store the start point;
+		*/
+		private Node startPoint;
+		
+		/**store the end point;
+		*/
+		private Node endPoint;
+		
+		/**store the way points
+		*/
+		private ArrayList wayPoint;
+		
+		/**calculate and return a multiple layer path from campus to floor
+		*or return a multiple layer path on campus
+		@pre start Node and end Node are not null
+		@post the path will be stored in the graph
+		*/
+		public MultipleLayerPath calculatePathinCampus(Node start,Node end)
+		{	
+		}
+		
+		/**calculate and return a single layer path on campus
+		*/
+		public SingleLayerPath calculatePathinCampus(Node start, Node end, ArrayList nodes) {
+			// TODO Auto-generated method stub
+			
+			//dijkstra
+			
+		}
+
+		/**calculate and return a multiple layer path from one floor to another floor
+		@pre start Node and end Node are not null
+		@post the path will be store in the graph
+		*/
+		public MultipleLayerPath calculatePathinBuilding(Node start,Node end){}
+		
+		/**calculate and return a signle layer path from room to room in a floor
+		@pre start Node and end Node are not null
+		@post the path will be store in the graph
+		*/
+		public SingleLayerPath calculatePathinFloor(Node start,Node end){}
+		
+		/**return start point
+		*/
+		public Node getStart(){}
+		
+		/**return end point
+		*/
+		public Node getEnd(){}
+	    
+		/**return a vector of Node
+		*/
+		public ArrayList getWayPoint(){}
+	}
+
+	public class MultipleLayerPath
+	{
+	  /** start point
+	  */
+	  private Node startPoint;
+	  
+	  /**end point
+	  */
+	  private Node endPoint;
+	  
+	  /**multiple layer path contains several single layer paths
+	  */
+	  private ArrayList paths;
+
+	  /**return start point
+		*/
+		public Node getStart(){}
+		
+		/**return end point
+		*/
+		public Node getEnd(){}
+	    
+		/**return a vector of Path
+		*/
+		public ArrayList getPath(){}  
+	}
+
+	public class SingleLayerPath
+	{
+	  /** start point
+	  */
+	  private Node startPoint;
+	  
+	  /**end point
+	  */
+	  private Node endPoint;
+	  
+	  /**single layer path contains several way points
+	  */
+	  private Node wayPoint;
+	  
+	  /**specify where the path is
+	  */
+	  private PathAttritube pathAttr;
+	  
+	  /**return start point
+		*/
+		public Node getStart(){}
+		
+		/**return end point
+		*/
+		public Node getEnd(){}
+	    
+		/**return a vector of Path
+		*/
+		public Vector<Node> getWay;
+	 
+	    /**return the attribute of the path
+		*/
+		public PathAttritube getPathAttr(){}
+	}
+
+	public class PathAttritube
+	{
+	  /**specify the floor the path belongs to
+	  */
+	  private String belongFloor;
+	  
+	  /**specify the building the path belongs to
+	  */
+	  private String beloingBuilding;
+
+	  /**
+	   * return the floor the path belongs to
+	   */
+	  public String getBelongFloor() {}
+      
+	  /**
+	   * return the floor the path belongs to
+	   */
+	  public String getBeloingBuilding() {}
+	}
+
+	public class Building
+	{
+		/**the name of the building
+		*/
+		private String buildingName;
+		
+		/**specify how many floors in the building
+		*/
+		private Vector<Floor> floors;	
+
+		/**return the name of the building
+		*/
+		public String getName(){}
+		
+		/**return the vector of Floor
+		*/
+		public Vector<Floor> getFloors(){}
+	} 
+
+	public class Floor
+	{
+		/**the name of the floor
+		*/
+		private String floorName;
+	    
+		/**Floor contains a corresponding floor map
+		*/
+		private FloorMap floormap;
+		
+		/**return the  name of the floor
+		*/
+		public String getName(){}
+		
+		/**return the floorMap
+		*/
+		public FloorMap getFloor(){}
+	}
+
+	public class Room
+	{
+		/**store the name of the room
+		*/
+		private String roomName; 
+		
+		/**
+		 * return room name
+		 */
+		public String getRoomName() {
+			
+		}
+
+		/**store its entrance node
+		*/
+		private Node entrance;
+		
+		/**
+		 * return entrance
+		*/ 
+		public Node getEntrance() {
+			
+		}		
+	}
+
+	public class CampusMap
+	{
+		/**The background image is loaded into Map
+		*/
+		private Image img;
+	    
+	    /**The graph contains the nodes in a map which
+		*will be used to calculate the path
+		*/
+		private CoordinateGraph graph;
+
+	    /**buildings contain all the buildings on
+		*on campus map
+		*/
+		private Vector<Building> buildings;
+		
+		/**Load the image into the map 
+		*according to the image's path
+		*@pre image exists
+		*@post img!=NULL
+		*/
+		public void drawMap(String filePath){}	
+		
+		/**
+		 * return img
+		 */
+		public Image getImg() {}
+        
+		/**
+		 * return graph
+		 */
+		public CoordinateGraph getGraph() {}
+        
+		/**
+		 * return vector of buildings
+		 */
+		public Vector<Building> getBuildings() {}
+	}
+
+	public class FloorMap
+	{
+		/**The background image is loaded into Map
+		*/
+		private Image img;
+	    
+	    /**The graph contains the nodes in a map which
+		*will be used to calculate the path
+		*/
+		private CoordinateGraph graph;
+
+	    /**rooms contain all the rooms on
+		*on floor map
+		*/
+		private Vector<Room> rooms;
+		
+		/**entrance contain all the entrance Nodes on the floor map
+		*/
+		private Vector<Node> entrance;
+		
+		/**Load the image into the map 
+		*according to the image's path
+		*@pre image exists
+		*@post img!=NULL
+		*/
+		public void drawMap(String filePath){}	
+		
+		/**
+		 * return img
+		 */
+		public Image getImg() {}
+
+		/**
+		 * return graph
+		 */
+		public CoordinateGraph getGraph() {}
+
+		/**
+		 * return vector of rooms on the floor
+		 */
+		public Vector<Room> getRooms() {
+		}
+        
+		/**
+		 * return vector of entrances on the floor
+		 */
+		public Vector<Node> getEntrance() {}
+	}
+  }
