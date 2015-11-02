@@ -1,4 +1,5 @@
 package gtg_view_subsystem;
+
 import java.awt.Color;
 import java.awt.Font;
 
@@ -22,13 +23,19 @@ public class MapPage extends JPanel {
 	private JButton zoomInBtn, zoomOutBtn, getDirectionsBtn, fromClearBtn, toClearBtn;
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, getDirectionsBtnImage, fromClearBtnImage, toClearBtnImage;
 	private JLabel dropDownLabel, fromLabel, toLabel;
-	private MainView parent;
-	private MapDisplayPanel mapDisplayPanel;
+	private MapMapDisplayPanel mapMapDisplayPanel;
 	private JScrollPane mapPanelHolder;
 	private JLayeredPane layeredPane;
 	private JComboBox comboBox;
+	private double MAX_ZOOM_IN = 2.0;
+	private double MAX_ZOOM_OUT = 1.0;
+	private double currentZoomValue = 1.0;
+	private double zoomFactor = 0.1;
+	private SelectedPoints selectedPoints = new SelectedPoints();
+	private MainView parent;
 	/**
 	 * Create the panel.
+	 * @param mainView 
 	 * @param mainView 
 	 */
 	public MapPage(MainView mainView) {
@@ -49,6 +56,14 @@ public class MapPage extends JPanel {
 		this.leftPanel.add(this.layeredPane);
 
 		this.zoomInBtn = new JButton();
+		zoomInBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(currentZoomValue + zoomFactor <= MAX_ZOOM_IN){
+					currentZoomValue = currentZoomValue + zoomFactor;
+					mapMapDisplayPanel.setScale(currentZoomValue);
+				}
+			}
+		});
 		this.zoomInBtn.setBounds(895, 5, 50, 50);
 		this.zoomInBtn.setContentAreaFilled(false);
 		this.zoomInBtn.setBorder(null);
@@ -57,6 +72,14 @@ public class MapPage extends JPanel {
 		this.layeredPane.add(this.zoomInBtn, new Integer(1));
 
 		this.zoomOutBtn = new JButton();
+		zoomOutBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(currentZoomValue - zoomFactor >= MAX_ZOOM_OUT){
+					currentZoomValue = currentZoomValue - zoomFactor;
+					mapMapDisplayPanel.setScale(currentZoomValue);
+				}
+			}
+		});
 		this.zoomOutBtn.setBounds(895, 60, 51, 50);
 		this.zoomOutBtn.setContentAreaFilled(false);
 		this.zoomOutBtn.setBorder(null);
@@ -73,10 +96,7 @@ public class MapPage extends JPanel {
 		Border border = BorderFactory.createEmptyBorder(0, 0, 0, 0);
 		this.mapPanelHolder.setViewportBorder(border);
 		this.mapPanelHolder.setBorder(border);
-		
-		//this.mapDisplayPanel = new MapDisplayPanel(this.mapPanelHolder);
-		//this.mapPanelHolder.setViewportView(mapDisplayPanel);
-		
+
 		this.rightPanel = new JPanel();
 		this.rightPanel.setBounds(955, 5, 405, 650);
 		this.rightPanel.setLayout(null);
@@ -140,6 +160,14 @@ public class MapPage extends JPanel {
 		this.rightPanel.add(this.fromTextField);
 
 		this.fromClearBtn = new JButton();
+		fromClearBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(mapMapDisplayPanel != null){
+					mapMapDisplayPanel.deletePoint(ViewStringLiterals.FROM);
+					fromTextField.setText("");
+				}
+			}
+		});
 		this.fromClearBtn.setBounds(364, 275, 20, 20);
 		this.fromClearBtn.setContentAreaFilled(false);
 		this.fromClearBtn.setBorder(null);
@@ -157,6 +185,14 @@ public class MapPage extends JPanel {
 		this.rightPanel.add(this.toTextField);
 
 		this.toClearBtn = new JButton();
+		toClearBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(mapMapDisplayPanel != null){
+					mapMapDisplayPanel.deletePoint(ViewStringLiterals.TO);
+					toTextField.setText("");
+				}
+			}
+		});
 		this.toClearBtn.setBounds(364, 395, 20, 20);
 		this.toClearBtn.setContentAreaFilled(false);
 		this.toClearBtn.setBorder(null);
@@ -166,7 +202,7 @@ public class MapPage extends JPanel {
 	}
 	
 	private void changeMap(String mapName){
-		this.mapDisplayPanel = null;
+		this.mapMapDisplayPanel = null;
 		String mapurl = "";
 		switch(mapName){
 		case "BH_Basement":
@@ -185,7 +221,20 @@ public class MapPage extends JPanel {
 			mapurl = ImageURLS.BH_THIRD_FLOOR;
 			break;
 		}
-		this.mapDisplayPanel = new MapDisplayPanel(this.mapPanelHolder, mapurl);
-		this.mapPanelHolder.setViewportView(mapDisplayPanel);
+		this.mapMapDisplayPanel = new MapMapDisplayPanel(this,this.mapPanelHolder, mapName, mapurl, selectedPoints);
+		this.mapPanelHolder.setViewportView(mapMapDisplayPanel);
+		this.currentZoomValue = 1.0;
+	}
+
+	public void displayPointInTextfield(String locationType, double x, double y) {
+		switch(locationType){
+		case ViewStringLiterals.FROM:
+			fromTextField.setText("X = " + Math.round(x * 100) / 100 + ", " + "Y = " + Math.round(y * 100) / 100);
+			break;
+			
+		case ViewStringLiterals.TO:
+			toTextField.setText("X = " + Math.round(x * 100) / 100 + ", " + "Y = " + Math.round(y * 100) / 100);
+			break;
+		}
 	}
 }
