@@ -10,4 +10,6 @@ public class ViewStringLiterals {
 	public static final String TO = "TO";
 	public static final String SELECT_MAP = "SELECT MAP";
 	public static final String LOGOUT = "Logout";
+	public static final String SET_AS_START_LOCATION = "Set as start location";
+	public static final String SET_AS_END_LOCATION = "Set as end location";
 }
