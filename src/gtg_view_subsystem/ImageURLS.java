@@ -20,6 +20,7 @@ public class ImageURLS {
 	public static final String WELCOME_BACKGROUND = "images\\login_background_new.png";
 	public static final String CLEAR_ALL_BUTTON = "images\\clear_all_btn.png";
 	public static final String SAVE_BUTTON = "images\\save_btn.png";
+	public static final String LOCATION_IMAGE = "images\\location_image.png";
 	
 	// map urls
 	public static final String BH_BASEMENT = "images//BH_Basement.png";
