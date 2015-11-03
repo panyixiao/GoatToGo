@@ -13,3 +13,13 @@ test it using point 0,1,2,3,4,5,6
 output shortest distance from point 0 to any other points
 output shortest path fromt point 0 to point 6
 We can use Edges to initialize the inputMatrix
+
+11/2/2015
+-Joshua
+Added Admin loading
+Saving of Nodes and Edges after admin can log in
+Cleaned up file structure
+
+11/2/2015 Libin
+rename ShortestPath.java to Dijkstra.java (make it straightforward)
+fix the problem about saving the path

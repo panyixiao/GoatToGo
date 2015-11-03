@@ -1,18 +1,16 @@
 package gtg_model_subsystem;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class ShortestPath {
-	private static final int minDis = 0;
+//Dijkstra
+public class Dijkstra {
 	private static final int maxDis = Integer.MAX_VALUE;
 	
-	
-	//the ajdacent matrix for th graph
+	//the adjacent matrix for the graph
 	int[][] matrix;
 	
 	//start point
@@ -24,36 +22,39 @@ public class ShortestPath {
 	//points whose shortest paths have been found
 	Set<Integer> findedSet = new HashSet<Integer>();
 	
-	//only record the path only for the last point because we can set it to be our end point 
-	ArrayList result;
+	//save the shortest path using the predecessor 
+	int[] result;
 
-	public ShortestPath(int[][] matrix, int start) {
+	public Dijkstra(int[][] matrix, int start) {
 		this.matrix = matrix;
 		this.startIndex = start;
+		this.result=new int[matrix.length];
 	}
 
 	public void find() {
+		
 		//initialize distanceMap by using start point
-		result=new ArrayList();
 		for (int i = 0; i < matrix.length; i++) {
 		  distanceMap.put(i, matrix[startIndex][i]);
 		}
-
+        
+		//
+		int predecessor=startIndex;
 		while (findedSet.size() != matrix.length) {
 			int currentMinIndex = currentMinIndex();
 			
 			//use this node to update all the distances
 			for (int i = 0; i < matrix.length; i++) {
-				if (!findedSet.contains(i) && matrix[currentMinIndex][i] != maxDis
-						&& matrix[currentMinIndex][i] + distanceMap.get(currentMinIndex) < distanceMap.get(i))
-					{
-					  distanceMap.put(i, matrix[currentMinIndex][i] + distanceMap.get(currentMinIndex));
-					  if(i==matrix.length-1)
-						result.add(currentMinIndex); 
-					}
+			  if (!findedSet.contains(i) && matrix[currentMinIndex][i] != maxDis
+				&& matrix[currentMinIndex][i] + distanceMap.get(currentMinIndex) < distanceMap.get(i))
+				{
+				  distanceMap.put(i, matrix[currentMinIndex][i] + distanceMap.get(currentMinIndex));
+				}
 			}
 			
-			//put it into findedset
+			//put it into findedset and save the path
+			result[currentMinIndex]=predecessor;
+			predecessor=currentMinIndex;
 			findedSet.add(currentMinIndex);
 		}
 	}
@@ -68,15 +69,17 @@ public class ShortestPath {
 			System.out.println(startIndex+" to "+entry.getKey()+" shortest distance:"+entry.getValue());
 		}
 		
-		//print the path from point 0 to the last point
+		//print the path from start to the last point
 		System.out.print("From point 0 to point "+(matrix.length-1)+",the path is:");
-		System.out.print("0 ");
-		Iterator it2=result.iterator();
-		while(it2.hasNext())
+		
+		int temp=matrix.length-1;
+		System.out.print(temp+" ");
+		while(result[temp]!=startIndex)
 		{
-			System.out.print(it2.next().toString()+" ");
+			System.out.print(result[temp]+" ");
+			temp=result[temp];
 		}
-		System.out.println(matrix.length-1);
+		System.out.println(result[temp]);
 	}
 	
 	// return the point which has minimum distance(not in findedSet)
@@ -93,13 +96,12 @@ public class ShortestPath {
 		}
 		return minIndex;
 	}
-
+    
 	public static void main(String[] args) {
-		int[][] inputMatrix = new int[][] { { minDis, 2, maxDis, 1, maxDis, maxDis, maxDis }, { maxDis, minDis, maxDis, 3, 10, maxDis, maxDis },
-				{ 4, maxDis, minDis, maxDis, maxDis, 5, maxDis }, { maxDis, maxDis, 2, minDis, 2, 8, 4 },
-				{ maxDis, maxDis, maxDis, maxDis, minDis, maxDis, 6 }, { maxDis, maxDis, maxDis, maxDis, maxDis, minDis, maxDis },
-				{ maxDis, maxDis, maxDis, maxDis, maxDis, 1, minDis } };
-		ShortestPath path = new ShortestPath(inputMatrix, 0);
+		int[][] inputMatrix = new int[][] {
+				{0,5,2,maxDis},{5,0,3,2},{2,3,0,1},{maxDis,2,1,0}
+		};
+		Dijkstra path = new Dijkstra(inputMatrix, 0);
 		path.find();
 		path.printDistance();
 
