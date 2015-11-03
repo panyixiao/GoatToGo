@@ -3,7 +3,7 @@ package gtg_model_subsystem;
 import gtg_model_subsystem.Node;
 import gtg_model_subsystem.CoordinateGraph;
 import gtg_model_subsystem.Edge;
-import gtg_model_subsystem.ShortestPath;
+import gtg_model_subsystem.Dijkstra;
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
