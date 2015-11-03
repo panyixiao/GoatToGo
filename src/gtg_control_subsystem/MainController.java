@@ -1,22 +1,38 @@
 package gtg_control_subsystem;
 
+import gtg_model_subsystem.MainModel;
+/* Import Classes from model*/
+import gtg_model_subsystem.Node;;
+
+
 public class MainController{
+	/**/
+	public gtg_model_subsystem.MainModel model;
+	private String test;
+	
 	/**/
 	private ViewController viewController;
 	private MapEditController mapEditor;
 	private PathSearchController pathSearchController;
 	private AdminController userChecker;
 	/**/
+	
+	// Controller Constructor
+	public MainController(MainModel MapData){
+		this.model = MapData;
+	}
+	
+	//  
 	public String getMapImage(String mapName){
 		String ImageURL ="";
-		
+		// ImageURL = model.getMapImage(mapName);
 		return ImageURL;
 	}
 	
 	public String[] getMapDate(String mapName){
 		String mapData[] = {};
 		
-		return mapData;		
+		return mapData;
 	}
 	
 	public TargetPntInfo setTaskPnt(int x, int y, String pntType, int scaleLevel, int x_center, int y_center, String mapName){
