@@ -35,9 +35,9 @@ public class MainController{
 		return mapData;
 	}
 	
-	public TargetPntInfo setTaskPnt(int x, int y, String pntType, int scaleLevel, int x_center, int y_center, String mapName){
+	public TargetPntInfo setTaskPnt(int x, int y, String pntType, String mapName){
 		TargetPntInfo targetPnt = new TargetPntInfo();
-		
+		// Do point Validation
 		return targetPnt;
 	}
 	
@@ -50,7 +50,7 @@ public class MainController{
 	 * return path;
 	 * }
 	 * 
-	 * */	
+	 * */
 	public Boolean adminQualification(String userName, String passWord){
 		Boolean isAdmin = false;
 		
