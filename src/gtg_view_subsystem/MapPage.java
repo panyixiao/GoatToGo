@@ -142,7 +142,8 @@ public class MapPage extends JPanel {
 		this.getDirectionsBtn = new JButton();
 		getDirectionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(selectedPoints.arePointsSelected() == true){
+				parent.showResultPage();
+				/*if(selectedPoints.arePointsSelected() == true){
 					parent.getPathResult();
 				} else {
 					if(selectedPoints.isStartSelected() == false && selectedPoints.isEndSelected() == true) {
@@ -154,7 +155,7 @@ public class MapPage extends JPanel {
 					else {
 						JOptionPane.showMessageDialog(null, ViewStringLiterals.POINTS_NOT_SET, "INVALID", JOptionPane.ERROR_MESSAGE);
 					}
-				}
+				}*/
 			}
 		});
 		this.getDirectionsBtn.setContentAreaFilled(false);
