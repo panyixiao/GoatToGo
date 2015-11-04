@@ -12,4 +12,7 @@ public class ViewStringLiterals {
 	public static final String LOGOUT = "Logout";
 	public static final String SET_AS_START_LOCATION = "Set as start location";
 	public static final String SET_AS_END_LOCATION = "Set as end location";
+	public static final String FROM_POINT_NOT_SET = "Please select start location";
+	public static final String TO_POINT_NOT_SET = "Please select end location";
+	public static final String POINTS_NOT_SET = "Please select start and end location";
 }

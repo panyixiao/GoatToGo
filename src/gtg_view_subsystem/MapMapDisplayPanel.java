@@ -4,15 +4,14 @@ package gtg_view_subsystem;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.imageio.ImageIO;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
@@ -24,7 +23,7 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	private SelectedPoints selectedPoints = null;
 	private Image locationImage;
 	private String map;
-	private Point2D startEndPoint;
+	private Point startEndPoint;
 	private MapPage parent;
 	/**
 	 * Create the panel.
@@ -47,10 +46,11 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    this.menuItem.setFont(new Font("Meiryo", Font.PLAIN, 22));
 	    this.menuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		selectedPoints.setStartLocation(startEndPoint.getX(), startEndPoint.getY(), map);
-	    		parent.displayPointInTextfield(ViewStringLiterals.FROM, startEndPoint.getX(), startEndPoint.getY());
-	    		revalidate();
-	    		repaint();
+	    		parent.sentPointToModel(startEndPoint, ViewStringLiterals.FROM, map);
+	    		//selectedPoints.setStartLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
+	    		//parent.displayPointInTextfield(ViewStringLiterals.FROM, startEndPoint.getX(), startEndPoint.getY());
+	    		//revalidate();
+	    		//repaint();
 	    	}
 	    });
 
@@ -59,10 +59,11 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    this.menuItem_1.setFont(new Font("Meiryo", Font.PLAIN, 22));
 	    this.menuItem_1.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		selectedPoints.setEndLocation(startEndPoint.getX(), startEndPoint.getY(), map);
-	    		parent.displayPointInTextfield(ViewStringLiterals.TO, startEndPoint.getX(), startEndPoint.getY());
-	    		revalidate();
-	    		repaint();
+	    		parent.sentPointToModel(startEndPoint, ViewStringLiterals.TO, map);
+	    		//selectedPoints.setEndLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
+	    		//parent.displayPointInTextfield(ViewStringLiterals.TO, startEndPoint.getX(), startEndPoint.getY());
+	    		//revalidate();
+	    		//repaint();
 	    	}
 	    });
 	    this.popup.add(this.menuItem_1);
@@ -110,9 +111,9 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
             
             double scale = super.getScale();
             if(scale > 1.0){
-            	 this.startEndPoint= new Point2D.Double(me.getX() / scale, me.getY() / scale);
+            	 this.startEndPoint= new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
 			} else {
-				 this.startEndPoint= new Point2D.Double(me.getX(), me.getY());
+				 this.startEndPoint= new Point(me.getX(), me.getY());
 			}
         }
     }
@@ -135,5 +136,11 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 				this.selectedPoints.resetEnd();
 			}
 		}
+	}
+
+	public void displayPoint() {
+		// display point to user
+		revalidate();
+		repaint();
 	}
 }
