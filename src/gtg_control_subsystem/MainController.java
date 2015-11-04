@@ -8,7 +8,6 @@ import gtg_model_subsystem.Node;;
 public class MainController{
 	/**/
 	public gtg_model_subsystem.MainModel model;
-	private String test;
 	
 	/**/
 	private ViewController viewController;
@@ -26,18 +25,18 @@ public class MainController{
 	public String getMapImage(String mapName){
 		String ImageURL ="";
 		// ImageURL = model.getMapImage(mapName);
-		return ImageURL;
+		return ImageURL; // and MapName
 	}
 	
-	public String[] getMapDate(String mapName){
+	public String[] getMapData(String mapName){
 		String mapData[] = {};
 		
 		return mapData;
 	}
 	
-	public TargetPntInfo setTaskPnt(int x, int y, String pntType, String mapName){
+	public TargetPntInfo setTaskPnt(int x, int y, String taskType, String mapName){
 		TargetPntInfo targetPnt = new TargetPntInfo();
-		// Do point Validation
+		// Do point Validation() in Model
 		return targetPnt;
 	}
 	
