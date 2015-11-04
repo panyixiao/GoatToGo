@@ -12,6 +12,6 @@ public class MainModel {
 	public static void main(String args[])
 	{
 		TestingDijkstra test = new TestingDijkstra();
-		test.testDij();
+		test.testDij(1,7);
 	}
 }

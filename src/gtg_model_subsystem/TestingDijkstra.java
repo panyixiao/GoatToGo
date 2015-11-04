@@ -4,9 +4,11 @@ import gtg_model_subsystem.Node;
 import gtg_model_subsystem.CoordinateGraph;
 import gtg_model_subsystem.Edge;
 import gtg_model_subsystem.Dijkstra;
+
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class TestingDijkstra {
@@ -17,7 +19,7 @@ public class TestingDijkstra {
 	private List<Admin> admins;
 	private FileProcessing fileProcessing;
 	
-	public void testDij(){
+	public void testDij(int start,int end){
 		
 		edges = new ArrayList<Edge>();
 		nodes = new ArrayList<Node>();
@@ -39,13 +41,46 @@ public class TestingDijkstra {
 			
 			printNodes();
 			printEdges();
+			
+			int nodeId1;
+			int nodeId2;
+			int edgeLength;
+			Edge e;
+			Dijkstra d;
+			int matrix[][]=new int[10][10];
+			for(int i=0;i<=9;i++)
+			  for(int j=0;j<=9;j++)
+				matrix[i][j]=10000;  
+			
+			Iterator<Edge> it=edges.iterator();
+			while(it.hasNext())
+			{
+			     e=(Edge)it.next();
+			     nodeId1=e.getSource().getID();
+			     nodeId2=e.getDestination().getID();
+			     edgeLength=(int)e.getEdgeLength();
+			     System.out.println(nodeId1+" "+nodeId2+" "+edgeLength);
+			     matrix[nodeId1][nodeId2]=edgeLength;
+			}
+			
+			for(int i=0;i<=9;i++)
+			{
+			  for(int j=0;j<=9;j++)
+				System.out.print(matrix[i][j]+" ");
+			  System.out.println();
+			}
+			d=new Dijkstra(matrix,start,end);
+			d.find();
+			d.printDistance();
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
 		
 		//testing for saving nodes and edges
-		try {
+		/*try {
 			saveNodes();
 			saveEdges();
 		}
@@ -53,6 +88,7 @@ public class TestingDijkstra {
 				// TODO Auto-generated catch block
 				System.out.println(e.toString());
 		}//END CATCH saveNodes/Edges
+		*/
 	}
 	void loadAdmin() throws IOException{
 		fileProcessing.readAdmin(admins, "ModelFiles\\adminFile.txt");

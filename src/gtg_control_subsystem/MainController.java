@@ -1,11 +1,21 @@
 package gtg_control_subsystem;
 
+import gtg_model_subsystem.MainModel;
 public class MainController{
+	
+	public MainModel mapData;
 	/**/
 	private ViewController viewController;
 	private MapEditController mapEditor;
 	private PathSearchController pathSearchController;
 	private AdminController userChecker;
+	
+	/**/
+	public MainController(MainModel mapData){
+		this.mapData = mapData;		
+	}
+	
+	
 	/**/
 	public String getMapImage(String mapName){
 		String ImageURL ="";
