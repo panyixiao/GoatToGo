@@ -8,7 +8,7 @@ public class GTGApplication {
 		
 		MainController mainController = new MainController(mainModel);
 
-		MainView mainView= new MainView();
+		MainView mainView= new MainView(mainController);
 	}
 
 }
