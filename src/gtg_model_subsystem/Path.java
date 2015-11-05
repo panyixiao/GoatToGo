@@ -1,7 +1,7 @@
 package gtg_model_subsystem;
 import java.util.List;
 public class Path
-	{
+{
 		/**store the start point;
 		*/
 		private Node startPoint;
@@ -12,8 +12,13 @@ public class Path
 		
 		/**store the way points
 		*/
-		private List<Node> wayPoint;
+		private List<Node> wayPoints;
 		
+		public Path(Node startPoint, Node endPoint, List<Node> wayPoints){
+			this.startPoint = startPoint;
+			this.endPoint = endPoint;
+			this.wayPoints = wayPoints;
+		}
 		/**calculate and return a multiple layer path from campus to floor
 		*or return a multiple layer path on campus
 		*@pre start Node and end Node are not null
@@ -33,21 +38,30 @@ public class Path
 		*/
 		//public SingleLayerPath calculatePathFloor(Node start,Node end){}
 		
+		public void setStartPoint(Node startPoint){
+			this.startPoint = startPoint;
+		}
+		public void setEndPoint(Node endPoint){
+			this.endPoint = endPoint;
+		}
+		public void setPath(List<Node> wayPoints){
+			this.wayPoints = wayPoints;
+		}
 		/**return start point
 		*/
-		public Node getStart(){
+		public Node getStartPoint(){
 			return this.startPoint;
 		}
 		
 		/**return end point
 		*/
-		public Node getEnd(){
+		public Node getEndPoint(){
 			return this.endPoint;
 		}
 	    
-		/**return a List of Node
+		/**return a List of Nodes
 		*/
-		public List<Node> getWayPoint(){
-			return this.wayPoint;
+		public List<Node> getWayPoints(){
+			return this.wayPoints;
 		}
 	}

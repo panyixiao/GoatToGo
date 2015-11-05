@@ -16,14 +16,9 @@ public class CoordinateGraph
 	*/
 	private List<Edge> edges;
 
-	/**Store the path that is going to be drawn
-	 */
-	private Path path;
-	
 	public CoordinateGraph(List<Node> nodes, List<Edge> edges){
 		this.nodes = nodes;
 		this.edges = edges;
-		this.path = null;
 	}
 	/**add a new Node to the graph
 	 *@pre Node is not NULL
@@ -42,12 +37,11 @@ public class CoordinateGraph
 	//public boolean addEdge(Edge edge){
 	//	
 	//}
-		
-	
-		/**return the path that is going to be drawn 
-	 */
-	public Path getPath(){
-		return this.path;
+	public List<Node> getNodes(){
+		return nodes;
+	}
+	public List<Edge> getEdges(){
+		return edges;
 	}
 	
 }

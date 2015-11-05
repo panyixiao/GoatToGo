@@ -27,6 +27,8 @@ public class Dijkstra {
 	
 	//save the shortest path using the predecessor 
 	int[] result;
+	
+	int[] resultPath;
 
 	public Dijkstra(int[][] matrix, int start,int end) {
 		this.matrix = matrix;
@@ -64,7 +66,7 @@ public class Dijkstra {
 	}
 
 	//print shortest distance from source to the destination
-	public void printDistance(){
+	public void printShortestDistance(){
 		Iterator<Entry<Integer, Integer>> it = distanceMap.entrySet().iterator();
 		int min = Integer.MIN_VALUE;
 		int minIndex = -1;
@@ -75,18 +77,6 @@ public class Dijkstra {
 			  System.out.println(startIndex+" to "+entry.getKey()+" shortest distance:"+entry.getValue());
 			}
 		}
-		
-		//print the path from start to the last point
-		System.out.print("From point "+startIndex+" to point "+endIndex+",the path is:");
-		
-		int temp=endIndex;
-		System.out.print(temp+" ");
-		while(result[temp]!=startIndex)
-		{
-			System.out.print(result[temp]+" ");
-			temp=result[temp];
-		}
-		System.out.println(result[temp]);
 	}
 	
 	// return the point which has minimum distance(not in findedSet)
@@ -102,5 +92,22 @@ public class Dijkstra {
 			}
 		}
 		return minIndex;
+	}
+	public void printPath(){
+		//print the path from start to the last point
+		System.out.print("From point "+startIndex+" to point "+endIndex+",the path is:");
+		
+		int temp=endIndex;
+		System.out.print(temp+" ");
+		while(result[temp]!=startIndex)
+		{
+			System.out.print(result[temp]+" ");
+			temp=result[temp];
+		}
+		System.out.println(result[temp]);
+		System.out.println(result.length);
+	}
+	public int[] getResultPath(){
+		return this.result;
 	}
 }
