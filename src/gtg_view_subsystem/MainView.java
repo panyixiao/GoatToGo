@@ -1,6 +1,7 @@
 package gtg_view_subsystem;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -74,7 +75,9 @@ public class MainView {
 
 	public void getPathResult() {
 		// TODO Auto-generated method stub
+		PathData path = this.createDummyDataForResult();
 		showResultPage();
+		this.resultPage.displayPath(path);
 	}
 
 	public void deleteSelectedPoint(String selectedPointType) {
@@ -83,5 +86,33 @@ public class MainView {
 		//this.mainController.deleteSelectedPoint(selectedPointType);
 		this.mapPage.deletePoint(selectedPointType);
 		
+	}
+	
+	public PathData createDummyDataForResult(){
+		PathData path = new PathData();
+		path.setStartPoint(new Point(112, 381));
+		path.setEndPoint(new Point(863, 842));
+		
+		ArrayList<String> tempMapNames = new ArrayList<String>();
+		tempMapNames.add("BH_BASEMENT");
+		path.setArrayOfMapNames(tempMapNames);
+		
+		ArrayList<Point> tempPoints = new ArrayList<Point>();
+		tempPoints.add(new Point(112, 381));
+		tempPoints.add(new Point(147, 364));
+		tempPoints.add(new Point(147, 364));
+		tempPoints.add(new Point(246, 364));
+		tempPoints.add(new Point(295, 363));
+		tempPoints.add(new Point(361, 365));
+		tempPoints.add(new Point(389, 493));
+		tempPoints.add(new Point(491, 529));
+		tempPoints.add(new Point(658, 542));
+		tempPoints.add(new Point(777, 542));
+		tempPoints.add(new Point(857, 538));
+		tempPoints.add(new Point(863, 842));
+		
+		path.setArrayOfPoints(tempPoints);
+		
+		return path;
 	}
 }
