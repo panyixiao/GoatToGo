@@ -39,13 +39,13 @@ public class FileProcessing {
 			line = line.trim();
 			lines = line.split("[\\s+]");
 			
-			
-			nodeId1 = Integer.parseInt(lines[1]);
-			nodeId2 = Integer.parseInt(lines[2]);
+			//Subtract one for arraylist index value
+			nodeId1 = Integer.parseInt(lines[1]) - 1;
+			nodeId2 = Integer.parseInt(lines[2]) - 1;
 
 			Edge edge = new Edge(Integer.parseInt(lines[0]), 
-								 nodes.get(nodeId1 - 1), 
-								 nodes.get(nodeId2 - 1),
+								 nodes.get(nodeId1), 
+								 nodes.get(nodeId2),
 								 calculateDistance(nodes.get(nodeId1).getX(), nodes.get(nodeId2).getX(), nodes.get(nodeId1).getY(), nodes.get(nodeId2).getY())
 								 );
 			edges.add(edge);
