@@ -142,7 +142,7 @@ public class MapPage extends JPanel {
 		this.getDirectionsBtn = new JButton();
 		getDirectionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.showResultPage();
+				parent.getPathResult();
 				/*if(selectedPoints.arePointsSelected() == true){
 					parent.getPathResult();
 				} else {

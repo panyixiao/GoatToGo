@@ -1,6 +1,7 @@
 package gtg_view_subsystem;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -151,6 +152,7 @@ public class ResultPage extends JPanel {
 		this.currentMapName.setBounds(100, 310, 204, 37);
 		this.currentMapName.setForeground(new Color(0x5b1010));
 		this.currentMapName.setBorder(null);
+		this.currentMapName.setHorizontalAlignment(JTextField.CENTER);
 		this.rightPanel.add(this.currentMapName);
 		this.currentMapName.setColumns(10);
 		
@@ -160,6 +162,7 @@ public class ResultPage extends JPanel {
 		this.totalMaps.setForeground(new Color(0x5b1010));
 		this.totalMaps.setBounds(150, 355, 98, 26);
 		this.totalMaps.setBorder(null);
+		this.totalMaps.setHorizontalAlignment(JTextField.CENTER);
 		this.rightPanel.add(this.totalMaps);
 		this.totalMaps.setColumns(10);
 
@@ -181,5 +184,16 @@ public class ResultPage extends JPanel {
 		this.mapPanelHolder.setViewportView(resultMapDisplayPanel);
 		this.currentZoomValue = 1.0;
 	}
-
+	public void displayPath(PathData path) {
+		System.out.println(path.getArrayOfPoints());
+		// TODO Auto-generated method stub
+		Point tempPoint = path.getStartPoint();
+		this.fromTextField.setText(" X:" + (int)tempPoint.getX() + ",  Y:" + (int)tempPoint.getY());
+		tempPoint = path.getEndPoint();
+		this.toTextField.setText(" X:" + (int)tempPoint.getX() + ",  Y:" + (int)tempPoint.getY());
+		
+		this.currentMapName.setText(path.getArrayOfMapNames().get(0));
+		this.totalMaps.setText("1 / " + path.getArrayOfMapNames().size());
+		this.resultMapDisplayPanel.displayPoints(path.getArrayOfPoints());
+	}
 }
