@@ -214,4 +214,7 @@ public class TestingDijkstra {
 		}
 		System.out.println("END OF PRINT ADMIN");
 	}
+	public Map getTestMap(){
+		return this.testMap;
+	}
 }
