@@ -12,6 +12,9 @@ public class TestingDijkstra {
 	public static void main(String args[])
 	{
 		MainModel test = new MainModel();
-		test.testDij(18,1);
+		test.loadFiles("testMap");
+		test.printNodes("testMap");
+		test.testDij("testMap",18,1);
+		test.printPath("testMap");
 	}
 }

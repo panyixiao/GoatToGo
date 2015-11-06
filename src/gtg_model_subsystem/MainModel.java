@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Hashtable;
 
 public class MainModel {
 	private List<Node> nodes;
@@ -19,31 +20,54 @@ public class MainModel {
 	private CoordinateGraph graph;
 	private List<Admin> admins;
 	private FileProcessing fileProcessing;
-	private Map testMap;
-	public void testDij(int start,int end){
-		
-		edges = new ArrayList<Edge>();
-		nodes = new ArrayList<Node>();
+	private Map tempMap;
+	private Hashtable<String, Map> mapTable;
+	
+	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
-		//testing for loading admins
-		try{
+		mapTable = new Hashtable<String, Map>();
+		try {
 			loadAdmin();
-			printAdmins();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		catch(IOException e){
+		
+	}
+	public void loadFiles(String mapName){
+		try{
+			createMapGraph(mapName);
+		}catch(IOException e){
 			System.out.println(e.toString());
 		}
+	}
+	public void loadAdmin() throws IOException{
+		fileProcessing.readAdmin(admins, "ModelFiles\\adminFile.txt");
+	}
+	public void createMapGraph(String mapName) throws IOException{
+		System.out.println("creating the Map/Graph");
+		nodes = new ArrayList<Node>();
+		edges = new ArrayList<Edge>();
+		fileProcessing.readNodesFile(nodes, MapNodeURLS.TEST_MAP_NODES);
+		fileProcessing.readEdgesFile(nodes, edges, MapEdgeURLS.TEST_MAP_EDGES);
+		
+		graph = new CoordinateGraph(nodes, edges);
+		tempMap = new Map(mapName, graph, null);
+		mapTable.put(mapName, tempMap);
+	}
+	public void saveMapGraph(String mapName) throws IOException{
+		Map saveMap = mapTable.get(mapName);
+		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
+		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
+	}
+	public void testDij(String mapName, int start,int end){
+		
 		//testing for loading of nodes/edges
 		try {
-			loadNodes();
-			loadEdges();
-			graph = new CoordinateGraph(nodes, edges);
-			testMap = new Map("testMap", graph, null);
-			runDijkstra(start, end);
-			runJDijkstra(start, end);
+			runJDijkstra(mapName, start, end);
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
@@ -65,15 +89,15 @@ public class MainModel {
 	 * @param start node ID
 	 * @param end node ID
 	 */
-	public void runJDijkstra(int start, int end){
+	public void runJDijkstra(String mapName, int start, int end){
 		//Create object instance with temporary dijkstra algorithim
-		JDijkstra dijkstra = new JDijkstra(testMap.getGraph());
+		JDijkstra dijkstra = new JDijkstra(mapTable.get(mapName).getGraph());
 		//Values to hold the start point and end point for the path
 		Node startPoint = null;
 		Node endPoint = null;
 	
 		//Search though the node elements
-		for(Node node: nodes){
+		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			//IF current node ID equals start integer value THEN
 			if(node.getID() == start)
 				//SET start node as current node
@@ -93,7 +117,7 @@ public class MainModel {
 		path = new Path(startPoint, endPoint, wayPoints);
 		
 		//Store it into the map
-		testMap.setPath(path);
+		mapTable.get(mapName).setPath(path);
 	}
 	public void runDijkstra(int start, int end){
 		int nodeId1;
@@ -159,13 +183,13 @@ public class MainModel {
 	 * @param y the y value for the given point
 	 * @return the more accurate validated point
 	 */
-	public Node validatePoint(int x, int y){
+	public Node validatePoint(String mapName, int x, int y){
 		Node validatedPoint = null;
 		int currentDiffX = 0;
 		int currentDiffY = 0;
 		int prevDiffX = 0;
 		int prevDiffY = 0;
-		for(Node node: testMap.getGraph().getNodes()){
+		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			currentDiffX = node.getX() - x;
 			currentDiffY = node.getY() - y;
 			if((currentDiffX < prevDiffX) && (currentDiffY < prevDiffY)){
@@ -175,25 +199,10 @@ public class MainModel {
 		}
 		return validatedPoint;
 	}
-	public void loadAdmin() throws IOException{
-		fileProcessing.readAdmin(admins, "ModelFiles\\adminFile.txt");
-	}
-	public void loadNodes() throws IOException{
-		fileProcessing.readNodesFile(nodes, MapNodeURLS.TEST_MAP_NODES);
-		
-	}
-	public void loadEdges() throws IOException{
-		fileProcessing.readEdgesFile(nodes, edges, MapEdgeURLS.TEST_MAP_EDGES);
-	}
-	public void saveNodes() throws IOException{
-		fileProcessing.saveNodesFile(nodes, MapNodeURLS.TEST_MAP_NODES);
-	}
-	public void saveEdges() throws IOException{
-		fileProcessing.saveEdgesFile(edges, MapEdgeURLS.TEST_MAP_EDGES);
-	}
-	public void printNodes(){
+	
+	public void printNodes(String mapName){
 		int count = 0;
-		for(Node node: nodes){
+		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			count++;
 			System.out.print(node.getID() + " " + node.getX() + " " + node.getY());
 			System.out.println();
@@ -215,7 +224,11 @@ public class MainModel {
 		}
 		System.out.println("END OF PRINT ADMIN");
 	}
-	public Map getTestMap(){
-		return this.testMap;
+	public void printPath(String mapName){
+		for(Node node: mapTable.get(mapName).getPath().getWayPoints()){
+			System.out.println(node.getID());
+		}
+		System.out.println("END PATH");
 	}
+
 }
