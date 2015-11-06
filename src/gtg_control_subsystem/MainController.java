@@ -1,11 +1,21 @@
 package gtg_control_subsystem;
 
+<<<<<<< HEAD
 import gtg_model_subsystem.MainModel;
 /* Import Classes from model*/
 import gtg_model_subsystem.Node;;
 
 
+=======
+import java.awt.Point;
+
+import gtg_model_subsystem.MainModel;
+import gtg_model_subsystem.Node;
+import gtg_view_subsystem.PathData;
+>>>>>>> 01835e2c6e34f9da4bb6851d323882f1336aaff1
 public class MainController{
+	
+	public MainModel mapData;
 	/**/
 	public gtg_model_subsystem.MainModel model;
 	
@@ -14,6 +24,13 @@ public class MainController{
 	private MapEditController mapEditor;
 	private PathSearchController pathSearchController;
 	private AdminController userChecker;
+	
+	/**/
+	public MainController(MainModel mapData){
+		this.mapData = mapData;		
+	}
+	
+	
 	/**/
 	
 	// Controller Constructor
@@ -39,7 +56,32 @@ public class MainController{
 		// Do point Validation() in Model
 		return targetPnt;
 	}
-	
+	/*public PathData testCalculation(Point start, Point end, String mapName){
+		
+		Point startNode=mapData.validatePoint(mapName, start.x, start.y);
+		Point endNode=mapData.validatePoint(mapName, end.x, end.y);
+		mapData.runJDijkstra(startNode.getID(), endNode.getID());
+		Map testMap=mapData.getTestMap();
+		List<Node> wayPnt=testMap.getPath().getWayPoints();
+		
+		Point newStart=new Point(startNode.getX(), startNode.getY());
+		Point newEnd=new Point(endNode.getX(), endNode.getY());
+		PathData path = new PathData();
+		path.setStartPoint(newStart);
+		path.setEndPoint(newEnd);
+		
+		ArrayList<String> tempMapNames = new ArrayList<String>();
+		tempMapNames.add(mapName);
+		path.setArrayOfMapNames(tempMapNames);
+		
+		ArrayList<Point> tempPoints = new ArrayList<Point>();
+		for (Node n:wayPnt){
+			tempPoints.add(new Point(n.getX(),n.getY()));
+		}
+		path.setArrayOfPoints(tempPoints);
+		
+		return path;
+	} */
 	/* need the package from modelsubsystem
 	 * 
 	 * public MultilayerPath getDirections(){

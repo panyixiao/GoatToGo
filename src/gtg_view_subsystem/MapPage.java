@@ -2,6 +2,7 @@ package gtg_view_subsystem;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -15,6 +16,7 @@ import javax.swing.border.Border;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 
 public class MapPage extends JPanel {
@@ -140,7 +142,20 @@ public class MapPage extends JPanel {
 		this.getDirectionsBtn = new JButton();
 		getDirectionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.showResultPage();
+				parent.getPathResult();
+				/*if(selectedPoints.arePointsSelected() == true){
+					parent.getPathResult();
+				} else {
+					if(selectedPoints.isStartSelected() == false && selectedPoints.isEndSelected() == true) {
+						JOptionPane.showMessageDialog(null, ViewStringLiterals.FROM_POINT_NOT_SET, "INVALID", JOptionPane.ERROR_MESSAGE);
+					}
+					else if(selectedPoints.isStartSelected() == true && selectedPoints.isEndSelected() == false) {
+						JOptionPane.showMessageDialog(null, ViewStringLiterals.TO_POINT_NOT_SET, "INVALID", JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, ViewStringLiterals.POINTS_NOT_SET, "INVALID", JOptionPane.ERROR_MESSAGE);
+					}
+				}*/
 			}
 		});
 		this.getDirectionsBtn.setContentAreaFilled(false);
@@ -163,8 +178,11 @@ public class MapPage extends JPanel {
 		fromClearBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(mapMapDisplayPanel != null){
-					mapMapDisplayPanel.deletePoint(ViewStringLiterals.FROM);
-					fromTextField.setText("");
+					if(selectedPoints.isStartSelected() == true){
+						parent.deleteSelectedPoint(ViewStringLiterals.FROM);
+					}
+					//mapMapDisplayPanel.deletePoint(ViewStringLiterals.FROM);
+					//fromTextField.setText("");
 				}
 			}
 		});
@@ -188,8 +206,11 @@ public class MapPage extends JPanel {
 		toClearBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(mapMapDisplayPanel != null){
-					mapMapDisplayPanel.deletePoint(ViewStringLiterals.TO);
-					toTextField.setText("");
+					if(selectedPoints.isEndSelected() == true){
+						parent.deleteSelectedPoint(ViewStringLiterals.TO);
+					}
+					//mapMapDisplayPanel.deletePoint(ViewStringLiterals.TO);
+					//toTextField.setText("");
 				}
 			}
 		});
@@ -235,6 +256,27 @@ public class MapPage extends JPanel {
 		case ViewStringLiterals.TO:
 			toTextField.setText("X = " + Math.round(x * 100) / 100 + ", " + "Y = " + Math.round(y * 100) / 100);
 			break;
+		}
+	}
+
+	public void sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
+		parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
+	}
+
+	public void setPoint() {
+		this.mapMapDisplayPanel.displayPoint();
+		
+	}
+	
+	public void deletePoint(String selectedPointType){
+		if(selectedPointType == ViewStringLiterals.FROM){
+			mapMapDisplayPanel.deletePoint(ViewStringLiterals.FROM);
+			fromTextField.setText("");
+		}
+		
+		if(selectedPointType == ViewStringLiterals.TO){
+			mapMapDisplayPanel.deletePoint(ViewStringLiterals.TO);
+			toTextField.setText("");
 		}
 	}
 }

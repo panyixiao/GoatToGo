@@ -12,26 +12,33 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
-
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
 
 public class AdminMapEditPage extends JPanel {
 	private JPanel leftPanel, rightPanel;
 	private JButton zoomInBtn, zoomOutBtn, clearAllBtn, saveBtn;
+	private JRadioButton pointBtn, pathBtn, nbrBtn;
+	private ButtonGroup modeBtns;
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, clearAllBtnImage, saveBtnImage;
 	private JLabel dropDownLabel;
 	private AdminMapDisplayPanel adminMapDisplayPanel;
 	private JScrollPane mapPanelHolder;
 	private JLayeredPane layeredPane;
+	private JComboBox comboBox;
+
 	private double MAX_ZOOM_IN = 2.0;
 	private double MAX_ZOOM_OUT = 1.0;
 	private double currentZoomValue = 1.0;
 	private double zoomFactor = 0.1;
 	private MainView parent;
+	private SelectedPoints selectedPoints = new SelectedPoints();
 	
 	/**
 	 * Create the panel.
@@ -106,9 +113,53 @@ public class AdminMapEditPage extends JPanel {
 
 		this.dropDownLabel = new JLabel(ViewStringLiterals.SELECT_MAP + " :");
 		this.dropDownLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.dropDownLabel.setBounds(15, 16, 253, 25);
+		this.dropDownLabel.setBounds(50, 54, 253, 25);
 		this.dropDownLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.dropDownLabel);
+
+		String[] floorStrings = {"BH_Basement", "BH_FirstFloor", "BH_SecondFloor", "BH_ThirdFloor"};
+		this.comboBox = new JComboBox(floorStrings);
+		comboBox.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				 JComboBox cb = (JComboBox)ae.getSource();
+			     String mapName = (String)cb.getSelectedItem();
+			     changeMap(mapName);
+			}
+		});
+		this.comboBox.setBackground(null);
+		this.comboBox.setSelectedIndex(0);
+		this.comboBox.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
+		this.comboBox.setBounds(60, 95, 307, 53);
+		this.rightPanel.add(this.comboBox);
+
+		this.pointBtn =new JRadioButton();
+		this.pointBtn.setText("Create Points");
+		this.pointBtn.setBounds(55, 225, 253, 25);
+		this.pointBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
+		this.pointBtn.setBackground(null);
+		
+		this.pathBtn =new JRadioButton();
+		this.pathBtn.setText("Create Path");
+		this.pathBtn.setBounds(55, 275, 253, 25);
+		this.pathBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
+		this.pathBtn.setBackground(null);
+		
+		this.nbrBtn =new JRadioButton();
+		this.nbrBtn.setText("Select Neighbors");
+		this.nbrBtn.setBounds(55, 325, 253, 25);
+		this.nbrBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
+		this.nbrBtn.setBackground(null);
+		
+		this.modeBtns = new ButtonGroup();
+		this.modeBtns.add(pointBtn);
+		this.modeBtns.add(pathBtn);
+		this.modeBtns.add(nbrBtn);
+
+		
+		this.rightPanel.add(this.pointBtn);
+		this.rightPanel.add(this.pathBtn);
+		this.rightPanel.add(this.nbrBtn);
 
 		this.clearAllBtn = new JButton();
 		this.clearAllBtn.setContentAreaFilled(false);
@@ -125,6 +176,32 @@ public class AdminMapEditPage extends JPanel {
 		this.saveBtnImage = new ImageIcon(ImageURLS.SAVE_BUTTON);
 		this.saveBtn.setIcon(this.saveBtnImage);
 		this.rightPanel.add(this.saveBtn);
+	}
+	
+	private void changeMap(String mapName){
+	//	this.adminMapDisplayPanel = null;
+		String mapurl = "";
+		switch(mapName){
+		case "BH_Basement":
+			mapurl = ImageURLS.BH_BASEMENT;
+			break;
+			
+		case "BH_FirstFloor":
+			mapurl = ImageURLS.BH_FIRST_FLOOR;
+			break;
+			
+		case "BH_SecondFloor":
+			mapurl = ImageURLS.BH_SECOND_FLOOR;
+			break;
+			
+		case "BH_ThirdFloor":
+			mapurl = ImageURLS.BH_THIRD_FLOOR;
+			break;
+		}
+//		this.adminMapDisplayPanel = new AdminMapDisplayPanel(this,this.mapPanelHolder, mapName, mapurl, selectedPoints);
+//		this.mapPanelHolder.setViewportView(adminMapDisplayPanel);
+		this.currentZoomValue = 1.0;
+
 	}
 
 }
