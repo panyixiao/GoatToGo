@@ -1,24 +1,13 @@
 package gtg_control_subsystem;
 
-<<<<<<< HEAD
-import gtg_model_subsystem.MainModel;
-/* Import Classes from model*/
-import gtg_model_subsystem.Node;;
-
-
-=======
 import java.awt.Point;
 
 import gtg_model_subsystem.MainModel;
 import gtg_model_subsystem.Node;
 import gtg_view_subsystem.PathData;
->>>>>>> 01835e2c6e34f9da4bb6851d323882f1336aaff1
 public class MainController{
 	
 	public MainModel mapData;
-	/**/
-	public gtg_model_subsystem.MainModel model;
-	
 	/**/
 	private ViewController viewController;
 	private MapEditController mapEditor;
@@ -32,28 +21,21 @@ public class MainController{
 	
 	
 	/**/
-	
-	// Controller Constructor
-	public MainController(MainModel MapData){
-		this.model = MapData;
-	}
-	
-	//  
 	public String getMapImage(String mapName){
 		String ImageURL ="";
-		// ImageURL = model.getMapImage(mapName);
-		return ImageURL; // and MapName
+		
+		return ImageURL;
 	}
 	
-	public String[] getMapData(String mapName){
+	public String[] getMapDate(String mapName){
 		String mapData[] = {};
 		
-		return mapData;
+		return mapData;		
 	}
 	
-	public TargetPntInfo setTaskPnt(int x, int y, String taskType, String mapName){
+	public TargetPntInfo setTaskPnt(int x, int y, String pntType, int scaleLevel, int x_center, int y_center, String mapName){
 		TargetPntInfo targetPnt = new TargetPntInfo();
-		// Do point Validation() in Model
+		
 		return targetPnt;
 	}
 	/*public PathData testCalculation(Point start, Point end, String mapName){
@@ -91,7 +73,7 @@ public class MainController{
 	 * return path;
 	 * }
 	 * 
-	 * */
+	 * */	
 	public Boolean adminQualification(String userName, String passWord){
 		Boolean isAdmin = false;
 		
