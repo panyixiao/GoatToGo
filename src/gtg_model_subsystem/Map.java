@@ -14,9 +14,8 @@ public class Map {
 		
 		String mapName;
 		
-		private Path path;
 		public Map(String mapName, CoordinateGraph graph, Image img){
-			this.img = img;
+			this.img = null;
 			this.graph = graph;
 		    this.mapName = mapName;
 		}
@@ -30,17 +29,12 @@ public class Map {
 		public void setGraph(CoordinateGraph graph){
 			this.graph = graph;
 		}
-		public void setPath(Path path){
-			this.path = path;
-		}
 		/**return img
 		*/
 		public Image getImg(){
 			return this.img;
 		}
-		public Path getPath(){
-			return this.path;
-		}
+
 		 /**
 		 * return the graph
 		 */

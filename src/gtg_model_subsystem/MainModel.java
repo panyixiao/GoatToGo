@@ -9,6 +9,7 @@ import gtg_model_subsystem.Dijkstra;
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Hashtable;
@@ -22,7 +23,6 @@ public class MainModel {
 	private FileProcessing fileProcessing;
 	private Map tempMap;
 	private Hashtable<String, Map> mapTable;
-	
 	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
@@ -117,7 +117,7 @@ public class MainModel {
 		path = new Path(startPoint, endPoint, wayPoints);
 		
 		//Store it into the map
-		mapTable.get(mapName).setPath(path);
+		//mapTable.get(mapName).setPath(path);
 	}
 	public void runDijkstra(int start, int end){
 		int nodeId1;
@@ -183,23 +183,36 @@ public class MainModel {
 	 * @param y the y value for the given point
 	 * @return the more accurate validated point
 	 */
-	public Node validatePoint(String mapName, int x, int y){
-		Node validatedPoint = null;
-		int currentDiffX = 0;
-		int currentDiffY = 0;
-		int prevDiffX = 0;
-		int prevDiffY = 0;
+	public Point validatePoint(String mapName, int x, int y){
+		Node validatedNode = null;
+		int currentDiff = 0;
+		int previousDiff = Integer.MAX_VALUE;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-			currentDiffX = node.getX() - x;
-			currentDiffY = node.getY() - y;
-			if((currentDiffX < prevDiffX) && (currentDiffY < prevDiffY)){
-				validatedPoint = node;
-			}
-				
+			currentDiff = (int) Math.sqrt(Math.pow(node.getX()-x, 2)+ Math.pow(node.getY() - y, 2));
+			if(currentDiff < previousDiff){
+				previousDiff = currentDiff;
+				validatedNode = node;
+			}				
 		}
-		return validatedPoint;
+		Point correctedPoint = new Point(validatedNode.getX(), validatedNode.getY());
+		return correctedPoint;
 	}
-	
+	public boolean setStartEndPathPoint(Point point, String pointType, String mapName){
+			boolean isSet = false;
+			for(Node node: mapTable.get(mapName).getGraph().getNodes()){
+				if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "From")){
+					//mapTable.get(mapName).getPath().setStartPoint(node);
+					path.setStartPoint(node);
+					isSet = true;
+				}
+				else if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "To")){
+					//mapTable.get(mapName).getPath().setEndPoint(node);
+					path.setEndPoint(node);
+					isSet = true;
+				}
+			}
+			return isSet;
+	}
 	public void printNodes(String mapName){
 		int count = 0;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
@@ -224,11 +237,29 @@ public class MainModel {
 		}
 		System.out.println("END OF PRINT ADMIN");
 	}
-	public void printPath(String mapName){
-		for(Node node: mapTable.get(mapName).getPath().getWayPoints()){
-			System.out.println(node.getID());
-		}
-		System.out.println("END PATH");
+//	public void printPath(String mapName){
+//		for(Node node: mapTable.get(mapName).getPath().getWayPoints()){
+//			System.out.println(node.getID());
+//		}
+//		System.out.println("END PATH");
+//	}
+	public Path getPath(){
+		return this.path;
 	}
-
+	public ArrayList<Point> convertWayPointsToPoints(){
+		ArrayList<Point> tempWayPoints = new ArrayList<Point>();
+		for(Node node : path.getWayPoints()){
+			tempWayPoints.add(new Point(node.getX(), node.getY()));
+		}
+		return tempWayPoints;
+	}
+	public ArrayList<String> getArrayOfMapNames(){
+		ArrayList<String> tempArrayOfMapNames = new ArrayList<String>();
+		Enumeration e = mapTable.keys();
+		while(e.hasMoreElements()){
+			String mapName = (String) e.nextElement();
+			tempArrayOfMapNames.add(mapName);
+		}
+		return tempArrayOfMapNames;
+	}
 }

@@ -111,7 +111,7 @@ public class MainView {
 		tempPoints.add(new Point(857, 538));
 		tempPoints.add(new Point(863, 842));
 		
-		path.setArrayOfPoints(tempPoints);
+		path.setWayPoints(tempPoints);
 		
 		return path;
 	}

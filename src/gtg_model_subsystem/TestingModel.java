@@ -1,6 +1,6 @@
 package gtg_model_subsystem;
-import gtg_model_subsystem.TestingDijkstra;
-
+import gtg_control_subsystem.TestController;
+import java.awt.Point;
 
 /**
  * Separate Main process to test Model subsystem, will be changed later to hook into Controller and view API
@@ -8,13 +8,15 @@ import gtg_model_subsystem.TestingDijkstra;
  * @author Joshua
  *
  */
-public class TestingDijkstra {
+public class TestingModel {
 	public static void main(String args[])
 	{
 		MainModel test = new MainModel();
 		test.loadFiles("testMap");
 		test.printNodes("testMap");
 		test.testDij("testMap",18,1);
-		test.printPath("testMap");
+		Point point = test.validatePoint("testMap", 125, 400);
+		System.out.println("Point x: " + point.x + " Point Y: " + point.y);
+		TestController testController = new TestController(test);
 	}
 }

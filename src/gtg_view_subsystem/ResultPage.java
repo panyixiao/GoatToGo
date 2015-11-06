@@ -185,7 +185,7 @@ public class ResultPage extends JPanel {
 		this.currentZoomValue = 1.0;
 	}
 	public void displayPath(PathData path) {
-		System.out.println(path.getArrayOfPoints());
+		System.out.println(path.getWayPoints());
 		// TODO Auto-generated method stub
 		Point tempPoint = path.getStartPoint();
 		this.fromTextField.setText(" X:" + (int)tempPoint.getX() + ",  Y:" + (int)tempPoint.getY());
@@ -194,6 +194,6 @@ public class ResultPage extends JPanel {
 		
 		this.currentMapName.setText(path.getArrayOfMapNames().get(0));
 		this.totalMaps.setText("1 / " + path.getArrayOfMapNames().size());
-		this.resultMapDisplayPanel.displayPoints(path.getArrayOfPoints());
+		this.resultMapDisplayPanel.displayPoints(path.getWayPoints());
 	}
 }
