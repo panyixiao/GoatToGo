@@ -35,9 +35,10 @@ public class MainModel {
 		}
 		
 	}
-	public void loadFiles(String mapName){
+	//re-add string mapName future
+	public void loadFiles(){
 		try{
-			createMapGraph(mapName);
+			createMapGraph("BH_Basement");
 		}catch(IOException e){
 			System.out.println(e.toString());
 		}

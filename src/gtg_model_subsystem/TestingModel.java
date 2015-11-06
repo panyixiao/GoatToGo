@@ -12,10 +12,10 @@ public class TestingModel {
 	public static void main(String args[])
 	{
 		MainModel test = new MainModel();
-		test.loadFiles("testMap");
-		test.printNodes("testMap");
-		test.testDij("testMap",18,1);
-		Point point = test.validatePoint("testMap", 125, 400);
+		test.loadFiles();
+		test.printNodes("BH_Basement");
+		test.testDij("BH_Basement",18,1);
+		Point point = test.validatePoint("BH_Basement", 125, 400);
 		System.out.println("Point x: " + point.x + " Point Y: " + point.y);
 		TestController testController = new TestController(test);
 	}
