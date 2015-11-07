@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class PathData {
 	private Point startPoint;
 	private Point endPoint;
-	private ArrayList<Point> coordinateList = new ArrayList<Point>();
+	private ArrayList<Point> wayPoints = new ArrayList<Point>();
 	private ArrayList<String> mapNames = new ArrayList<String>();
 	
 	public PathData(){
@@ -29,12 +29,12 @@ public class PathData {
 		return this.endPoint;
 	}
 	
-	public void setArrayOfPoints(ArrayList<Point> coordinateList){
-		this.coordinateList = coordinateList;
+	public void setWayPoints(ArrayList<Point> wayPoints){
+		this.wayPoints = wayPoints;
 	}
 	
-	public ArrayList<Point> getArrayOfPoints(){
-		return this.coordinateList;
+	public ArrayList<Point> getWayPoints(){
+		return this.wayPoints;
 	}
 	
 	public void setArrayOfMapNames(ArrayList<String> mapNames){
