@@ -4,7 +4,6 @@ import java.awt.Point;
 import gtg_model_subsystem.Node;
 import gtg_model_subsystem.CoordinateGraph;
 import gtg_model_subsystem.Edge;
-import gtg_model_subsystem.Dijkstra;
 
 import java.util.List;
 import java.io.IOException;
@@ -120,7 +119,7 @@ public class MainModel {
 		//Store it into the map
 		//mapTable.get(mapName).setPath(path);
 	}
-	public void runDijkstra(int start, int end){
+	/*public void runDijkstra(int start, int end){
 		int nodeId1;
 		int nodeId2;
 		int edgeLength;
@@ -155,7 +154,7 @@ public class MainModel {
 		d.find();
 		d.printShortestDistance();
 		d.printPath();
-	}
+	}*/
 	
 	/**
 	 * isValidAdmin method validates if the user that has choosen to login as admin is an admin.
