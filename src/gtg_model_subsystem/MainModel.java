@@ -28,6 +28,7 @@ public class MainModel {
 		mapTable = new Hashtable<String, Map>();
 		try {
 			loadAdmin();
+			loadFiles();	// Yixiao
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,6 +186,11 @@ public class MainModel {
 	 */
 	public Point validatePoint(String mapName, int x, int y){
 		Node validatedNode = null;
+		if(mapTable.isEmpty()){
+			Point pnt = new Point();
+			System.out.println("MapTable is empty, Validation Failed");
+			return pnt;
+		}
 		int currentDiff = 0;
 		int previousDiff = Integer.MAX_VALUE;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
