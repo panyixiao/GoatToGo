@@ -259,8 +259,14 @@ public class MapPage extends JPanel {
 		}
 	}
 
-	public void sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
-		parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
+	//public void sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
+	//	parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
+	//}
+	
+	public Point  sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
+		Point pntOnGraph = startEndPoint;
+		pntOnGraph = parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
+		return pntOnGraph;
 	}
 
 	public void setPoint() {

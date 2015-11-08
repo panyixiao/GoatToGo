@@ -50,13 +50,14 @@ public class MainController{
 		System.out.println("Task Type:" + pntType);
 		
 		targetPnt = mapModel.validatePoint(mapName, taskPnt.x, taskPnt.y);
-		System.out.println("Mapping To point: " + targetPnt.x + targetPnt.y);
+		System.out.println("Mapping To point: " + targetPnt.x + ", " + targetPnt.y);
 		mapModel.setStartEndPathPoint(targetPnt, pntType, mapName);		
 		return targetPnt;
 	}
 	
 	public PathData getPathData(){
 		PathData path = new PathData();
+		// 
 		Path calculateResult = mapModel.getPath();
 		
 		if(calculateResult.getWayPoints().isEmpty()){
@@ -118,14 +119,16 @@ public class MainController{
 	 * */	
 	public Boolean adminQualification(String userName, String passWord){
 		Boolean isAdmin = false;
-		
+		isAdmin = mapModel.isValidAdmin(userName, passWord);
+		if(!isAdmin){
+			mapModel.printAdmins();
+		}
 		return isAdmin;
 	}
 	
 	/* Used for create the "MapName.txt" file, 
 	 * correspond to a button "Generate Road Map" on the Admin page
-	 * Used to save the temporal point graph to file*/
-	
+	 * Used to save the temporal point graph to file*/	
 	private ArrayList<Point> tempPntList;
 	
 	public Boolean createCoordinateGraph(String mapName){

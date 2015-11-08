@@ -46,11 +46,11 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    this.menuItem.setFont(new Font("Meiryo", Font.PLAIN, 22));
 	    this.menuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		parent.sentPointToModel(startEndPoint, ViewStringLiterals.FROM, map);
-	    		//selectedPoints.setStartLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
-	    		//parent.displayPointInTextfield(ViewStringLiterals.FROM, startEndPoint.getX(), startEndPoint.getY());
-	    		//revalidate();
-	    		//repaint();
+	    		startEndPoint = parent.sentPointToModel(startEndPoint, ViewStringLiterals.FROM, map);
+	    		selectedPoints.setStartLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
+	    		parent.displayPointInTextfield(ViewStringLiterals.FROM, startEndPoint.getX(), startEndPoint.getY());
+	    		revalidate();
+	    		repaint();
 	    	}
 	    });
 
@@ -59,11 +59,11 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    this.menuItem_1.setFont(new Font("Meiryo", Font.PLAIN, 22));
 	    this.menuItem_1.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		parent.sentPointToModel(startEndPoint, ViewStringLiterals.TO, map);
-	    		//selectedPoints.setEndLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
-	    		//parent.displayPointInTextfield(ViewStringLiterals.TO, startEndPoint.getX(), startEndPoint.getY());
-	    		//revalidate();
-	    		//repaint();
+	    		startEndPoint = parent.sentPointToModel(startEndPoint, ViewStringLiterals.TO, map);
+	    		selectedPoints.setEndLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
+	    		parent.displayPointInTextfield(ViewStringLiterals.TO, startEndPoint.getX(), startEndPoint.getY());
+	    		revalidate();
+	    		repaint();
 	    	}
 	    });
 	    this.popup.add(this.menuItem_1);

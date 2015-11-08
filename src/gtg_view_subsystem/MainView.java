@@ -64,12 +64,24 @@ public class MainView {
 		currentPage = adminMapPage;
 	}
 
-	public void sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
+	// Original Function
+	/*public void sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
 		//send the point to controller
 		System.out.println("Selected Point is" + startEndPoint);
 		System.out.println("Selected Point type" + selectedPointType);
 		System.out.println("Selected Map " + mapName);
 		this.mainController.setTaskPnt(startEndPoint, selectedPointType, mapName);
+		//this.mapPage.setPoint();
+	}*/
+	// Yixiao's change
+	public Point sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
+		//send the point to controller
+		Point pntToBeMapped = startEndPoint;
+		System.out.println("Selected Point is" + startEndPoint);
+		System.out.println("Selected Point type" + selectedPointType);
+		System.out.println("Selected Map " + mapName);
+		pntToBeMapped = this.mainController.setTaskPnt(startEndPoint, selectedPointType, mapName);
+		return pntToBeMapped;
 		//this.mapPage.setPoint();
 	}
 
