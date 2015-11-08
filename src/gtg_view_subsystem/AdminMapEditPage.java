@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -26,13 +27,16 @@ public class AdminMapEditPage extends JPanel {
 	private JButton zoomInBtn, zoomOutBtn, clearAllBtn, saveBtn;
 	private JRadioButton pointBtn, pathBtn, nbrBtn;
 	private ButtonGroup modeBtns;
+	private JTextField buiding, floor;
+	private JLabel buildingLabel, floorLabel;
+
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, clearAllBtnImage, saveBtnImage;
 	private JLabel dropDownLabel;
 	private AdminMapDisplayPanel adminMapDisplayPanel;
 	private JScrollPane mapPanelHolder;
 	private JLayeredPane layeredPane;
 	private JComboBox comboBox;
-
+	private ActionListener changeMode; 
 	private double MAX_ZOOM_IN = 2.0;
 	private double MAX_ZOOM_OUT = 1.0;
 	private double currentZoomValue = 1.0;
@@ -132,30 +136,82 @@ public class AdminMapEditPage extends JPanel {
 		this.comboBox.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 		this.comboBox.setBounds(60, 95, 307, 53);
 		this.rightPanel.add(this.comboBox);
-
+		
+		
+		this.buildingLabel = new JLabel("Building :");
+		this.buildingLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.buildingLabel.setBounds(50, 165, 150, 50);
+		this.buildingLabel.setForeground(new Color(0x5b1010));
+		this.rightPanel.add(this.buildingLabel);
+		
+		this.buiding = new JTextField();
+		this.buiding.setBounds(50, 210, 307, 53);
+		this.buiding.setBackground(null);
+		this.buiding.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.buiding.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
+		this.buiding.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				JTextField b = (JTextField)ae.getSource();
+			     String building = (String)b.getText();
+			     adminMapDisplayPanel.setBuilding(building);
+			}
+		});
+		this.rightPanel.add(buiding);
+		
+		
+		this.floorLabel = new JLabel("Floor :");
+		this.floorLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.floorLabel.setBounds(50, 265, 150, 50);
+		this.floorLabel.setForeground(new Color(0x5b1010));
+		this.rightPanel.add(this.floorLabel);
+		
+		this.floor = new JTextField();
+		this.floor.setBounds(50, 310, 307, 53);
+		this.floor.setBackground(null);
+		this.floor.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.floor.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
+		this.floor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				JTextField f = (JTextField)ae.getSource();
+			     String floor = (String)f.getText();
+			     adminMapDisplayPanel.setFloor(floor);
+			}
+		});
+		this.rightPanel.add(floor);
+	
+		
+		this.changeMode = new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				JRadioButton cb = (JRadioButton)ae.getSource();
+			     String mode = cb.getText();
+			     setMode(mode);
+			}
+		};
+			
 		this.pointBtn =new JRadioButton();
 		this.pointBtn.setText("Create Points");
-		this.pointBtn.setBounds(55, 225, 253, 25);
+		this.pointBtn.setBounds(55, 425, 253, 25);
 		this.pointBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.pointBtn.setBackground(null);
-		
+		this.pointBtn.addActionListener(this.changeMode);
+	
 		this.pathBtn =new JRadioButton();
 		this.pathBtn.setText("Create Path");
-		this.pathBtn.setBounds(55, 275, 253, 25);
+		this.pathBtn.setBounds(55, 475, 253, 25);
 		this.pathBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.pathBtn.setBackground(null);
+		this.pathBtn.addActionListener(changeMode);
 		
 		this.nbrBtn =new JRadioButton();
 		this.nbrBtn.setText("Select Neighbors");
-		this.nbrBtn.setBounds(55, 325, 253, 25);
+		this.nbrBtn.setBounds(55, 525, 253, 25);
 		this.nbrBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.nbrBtn.setBackground(null);
-		
+		this.nbrBtn.addActionListener(changeMode);
 		this.modeBtns = new ButtonGroup();
 		this.modeBtns.add(pointBtn);
 		this.modeBtns.add(pathBtn);
 		this.modeBtns.add(nbrBtn);
-
 		
 		this.rightPanel.add(this.pointBtn);
 		this.rightPanel.add(this.pathBtn);
@@ -176,8 +232,13 @@ public class AdminMapEditPage extends JPanel {
 		this.saveBtnImage = new ImageIcon(ImageURLS.SAVE_BUTTON);
 		this.saveBtn.setIcon(this.saveBtnImage);
 		this.rightPanel.add(this.saveBtn);
+		
+		System.out.println(this.modeBtns.getSelection());
 	}
 	
+	private void setMode(String mode){
+		this.adminMapDisplayPanel.setMode(mode);
+	}
 	private void changeMap(String mapName){
 	//	this.adminMapDisplayPanel = null;
 		String mapurl = "";
