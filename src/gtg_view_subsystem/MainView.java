@@ -69,13 +69,14 @@ public class MainView {
 		System.out.println("Selected Point is" + startEndPoint);
 		System.out.println("Selected Point type" + selectedPointType);
 		System.out.println("Selected Map " + mapName);
-		//this.mainController.setTaskPnt((int) startEndPoint.getX(), (int) startEndPoint.getY(), selectedPointType, mapName)
-		this.mapPage.setPoint();
+		this.mainController.setTaskPnt(startEndPoint, selectedPointType, mapName);
+		//this.mapPage.setPoint();
 	}
 
 	public void getPathResult() {
 		// TODO Auto-generated method stub
-		PathData path = this.createDummyDataForResult();
+		//PathData path = this.createDummyDataForResult();
+		PathData path = mainController.getPathData();
 		showResultPage();
 		this.resultPage.displayPath(path);
 	}
