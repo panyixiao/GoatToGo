@@ -77,7 +77,11 @@ public class MainController{
 		TempPnt.y = TempNode.getY();
 		path.setEndPoint(TempPnt);
 		ArrayList<Point> displayWayPnts = mapModel.convertWayPointsToPoints();
-		path.setWayPoints(displayWayPnts);	
+		path.setWayPoints(displayWayPnts);
+		// For Test
+		ArrayList<String> mapNames = new ArrayList<String>();
+		mapNames.add("BH_Basement");		
+		path.setArrayOfMapNames(mapNames);
 		
 		return path;
 	}
