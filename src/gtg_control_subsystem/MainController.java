@@ -21,6 +21,10 @@ public class MainController{
 	private PathSearchController pathSearchController;
 	private AdminController userChecker;
 	
+	/*This is only for Tuesday show*/
+	private int StartID;
+	private int EndID;
+	
 	/**/
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;		
@@ -43,8 +47,10 @@ public class MainController{
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		//TargetPntInfo targetPnt = new TargetPntInfo();
 		Point targetPnt = new Point();
+		System.out.println("Task Type:" + pntType);
+		
 		targetPnt = mapModel.validatePoint(mapName, taskPnt.x, taskPnt.y);
-		System.out.println("Mapping To point: " + targetPnt.x + targetPnt.y);		
+		System.out.println("Mapping To point: " + targetPnt.x + targetPnt.y);
 		mapModel.setStartEndPathPoint(targetPnt, pntType, mapName);		
 		return targetPnt;
 	}
