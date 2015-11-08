@@ -119,18 +119,43 @@ public class MainController{
 	/* Used for create the "MapName.txt" file, 
 	 * correspond to a button "Generate Road Map" on the Admin page
 	 * Used to save the temporal point graph to file*/
+	
+	private ArrayList<Point> tempPntList;
+	
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
 		
 		return success;
 	}
 	
-	public Boolean createPoint(int x, int y){
+	public Boolean addPoint(Point inputPnt){
 		Boolean success = false;
 		/*
 		 * Create point on temporal the point graph created in MapEditor
-		 * */		
+		 * */
+		if(!CheckPntExistence(inputPnt,tempPntList)){
+			tempPntList.add(inputPnt);	
+			success = true;
+		}
 		return success;
+	}
+	
+	public ArrayList<Point> getDisplayPnt(){
+		ArrayList<Point> display_Pnts = tempPntList;		
+		return display_Pnts;
+	}
+	
+	private Boolean CheckPntExistence(Point pnt, ArrayList<Point> list){
+		Boolean pnt_Exist = false;
+		if(list.isEmpty())
+			return pnt_Exist;
+		int toleranceRadius = 5;	// 5 pixels
+		for (Point temPnt : list){
+			if(Math.abs(pnt.x - temPnt.x) <= toleranceRadius && 
+			   Math.abs(pnt.y - temPnt.y) <= toleranceRadius)
+				pnt_Exist = true;
+		}
+		return pnt_Exist;
 	}
 	
 	/* We might consider about using the Point structure from model subsystem*/
