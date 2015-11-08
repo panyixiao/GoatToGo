@@ -35,9 +35,11 @@ public class AdminMapDisplayPanel extends MapDisplayPanel{
 		if(me.getButton() == MouseEvent.BUTTON1) {
 			if(scale > 1.0){
 				pointPositions.add(new Point2D.Double(me.getX() / scale, me.getY() / scale));
-			} else {
+			} 
+			else {
 				pointPositions.add(new Point2D.Double(me.getX(), me.getY()));
-			}
+			}/**/
+			
 			revalidate();
 			repaint();
 		} else if(me.getButton() == MouseEvent.BUTTON3) {
