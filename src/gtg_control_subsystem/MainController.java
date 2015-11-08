@@ -4,10 +4,17 @@ import java.awt.Point;
 
 import gtg_model_subsystem.MainModel;
 import gtg_model_subsystem.Node;
+import gtg_model_subsystem.Path;
+
 import gtg_view_subsystem.PathData;
+
+import java.util.List;
+import java.util.ArrayList;
+
+
 public class MainController{
 	
-	public MainModel mapData;
+	public MainModel mapModel;
 	/**/
 	private ViewController viewController;
 	private MapEditController mapEditor;
@@ -15,8 +22,8 @@ public class MainController{
 	private AdminController userChecker;
 	
 	/**/
-	public MainController(MainModel mapData){
-		this.mapData = mapData;		
+	public MainController(MainModel mapModel){
+		this.mapModel = mapModel;		
 	}
 	
 	
@@ -33,11 +40,40 @@ public class MainController{
 		return mapData;		
 	}
 	
-	public TargetPntInfo setTaskPnt(int x, int y, String pntType, int scaleLevel, int x_center, int y_center, String mapName){
-		TargetPntInfo targetPnt = new TargetPntInfo();
-		
+	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
+		//TargetPntInfo targetPnt = new TargetPntInfo();
+		Point targetPnt = new Point();
+		targetPnt = mapModel.validatePoint(mapName, taskPnt.x, taskPnt.y);
+		System.out.println("Mapping To point: " + targetPnt.x + targetPnt.y);		
+		mapModel.setStartEndPathPoint(targetPnt, pntType, mapName);		
 		return targetPnt;
 	}
+	
+	public PathData getPathData(){
+		PathData path = new PathData();
+		Path calculateResult = mapModel.getPath();
+		
+		if(calculateResult.getWayPoints().isEmpty()){
+			System.out.println("WayPoint list is Empty, Display failed!");
+			return path;
+		}
+		// Set StartPnt
+		Point TempPnt = new Point();
+		Node TempNode =  calculateResult.getStartPoint();
+		TempPnt.x = TempNode.getX();
+		TempPnt.y = TempNode.getY();		
+		path.setStartPoint(TempPnt);
+		// Set EndPnt
+		TempNode = calculateResult.getEndPoint();
+		TempPnt.x = TempNode.getX();
+		TempPnt.y = TempNode.getY();
+		path.setEndPoint(TempPnt);
+		ArrayList<Point> displayWayPnts = mapModel.convertWayPointsToPoints();
+		path.setWayPoints(displayWayPnts);	
+		
+		return path;
+	}
+	
 	/*public PathData testCalculation(Point start, Point end, String mapName){
 		
 		Point startNode=mapData.validatePoint(mapName, start.x, start.y);
