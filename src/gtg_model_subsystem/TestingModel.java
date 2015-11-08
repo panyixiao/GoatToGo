@@ -14,7 +14,11 @@ public class TestingModel {
 		MainModel test = new MainModel();
 		test.loadFiles();
 		test.printNodes("BH_Basement");
-		test.testDij("BH_Basement",18,1);
+		test.setStartEndPathPoint(new Point(590,346), "FROM", "BH_Basement");
+		test.setStartEndPathPoint(new Point(632,189), "TO", "BH_Basement");
+		System.out.println(test.getPath().getStartPoint().getID());
+		System.out.println(test.getPath().getEndPoint().getID());
+		test.testDij("BH_Basement");
 		Point point = test.validatePoint("BH_Basement", 125, 400);
 		System.out.println("Point x: " + point.x + " Point Y: " + point.y);
 		TestController testController = new TestController(test);

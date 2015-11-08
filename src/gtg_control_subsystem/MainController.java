@@ -58,8 +58,9 @@ public class MainController{
 	public PathData getPathData(){
 		PathData path = new PathData();
 		// 
+		mapModel.testDij("BH_Basement");
 		Path calculateResult = mapModel.getPath();
-		
+		mapModel.printPath("BH_Basement");
 		if(calculateResult.getWayPoints().isEmpty()){
 			System.out.println("WayPoint list is Empty, Display failed!");
 			return path;
