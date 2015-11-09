@@ -1,4 +1,4 @@
-package gtg_model_subsystem;
+/*package gtg_model_subsystem;
 
 import java.awt.Point;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class AdminModel
 		points.add(new Point(23,20));
 		points.add(new Point(56,89));
 		adminModel.newPath(points);
-		*/
+		
 		
 	}
 	private List<Node> nodes;
@@ -165,3 +165,4 @@ public class AdminModel
 		fileProcessing.saveEdgesFile(edges, MapEdgeURLS.TEST_MAP_EDGES);
 	}
 }
+*/
