@@ -272,4 +272,80 @@ public class MainModel {
 		}
 		return tempArrayOfMapNames;
 	}
+	//generate id
+	public int countNumber(List list)
+	{
+		Iterator it=list.iterator();
+		int count=1;
+		while(it.hasNext())
+		{
+			it.next();
+			count++;
+		}
+		return count;
+	}
+	
+	//admin create a point
+	public boolean newNode(String mapName,Point point)
+    {
+    	Node node=new Node(countNumber(mapTable.get(mapName).getGraph().getNodes()),point.x,point.y);
+		mapTable.get(mapName).getGraph().getNodes().add(node);
+    	try {
+			saveMapGraph(mapName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return true;
+    }
+    
+	//admin specifies an edge
+    public boolean newEdge(String mapName,Point source,Point destination)
+    {
+    	Node sourceNode=new Node(countNumber(mapTable.get(mapName).getGraph().getNodes()),source.x,source.y);
+    	mapTable.get(mapName).getGraph().getNodes().add(sourceNode);
+    	Node destinationNode=new Node(countNumber(mapTable.get(mapName).getGraph().getNodes()),destination.x,destination.y);
+    	mapTable.get(mapName).getGraph().getNodes().add(destinationNode);
+    	//Don't need to calculate edgeLength. It will be calculated when loading edges 
+    	Edge edge=new Edge(countNumber(mapTable.get(mapName).getGraph().getEdges()),sourceNode,destinationNode,0);
+    	mapTable.get(mapName).getGraph().getEdges().add(edge);
+    	try {
+			saveMapGraph(mapName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return true;
+    }
+    
+    //admin create a path
+    public boolean newPath(String mapName,List<Point> points)
+    {
+    	Iterator iterator=points.iterator();
+    	//the start node of an edge
+    	Node startNode=null;
+    	//the end Node of an edge
+    	Node endNode=null;
+    	Point point=null;
+    	Edge edge=null;
+    	while(iterator.hasNext())
+    	{
+    	  point=(Point)iterator.next();
+    	  endNode=new Node(countNumber(mapTable.get(mapName).getGraph().getNodes()),point.x,point.y);
+    	  mapTable.get(mapName).getGraph().getNodes().add(endNode);
+    	  if(startNode!=null)
+    	  {
+    		 edge=new Edge(countNumber(mapTable.get(mapName).getGraph().getEdges()),startNode,endNode,0);
+    	     mapTable.get(mapName).getGraph().getEdges().add(edge);
+    	  }
+    	  startNode=endNode;
+    	}
+    	try {
+			saveMapGraph(mapName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return true;
+    }
 }
