@@ -1,5 +1,6 @@
 package gtg_model_subsystem;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,17 +8,21 @@ import java.util.List;
 
 public class AdminModel
 {
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		AdminModel adminModel=new AdminModel();
-		adminModel.newNode(200,200);
+		/*adminModel.newNode(200,200);
 		
 		Node node1=new Node(10,635,369);
 		Node node2=new Node(11,786,509);
 		adminModel.newEdge(node1,node2);
 		
-	}*/
-	
+		List<Point> points=new ArrayList<Point>();
+		points.add(new Point(23,20));
+		points.add(new Point(56,89));
+		adminModel.newPath(points);
+		*/
+	}
 	private List<Node> nodes;
 	private List<Edge> edges;
 	private Path path;
@@ -49,7 +54,7 @@ public class AdminModel
 		}//END CATCH loadNodes/Edges
 	}
     
-	//generate node id
+	//generate a new node id
 	public int countNumber(List list)
 	{
 		Iterator it=list.iterator();
@@ -62,6 +67,7 @@ public class AdminModel
 		return count;
 	}
 	
+	//admin create a point
 	public void newNode(int x,int y)
     {
     	Node node=new Node(countNumber(nodes),x,y);
@@ -74,12 +80,40 @@ public class AdminModel
 		}
     }
     
+	//admin specifies an edge
     public void newEdge(Node source,Node destination)
     {
     	Edge edge=new Edge(countNumber(edges),source,destination,0);
     	edges.add(edge);
     	try {
 			saveEdges();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    //admin create a path
+    public void newPath(List<Point> points)
+    {
+    	Iterator iterator=points.iterator();
+    	//the start node of an edge
+    	Node startNode=null;
+    	Node node=null;
+    	Point p=null;
+    	while(iterator.hasNext())
+    	{
+    	  p=(Point)iterator.next();
+    	  node=new Node(countNumber(nodes),p.x,p.y);
+    	  nodes.add(node);
+    	  if(startNode!=null)
+    	  {
+    		  newEdge(startNode,node);
+    	  }
+    	  startNode=node;
+    	}
+    	try {
+			saveNodes();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
