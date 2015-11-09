@@ -11,17 +11,16 @@ public class AdminModel
 	public static void main(String[] args) {
 		
 		AdminModel adminModel=new AdminModel();
-		/*adminModel.newNode(200,200);
-		
-		Node node1=new Node(10,635,369);
-		Node node2=new Node(11,786,509);
-		adminModel.newEdge(node1,node2);
+		/*adminModel.newNode(new Point(200,200));
+	  
+		adminModel.newEdge(new Point(100,100),new Point(200,200));
 		
 		List<Point> points=new ArrayList<Point>();
 		points.add(new Point(23,20));
 		points.add(new Point(56,89));
 		adminModel.newPath(points);
 		*/
+		
 	}
 	private List<Node> nodes;
 	private List<Edge> edges;
@@ -68,9 +67,9 @@ public class AdminModel
 	}
 	
 	//admin create a point
-	public void newNode(int x,int y)
+	public void newNode(Point point)
     {
-    	Node node=new Node(countNumber(nodes),x,y);
+    	Node node=new Node(countNumber(nodes),point.x,point.y);
 		nodes.add(node);
     	try {
 			saveNodes();
@@ -81,12 +80,18 @@ public class AdminModel
     }
     
 	//admin specifies an edge
-    public void newEdge(Node source,Node destination)
+    public void newEdge(Point source,Point destination)
     {
-    	Edge edge=new Edge(countNumber(edges),source,destination,0);
+    	Node sourceNode=new Node(countNumber(nodes),source.x,source.y);
+    	nodes.add(sourceNode);
+    	Node destinationNode=new Node(countNumber(nodes),destination.x,destination.y);
+    	nodes.add(destinationNode);
+    	//Don't need to calculate edgeLength. It will be calculated when loading edges 
+    	Edge edge=new Edge(countNumber(edges),sourceNode,destinationNode,0);
     	edges.add(edge);
     	try {
-			saveEdges();
+			saveNodes();
+    		saveEdges();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,21 +104,25 @@ public class AdminModel
     	Iterator iterator=points.iterator();
     	//the start node of an edge
     	Node startNode=null;
-    	Node node=null;
-    	Point p=null;
+    	//the end Node of an edge
+    	Node endNode=null;
+    	Point point=null;
+    	Edge edge=null;
     	while(iterator.hasNext())
     	{
-    	  p=(Point)iterator.next();
-    	  node=new Node(countNumber(nodes),p.x,p.y);
-    	  nodes.add(node);
+    	  point=(Point)iterator.next();
+    	  endNode=new Node(countNumber(nodes),point.x,point.y);
+    	  nodes.add(endNode);
     	  if(startNode!=null)
     	  {
-    		  newEdge(startNode,node);
+    		 edge=new Edge(countNumber(edges),startNode,endNode,0);
+    	     edges.add(edge);
     	  }
-    	  startNode=node;
+    	  startNode=endNode;
     	}
     	try {
 			saveNodes();
+			saveEdges();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
