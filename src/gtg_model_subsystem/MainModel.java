@@ -26,6 +26,7 @@ public class MainModel {
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
 		mapTable = new Hashtable<String, Map>();
+		path = new Path(null, null, null);
 		try {
 			loadAdmin();
 			loadFiles();	// Yixiao
@@ -62,11 +63,11 @@ public class MainModel {
 		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
 		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
 	}
-	public void testDij(String mapName, int start,int end){
+	public void testDij(String mapName){
 		
 		//testing for loading of nodes/edges
 		try {
-			runJDijkstra(mapName, start, end);
+			runJDijkstra(mapName);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -90,11 +91,12 @@ public class MainModel {
 	 * @param start node ID
 	 * @param end node ID
 	 */
-	public void runJDijkstra(String mapName, int start, int end){
+	public void runJDijkstra(String mapName){
 		//Create object instance with temporary dijkstra algorithim
 		JDijkstra dijkstra = new JDijkstra(mapTable.get(mapName).getGraph());
+		
 		//Values to hold the start point and end point for the path
-		Node startPoint = null;
+/*		Node startPoint = null;
 		Node endPoint = null;
 	
 		//Search though the node elements
@@ -107,15 +109,15 @@ public class MainModel {
 			else if(node.getID() == end)
 				//SET end node as current node
 				endPoint = node;
-		}
+		}*/
 		//Start the execution with the first starting node
-		dijkstra.execute(startPoint);
+		dijkstra.execute(path.getStartPoint());
 		
 		//Store the wayPoints for the map's graph
-		LinkedList<Node> wayPoints = dijkstra.getPath(endPoint);
+		LinkedList<Node> wayPoints = dijkstra.getPath(path.getEndPoint());
 		
 		//Create the new path with the start point, end point, and way points
-		path = new Path(startPoint, endPoint, wayPoints);
+		path.setPath(wayPoints);;
 		
 		//Store it into the map
 		//mapTable.get(mapName).setPath(path);
@@ -206,13 +208,15 @@ public class MainModel {
 	public boolean setStartEndPathPoint(Point point, String pointType, String mapName){
 			boolean isSet = false;
 			for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-				if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "From")){
+				if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "FROM")){
 					//mapTable.get(mapName).getPath().setStartPoint(node);
+					System.out.println("Set Start point");
 					path.setStartPoint(node);
 					isSet = true;
 				}
-				else if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "To")){
+				else if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "TO")){
 					//mapTable.get(mapName).getPath().setEndPoint(node);
+					System.out.println("Set End point");
 					path.setEndPoint(node);
 					isSet = true;
 				}
@@ -243,12 +247,12 @@ public class MainModel {
 		}
 		System.out.println("END OF PRINT ADMIN");
 	}
-//	public void printPath(String mapName){
-//		for(Node node: mapTable.get(mapName).getPath().getWayPoints()){
-//			System.out.println(node.getID());
-//		}
-//		System.out.println("END PATH");
-//	}
+	public void printPath(String mapName){
+		for(Node node: path.getWayPoints()){
+			System.out.println(node.getID());
+		}
+		System.out.println("END PATH");
+	}
 	public Path getPath(){
 		return this.path;
 	}
