@@ -63,6 +63,7 @@ private MainController adminCOntrol;
 		panel.add(entranceId);
 
 		if (me.getButton() == MouseEvent.BUTTON1) {
+			System.out.println("Mouse Mode" + this.mode);
 			switch (this.mode) {
 			case "Create Points":
 				int result = JOptionPane.showConfirmDialog(null, panel, "Please Describe Point",
@@ -86,6 +87,7 @@ private MainController adminCOntrol;
 			default:
 				System.out.println("Sorry");
 			}
+			
 			revalidate();
 			repaint();
 		} else if (me.getButton() == MouseEvent.BUTTON3) {

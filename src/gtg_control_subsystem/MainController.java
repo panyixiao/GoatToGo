@@ -126,6 +126,7 @@ public class MainController{
 		Boolean isAdmin = false;
 		isAdmin = mapModel.isValidAdmin(userName, passWord);
 		if(!isAdmin){
+			System.out.println("Sorry You are not Admin!");
 			mapModel.printAdmins();
 		}
 		return isAdmin;
