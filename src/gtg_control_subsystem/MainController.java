@@ -1,6 +1,7 @@
 package gtg_control_subsystem;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import gtg_model_subsystem.MainModel;
 import gtg_model_subsystem.Node;
@@ -25,9 +26,11 @@ public class MainController{
 	private int StartID;
 	private int EndID;
 	
+	private ArrayList<Point2D> tempPntList;
 	/**/
 	public MainController(MainModel mapModel){
-		this.mapModel = mapModel;		
+		this.mapModel = mapModel;	
+		tempPntList = new ArrayList<Point2D>();
 	}
 	
 	
@@ -134,8 +137,7 @@ public class MainController{
 	
 	/* Used for create the "MapName.txt" file, 
 	 * correspond to a button "Generate Road Map" on the Admin page
-	 * Used to save the temporal point graph to file*/	
-	private ArrayList<Point> tempPntList;
+	 * Used to save the temporal point graph to file*/
 	
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
@@ -143,7 +145,7 @@ public class MainController{
 		return success;
 	}
 	
-	public Boolean addPoint(Point inputPnt){
+	public Boolean addPoint(Point2D inputPnt){
 		Boolean success = false;
 		/*
 		 * Create point on temporal the point graph created in MapEditor
@@ -155,20 +157,21 @@ public class MainController{
 		return success;
 	}
 	
-	public ArrayList<Point> getDisplayPnt(){
-		ArrayList<Point> display_Pnts = tempPntList;		
-		return display_Pnts;
+	public ArrayList<Point2D> getDisplayPnt(){		
+		return tempPntList;
 	}
 	
-	private Boolean CheckPntExistence(Point pnt, ArrayList<Point> list){
+	private Boolean CheckPntExistence(Point2D pnt, ArrayList<Point2D> list){
 		Boolean pnt_Exist = false;
 		if(list.isEmpty())
 			return pnt_Exist;
-		int toleranceRadius = 5;	// 5 pixels
-		for (Point temPnt : list){
-			if(Math.abs(pnt.x - temPnt.x) <= toleranceRadius && 
-			   Math.abs(pnt.y - temPnt.y) <= toleranceRadius)
+		int toleranceRadius = 15;	// 5 pixels
+		for (Point2D temPnt : list){
+			double d = Math.sqrt(Math.pow(pnt.getX() - temPnt.getX(), 2) + 
+							     Math.pow(pnt.getY() - temPnt.getY(), 2));
+			if(d <= toleranceRadius)
 				pnt_Exist = true;
+				System.out.println("Point Already Exist!");
 		}
 		return pnt_Exist;
 	}
