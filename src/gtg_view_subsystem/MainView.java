@@ -15,7 +15,8 @@ public class MainView {
 	private LoginPage loginPage = new LoginPage(this);
 	private JPanel currentPage = new JPanel();
 	private AdminMapEditPage adminMapPage = new AdminMapEditPage(this);
-	private MainController mainController;
+	
+	public MainController mainController;
 	
 	public MainView(MainController mainController){
 		this.mainController = mainController;
