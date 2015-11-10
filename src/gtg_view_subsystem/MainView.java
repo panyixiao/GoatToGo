@@ -135,4 +135,9 @@ public class MainView {
 		
 		return path;
 	}
+
+	public void saveFromAdmin() {
+		// TODO Auto-generated method stub
+		this.mainController.createCoordinateGraph("BH_Basement");
+	}
 }

@@ -65,42 +65,80 @@ public class MainModel {
 		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
 	}
 	
-	private List<Node> generatingNodeList(ArrayList<Point2D> inputPointList){
+	//Overrode method to handle controller temporary list for nodes and edges
+	public void saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
+		try{
+			Map saveMap = mapTable.get(mapName);
+			List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
+			for(Node node:nodeList){
+				System.out.println("Node"+node.getID()+":"+node.getX()+","+node.getY());
+			}
+			if(!nodeList.isEmpty()){		
+				List<Edge> edgeList = generatingEdgeList(tempEdgeList, nodeList);
+				if(!edgeList.isEmpty()){
+					fileProcessing.saveNodesFile(nodeList, MapNodeURLS.TEST_MAP_NODES);	
+					fileProcessing.saveEdgesFile(edgeList, MapEdgeURLS.TEST_MAP_EDGES);	
+					System.out.println("File saved successfully");	
+				}	
+			}
+		}catch(IOException e){
+			System.out.println(e.toString());
+		}
+		
+}
+	
+	private List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
 		List<Node> NodeList = new ArrayList<Node>();
 		
 		if(inputPointList.isEmpty()){
-			System.out.println("Point List is Empty, there is nothing to save");
-			
+			System.out.println("Point List is Empty, there is nothing to save");			
 			return NodeList;
 		}		
 		for(int i = 0; i<inputPointList.size(); i++)
 		{
 			Point2D tempPnt = inputPointList.get(i);
-			Double X = tempPnt.getX();
-			Double Y = tempPnt.getY();
-			Node tempNode = new Node(i+1, X.intValue(), Y.intValue());
+			int X = (int)tempPnt.getX();
+			int Y = (int)tempPnt.getY();
+			Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size()+i+1, X, Y);
 			NodeList.add(tempNode);			
-		}
-		
+		}		
 		return NodeList;
 	}
 	
-	private List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList){
+	
+	private List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
 		List<Edge> EdgeList = new ArrayList<Edge>();
 		// It is also better to add odd/even number judgement here in the future
 		if(inputEdgeList.isEmpty()){
 			System.out.println("Edge List is Empty, there is nothing to save");			
-			return EdgeList;			
+			return EdgeList;
 		}
-		for (int i = 0; i<inputEdgeList.size(); i = i+2)
+		
+		for (int i = 0; i<inputEdgeList.size(); i+=2)
 		{
+			System.out.println(i);
 			Point2D pnt_1 = inputEdgeList.get(i);
 			Point2D pnt_2 = inputEdgeList.get(i+1);
-			//Edge tempEdge = new Edge();
+			for(Node firstNode:tempNodeList){
+				// Find pnt_1 in node list
+				if(firstNode.getX() == (int)pnt_1.getX() && firstNode.getY() == (int)pnt_1.getY()){
+					Node startNode = firstNode;
+					// Find pnt_2 in node list
+					for(Node secndNode:tempNodeList){
+						if(secndNode.getX() == (int)pnt_2.getX() && secndNode.getY() == (int)pnt_2.getY()){
+							Node endNode = secndNode;
+							Edge edgeObject = new Edge(i/2+1, startNode, endNode, 1);
+							EdgeList.add(edgeObject);							
+						}
+					}
+				}
+
+			}
 		}
 		
 		return EdgeList;
 	}
+	
 	
 	// Temporarily
 	private Node convertPnt2Node(Point2D inputPnt){
@@ -119,16 +157,6 @@ public class MainModel {
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
 		
-		//testing for saving nodes and edges
-		//try {
-			//saveNodes();
-			//saveEdges();
-		//}
-		//catch (IOException e) {
-				// TODO Auto-generated catch block
-				//System.out.println(e.toString());
-		//}//END CATCH saveNodes/Edges
-		
 	}
 	/** Temporary java dijkstra algorithim implemented by Joshua until he speaks with Libin about
 	 *  fixing his up. First set the current maps graph into the algorithim. Next cycle through the nodes
@@ -140,21 +168,6 @@ public class MainModel {
 		//Create object instance with temporary dijkstra algorithim
 		JDijkstra dijkstra = new JDijkstra(mapTable.get(mapName).getGraph());
 		
-		//Values to hold the start point and end point for the path
-/*		Node startPoint = null;
-		Node endPoint = null;
-	
-		//Search though the node elements
-		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-			//IF current node ID equals start integer value THEN
-			if(node.getID() == start)
-				//SET start node as current node
-				startPoint = node;
-			//ELSE IF current node ID equals end integer value THEN
-			else if(node.getID() == end)
-				//SET end node as current node
-				endPoint = node;
-		}*/
 		//Start the execution with the first starting node
 		dijkstra.execute(path.getStartPoint());
 		
@@ -162,47 +175,9 @@ public class MainModel {
 		LinkedList<Node> wayPoints = dijkstra.getPath(path.getEndPoint());
 		
 		//Create the new path with the start point, end point, and way points
-		path.setPath(wayPoints);;
+		path.setPath(wayPoints);
 		
-		//Store it into the map
-		//mapTable.get(mapName).setPath(path);
 	}
-	/*public void runDijkstra(int start, int end){
-		int nodeId1;
-		int nodeId2;
-		int edgeLength;
-		int count = 0;
-		Edge e;
-		Dijkstra d;
-		int matrix[][]=new int[28][28];
-		for(int i=0;i<=27;i++)
-		  for(int j=0;j<=27;j++)
-			matrix[i][j]=10000;  
-		
-		Iterator<Edge> it=edges.iterator();
-		while(it.hasNext())
-		{
-		     e=(Edge)it.next();
-		     nodeId1=e.getSource().getID();
-		     nodeId2=e.getDestination().getID();
-		     edgeLength=(int)e.getEdgeLength();
-		     //System.out.println(nodeId1+" "+nodeId2+" "+edgeLength);
-		     count++;
-		     //System.out.println(count);
-		     matrix[nodeId1][nodeId2]=edgeLength;
-		}
-		
-//		for(int i=0;i<=27;i++)
-//		{
-//		  for(int j=0;j<=27;j++)
-//			System.out.print(matrix[i][j]+" ");
-//		  System.out.println();
-//		}
-		d=new Dijkstra(matrix,start,end);
-		d.find();
-		d.printShortestDistance();
-		d.printPath();
-	}*/
 	
 	/**
 	 * isValidAdmin method validates if the user that has choosen to login as admin is an admin.
@@ -254,13 +229,11 @@ public class MainModel {
 			boolean isSet = false;
 			for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 				if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "FROM")){
-					//mapTable.get(mapName).getPath().setStartPoint(node);
 					System.out.println("Set Start point");
 					path.setStartPoint(node);
 					isSet = true;
 				}
 				else if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "TO")){
-					//mapTable.get(mapName).getPath().setEndPoint(node);
 					System.out.println("Set End point");
 					path.setEndPoint(node);
 					isSet = true;
@@ -326,8 +299,7 @@ public class MainModel {
     	try {
 		saveMapGraph(mapName);
 	     } catch (IOException e) {
-			// TODO Auto-generated catch block
-		e.printStackTrace();
+	    	 e.printStackTrace();
 	    }
     	return true;
     }
@@ -335,12 +307,14 @@ public class MainModel {
     //find node Id for the start of the edge
     public int findNodeId(String mapName,Point point)
     {
-	for(Node node: mapTable.get(mapName).getGraph().getNodes())
-	if((node.getX()==point.x)&&(node.getY()==point.y))
-	{ 
-		return node.getID();   
-	}
-	return 0;
+    	for(Node node: mapTable.get(mapName).getGraph().getNodes())
+    	{
+			if((node.getX()==point.x)&&(node.getY()==point.y))
+			{ 
+				return node.getID();   
+			}
+    	}
+		return 0;
     }
 	
 	//admin specifies an edge
