@@ -8,6 +8,8 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -43,6 +45,9 @@ public class AdminMapEditPage extends JPanel {
 	private double zoomFactor = 0.1;
 	private MainView parent;
 	private SelectedPoints selectedPoints = new SelectedPoints();
+	
+	public ArrayList<Point2D> pointPositions = new ArrayList<Point2D>();
+	public ArrayList<Point2D> pointNeighbors = new ArrayList<Point2D>();
 	
 	/**
 	 * Create the panel.
@@ -102,7 +107,7 @@ public class AdminMapEditPage extends JPanel {
 		this.mapPanelHolder.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.mapPanelHolder.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		this.layeredPane.add(this.mapPanelHolder, new Integer(0));
-		this.adminMapDisplayPanel = new AdminMapDisplayPanel(this.mapPanelHolder, ImageURLS.BH_BASEMENT);
+		this.adminMapDisplayPanel = new AdminMapDisplayPanel(this.mapPanelHolder, ImageURLS.BH_BASEMENT, this);
 		this.mapPanelHolder.setViewportView(adminMapDisplayPanel);
 
 		Border border = BorderFactory.createEmptyBorder(0, 0, 0, 0);
@@ -242,6 +247,16 @@ public class AdminMapEditPage extends JPanel {
 		System.out.println(this.modeBtns.getSelection());
 	}
 	
+	public Boolean CreatePoint(Point2D inputPoint){
+		Boolean success = false;
+		success = this.parent.mainController.addPoint(inputPoint);
+		pointPositions = this.parent.mainController.getDisplayPnt();		
+		for(Point2D pnt: pointPositions){
+			System.out.println(pnt.getX() + "," + pnt.getY());
+		}
+		
+		return success;
+	}
 	private void setMode(String mode){
 		this.adminMapDisplayPanel.setMode(mode);
 	}

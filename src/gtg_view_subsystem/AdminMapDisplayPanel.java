@@ -1,5 +1,7 @@
 package gtg_view_subsystem;
 
+import gtg_view_subsystem.AdminMapEditPage;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -21,43 +23,48 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import gtg_control_subsystem.MainController;
+//import gtg_control_subsystem.MainController;
 
 public class AdminMapDisplayPanel extends MapDisplayPanel {
-	private ArrayList<Point2D> pointPositions = new ArrayList<Point2D>();
-	private ArrayList<Point2D> pointNeighbors = new ArrayList<Point2D>();
-	private Point2D newPoint, newStart, newEnd;
+	private Point2D newPoint, newStart,newEnd;
 	private int circleWidthHeight = 10;
 	private ImageIcon icon;
 	private JPanel imputPopup;
 	private String currentMap, mode, building, floor;
+	private AdminMapEditPage adminViewPageHandle;
 
 	/**
 	 * Create the panel.
 	 */
-	public AdminMapDisplayPanel(JScrollPane mapPanelHolder, String mapurl) {
+	public AdminMapDisplayPanel(JScrollPane mapPanelHolder, String mapurl, AdminMapEditPage adminViewPage) {
 		super(mapPanelHolder, mapurl);
 		this.currentMap = mapurl;
-		this.mode = "Create Points";
-
+		this.mode="Create Points";
+		adminViewPageHandle = adminViewPage;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		for (int i = 0; i < pointPositions.size(); i++) {
-			Point2D p = pointPositions.get(i);
+		
+		// Here, need to get points, which have been created and stored in controller;
+		
+		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
+			Point2D p = adminViewPageHandle.pointPositions.get(i);
 			Ellipse2D.Double circle = new Ellipse2D.Double(p.getX() - (circleWidthHeight * super.getScale() / 2),
 					p.getY() - (circleWidthHeight * super.getScale() / 2), circleWidthHeight * super.getScale(),
 					circleWidthHeight * super.getScale());
+			//System.out.println("Will Draw at:"+p.getX()+","+p.getY());
 			g2.fill(circle);
 		}
-		if (this.mode == "Select Neighbors") {
-			for (int i = 0; i < pointNeighbors.size(); i += 2) {
-				Point2D p1 = pointNeighbors.get(i);
-				Point2D p2 = pointNeighbors.get(i + 1);
-				g2.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
+		
+		// Here, need to get edges, which have been created and stored in controller;
+		if(this.mode=="Select Neighbors"){
+			for(int i=0; i<adminViewPageHandle.pointNeighbors.size()-1; i+=2){
+				Point2D p1 = adminViewPageHandle.pointPositions.get(i);
+				Point2D p2 = adminViewPageHandle.pointPositions.get(i+1);				
+				g2.drawLine((int)p1.getX(), (int)p1.getY(), (int)p2.getX(), (int)p2.getY());
 			}
 		}
 	}
@@ -77,7 +84,6 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		panel.add(entranceId);
 
 		if (me.getButton() == MouseEvent.BUTTON1) {
-			System.out.println("Mouse Mode" + this.mode);
 			switch (this.mode) {
 			case "Create Points":
 				int result = JOptionPane.showConfirmDialog(null, panel, "Please Describe Point",
@@ -85,11 +91,10 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 				if (result == JOptionPane.OK_OPTION) {
 					if (scale > 1.0) {
 						newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
-						pointPositions.add(newPoint);
+						adminViewPageHandle.CreatePoint(newPoint);
 					} else {
 						newPoint = new Point2D.Double(me.getX(), me.getY());
-						pointPositions.add(newPoint);
-						
+						adminViewPageHandle.CreatePoint(newPoint);
 					}
 
 					newEnterenceId = entranceId.getText();
@@ -99,8 +104,9 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 					System.out.println("Description: " + description.getText());
 					System.out.println("Exit ID: " + entranceId.getText());
 				}
-				revalidate();
-				repaint();
+				break;
+			case "Create Path":
+				
 				break;
 			case "Select Neighbors":
 				if (scale > 1.0) {
@@ -128,33 +134,31 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 				if (newStart != null) {
 					selectAction.add(selectNeighbor);
 				}
+								
+				selectAction.show(this, (int)newPoint.getX(), (int)newPoint.getY());
+				System.out.println("Start: "+ this.newStart);
+				System.out.println("End: "+ this.newEnd);
+				System.out.println("Paths: "+ this.adminViewPageHandle.pointNeighbors);
 
-				selectAction.show(this, (int) newPoint.getX(), (int) newPoint.getY());
-				
-				
-				System.out.println("Start: " + this.newStart);
-				System.out.println("End: " + this.newEnd);
-				System.out.println("Paths: " + this.pointNeighbors);
 				break;
 
 			default:
-				System.out.println("Sorry");
+				System.out.println("No mode selected, Please select a mode");
 			}
 			
-<<<<<<< HEAD
-			revalidate();
-			repaint();
-=======
->>>>>>> 045c0fb7813cd4b6243d466bf3545331a9c1d3c7
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
+			// Check back in the controller list, delete it if the point exist.
 			checkIfPointIsDrawn(me.getX(), me.getY(), scale);
 		}
+		
+		revalidate();
+		repaint();
 	}
 
-	public void addNeighbors(Point2D p) {
-		this.newEnd = p;
-		this.pointNeighbors.add(this.newStart);
-		this.pointNeighbors.add(this.newEnd);
+	public void addNeighbors(Point2D p){
+		this.newEnd = p; 
+		this.adminViewPageHandle.pointNeighbors.add(this.newStart);
+		this.adminViewPageHandle.pointNeighbors.add(this.newEnd);
 		revalidate();
 		repaint();
 	}
@@ -165,10 +169,10 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	}
 
 	public void checkIfPointIsDrawn(int x, int y, double scale) {
-		for (int i = 0; i < pointPositions.size(); i++) {
-			Point2D p = pointPositions.get(i);
+		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
+			Point2D p = adminViewPageHandle.pointPositions.get(i);
 			if (isInCircle(p.getX(), p.getY(), circleWidthHeight / 2, x / scale, y / scale, scale)) {
-				pointPositions.remove(i);
+				adminViewPageHandle.pointPositions.remove(i);
 				revalidate();
 				repaint();
 			}
@@ -193,8 +197,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	}
 	
 	public void clearAll(){
-		this.pointNeighbors.clear();
-		this.pointPositions.clear();
+		adminViewPageHandle.pointNeighbors.clear();
+		adminViewPageHandle.pointPositions.clear();
 		revalidate();
 		repaint();
 		
