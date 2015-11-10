@@ -180,11 +180,11 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		Point2D result = adminViewPageHandle.checkPoint(p);
 		if(result.getX()!= 0)
 		{
-			this.newEnd = result; 
+			this.newEnd = result;
 			if(newStart.getX()!= 0){
-				this.adminViewPageHandle.pointNeighbors.add(this.newStart);
-				this.adminViewPageHandle.pointNeighbors.add(this.newEnd);
-				
+				this.adminViewPageHandle.CreateEdge(newStart, newEnd);
+				//this.adminViewPageHandle.pointNeighbors.add(this.newStart);
+				//this.adminViewPageHandle.pointNeighbors.add(this.newEnd);				
 				this.newStart = new Point2D.Double(0,0);
 				this.newEnd = new Point2D.Double(0,0);
 			}
