@@ -194,7 +194,7 @@ public class AdminMapEditPage extends JPanel {
 		this.pointBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.pointBtn.setBackground(null);
 		this.pointBtn.addActionListener(this.changeMode);
-	
+	this.pointBtn.setSelected(true);
 		this.pathBtn =new JRadioButton();
 		this.pathBtn.setText("Create Path");
 		this.pathBtn.setBounds(55, 475, 253, 25);
@@ -223,6 +223,12 @@ public class AdminMapEditPage extends JPanel {
 		this.clearAllBtn.setBounds(109, 569, 80, 42);
 		this.clearAllBtnImage = new ImageIcon(ImageURLS.CLEAR_ALL_BUTTON);
 		this.clearAllBtn.setIcon(this.clearAllBtnImage);
+		this.clearAllBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				clearAllBtnPressed();
+			}
+		});
+		
 		this.rightPanel.add(this.clearAllBtn);
 
 		this.saveBtn = new JButton();
@@ -263,6 +269,9 @@ public class AdminMapEditPage extends JPanel {
 //		this.mapPanelHolder.setViewportView(adminMapDisplayPanel);
 		this.currentZoomValue = 1.0;
 
+	}
+	public void clearAllBtnPressed(){
+		this.adminMapDisplayPanel.clearAll();
 	}
 
 }

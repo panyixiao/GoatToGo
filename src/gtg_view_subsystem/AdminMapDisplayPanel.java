@@ -3,6 +3,8 @@ package gtg_view_subsystem;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -12,8 +14,10 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -21,17 +25,21 @@ import gtg_control_subsystem.MainController;
 
 public class AdminMapDisplayPanel extends MapDisplayPanel {
 	private ArrayList<Point2D> pointPositions = new ArrayList<Point2D>();
+	private ArrayList<Point2D> pointNeighbors = new ArrayList<Point2D>();
+	private Point2D newPoint, newStart, newEnd;
 	private int circleWidthHeight = 10;
 	private ImageIcon icon;
 	private JPanel imputPopup;
 	private String currentMap, mode, building, floor;
-private MainController adminCOntrol;
+
 	/**
 	 * Create the panel.
 	 */
 	public AdminMapDisplayPanel(JScrollPane mapPanelHolder, String mapurl) {
 		super(mapPanelHolder, mapurl);
 		this.currentMap = mapurl;
+		this.mode = "Create Points";
+
 	}
 
 	@Override
@@ -45,12 +53,18 @@ private MainController adminCOntrol;
 					circleWidthHeight * super.getScale());
 			g2.fill(circle);
 		}
+		if (this.mode == "Select Neighbors") {
+			for (int i = 0; i < pointNeighbors.size(); i += 2) {
+				Point2D p1 = pointNeighbors.get(i);
+				Point2D p2 = pointNeighbors.get(i + 1);
+				g2.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
+			}
+		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
 		double scale = super.getScale();
-		Point2D newPoint;
 		String newEnterenceId;
 		String newDescription;
 		JTextField description = new JTextField(10);
@@ -75,24 +89,79 @@ private MainController adminCOntrol;
 					} else {
 						newPoint = new Point2D.Double(me.getX(), me.getY());
 						pointPositions.add(newPoint);
+						
 					}
+
 					newEnterenceId = entranceId.getText();
 					newDescription = description.getText();
 					System.out.println("Building: " + this.building);
 					System.out.println("Floor: " + this.floor);
-					System.out.println("description: " + description.getText());
+					System.out.println("Description: " + description.getText());
 					System.out.println("Exit ID: " + entranceId.getText());
 				}
+				revalidate();
+				repaint();
 				break;
+			case "Select Neighbors":
+				if (scale > 1.0) {
+					this.newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+
+				} else {
+					this.newPoint = new Point2D.Double(me.getX(), me.getY());
+
+				}
+				JPopupMenu selectAction = new JPopupMenu();
+				JMenuItem selectPoint, selectNeighbor;
+				selectPoint = new JMenuItem("Select Point");
+				selectPoint.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						addStart(me.getPoint());
+					}
+				});
+				selectNeighbor = new JMenuItem("Select Neighbor");
+				selectNeighbor.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						addNeighbors(me.getPoint());
+					}
+				});
+				selectAction.add(selectPoint);
+				if (newStart != null) {
+					selectAction.add(selectNeighbor);
+				}
+
+				selectAction.show(this, (int) newPoint.getX(), (int) newPoint.getY());
+				
+				
+				System.out.println("Start: " + this.newStart);
+				System.out.println("End: " + this.newEnd);
+				System.out.println("Paths: " + this.pointNeighbors);
+				break;
+
 			default:
 				System.out.println("Sorry");
 			}
 			
+<<<<<<< HEAD
 			revalidate();
 			repaint();
+=======
+>>>>>>> 045c0fb7813cd4b6243d466bf3545331a9c1d3c7
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
 			checkIfPointIsDrawn(me.getX(), me.getY(), scale);
 		}
+	}
+
+	public void addNeighbors(Point2D p) {
+		this.newEnd = p;
+		this.pointNeighbors.add(this.newStart);
+		this.pointNeighbors.add(this.newEnd);
+		revalidate();
+		repaint();
+	}
+
+	public void addStart(Point2D p) {
+		this.newStart = p;
+		System.out.println("New start" + this.newStart);
 	}
 
 	public void checkIfPointIsDrawn(int x, int y, double scale) {
@@ -121,5 +190,13 @@ private MainController adminCOntrol;
 
 	public void setFloor(String f) {
 		this.floor = f;
+	}
+	
+	public void clearAll(){
+		this.pointNeighbors.clear();
+		this.pointPositions.clear();
+		revalidate();
+		repaint();
+		
 	}
 }
