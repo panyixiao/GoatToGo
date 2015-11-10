@@ -64,18 +64,34 @@ public class MainModel {
 		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
 		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
 	}
+	
 	//Overrode method to handle controller temporary list for nodes and edges
-	public void saveMapGraph(String mapName, List<Node> tempNodeList, List<Edge> tempEdgeList) throws IOException{
-		Map saveMap = mapTable.get(mapName);
-		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
-		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
-	}
-	public List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
+	public void saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
+		try{
+			Map saveMap = mapTable.get(mapName);
+			List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
+			for(Node node:nodeList){
+				System.out.println("Node"+node.getID()+":"+node.getX()+","+node.getY());
+			}
+			if(!nodeList.isEmpty()){		
+				List<Edge> edgeList = generatingEdgeList(tempEdgeList, nodeList);
+				if(!edgeList.isEmpty()){
+					fileProcessing.saveNodesFile(nodeList, MapNodeURLS.TEST_MAP_NODES);	
+					fileProcessing.saveEdgesFile(edgeList, MapEdgeURLS.TEST_MAP_EDGES);	
+					System.out.println("File saved successfully");	
+				}	
+			}
+		}catch(IOException e){
+			System.out.println(e.toString());
+		}
+		
+}
+	
+	private List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
 		List<Node> NodeList = new ArrayList<Node>();
 		
 		if(inputPointList.isEmpty()){
-			System.out.println("Point List is Empty, there is nothing to save");
-			
+			System.out.println("Point List is Empty, there is nothing to save");			
 			return NodeList;
 		}		
 		for(int i = 0; i<inputPointList.size(); i++)
@@ -83,26 +99,41 @@ public class MainModel {
 			Point2D tempPnt = inputPointList.get(i);
 			int X = (int)tempPnt.getX();
 			int Y = (int)tempPnt.getY();
-			Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size()+i, X, Y);
+			Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size()+i+1, X, Y);
 			NodeList.add(tempNode);			
-		}
-		
+		}		
 		return NodeList;
 	}
 	
 	
-	public List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
+	private List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
 		List<Edge> EdgeList = new ArrayList<Edge>();
 		// It is also better to add odd/even number judgement here in the future
 		if(inputEdgeList.isEmpty()){
 			System.out.println("Edge List is Empty, there is nothing to save");			
-			return EdgeList;			
+			return EdgeList;
 		}
-		for (int i = 0; i<inputEdgeList.size(); i = i+2)
+		
+		for (int i = 0; i<inputEdgeList.size(); i+=2)
 		{
+			System.out.println(i);
 			Point2D pnt_1 = inputEdgeList.get(i);
 			Point2D pnt_2 = inputEdgeList.get(i+1);
-			//Edge tempEdge = new Edge();
+			for(Node firstNode:tempNodeList){
+				// Find pnt_1 in node list
+				if(firstNode.getX() == (int)pnt_1.getX() && firstNode.getY() == (int)pnt_1.getY()){
+					Node startNode = firstNode;
+					// Find pnt_2 in node list
+					for(Node secndNode:tempNodeList){
+						if(secndNode.getX() == (int)pnt_2.getX() && secndNode.getY() == (int)pnt_2.getY()){
+							Node endNode = secndNode;
+							Edge edgeObject = new Edge(i/2+1, startNode, endNode, 1);
+							EdgeList.add(edgeObject);							
+						}
+					}
+				}
+
+			}
 		}
 		
 		return EdgeList;
@@ -276,7 +307,6 @@ public class MainModel {
     //find node Id for the start of the edge
     public int findNodeId(String mapName,Point point)
     {
-<<<<<<< HEAD
     	for(Node node: mapTable.get(mapName).getGraph().getNodes())
     	{
 			if((node.getX()==point.x)&&(node.getY()==point.y))
@@ -285,14 +315,6 @@ public class MainModel {
 			}
     	}
 		return 0;
-=======
-	for(Node node: mapTable.get(mapName).getGraph().getNodes())
-	if((node.getX()==point.x)&&(node.getY()==point.y))
-	{ 
-		return node.getID();
-	}
-	return 0;
->>>>>>> 9f3aadf4402578a8a2f3e279bdcd5e40548918d4
     }
 	
 	//admin specifies an edge

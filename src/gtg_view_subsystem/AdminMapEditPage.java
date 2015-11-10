@@ -246,6 +246,11 @@ public class AdminMapEditPage extends JPanel {
 		this.rightPanel.add(this.clearAllBtn);
 
 		this.saveBtn = new JButton();
+		saveBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				parent.saveFromAdmin();
+			}
+		});
 		this.saveBtn.setBounds(234, 569, 80, 42);
 		this.saveBtn.setContentAreaFilled(false);
 		this.saveBtn.setBorder(null);

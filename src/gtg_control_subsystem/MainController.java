@@ -2,6 +2,7 @@ package gtg_control_subsystem;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 
 import gtg_model_subsystem.MainModel;
 import gtg_model_subsystem.Node;
@@ -81,16 +82,17 @@ public class MainController{
 			return path;
 		}
 		// Set StartPnt
-		Point TempPnt = new Point();
+		Point TempStartPnt = new Point();
 		Node TempNode =  calculateResult.getStartPoint();
-		TempPnt.x = TempNode.getX();
-		TempPnt.y = TempNode.getY();		
-		path.setStartPoint(TempPnt);
+		TempStartPnt.x = TempNode.getX();
+		TempStartPnt.y = TempNode.getY();		
+		path.setStartPoint(TempStartPnt);
 		// Set EndPnt
 		TempNode = calculateResult.getEndPoint();
-		TempPnt.x = TempNode.getX();
-		TempPnt.y = TempNode.getY();
-		path.setEndPoint(TempPnt);
+		Point TempEndPnt = new Point();
+		TempEndPnt.x = TempNode.getX();
+		TempEndPnt.y = TempNode.getY();
+		path.setEndPoint(TempEndPnt);
 		ArrayList<Point> displayWayPnts = mapModel.convertWayPointsToPoints();
 		path.setWayPoints(displayWayPnts);
 		// For Test
@@ -153,6 +155,12 @@ public class MainController{
 	
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
+		try{
+			mapModel.saveMapGraph(mapName, tempPntList, tempEdgeList);
+		}
+		catch(IOException e){
+			System.out.println(e.toString());
+		}
 		
 		return success;
 	}
