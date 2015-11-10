@@ -65,7 +65,7 @@ public class MainModel {
 		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
 	}
 	
-	private List<Node> generatingNodeList(ArrayList<Point2D> inputPointList){
+	public List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
 		List<Node> NodeList = new ArrayList<Node>();
 		
 		if(inputPointList.isEmpty()){
@@ -76,14 +76,15 @@ public class MainModel {
 		for(int i = 0; i<inputPointList.size(); i++)
 		{
 			Point2D tempPnt = inputPointList.get(i);
-			Double X = tempPnt.getX();
-			Double Y = tempPnt.getY();
-			Node tempNode = new Node(i+1, X.intValue(), Y.intValue());
+			int X = (int)tempPnt.getX();
+			int Y = (int)tempPnt.getY();
+			Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size()+i, X, Y);
 			NodeList.add(tempNode);			
 		}
 		
 		return NodeList;
 	}
+	
 	
 	private List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList){
 		List<Edge> EdgeList = new ArrayList<Edge>();
@@ -101,6 +102,7 @@ public class MainModel {
 		
 		return EdgeList;
 	}
+	
 	
 	// Temporarily
 	private Node convertPnt2Node(Point2D inputPnt){
@@ -140,21 +142,6 @@ public class MainModel {
 		//Create object instance with temporary dijkstra algorithim
 		JDijkstra dijkstra = new JDijkstra(mapTable.get(mapName).getGraph());
 		
-		//Values to hold the start point and end point for the path
-/*		Node startPoint = null;
-		Node endPoint = null;
-	
-		//Search though the node elements
-		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-			//IF current node ID equals start integer value THEN
-			if(node.getID() == start)
-				//SET start node as current node
-				startPoint = node;
-			//ELSE IF current node ID equals end integer value THEN
-			else if(node.getID() == end)
-				//SET end node as current node
-				endPoint = node;
-		}*/
 		//Start the execution with the first starting node
 		dijkstra.execute(path.getStartPoint());
 		
@@ -167,42 +154,6 @@ public class MainModel {
 		//Store it into the map
 		//mapTable.get(mapName).setPath(path);
 	}
-	/*public void runDijkstra(int start, int end){
-		int nodeId1;
-		int nodeId2;
-		int edgeLength;
-		int count = 0;
-		Edge e;
-		Dijkstra d;
-		int matrix[][]=new int[28][28];
-		for(int i=0;i<=27;i++)
-		  for(int j=0;j<=27;j++)
-			matrix[i][j]=10000;  
-		
-		Iterator<Edge> it=edges.iterator();
-		while(it.hasNext())
-		{
-		     e=(Edge)it.next();
-		     nodeId1=e.getSource().getID();
-		     nodeId2=e.getDestination().getID();
-		     edgeLength=(int)e.getEdgeLength();
-		     //System.out.println(nodeId1+" "+nodeId2+" "+edgeLength);
-		     count++;
-		     //System.out.println(count);
-		     matrix[nodeId1][nodeId2]=edgeLength;
-		}
-		
-//		for(int i=0;i<=27;i++)
-//		{
-//		  for(int j=0;j<=27;j++)
-//			System.out.print(matrix[i][j]+" ");
-//		  System.out.println();
-//		}
-		d=new Dijkstra(matrix,start,end);
-		d.find();
-		d.printShortestDistance();
-		d.printPath();
-	}*/
 	
 	/**
 	 * isValidAdmin method validates if the user that has choosen to login as admin is an admin.
