@@ -74,10 +74,16 @@ public class MainModel {
 				System.out.println("Node"+node.getID()+":"+node.getX()+","+node.getY());
 			}
 			if(!nodeList.isEmpty()){		
-				List<Edge> edgeList = generatingEdgeList(tempEdgeList, nodeList);
+				List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
 				if(!edgeList.isEmpty()){
-					fileProcessing.saveNodesFile(nodeList, MapNodeURLS.TEST_MAP_NODES);	
-					fileProcessing.saveEdgesFile(edgeList, MapEdgeURLS.TEST_MAP_EDGES);	
+					for(Node newNode:nodeList){
+						nodes.add(newNode);
+					}
+					for(Edge newEdge:edgeList){
+						edges.add(newEdge);
+					}
+					fileProcessing.saveNodesFile(nodes, MapNodeURLS.TEST_MAP_NODES);	
+					fileProcessing.saveEdgesFile(edges, MapEdgeURLS.TEST_MAP_EDGES);	
 					System.out.println("File saved successfully");	
 				}	
 			}
@@ -106,7 +112,7 @@ public class MainModel {
 	}
 	
 	
-	private List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
+	private List<Edge> generatingEdgeList(String mapName, ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
 		List<Edge> EdgeList = new ArrayList<Edge>();
 		// It is also better to add odd/even number judgement here in the future
 		if(inputEdgeList.isEmpty()){
@@ -127,7 +133,7 @@ public class MainModel {
 					for(Node secndNode:tempNodeList){
 						if(secndNode.getX() == (int)pnt_2.getX() && secndNode.getY() == (int)pnt_2.getY()){
 							Node endNode = secndNode;
-							Edge edgeObject = new Edge(i/2+1, startNode, endNode, 1);
+							Edge edgeObject = new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i/2+1, startNode, endNode, 1);
 							EdgeList.add(edgeObject);							
 						}
 					}
