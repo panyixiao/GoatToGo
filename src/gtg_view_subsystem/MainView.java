@@ -48,6 +48,7 @@ public class MainView {
 		page.hideLogoutButton();
 		page.removePage(currentPage);
 		page.addPage(loginPage);
+		loginPage.reset();
 		currentPage = loginPage;
 	}
 	
