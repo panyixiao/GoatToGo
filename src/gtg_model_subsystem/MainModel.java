@@ -338,7 +338,7 @@ public class MainModel {
 	for(Node node: mapTable.get(mapName).getGraph().getNodes())
 	if((node.getX()==point.x)&&(node.getY()==point.y))
 	{ 
-		return node.getID();   
+		return node.getID();
 	}
 	return 0;
     }
