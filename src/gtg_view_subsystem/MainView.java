@@ -31,6 +31,7 @@ public class MainView {
 		page.hideLogoutButton();
 		page.removePage(currentPage);
 		page.addPage(mapPage);
+		mapPage.reset();
 		currentPage = mapPage;
 	}
 	
