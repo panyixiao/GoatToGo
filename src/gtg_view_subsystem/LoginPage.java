@@ -103,4 +103,8 @@ public class LoginPage extends JPanel {
 		JOptionPane.showMessageDialog(null, ViewStringLiterals.USERNAME_PASSWORD_NOT_CORRECT, "INVALID", JOptionPane.ERROR_MESSAGE);
 	}
 
+	public void reset(){
+		this.usernameTextField.setText("");
+		this.passwordTextField.setText("");
+	}
 }
