@@ -276,6 +276,7 @@ public class MainModel {
     //find node Id for the start of the edge
     public int findNodeId(String mapName,Point point)
     {
+<<<<<<< HEAD
     	for(Node node: mapTable.get(mapName).getGraph().getNodes())
     	{
 			if((node.getX()==point.x)&&(node.getY()==point.y))
@@ -284,6 +285,14 @@ public class MainModel {
 			}
     	}
 		return 0;
+=======
+	for(Node node: mapTable.get(mapName).getGraph().getNodes())
+	if((node.getX()==point.x)&&(node.getY()==point.y))
+	{ 
+		return node.getID();
+	}
+	return 0;
+>>>>>>> 9f3aadf4402578a8a2f3e279bdcd5e40548918d4
     }
 	
 	//admin specifies an edge
