@@ -41,12 +41,21 @@ public class MainController{
 		return ImageURL;
 	}
 	
-	public String[] getMapDate(String mapName){
-		String mapData[] = {};
-		
+	public ArrayList<String> getMapList(){
+		ArrayList<String> mapData= new ArrayList<String>();
+		mapData=mapModel.getArrayOfMapNames();
+		/*for (String temp: mapData) {
+			System.out.println("Map Name: "+temp);
+		}*/
 		return mapData;		
 	}
-	
+	/*
+	public ArrayList<String> getMapDate(String mapName){
+		ArrayList<String> mapData= new ArrayList<String>();
+		mapData=mapModel.getArrayOfMapNames();
+		return mapData;		
+	}
+	*/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		//TargetPntInfo targetPnt = new TargetPntInfo();
 		Point targetPnt = new Point();
