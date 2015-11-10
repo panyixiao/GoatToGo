@@ -272,4 +272,88 @@ public class MainModel {
 		}
 		return tempArrayOfMapNames;
 	}
+	//admin create a point
+    public boolean newNode(String mapName,Point point)
+    {
+    	nodes=mapTable.get(mapName).getGraph().getNodes();
+	Node node=new Node(nodes.get(nodes.size()-1).getID()+1,point.x,point.y);
+	nodes.add(node);
+    	try {
+		saveMapGraph(mapName);
+	     } catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+    	return true;
+    }
+    
+    //find node Id for the start of the edge
+    public int findNodeId(String mapName,Point point)
+    {
+	for(Node node: mapTable.get(mapName).getGraph().getNodes())
+	if((node.getX()==point.x)&&(node.getY()==point.y))
+	{ 
+		return node.getID();   
+	}
+	return 0;
+    }
+	
+	//admin specifies an edge
+    public boolean newEdge(String mapName,Point source,Point destination)
+    {
+    	nodes=mapTable.get(mapName).getGraph().getNodes();
+    	edges=mapTable.get(mapName).getGraph().getEdges();
+    	Point point=validatePoint(mapName,source.x,source.y);
+    	if((point.x==0)&&(point.y==0))
+    	  {
+    		newNode(mapName,point);
+    		point=validatePoint(mapName,source.x,source.y);
+    	  }
+    	Node sourceNode=new Node(findNodeId(mapName,point),point.x,point.y);	
+    	Node destinationNode=new Node(nodes.get(nodes.size()-1).getID()+1,destination.x,destination.y);
+    	nodes.add(destinationNode);
+    	//Don't need to calculate edgeLength. It will be calculated when loading edges 
+    	Edge edge=new Edge(edges.get(edges.size()-1).getEdgeID()+1,sourceNode,destinationNode,0);
+    	edges.add(edge);
+    	try {
+			saveMapGraph(mapName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return true;
+    }
+    
+    //admin create a path
+    public boolean newPath(String mapName,List<Point> points)
+    {
+    	nodes=mapTable.get(mapName).getGraph().getNodes();
+    	edges=mapTable.get(mapName).getGraph().getEdges();
+    	Iterator iterator=points.iterator();
+    	//the start node of an edge
+    	Node startNode=null;
+    	//the end Node of an edge
+    	Node endNode=null;
+    	Point point=null;
+    	Edge edge=null;
+    	while(iterator.hasNext())
+    	{
+    	  point=(Point)iterator.next();
+    	  endNode=new Node(nodes.get(nodes.size()-1).getID()+1,point.x,point.y);
+    	  nodes.add(endNode);
+    	  if(startNode!=null)
+    	  {
+    	     edge=new Edge(edges.get(edges.size()-1).getEdgeID()+1,startNode,endNode,0);
+    	     edges.add(edge);
+    	  }
+    	  startNode=endNode;
+    	}
+    	try {
+		saveMapGraph(mapName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return true;
+    }
 }
