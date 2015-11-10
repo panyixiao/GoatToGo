@@ -216,7 +216,7 @@ public class MainModel {
 		//FOR EACH admin in admin list
 		for(Admin admin: admins){
 			//IF current admin user name EQUALS param username AND admin password EQUALS param password
-			if((admin.getUsername() == userName) && (admin.getPassword() == password))
+			if((admin.getUsername().equals(userName)) && (admin.getPassword().equals(password)))
 				//SET isAdmin as valid
 				isAdmin =true;
 		}

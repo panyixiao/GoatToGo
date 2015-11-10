@@ -58,11 +58,17 @@ public class MainView {
 		currentPage = resultPage;
 	}
 	
-	public void showAdminMapEditPage(){
-		page.showLogoutButton();
-		page.removePage(currentPage);
-		page.addPage(adminMapPage);
-		currentPage = adminMapPage;
+	public void checkAdminValid(String userName, String passWord){
+		Boolean userValid = this.mainController.adminQualification(userName, passWord);
+		if(userValid == true){
+			page.showLogoutButton();
+			page.removePage(currentPage);
+			page.addPage(adminMapPage);
+			currentPage = adminMapPage;
+		} else {
+			loginPage.showInvalidUsernameDialog();
+		}
+		
 	}
 
 	// Original Function
