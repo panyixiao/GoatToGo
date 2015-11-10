@@ -41,6 +41,10 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		this.currentMap = mapurl;
 		this.mode="Create Points";
 		adminViewPageHandle = adminViewPage;
+		this.newStart = new Point2D.Double(0,0);
+		this.newEnd = new Point2D.Double(0,0);
+		
+		//building = adminViewPage.
 	}
 
 	@Override
@@ -60,12 +64,10 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		}
 		
 		// Here, need to get edges, which have been created and stored in controller;
-		if(this.mode=="Select Neighbors"){
-			for(int i=0; i<adminViewPageHandle.pointNeighbors.size()-1; i+=2){
-				Point2D p1 = adminViewPageHandle.pointPositions.get(i);
-				Point2D p2 = adminViewPageHandle.pointPositions.get(i+1);				
-				g2.drawLine((int)p1.getX(), (int)p1.getY(), (int)p2.getX(), (int)p2.getY());
-			}
+		for(int i=0; i<adminViewPageHandle.pointNeighbors.size()-1; i+=2){
+			Point2D p1 = adminViewPageHandle.pointNeighbors.get(i);
+			Point2D p2 = adminViewPageHandle.pointNeighbors.get(i+1);				
+			g2.drawLine((int)p1.getX(), (int)p1.getY(), (int)p2.getX(), (int)p2.getY());
 		}
 	}
 
@@ -99,6 +101,12 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 
 					newEnterenceId = entranceId.getText();
 					newDescription = description.getText();
+					if(newEnterenceId.isEmpty()){
+						newEnterenceId = "0";
+					}
+					if(newDescription == null){
+						newDescription = "Null";
+					}
 					System.out.println("Building: " + this.building);
 					System.out.println("Floor: " + this.floor);
 					System.out.println("Description: " + description.getText());
@@ -107,38 +115,49 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 				break;
 			case "Create Path":
 				
-				break;
-			case "Select Neighbors":
-				if (scale > 1.0) {
-					this.newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
-
-				} else {
-					this.newPoint = new Point2D.Double(me.getX(), me.getY());
-
+				Point2D checkResult = adminViewPageHandle.returnLastPointInList();
+				 
+				if (checkResult.getX() != 0){
+					this.addStart(checkResult);
+					newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+					adminViewPageHandle.CreatePoint(newPoint);				 
+					this.addNeighbors(me.getPoint());
 				}
+				
+				else{			
+					newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+					adminViewPageHandle.CreatePoint(newPoint);
+				}
+				break;
+				
+			case "Select Neighbors":
+
+				this.newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+				
 				JPopupMenu selectAction = new JPopupMenu();
 				JMenuItem selectPoint, selectNeighbor;
-				selectPoint = new JMenuItem("Select Point");
-				selectPoint.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						addStart(me.getPoint());
-					}
-				});
-				selectNeighbor = new JMenuItem("Select Neighbor");
+				selectPoint = new JMenuItem("From here");
+				selectPoint.addActionListener(
+						new ActionListener() {
+							public void actionPerformed(ActionEvent e){
+								addStart(me.getPoint());
+							}
+						});
+				
+				selectNeighbor = new JMenuItem("To here");
 				selectNeighbor.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						addNeighbors(me.getPoint());
 					}
 				});
+				
 				selectAction.add(selectPoint);
-				if (newStart != null) {
-					selectAction.add(selectNeighbor);
-				}
-								
+				selectAction.add(selectNeighbor);				
 				selectAction.show(this, (int)newPoint.getX(), (int)newPoint.getY());
-				System.out.println("Start: "+ this.newStart);
-				System.out.println("End: "+ this.newEnd);
-				System.out.println("Paths: "+ this.adminViewPageHandle.pointNeighbors);
+				
+				//System.out.println("Start: "+ this.newStart);
+				//System.out.println("End: "+ this.newEnd);
+				//System.out.println("Paths: "+ this.adminViewPageHandle.pointNeighbors);
 
 				break;
 
@@ -158,16 +177,31 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	}
 
 	public void addNeighbors(Point2D p){
-		this.newEnd = p; 
-		this.adminViewPageHandle.pointNeighbors.add(this.newStart);
-		this.adminViewPageHandle.pointNeighbors.add(this.newEnd);
+		Point2D result = adminViewPageHandle.checkPoint(p);
+		if(result.getX()!= 0)
+		{
+			this.newEnd = result; 
+			if(newStart.getX()!= 0){
+				this.adminViewPageHandle.pointNeighbors.add(this.newStart);
+				this.adminViewPageHandle.pointNeighbors.add(this.newEnd);
+				
+				this.newStart = new Point2D.Double(0,0);
+				this.newEnd = new Point2D.Double(0,0);
+			}
+			else{
+				System.out.println("Please select a start Point first!");
+			}
+		}
 		revalidate();
 		repaint();
 	}
 
 	public void addStart(Point2D p) {
-		this.newStart = p;
-		System.out.println("New start" + this.newStart);
+		Point2D result = adminViewPageHandle.checkPoint(p);
+		if(result.getX()!=0){
+			this.newStart = result;
+			System.out.println("New start" + this.newStart);
+		}
 	}
 
 	public void checkIfPointIsDrawn(int x, int y, double scale) {

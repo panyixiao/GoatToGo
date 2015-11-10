@@ -49,6 +49,9 @@ public class AdminMapEditPage extends JPanel {
 	public ArrayList<Point2D> pointPositions = new ArrayList<Point2D>();
 	public ArrayList<Point2D> pointNeighbors = new ArrayList<Point2D>();
 	
+	// This is only for 1st Version, In the end, it will be updated based on the name in file!!!
+	private String buildingName = "Boyton Hall";
+	
 	/**
 	 * Create the panel.
 	 * @param mainView 
@@ -126,6 +129,8 @@ public class AdminMapEditPage extends JPanel {
 		this.dropDownLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.dropDownLabel);
 
+		// This is only for 1st Version, In the end, it will be updated based on the name in file!!!
+		
 		String[] floorStrings = {"BH_Basement", "BH_FirstFloor", "BH_SecondFloor", "BH_ThirdFloor"};
 		this.comboBox = new JComboBox(floorStrings);
 		comboBox.setFont(new Font("Meiryo", Font.PLAIN, 20));
@@ -133,6 +138,7 @@ public class AdminMapEditPage extends JPanel {
 			public void actionPerformed(ActionEvent ae) {
 				 JComboBox cb = (JComboBox)ae.getSource();
 			     String mapName = (String)cb.getSelectedItem();
+			     adminMapDisplayPanel.setFloor(mapName);
 			     changeMap(mapName);
 			}
 		});
@@ -154,6 +160,9 @@ public class AdminMapEditPage extends JPanel {
 		this.buiding.setBackground(null);
 		this.buiding.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.buiding.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
+		
+		adminMapDisplayPanel.setBuilding(buildingName);
+		
 		this.buiding.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				JTextField b = (JTextField)ae.getSource();
@@ -253,7 +262,7 @@ public class AdminMapEditPage extends JPanel {
 		pointPositions = this.parent.mainController.getDisplayPnt();		
 		for(Point2D pnt: pointPositions){
 			System.out.println(pnt.getX() + "," + pnt.getY());
-		}		
+		}
 		return success;
 	}
 	
@@ -262,6 +271,22 @@ public class AdminMapEditPage extends JPanel {
 		pointDeleted = this.parent.mainController.deletePoint(inputPoint);
 		return pointDeleted;
 	}
+	
+	public Point2D checkPoint(Point2D inputPoint){
+	
+		Point2D pointInGraph = this.parent.mainController.pointMapping(inputPoint);
+		
+		return pointInGraph;
+	}
+	
+	
+	public Point2D returnLastPointInList()
+	{
+		Point2D pnt = new Point2D.Double(0,0);
+		pnt  = this.parent.mainController.getLastPnt();
+		return pnt;
+	}
+	
 	private void setMode(String mode){
 		this.adminMapDisplayPanel.setMode(mode);
 	}
