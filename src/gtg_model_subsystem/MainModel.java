@@ -64,7 +64,12 @@ public class MainModel {
 		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
 		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
 	}
-	
+	//Overrode method to handle controller temporary list for nodes and edges
+	public void saveMapGraph(String mapName, List<Node> tempNodeList, List<Edge> tempEdgeList) throws IOException{
+		Map saveMap = mapTable.get(mapName);
+		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
+		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
+	}
 	public List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
 		List<Node> NodeList = new ArrayList<Node>();
 		
@@ -86,7 +91,7 @@ public class MainModel {
 	}
 	
 	
-	private List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList){
+	public List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
 		List<Edge> EdgeList = new ArrayList<Edge>();
 		// It is also better to add odd/even number judgement here in the future
 		if(inputEdgeList.isEmpty()){
@@ -121,16 +126,6 @@ public class MainModel {
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
 		
-		//testing for saving nodes and edges
-		//try {
-			//saveNodes();
-			//saveEdges();
-		//}
-		//catch (IOException e) {
-				// TODO Auto-generated catch block
-				//System.out.println(e.toString());
-		//}//END CATCH saveNodes/Edges
-		
 	}
 	/** Temporary java dijkstra algorithim implemented by Joshua until he speaks with Libin about
 	 *  fixing his up. First set the current maps graph into the algorithim. Next cycle through the nodes
@@ -149,10 +144,8 @@ public class MainModel {
 		LinkedList<Node> wayPoints = dijkstra.getPath(path.getEndPoint());
 		
 		//Create the new path with the start point, end point, and way points
-		path.setPath(wayPoints);;
+		path.setPath(wayPoints);
 		
-		//Store it into the map
-		//mapTable.get(mapName).setPath(path);
 	}
 	
 	/**
@@ -205,13 +198,11 @@ public class MainModel {
 			boolean isSet = false;
 			for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 				if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "FROM")){
-					//mapTable.get(mapName).getPath().setStartPoint(node);
 					System.out.println("Set Start point");
 					path.setStartPoint(node);
 					isSet = true;
 				}
 				else if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "TO")){
-					//mapTable.get(mapName).getPath().setEndPoint(node);
 					System.out.println("Set End point");
 					path.setEndPoint(node);
 					isSet = true;
@@ -277,8 +268,7 @@ public class MainModel {
     	try {
 		saveMapGraph(mapName);
 	     } catch (IOException e) {
-			// TODO Auto-generated catch block
-		e.printStackTrace();
+	    	 e.printStackTrace();
 	    }
     	return true;
     }
@@ -286,12 +276,14 @@ public class MainModel {
     //find node Id for the start of the edge
     public int findNodeId(String mapName,Point point)
     {
-	for(Node node: mapTable.get(mapName).getGraph().getNodes())
-	if((node.getX()==point.x)&&(node.getY()==point.y))
-	{ 
-		return node.getID();   
-	}
-	return 0;
+    	for(Node node: mapTable.get(mapName).getGraph().getNodes())
+    	{
+			if((node.getX()==point.x)&&(node.getY()==point.y))
+			{ 
+				return node.getID();   
+			}
+    	}
+		return 0;
     }
 	
 	//admin specifies an edge
