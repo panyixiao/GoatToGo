@@ -41,12 +41,21 @@ public class MainController{
 		return ImageURL;
 	}
 	
-	public String[] getMapDate(String mapName){
-		String mapData[] = {};
-		
+	public ArrayList<String> getMapList(){
+		ArrayList<String> mapData= new ArrayList<String>();
+		mapData=mapModel.getArrayOfMapNames();
+		/*for (String temp: mapData) {
+			System.out.println("Map Name: "+temp);
+		}*/
 		return mapData;		
 	}
-	
+	/*
+	public ArrayList<String> getMapDate(String mapName){
+		ArrayList<String> mapData= new ArrayList<String>();
+		mapData=mapModel.getArrayOfMapNames();
+		return mapData;		
+	}
+	*/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		//TargetPntInfo targetPnt = new TargetPntInfo();
 		Point targetPnt = new Point();
@@ -175,6 +184,34 @@ public class MainController{
 		}		
 		return pointDeleted;
 	}
+
+	public Point2D pointMapping(Point2D inputPnt){		
+		Point2D searchingResult = new Point2D.Double(0,0);
+		
+		for (Point2D temPnt : tempPntList){
+			double d = Math.sqrt(Math.pow(inputPnt.getX() - temPnt.getX(), 2) + 
+							     Math.pow(inputPnt.getY() - temPnt.getY(), 2));
+			if(d <= 15){
+				
+				System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
+				searchingResult = temPnt;
+				return searchingResult;
+			}
+		}		
+		System.out.println("Invalid Input!!");
+		return searchingResult;
+	}
+	
+	public Point2D getLastPnt()
+	{
+		Point2D pnt = new Point2D.Double(0,0);
+		if(tempPntList.size()!=0){
+			pnt = tempPntList.get(tempPntList.size()-1);
+			return pnt;
+		}	
+		System.out.println("There is no Pnt in the list!");
+		return pnt;		
+	}
 	
 	public ArrayList<Point2D> getDisplayPnt(){		
 		return tempPntList;
@@ -188,9 +225,11 @@ public class MainController{
 		for (Point2D temPnt : list){
 			double d = Math.sqrt(Math.pow(pnt.getX() - temPnt.getX(), 2) + 
 							     Math.pow(pnt.getY() - temPnt.getY(), 2));
-			if(d <= toleranceRadius)
+			
+			if(d <= toleranceRadius){
 				pnt_Exist = true;
 				System.out.println("Point Already Exist!");
+			}
 		}
 		return pnt_Exist;
 	}
