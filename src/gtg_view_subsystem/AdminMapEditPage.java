@@ -223,6 +223,12 @@ public class AdminMapEditPage extends JPanel {
 		this.clearAllBtn.setBounds(109, 569, 80, 42);
 		this.clearAllBtnImage = new ImageIcon(ImageURLS.CLEAR_ALL_BUTTON);
 		this.clearAllBtn.setIcon(this.clearAllBtnImage);
+		this.clearAllBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				clearAllBtnPressed();
+			}
+		});
+		
 		this.rightPanel.add(this.clearAllBtn);
 
 		this.saveBtn = new JButton();
@@ -263,6 +269,9 @@ public class AdminMapEditPage extends JPanel {
 //		this.mapPanelHolder.setViewportView(adminMapDisplayPanel);
 		this.currentZoomValue = 1.0;
 
+	}
+	public void clearAllBtnPressed(){
+		this.adminMapDisplayPanel.clearAll();
 	}
 
 }
