@@ -15,4 +15,6 @@ public class ViewStringLiterals {
 	public static final String FROM_POINT_NOT_SET = "Please select start location";
 	public static final String TO_POINT_NOT_SET = "Please select end location";
 	public static final String POINTS_NOT_SET = "Please select start and end location";
+	public static final String USERNAME_PASSWORD_NOT_SET = "Please enter a valid username and password";
+	public static final String USERNAME_PASSWORD_NOT_CORRECT = "Please enter valid credentials";
 }
