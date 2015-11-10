@@ -46,7 +46,7 @@ public class MainModel {
 		}
 	}
 	public void loadAdmin() throws IOException{
-		fileProcessing.readAdmin(admins, "ModelFiles\\adminFile.txt");
+		fileProcessing.readAdmin(admins, "ModelFiles"+System.getProperty("file.separator")+"adminFile.txt");
 	}
 	public void createMapGraph(String mapName) throws IOException{
 		System.out.println("creating the Map/Graph");
