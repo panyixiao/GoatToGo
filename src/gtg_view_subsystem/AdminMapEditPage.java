@@ -194,7 +194,7 @@ public class AdminMapEditPage extends JPanel {
 		this.pointBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.pointBtn.setBackground(null);
 		this.pointBtn.addActionListener(this.changeMode);
-	
+	this.pointBtn.setSelected(true);
 		this.pathBtn =new JRadioButton();
 		this.pathBtn.setText("Create Path");
 		this.pathBtn.setBounds(55, 475, 253, 25);
