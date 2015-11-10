@@ -142,8 +142,8 @@ public class MapPage extends JPanel {
 		this.getDirectionsBtn = new JButton();
 		getDirectionsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.getPathResult();
-				/*if(selectedPoints.arePointsSelected() == true){
+				//parent.getPathResult();
+				if(selectedPoints.arePointsSelected() == true){
 					parent.getPathResult();
 				} else {
 					if(selectedPoints.isStartSelected() == false && selectedPoints.isEndSelected() == true) {
@@ -155,7 +155,7 @@ public class MapPage extends JPanel {
 					else {
 						JOptionPane.showMessageDialog(null, ViewStringLiterals.POINTS_NOT_SET, "INVALID", JOptionPane.ERROR_MESSAGE);
 					}
-				}*/
+				}
 			}
 		});
 		this.getDirectionsBtn.setContentAreaFilled(false);
@@ -283,6 +283,17 @@ public class MapPage extends JPanel {
 		if(selectedPointType == ViewStringLiterals.TO){
 			mapMapDisplayPanel.deletePoint(ViewStringLiterals.TO);
 			toTextField.setText("");
+		}
+	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		fromTextField.setText("");
+		toTextField.setText("");
+		this.selectedPoints.resetEnd();
+		this.selectedPoints.resetStart();
+		if(this.mapMapDisplayPanel != null){
+			this.mapMapDisplayPanel.displayPoint();
 		}
 	}
 }
