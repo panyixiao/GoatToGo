@@ -149,12 +149,31 @@ public class MainController{
 		Boolean success = false;
 		/*
 		 * Create point on temporal the point graph created in MapEditor
+		 * 
 		 * */
 		if(!CheckPntExistence(inputPnt,tempPntList)){
 			tempPntList.add(inputPnt);	
 			success = true;
 		}
 		return success;
+	}
+	
+	public Boolean deletePoint(Point2D inputPnt){
+		Boolean pointDeleted = false;
+		if(tempPntList.isEmpty()){
+			System.out.println("List is empty, nothing to delete.");
+			return pointDeleted;
+		}		
+		for(int i = 0; i<tempPntList.size(); i++){
+			Point2D pnt = tempPntList.get(i);
+			double distance = Math.sqrt(Math.pow(pnt.getX() - inputPnt.getX(), 2) + Math.pow(pnt.getY() - inputPnt.getY(), 2));
+			if(distance < 20){
+				tempPntList.remove(i);
+				pointDeleted = true;
+				return pointDeleted;
+			}
+		}		
+		return pointDeleted;
 	}
 	
 	public ArrayList<Point2D> getDisplayPnt(){		

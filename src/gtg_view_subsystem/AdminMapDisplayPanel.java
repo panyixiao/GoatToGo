@@ -148,7 +148,9 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
 			// Check back in the controller list, delete it if the point exist.
-			checkIfPointIsDrawn(me.getX(), me.getY(), scale);
+			// checkIfPointIsDrawn(me.getX(), me.getY(), scale);
+			Point2D point2bDeleted = new Point2D.Double(me.getX()/scale,me.getY()/scale);
+			adminViewPageHandle.deletePoint(point2bDeleted);
 		}
 		
 		revalidate();
