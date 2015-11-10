@@ -27,10 +27,13 @@ public class MainController{
 	private int EndID;
 	
 	private ArrayList<Point2D> tempPntList;
+	private ArrayList<Point2D> tempEdgeList;
+	
 	/**/
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;	
 		tempPntList = new ArrayList<Point2D>();
+		tempEdgeList = new ArrayList<Point2D>();
 	}
 	
 	
@@ -160,11 +163,32 @@ public class MainController{
 		 * Create point on temporal the point graph created in MapEditor
 		 * 
 		 * */
-		if(!CheckPntExistence(inputPnt,tempPntList)){
+		if(CheckPntExistence(inputPnt,tempPntList)==0){
 			tempPntList.add(inputPnt);	
 			success = true;
 		}
 		return success;
+	}
+	
+	public Boolean createEdge(Point2D pnt1, Point2D pnt2){
+		Boolean success = true;
+		// Check Edge Redundancy
+		int PointID_1 = CheckPntExistence(pnt1,tempEdgeList);
+		int PointID_2 = CheckPntExistence(pnt2,tempEdgeList);
+		if(PointID_1 !=0 && PointID_2!=0 && 
+		   Math.abs(PointID_1-PointID_2) == 1){
+			success = false;
+			return success;
+		}
+			
+		tempEdgeList.add(pnt1);
+		tempEdgeList.add(pnt2);		
+		return success;
+	}
+	
+	public void clearAllTempData(){
+		tempPntList.clear();
+		tempEdgeList.clear();
 	}
 	
 	public Boolean deletePoint(Point2D inputPnt){
@@ -216,28 +240,29 @@ public class MainController{
 	public ArrayList<Point2D> getDisplayPnt(){		
 		return tempPntList;
 	}
+	public ArrayList<Point2D> getDisplayEdge(){
+		return tempEdgeList;
+	}
 	
-	private Boolean CheckPntExistence(Point2D pnt, ArrayList<Point2D> list){
-		Boolean pnt_Exist = false;
+	
+	private int CheckPntExistence(Point2D pnt, ArrayList<Point2D> list){
+		int pntID = 0;
 		if(list.isEmpty())
-			return pnt_Exist;
+			return pntID;
 		int toleranceRadius = 15;	// 5 pixels
-		for (Point2D temPnt : list){
+		for (int i =0;i<list.size();i++){
+			Point2D temPnt = list.get(i);
 			double d = Math.sqrt(Math.pow(pnt.getX() - temPnt.getX(), 2) + 
 							     Math.pow(pnt.getY() - temPnt.getY(), 2));
 			
 			if(d <= toleranceRadius){
-				pnt_Exist = true;
-				System.out.println("Point Already Exist!");
+				pntID = i;
+				System.out.println("Point Exist!");
+				return pntID;
 			}
 		}
-		return pnt_Exist;
+		return pntID;
 	}
 	
-	/* We might consider about using the Point structure from model subsystem*/
-	public Boolean createEdge(int pnt1_x, int pnt1_y, int pnt2_x, int pnt2_y){
-		Boolean success = false;
-		
-		return success;
-	}
+
 }

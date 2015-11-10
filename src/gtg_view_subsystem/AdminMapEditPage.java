@@ -266,18 +266,34 @@ public class AdminMapEditPage extends JPanel {
 		return success;
 	}
 	
+	public Boolean CreateEdge(Point2D pnt1, Point2D pnt2){
+		Boolean success = false;
+		success = this.parent.mainController.createEdge(pnt1, pnt2);		
+		pointNeighbors = this.parent.mainController.getDisplayEdge();
+		System.out.println("Edge");
+		for(Point2D pnt: pointNeighbors){	
+			System.out.println(pnt.getX() + "," + pnt.getY());
+		}
+		return success;
+	}
+	
 	public Boolean deletePoint(Point2D inputPoint){
 		Boolean pointDeleted = false;
 		pointDeleted = this.parent.mainController.deletePoint(inputPoint);
 		return pointDeleted;
 	}
 	
-	public Point2D checkPoint(Point2D inputPoint){
-	
-		Point2D pointInGraph = this.parent.mainController.pointMapping(inputPoint);
-		
+	public Point2D checkPoint(Point2D inputPoint){	
+		Point2D pointInGraph = this.parent.mainController.pointMapping(inputPoint);		
 		return pointInGraph;
 	}
+	
+	public void clearTempData(){
+		this.parent.mainController.clearAllTempData();
+		pointPositions = this.parent.mainController.getDisplayPnt();	
+		pointNeighbors = this.parent.mainController.getDisplayEdge();	
+	}
+	
 	
 	
 	public Point2D returnLastPointInList()

@@ -1,6 +1,7 @@
 
 package gtg_model_subsystem;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import gtg_model_subsystem.Node;
 import gtg_model_subsystem.CoordinateGraph;
 import gtg_model_subsystem.Edge;
@@ -63,6 +64,50 @@ public class MainModel {
 		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
 		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
 	}
+	
+	private List<Node> generatingNodeList(ArrayList<Point2D> inputPointList){
+		List<Node> NodeList = new ArrayList<Node>();
+		
+		if(inputPointList.isEmpty()){
+			System.out.println("Point List is Empty, there is nothing to save");
+			
+			return NodeList;
+		}		
+		for(int i = 0; i<inputPointList.size(); i++)
+		{
+			Point2D tempPnt = inputPointList.get(i);
+			Double X = tempPnt.getX();
+			Double Y = tempPnt.getY();
+			Node tempNode = new Node(i+1, X.intValue(), Y.intValue());
+			NodeList.add(tempNode);			
+		}
+		
+		return NodeList;
+	}
+	
+	private List<Edge> generatingEdgeList(ArrayList<Point2D> inputEdgeList){
+		List<Edge> EdgeList = new ArrayList<Edge>();
+		// It is also better to add odd/even number judgement here in the future
+		if(inputEdgeList.isEmpty()){
+			System.out.println("Edge List is Empty, there is nothing to save");			
+			return EdgeList;			
+		}
+		for (int i = 0; i<inputEdgeList.size(); i = i+2)
+		{
+			Point2D pnt_1 = inputEdgeList.get(i);
+			Point2D pnt_2 = inputEdgeList.get(i+1);
+			//Edge tempEdge = new Edge();
+		}
+		
+		return EdgeList;
+	}
+	
+	// Temporarily
+	private Node convertPnt2Node(Point2D inputPnt){
+		Node outPutNode = new Node(0,0,0);
+		return outPutNode;		
+	}
+	
 	public void testDij(String mapName){
 		
 		//testing for loading of nodes/edges
