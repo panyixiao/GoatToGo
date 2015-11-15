@@ -16,6 +16,13 @@ import java.util.ArrayList;
 
 public class MainController{
 	
+	/*Added by neha. Yixio this is the temporary list to store map names and map urls. This is done to check
+	integration between the controller and the view subsystem.*/
+	
+	private ArrayList<String> listofMaps = new ArrayList<String>();
+	private ArrayList<String> urlsofMaps = new ArrayList<String>();
+
+	
 	public MainModel mapModel;
 	/**/
 	private ViewController viewController;
@@ -38,21 +45,57 @@ public class MainController{
 	}
 	
 	
-	/**/
-	public String getMapImage(String mapName){
-		String ImageURL ="";
-		
-		return ImageURL;
+	/* Added by neha
+	 * This method should fetch the map url from the model and return the url to the view subsystem.
+	 * */
+	public String getMapURL(String mapName){
+		String mapurl = "";
+		int index = listofMaps.indexOf(mapName);
+		mapurl = urlsofMaps.get(index);
+		return mapurl;
 	}
 	
-	public ArrayList<String> getMapList(){
-		ArrayList<String> mapData= new ArrayList<String>();
-		mapData=mapModel.getArrayOfMapNames();
-		/*for (String temp: mapData) {
-			System.out.println("Map Name: "+temp);
-		}*/
-		return mapData;		
+	/* Added by Neha
+	 * For integration the method return me the hardcoded arraylist.
+	 * Once a method from model is available the method should return me an arrayList of mapnames.
+	 * The input parameter mapName will help us to use the same method in the map page
+	 * i.e if mapName is admin means the list should conatins all the map names
+	 * if mapName is campus then the list will contain all building names
+	 * if mapName is building then the list will contain all the floor names of the building and the campus map also.
+	 * You will have to implement the switch case.
+	 */
+	public ArrayList<String> getMapList(String mapName){
+		//ArrayList<String> mapData= new ArrayList<String>();
+		//mapData=mapModel.getArrayOfMapNames();
+		
+		return listofMaps;		
 	}
+	
+	/* Added by  neha. For now this method just pushes the data into the listofMaps and urlsofMaps.
+	 * Once the model method is available call that method with the same paramaters.
+	 * The model method should return a boolean value:
+	 * True if mapName and mapImageURL are stored succesfully into the .txt file
+	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
+	 */
+	public Boolean addNewMap(String mapName, String mapImageURL){
+		listofMaps.add(mapName);
+		urlsofMaps.add(mapImageURL);
+		return true;
+	}
+	
+	/* Added by  neha. For now this method just deletes the map from listofMaps and urlsofMaps.
+	 * Once the model method is available call that method with the same paramaters.
+	 * The model method should return a boolean value:
+	 * True if mapName and mapImageURL are deleted succesfully from the .txt file
+	 * False if mapName and mapImageURL are not deleted succesfully from the .txt file
+	 */
+	public Boolean deleteMap(String mapName){
+		int index = listofMaps.indexOf(mapName);
+		listofMaps.remove(index);
+		urlsofMaps.remove(index);
+		return true;
+	}
+	/*
 	/*
 	public ArrayList<String> getMapDate(String mapName){
 		ArrayList<String> mapData= new ArrayList<String>();

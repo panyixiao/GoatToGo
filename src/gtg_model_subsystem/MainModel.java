@@ -125,20 +125,23 @@ public class MainModel {
 			System.out.println(i);
 			Point2D pnt_1 = inputEdgeList.get(i);
 			Point2D pnt_2 = inputEdgeList.get(i+1);
-			for(Node firstNode:tempNodeList){
-				// Find pnt_1 in node list
-				if(firstNode.getX() == (int)pnt_1.getX() && firstNode.getY() == (int)pnt_1.getY()){
-					Node startNode = firstNode;
-					// Find pnt_2 in node list
-					for(Node secndNode:tempNodeList){
-						if(secndNode.getX() == (int)pnt_2.getX() && secndNode.getY() == (int)pnt_2.getY()){
-							Node endNode = secndNode;
-							Edge edgeObject = new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i/2+1, startNode, endNode, 1);
-							EdgeList.add(edgeObject);							
-						}
-					}
+			Node startNode= new Node(0,0,0);
+			Node endNode= new Node(0,0,0);
+			for(Node n:tempNodeList){
+				if(n.getX() == (int)pnt_1.getX() && n.getY() == (int)pnt_1.getY()){
+					startNode = n;
+					break;
 				}
-
+			}
+			for(Node n:tempNodeList){
+				if(n.getX() == (int)pnt_2.getX() && n.getY() == (int)pnt_2.getY()){
+					endNode = n;
+					break;
+				}
+			}
+			if (startNode.getID()!=0&&endNode.getID()!=0) {
+				EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+1, startNode, endNode, 1));	
+				EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+2, endNode, startNode, 1));
 			}
 		}
 		
