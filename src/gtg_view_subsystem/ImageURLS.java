@@ -21,6 +21,11 @@ public class ImageURLS {
 	public static final String CLEAR_ALL_BUTTON = "images"+System.getProperty("file.separator")+"clear_all_btn.png";
 	public static final String SAVE_BUTTON = "images"+System.getProperty("file.separator")+"save_btn.png";
 	public static final String LOCATION_IMAGE = "images"+System.getProperty("file.separator")+"location_image.png";
+	public static final String ADD_BUTTON = "images"+System.getProperty("file.separator")+"add_btn.png";
+	public static final String DELETE_BUTTON = "images"+System.getProperty("file.separator")+"delete_btn.png";
+	public static final String EDIT_BUTTON = "images"+System.getProperty("file.separator")+"edit_btn.png";
+	public static final String PREVIEW_BUTTON = "images"+System.getProperty("file.separator")+"preview_btn.png";
+	public static final String BROWSE_FILE_BUTTON = "images"+System.getProperty("file.separator")+"browse_file_btn.png";
 	
 	// map urls
 	public static final String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
