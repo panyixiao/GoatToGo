@@ -138,8 +138,8 @@ public class MainView {
 	/*
 	 * This method is called from the admin addDeleteMapPage to add new map data into the .txt file.
 	 */
-	public void sendAddMapData(String mapName, String mapImageURL) {
-		boolean result = this.mainController.addNewMap(mapName, mapImageURL);
+	public void sendAddMapData(String mapName, String mapImageURL, String mapType) {
+		boolean result = this.mainController.addNewMap(mapName, mapImageURL, mapType);
 		if(result == true){
 			addDeleteMapPage.showMapList(this.mainController.getMapList("admin"));
 		} else {
