@@ -166,10 +166,23 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			}
 			
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
+			Point2D point2bDeleted = new Point2D.Double(me.getX()/scale,me.getY()/scale);
+			switch (this.mode) {
+			case "Create Points":
 			// Check back in the controller list, delete it if the point exist.
 			// checkIfPointIsDrawn(me.getX(), me.getY(), scale);
-			Point2D point2bDeleted = new Point2D.Double(me.getX()/scale,me.getY()/scale);
 			adminViewPageHandle.deletePoint(point2bDeleted);
+			case "Select Neighbors":
+				//check if point is part of an edge
+				int n =checkIfPointIsInEdge(point2bDeleted);
+				if(n>=0){
+					System.out.println("I will delete edge");
+					adminViewPageHandle.pointNeighbors.remove(n);
+					adminViewPageHandle.pointNeighbors.remove(n);
+					;
+				}
+			}
+			
 		}
 		
 		revalidate();
@@ -238,5 +251,24 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		revalidate();
 		repaint();
 		
+	}
+	
+	//See if selected point is a part of an existing edge
+	// If the distance between the selected point 
+	public int checkIfPointIsInEdge(Point2D P){
+		double AB, AP, PB;
+		int r = -1;
+		for(int i=0; i<adminViewPageHandle.pointNeighbors.size()-1; i+=2){
+			AB= adminViewPageHandle.pointNeighbors.get(i).distance(adminViewPageHandle.pointNeighbors.get(i+1));
+			AP=adminViewPageHandle.pointNeighbors.get(i).distance(P);
+			PB = P.distance(adminViewPageHandle.pointNeighbors.get(i+1));
+			if(Math.abs(AB-(AP+PB))<=2){
+				r=i;
+				System.out.println("Point " + P + "is part of an edge");
+				break;
+			}
+			}
+		System.out.println("Is point " + P+ "in an edge? " + r);
+		return r;
 	}
 }
