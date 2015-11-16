@@ -262,7 +262,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			AB= adminViewPageHandle.pointNeighbors.get(i).distance(adminViewPageHandle.pointNeighbors.get(i+1));
 			AP=adminViewPageHandle.pointNeighbors.get(i).distance(P);
 			PB = P.distance(adminViewPageHandle.pointNeighbors.get(i+1));
-			if(Math.abs(AB-(AP+PB))<=.5){
+			if(Math.abs(AB-(AP+PB))<=2){
 				r=i;
 				System.out.println("Point " + P + "is part of an edge");
 				break;
