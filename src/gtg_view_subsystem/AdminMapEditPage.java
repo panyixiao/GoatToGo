@@ -26,18 +26,16 @@ import javax.swing.JRadioButton;
 
 public class AdminMapEditPage extends JPanel {
 	private JPanel leftPanel, rightPanel;
-	private JButton zoomInBtn, zoomOutBtn, clearAllBtn, saveBtn;
+	private JButton zoomInBtn, zoomOutBtn, clearAllBtn, saveBtn, backBtn;
 	private JRadioButton pointBtn, pathBtn, nbrBtn;
 	private ButtonGroup modeBtns;
 	private JTextField buiding, floor;
-	private JLabel buildingLabel, floorLabel;
+	private JLabel buildingLabel, floorLabel, mapLabel,currentMapLabel;
 
-	private ImageIcon zoomInBtnImage, zoomOutBtnImage, clearAllBtnImage, saveBtnImage;
-	private JLabel dropDownLabel;
+	private ImageIcon zoomInBtnImage, zoomOutBtnImage, clearAllBtnImage, saveBtnImage, backBtnImage;
 	private AdminMapDisplayPanel adminMapDisplayPanel;
 	private JScrollPane mapPanelHolder;
 	private JLayeredPane layeredPane;
-	private JComboBox comboBox;
 	private ActionListener changeMode; 
 	private double MAX_ZOOM_IN = 2.0;
 	private double MAX_ZOOM_OUT = 1.0;
@@ -45,7 +43,7 @@ public class AdminMapEditPage extends JPanel {
 	private double zoomFactor = 0.1;
 	private MainView parent;
 	private SelectedPoints selectedPoints = new SelectedPoints();
-	
+	private String mapName;
 	public ArrayList<Point2D> pointPositions = new ArrayList<Point2D>();
 	public ArrayList<Point2D> pointNeighbors = new ArrayList<Point2D>();
 	
@@ -56,8 +54,9 @@ public class AdminMapEditPage extends JPanel {
 	 * Create the panel.
 	 * @param mainView 
 	 */
-	public AdminMapEditPage(MainView mainView) {
+	public AdminMapEditPage(MainView mainView,String mapName) {
 		this.parent = mainView;
+		this.mapName = mapName;
 		this.setBounds(0, 67, 1366, 661);
 		this.setBackground(new Color(0xf0e6e6));
 		this.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 5));
@@ -110,7 +109,8 @@ public class AdminMapEditPage extends JPanel {
 		this.mapPanelHolder.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.mapPanelHolder.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		this.layeredPane.add(this.mapPanelHolder, new Integer(0));
-		this.adminMapDisplayPanel = new AdminMapDisplayPanel(this.mapPanelHolder, ImageURLS.BH_BASEMENT, this);
+		String mapUrl = this.parent.mainController.getMapURL(this.mapName);
+		this.adminMapDisplayPanel = new AdminMapDisplayPanel(this.mapPanelHolder, mapUrl, this);
 		this.mapPanelHolder.setViewportView(adminMapDisplayPanel);
 
 		Border border = BorderFactory.createEmptyBorder(0, 0, 0, 0);
@@ -123,31 +123,19 @@ public class AdminMapEditPage extends JPanel {
 		this.rightPanel.setBackground(null);
 		this.add(this.rightPanel);
 
-		this.dropDownLabel = new JLabel(ViewStringLiterals.SELECT_MAP + " :");
-		this.dropDownLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.dropDownLabel.setBounds(50, 54, 253, 25);
-		this.dropDownLabel.setForeground(new Color(0x5b1010));
-		this.rightPanel.add(this.dropDownLabel);
+		this.mapLabel = new JLabel("Current Map :");
+		this.mapLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.mapLabel.setBounds(50, 54, 253, 25);
+		this.mapLabel.setForeground(new Color(0x5b1010));
+		this.rightPanel.add(this.mapLabel);
 
 		// This is only for 1st Version, In the end, it will be updated based on the name in file!!!
-		
-		String[] floorStrings = {"BH_Basement", "BH_FirstFloor", "BH_SecondFloor", "BH_ThirdFloor"};
-		this.comboBox = new JComboBox(floorStrings);
-		comboBox.setFont(new Font("Meiryo", Font.PLAIN, 20));
-		this.comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				 JComboBox cb = (JComboBox)ae.getSource();
-			     String mapName = (String)cb.getSelectedItem();
-			     adminMapDisplayPanel.setFloor(mapName);
-			     changeMap(mapName);
-			}
-		});
-		this.comboBox.setBackground(null);
-		this.comboBox.setSelectedIndex(0);
-		this.comboBox.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
-		this.comboBox.setBounds(60, 95, 307, 53);
-		this.rightPanel.add(this.comboBox);
-		
+		this.currentMapLabel = new JLabel(this.mapName);
+		this.currentMapLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.currentMapLabel.setBounds(50, 100, 253, 25);
+		this.currentMapLabel.setForeground(new Color(0x5b1010));
+		this.rightPanel.add(this.currentMapLabel);
+				
 		
 		this.buildingLabel = new JLabel("Building :");
 		this.buildingLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
@@ -234,7 +222,7 @@ public class AdminMapEditPage extends JPanel {
 		this.clearAllBtn = new JButton();
 		this.clearAllBtn.setContentAreaFilled(false);
 		this.clearAllBtn.setBorder(null);
-		this.clearAllBtn.setBounds(109, 569, 80, 42);
+		this.clearAllBtn.setBounds(50, 569, 80, 42);
 		this.clearAllBtnImage = new ImageIcon(ImageURLS.CLEAR_ALL_BUTTON);
 		this.clearAllBtn.setIcon(this.clearAllBtnImage);
 		this.clearAllBtn.addActionListener(new ActionListener() {
@@ -251,12 +239,26 @@ public class AdminMapEditPage extends JPanel {
 				parent.saveFromAdmin();
 			}
 		});
-		this.saveBtn.setBounds(234, 569, 80, 42);
+		this.saveBtn.setBounds(150, 569, 80, 42);
 		this.saveBtn.setContentAreaFilled(false);
 		this.saveBtn.setBorder(null);
 		this.saveBtnImage = new ImageIcon(ImageURLS.SAVE_BUTTON);
 		this.saveBtn.setIcon(this.saveBtnImage);
 		this.rightPanel.add(this.saveBtn);
+		
+		
+		this.backBtn = new JButton();
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				parent.showAdddDeleteMapPage();
+			}
+		});
+		this.backBtn.setBounds(250, 569, 100, 42);
+		this.backBtn.setContentAreaFilled(false);
+		this.backBtn.setBorder(null);
+		this.backBtnImage = new ImageIcon(ImageURLS.BACK_BUTTON);
+		this.backBtn.setIcon(this.backBtnImage);
+		this.rightPanel.add(this.backBtn);
 		
 		System.out.println(this.modeBtns.getSelection());
 	}
@@ -311,33 +313,14 @@ public class AdminMapEditPage extends JPanel {
 	private void setMode(String mode){
 		this.adminMapDisplayPanel.setMode(mode);
 	}
-	private void changeMap(String mapName){
-	//	this.adminMapDisplayPanel = null;
-		String mapurl = "";
-		switch(mapName){
-		case "BH_Basement":
-			mapurl = ImageURLS.BH_BASEMENT;
-			break;
-			
-		case "BH_FirstFloor":
-			mapurl = ImageURLS.BH_FIRST_FLOOR;
-			break;
-			
-		case "BH_SecondFloor":
-			mapurl = ImageURLS.BH_SECOND_FLOOR;
-			break;
-			
-		case "BH_ThirdFloor":
-			mapurl = ImageURLS.BH_THIRD_FLOOR;
-			break;
-		}
-//		this.adminMapDisplayPanel = new AdminMapDisplayPanel(this,this.mapPanelHolder, mapName, mapurl, selectedPoints);
-//		this.mapPanelHolder.setViewportView(adminMapDisplayPanel);
-		this.currentZoomValue = 1.0;
 
-	}
 	public void clearAllBtnPressed(){
 		this.adminMapDisplayPanel.clearAll();
 	}
+	
+	public void setMapName(String s){
+		this.mapName = s;
+	}
+	
 
 }
