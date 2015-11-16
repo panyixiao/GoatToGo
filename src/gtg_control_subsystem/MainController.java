@@ -84,6 +84,8 @@ public class MainController{
 			mapData.add("BH_SecondFloor");
 			mapData.add("BH_ThirdFloor");			
 		}
+		
+		mapData = listofMaps;
 		return mapData;		
 	}
 
