@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -27,7 +29,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class AddDeleteMapPage extends JPanel{
 	private JButton addBtn, deleteBtn, editBtn, previewBtn, browseFileBtn;
 	private ImageIcon addBtnImage, deleteBtnImage, editBtnImage, previewBtnImage, browseFileBtnImage;
-	private JLabel availableMapListLabel, mapPreviewLabel, mapPreviewHolder, enterMapNameLabel, selectImageLabel, mapListEmpty;
+	private JLabel availableMapListLabel, mapPreviewLabel, mapPreviewHolder, enterMapNameLabel, selectImageLabel, mapListEmpty, isCampusLabel;
 	private MainView parent;
 	private JScrollPane mapListscrollPane;
 	private JList mapList;
@@ -35,7 +37,9 @@ public class AddDeleteMapPage extends JPanel{
 	private JPanel addDialogPanel;
 	private JTextField mapNameTextField, mapURLTextField;
 	private String addMapURLPath = "";
-
+	private JRadioButton yesBtn, noBtn;
+	private ButtonGroup group;
+	private String mapType = ViewStringLiterals.FLOOR;
 	/*
 	 * Initialize the contents of the page.
 	 */
@@ -68,7 +72,7 @@ public class AddDeleteMapPage extends JPanel{
 					} else if(mapURLTextField.getText().equals("")){
 						JOptionPane.showMessageDialog(((JButton)e.getSource()).getParent(), ViewStringLiterals.MAP_URL_EMPTY, "INVALID", JOptionPane.ERROR_MESSAGE);
 					} else {
-						parent.sendAddMapData(mapNameTextField.getText(), addMapURLPath);
+						parent.sendAddMapData(mapNameTextField.getText(), addMapURLPath, mapType);
 					}
 				}
 			}
@@ -215,11 +219,48 @@ public class AddDeleteMapPage extends JPanel{
 		this.browseFileBtnImage = new ImageIcon(ImageURLS.BROWSE_FILE_BUTTON);
 		this.browseFileBtn.setIcon(this.browseFileBtnImage);
 		
+		this.isCampusLabel = new JLabel(ViewStringLiterals.IS_CAMPUS_MAP);
+		this.isCampusLabel.setBounds(10, 150, 250, 30);
+		this.isCampusLabel.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.isCampusLabel.setForeground(new Color(0xc30e2d));
+	
+		this.yesBtn = new JRadioButton();
+		this.yesBtn.setText(ViewStringLiterals.YES);
+		this.yesBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				mapType = ViewStringLiterals.CAMPUS;
+			}
+		});
+		this.yesBtn.setBounds(250, 153, 70, 25);
+		this.yesBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.yesBtn.setForeground(new Color(0xc30e2d));
+		this.yesBtn.setBackground(null);
+
+		this.noBtn = new JRadioButton();
+		this.noBtn.setText(ViewStringLiterals.NO);
+		this.noBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				mapType = ViewStringLiterals.FLOOR;
+			}
+		});
+		this.noBtn.setBounds(350, 153, 70, 25);
+		this.noBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.noBtn.setForeground(new Color(0xc30e2d));
+		this.noBtn.setBackground(null);
+		this.noBtn.setSelected(true);
+
+		this.group = new ButtonGroup();
+	    this.group.add(yesBtn);
+	    this.group.add(noBtn);
+
 		this.addDialogPanel.add(this.enterMapNameLabel);
 		this.addDialogPanel.add(this.selectImageLabel);
 		this.addDialogPanel.add(this.browseFileBtn);
 		this.addDialogPanel.add(this.mapNameTextField);
 		this.addDialogPanel.add(this.mapURLTextField);
+		this.addDialogPanel.add(this.isCampusLabel);
+		this.addDialogPanel.add(this.yesBtn);
+		this.addDialogPanel.add(this.noBtn);
 	}
 	
 	/*
