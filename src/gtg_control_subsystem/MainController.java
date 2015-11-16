@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import gtg_model_subsystem.MainModel;
 import gtg_model_subsystem.Node;
+import gtg_model_subsystem.Edge;
 import gtg_model_subsystem.Path;
 
 import gtg_view_subsystem.PathData;
@@ -34,17 +35,20 @@ public class MainController{
 	private int StartID;
 	private int EndID;
 	
-	private ArrayList<Point2D> tempPntList;
-	private ArrayList<Point2D> tempEdgeList;
+	private ArrayList<Point2D> tempPntList  = new ArrayList<Point2D>();
+	private ArrayList<Point2D> tempEdgeList = new ArrayList<Point2D>();
 	
 	/**/
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;	
-		tempPntList = new ArrayList<Point2D>();
-		tempEdgeList = new ArrayList<Point2D>();
 	}
 	
 	
+	public ArrayList<String> getMapDate(String mapName){
+		ArrayList<String> mapData= new ArrayList<String>();
+		mapData=mapModel.getArrayOfMapNames();
+		return mapData;
+	}
 	/* Added by neha
 	 * This method should fetch the map url from the model and return the url to the view subsystem.
 	 * */
@@ -65,44 +69,26 @@ public class MainController{
 	 * You will have to implement the switch case.
 	 */
 	public ArrayList<String> getMapList(String mapName){
-		//ArrayList<String> mapData= new ArrayList<String>();
-		//mapData=mapModel.getArrayOfMapNames();
-		
-		return listofMaps;		
-	}
-	
-	/* Added by  neha. For now this method just pushes the data into the listofMaps and urlsofMaps.
-	 * Once the model method is available call that method with the same paramaters.
-	 * The model method should return a boolean value:
-	 * True if mapName and mapImageURL are stored succesfully into the .txt file
-	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
-	 */
-	public Boolean addNewMap(String mapName, String mapImageURL){
-		listofMaps.add(mapName);
-		urlsofMaps.add(mapImageURL);
-		return true;
-	}
-	
-	/* Added by  neha. For now this method just deletes the map from listofMaps and urlsofMaps.
-	 * Once the model method is available call that method with the same paramaters.
-	 * The model method should return a boolean value:
-	 * True if mapName and mapImageURL are deleted succesfully from the .txt file
-	 * False if mapName and mapImageURL are not deleted succesfully from the .txt file
-	 */
-	public Boolean deleteMap(String mapName){
-		int index = listofMaps.indexOf(mapName);
-		listofMaps.remove(index);
-		urlsofMaps.remove(index);
-		return true;
-	}
-	/*
-	/*
-	public ArrayList<String> getMapDate(String mapName){
 		ArrayList<String> mapData= new ArrayList<String>();
-		mapData=mapModel.getArrayOfMapNames();
+		//mapData=mapModel.getArrayOfMapNames(mapName);
+		
+		// For test
+		if(mapName == "Campus_Map"){
+			mapData.clear();
+			mapData.add("Boynton_Hall");
+		}
+		if(mapName == "Boyton_Hall"){
+			mapData.clear();
+			mapData.add("BH_Basement");
+			mapData.add("BH_FirstFloor");
+			mapData.add("BH_SecondFloor");
+			mapData.add("BH_ThirdFloor");			
+		}
+		
+		mapData = listofMaps;
 		return mapData;		
 	}
-	*/
+
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		//TargetPntInfo targetPnt = new TargetPntInfo();
 		Point targetPnt = new Point();
@@ -146,42 +132,6 @@ public class MainController{
 		return path;
 	}
 	
-	/*public PathData testCalculation(Point start, Point end, String mapName){
-		
-		Point startNode=mapData.validatePoint(mapName, start.x, start.y);
-		Point endNode=mapData.validatePoint(mapName, end.x, end.y);
-		mapData.runJDijkstra(startNode.getID(), endNode.getID());
-		Map testMap=mapData.getTestMap();
-		List<Node> wayPnt=testMap.getPath().getWayPoints();
-		
-		Point newStart=new Point(startNode.getX(), startNode.getY());
-		Point newEnd=new Point(endNode.getX(), endNode.getY());
-		PathData path = new PathData();
-		path.setStartPoint(newStart);
-		path.setEndPoint(newEnd);
-		
-		ArrayList<String> tempMapNames = new ArrayList<String>();
-		tempMapNames.add(mapName);
-		path.setArrayOfMapNames(tempMapNames);
-		
-		ArrayList<Point> tempPoints = new ArrayList<Point>();
-		for (Node n:wayPnt){
-			tempPoints.add(new Point(n.getX(),n.getY()));
-		}
-		path.setArrayOfPoints(tempPoints);
-		
-		return path;
-	} */
-	/* need the package from modelsubsystem
-	 * 
-	 * public MultilayerPath getDirections(){
-	 * 
-	 * MultilayerPath path = new MultilayerPath();
-	 * 
-	 * return path;
-	 * }
-	 * 
-	 * */	
 	public Boolean adminQualification(String userName, String passWord){
 		Boolean isAdmin = false;
 		isAdmin = mapModel.isValidAdmin(userName, passWord);
@@ -196,6 +146,37 @@ public class MainController{
 	 * correspond to a button "Generate Road Map" on the Admin page
 	 * Used to save the temporal point graph to file*/
 	
+	public Boolean LoadingPntsAndEdges(){
+		List<Node> currentNode = mapModel.getNodeList();
+		List<Edge> currentEdge = mapModel.getEdgeList();
+		if(currentNode.isEmpty()||currentEdge.isEmpty()){
+			System.out.println("Current Node/Edge List is empty");
+			return false;
+		}		
+		tempPntList = transferNodeToPnt2D(currentNode);
+		tempEdgeList = transferEdgeToPnt2D(currentEdge);		
+		return true;
+	}
+	
+	private ArrayList<Point2D> transferNodeToPnt2D(List<Node> targetList){
+		ArrayList<Point2D> pntList = new ArrayList<Point2D>();
+		for(Node nd:targetList){
+			Point2D pnt = new Point2D.Double(nd.getX(),nd.getY());
+			pntList.add(pnt);			
+		}
+		return pntList;
+	}
+	private ArrayList<Point2D> transferEdgeToPnt2D(List<Edge> targetList){
+		ArrayList<Point2D> edgeList = new ArrayList<Point2D>();
+		for(Edge eg:targetList){
+			Point2D pnt_1 = new Point2D.Double(eg.getSource().getX(),eg.getSource().getY());
+			Point2D pnt_2 = new Point2D.Double(eg.getDestination().getX(),eg.getDestination().getY());
+			edgeList.add(pnt_1);
+			edgeList.add(pnt_2);
+		}
+		return edgeList;
+	}
+	
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
 		try{
@@ -208,12 +189,35 @@ public class MainController{
 		return success;
 	}
 	
+	/* Added by  neha. For now this method just pushes the data into the listofMaps and urlsofMaps.
+	 * Once the model method is available call that method with the same paramaters.
+	 * The model method should return a boolean value:
+	 * True if mapName and mapImageURL are stored succesfully into the .txt file
+	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
+	 */
+	public Boolean addNewMap(String mapName, String mapImageURL, String mapType){
+		System.out.println(mapType);
+		listofMaps.add(mapName);
+		urlsofMaps.add(mapImageURL);
+		return true;
+	}
+	
+	/* Added by  neha. For now this method just deletes the map from listofMaps and urlsofMaps.
+	 * Once the model method is available call that method with the same paramaters.
+	 * The model method should return a boolean value:
+	 * True if mapName and mapImageURL are deleted succesfully from the .txt file
+	 * False if mapName and mapImageURL are not deleted succesfully from the .txt file
+	 */
+	public Boolean deleteMap(String mapName){
+		int index = listofMaps.indexOf(mapName);
+		listofMaps.remove(index);
+		urlsofMaps.remove(index);
+		return true;
+	}
+	
+	// Create point on temporal the point graph created in MapEditor
 	public Boolean addPoint(Point2D inputPnt){
 		Boolean success = false;
-		/*
-		 * Create point on temporal the point graph created in MapEditor
-		 * 
-		 * */
 		if(CheckPntExistence(inputPnt,tempPntList)==0){
 			tempPntList.add(inputPnt);	
 			success = true;
@@ -226,6 +230,7 @@ public class MainController{
 		// Check Edge Redundancy
 		int PointID_1 = CheckPntExistence(pnt1,tempEdgeList);
 		int PointID_2 = CheckPntExistence(pnt2,tempEdgeList);
+		// Check if edge already exist in the edge list
 		if(PointID_1 !=0 && PointID_2!=0 && 
 		   Math.abs(PointID_1-PointID_2) == 1){
 			success = false;
@@ -313,7 +318,6 @@ public class MainController{
 			}
 		}
 		return pntID;
-	}
-	
+	}	
 
 }

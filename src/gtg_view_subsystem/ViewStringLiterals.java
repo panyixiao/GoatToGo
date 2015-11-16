@@ -27,4 +27,9 @@ public class ViewStringLiterals {
 	public static final String MAP_NOT_SELECTED = "Please select a map from the list.";
 	public static final String MAP_CANNOT_ADDED = "Unable to add new map. Please try  again later";
 	public static final String MAP_CANNOT_DELETE = "Unable to delete the map. Please try  again later";
+	public static final String YES = "Yes";
+	public static final String NO = "No";
+	public static final String IS_CAMPUS_MAP = "Is this a campus map?";
+	public static final String CAMPUS = "Campus";
+	public static final String FLOOR = "Floor";
 }

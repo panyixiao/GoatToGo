@@ -260,6 +260,11 @@ public class AdminMapEditPage extends JPanel {
 		this.backBtn.setIcon(this.backBtnImage);
 		this.rightPanel.add(this.backBtn);
 		
+		// Yixiao 2015-11-15 For display Current node & Edges
+		this.parent.mainController.LoadingPntsAndEdges();
+		pointPositions = this.parent.mainController.getDisplayPnt();	
+		pointNeighbors = this.parent.mainController.getDisplayEdge();
+		
 		System.out.println(this.modeBtns.getSelection());
 	}
 	
