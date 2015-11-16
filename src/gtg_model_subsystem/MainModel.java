@@ -37,6 +37,21 @@ public class MainModel {
 		}
 		
 	}
+
+	// Yixiao 2015-11-15	
+	public void loadMapListFile(){
+	}
+	// Yixiao 2015-11-15
+	public List<Node> getNodeList(){
+		List<Node> currentNodeList = tempMap.getGraph().getNodes();		
+		return currentNodeList;		
+	}
+	// Yixiao 2015-11-15
+	public List<Edge> getEdgeList(){
+		List<Edge> currentEdgeList = tempMap.getGraph().getEdges();		
+		return currentEdgeList;
+	}
+	
 	//re-add string mapName future
 	public void loadFiles(){
 		try{
@@ -111,7 +126,6 @@ public class MainModel {
 		return NodeList;
 	}
 	
-	
 	private List<Edge> generatingEdgeList(String mapName, ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
 		List<Edge> EdgeList = new ArrayList<Edge>();
 		// It is also better to add odd/even number judgement here in the future
@@ -147,7 +161,6 @@ public class MainModel {
 		
 		return EdgeList;
 	}
-	
 	
 	// Temporarily
 	private Node convertPnt2Node(Point2D inputPnt){
