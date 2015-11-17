@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 /GTGApplication.class
 /gtg_control_subsystem/
 /gtg_model_subsystem/
 /gtg_view_subsystem/
+=======
+/gtg_control_subsystem/
+/gtg_model_subsystem/
+/gtg_view_subsystem/
+/GTGApplication.class
+>>>>>>> master

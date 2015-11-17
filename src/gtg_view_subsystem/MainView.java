@@ -14,7 +14,8 @@ public class MainView {
 	private ResultPage resultPage = new ResultPage(this);
 	private LoginPage loginPage = new LoginPage(this);
 	private JPanel currentPage = new JPanel();
-	private AdminMapEditPage adminMapPage = new AdminMapEditPage(this);
+	private AdminMapEditPage adminMapPage; 
+	//= new AdminMapEditPage(this);
 	private AddDeleteMapPage addDeleteMapPage = new AddDeleteMapPage(this);
 
 	public MainController mainController;
@@ -67,6 +68,8 @@ public class MainView {
 		currentPage = resultPage;
 	}
 	
+
+
 	public void checkAdminValid(String userName, String passWord){
 		Boolean userValid = this.mainController.adminQualification(userName, passWord);
 		if(userValid == true){
@@ -78,6 +81,24 @@ public class MainView {
 		} else {
 			loginPage.showInvalidUsernameDialog();
 		}
+	}
+	public void showAdminMapEditPage(String mapName) {
+		System.out.println("(Mainview switchToAdminMapEditPage)" + mapName);
+		page.removePage(currentPage);
+		adminMapPage = new AdminMapEditPage(this,mapName);
+		adminMapPage.setMapName(mapName);
+		page.addPage(adminMapPage);
+		currentPage = adminMapPage;
+		
+	}
+
+	public void showAdddDeleteMapPage() {
+		page.showLogoutButton();
+		page.removePage(currentPage);
+		page.addPage(addDeleteMapPage);
+		currentPage = addDeleteMapPage;
+		addDeleteMapPage.showMapList(this.mainController.getMapList("admin"));
+		
 	}
 
 	// Yixiao's change
@@ -103,8 +124,8 @@ public class MainView {
 		
 	}
 
-	public void saveFromAdmin() {
-		this.mainController.createCoordinateGraph("BH_Basement");
+	public void saveFromAdmin(String mapName) {
+		this.mainController.createCoordinateGraph(mapName);
 	}
 
 	/*
@@ -117,8 +138,8 @@ public class MainView {
 	/*
 	 * This method is called from the admin addDeleteMapPage to add new map data into the .txt file.
 	 */
-	public void sendAddMapData(String mapName, String mapImageURL) {
-		boolean result = this.mainController.addNewMap(mapName, mapImageURL);
+	public void sendAddMapData(String mapName, String mapImageURL, String mapType) {
+		boolean result = this.mainController.addNewMap(mapName, mapImageURL, mapType);
 		if(result == true){
 			addDeleteMapPage.showMapList(this.mainController.getMapList("admin"));
 		} else {
@@ -126,12 +147,6 @@ public class MainView {
 		}
 	}
 
-	public void showAdminMapEditPage(String mapName) {
-		System.out.println("(Mainview switchToAdminMapEditPage)" + mapName);
-		page.removePage(currentPage);
-		page.addPage(adminMapPage);
-		currentPage = adminMapPage;
-	}
 
 	/*
 	 * This method is called from the admin addDeleteMapPage to delete the map from the .txt file.
