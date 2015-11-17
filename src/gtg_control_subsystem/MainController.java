@@ -30,17 +30,33 @@ public class MainController{
 	private MapEditController mapEditor;
 	private PathSearchController pathSearchController;
 	private AdminController userChecker;
-	
-	/*This is only for Tuesday show*/
-	private int StartID;
-	private int EndID;
-	
+		
 	private ArrayList<Point2D> tempPntList  = new ArrayList<Point2D>();
 	private ArrayList<Point2D> tempEdgeList = new ArrayList<Point2D>();
 	
 	/**/
 	public MainController(MainModel mapModel){
-		this.mapModel = mapModel;	
+		this.mapModel = mapModel;
+		MapListIntial();
+	}
+	
+	// temporarily initializer, will be moved to Model-subsystem in the future
+	private void MapListIntial(){
+		listofMaps.add("BH_Basement");
+		listofMaps.add("BH_FirstFloor");
+		listofMaps.add("BH_SecondFloor");
+		listofMaps.add("BH_ThirdFloor");
+		
+		// map urls
+		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
+		String BH_FIRST_FLOOR = "images"+System.getProperty("file.separator")+"BH_FirstFloor.png";
+		String BH_SECOND_FLOOR = "images"+System.getProperty("file.separator")+"BH_SecondFloor.png";
+		String BH_THIRD_FLOOR = "images"+System.getProperty("file.separator")+"BH_ThirdFloor.png";
+		
+		urlsofMaps.add(BH_BASEMENT);
+		urlsofMaps.add(BH_FIRST_FLOOR);
+		urlsofMaps.add(BH_SECOND_FLOOR);
+		urlsofMaps.add(BH_THIRD_FLOOR);		
 	}
 	
 	
@@ -69,24 +85,7 @@ public class MainController{
 	 * You will have to implement the switch case.
 	 */
 	public ArrayList<String> getMapList(String mapName){
-		ArrayList<String> mapData= new ArrayList<String>();
-		//mapData=mapModel.getArrayOfMapNames(mapName);
-		
-		// For test
-		if(mapName == "Campus_Map"){
-			mapData.clear();
-			mapData.add("Boynton_Hall");
-		}
-		if(mapName == "Boyton_Hall"){
-			mapData.clear();
-			mapData.add("BH_Basement");
-			mapData.add("BH_FirstFloor");
-			mapData.add("BH_SecondFloor");
-			mapData.add("BH_ThirdFloor");			
-		}
-		
-		mapData = listofMaps;
-		return mapData;		
+		return listofMaps;		
 	}
 
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
@@ -144,9 +143,9 @@ public class MainController{
 	
 	/* Used for create the "MapName.txt" file, 
 	 * correspond to a button "Generate Road Map" on the Admin page
-	 * Used to save the temporal point graph to file*/
-	
-	public Boolean LoadingPntsAndEdges(){
+	 * Used to save the temporal point graph to file*/	
+	public Boolean LoadingPntsAndEdges(String mapName){
+		mapModel.loadFiles(mapName);
 		List<Node> currentNode = mapModel.getNodeList();
 		List<Edge> currentEdge = mapModel.getEdgeList();
 		if(currentNode.isEmpty()||currentEdge.isEmpty()){

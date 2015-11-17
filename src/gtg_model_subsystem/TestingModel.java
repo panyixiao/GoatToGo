@@ -12,7 +12,7 @@ public class TestingModel {
 	public static void main(String args[])
 	{
 		MainModel test = new MainModel();
-		test.loadFiles();
+		test.loadFiles("BH_Basement");
 		test.printNodes("BH_Basement");
 		test.setStartEndPathPoint(new Point(590,346), "FROM", "BH_Basement");
 		test.setStartEndPathPoint(new Point(632,189), "TO", "BH_Basement");
