@@ -195,6 +195,8 @@ public class MainController{
 	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
 	 */
 	public Boolean addNewMap(String mapName, String mapImageURL, String mapType){
+		System.out.println(mapName);
+		System.out.println(mapImageURL);
 		System.out.println(mapType);
 		listofMaps.add(mapName);
 		urlsofMaps.add(mapImageURL);

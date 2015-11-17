@@ -29,8 +29,9 @@ public class MainModel {
 		mapTable = new Hashtable<String, Map>();
 		path = new Path(null, null, null);
 		try {			
+			loadMaps();
 			loadAdmin();			
-			loadMapListFile();
+			//loadMapListFile();
 			loadFiles("BH_Basement");	// Yixiao
 			
 		} catch (IOException e) {
@@ -39,9 +40,80 @@ public class MainModel {
 		}
 		
 	}
-
-	// Yixiao 2015-11-15	
-	public void loadMapListFile(){
+    
+	/**
+	 * Load maps from master map text file and store into table of maps
+	 * @return true if load and store the map table successfully
+	 * 		   false if maps does not exist
+	 */
+	public boolean loadMaps()
+	{
+		ArrayList<Map> masterMapList=null;
+		try {
+			//load maps from master text file
+			masterMapList=fileProcessing.loadMapList();		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(masterMapList==null){
+			System.out.println("master list is null");
+			return false;
+		} else{
+			System.out.println("Attempting to store in master list");
+			//access each map and store it into map table
+			for(Map map:masterMapList){
+				System.out.println(map.getMapName());
+				mapTable.put(map.getMapName(), map);
+			}
+			
+			return true;
+		}
+	}
+	/**
+	 * deleteMap will delete map from the map table and the master list text file
+	 * @param mapName the name of the map the admin wishes to delete
+	 * @return true if deletion was successful false otherwise
+	 * @throws IOException 
+	 */
+	public boolean deleteMap(String mapName) throws IOException{
+			boolean deleteSuccess = true;
+			if(mapTable.get(mapName) == null){
+				System.out.println("Map does not exist");
+				deleteSuccess = false;
+			}
+			//IF map exists in map table THEN
+			if(mapTable.get(mapName) != null){
+				//will this delete from memory??
+				//REMOVE map from map table
+				mapTable.remove(mapName);
+				//REMOVE map from master map list so it will not be re-loaded
+				fileProcessing.deleteMapFromMaster(mapName);
+				System.out.println("Delete Success");
+			}
+			return deleteSuccess;
+	}
+	
+	/**
+	 * Method to save newly created maps added by admin from admin view to the list of maps.
+	 * @param mapName the name of new map to be saved
+	 * @param mapNameURL the name of new map URL to be saved
+	 * @param mapType the type of map that we are saving
+	 * @return true if map was successfully created false otherwise
+	 * @throws IOException 
+	 */
+	public boolean saveNewMap(String mapName, String mapImgURL, String mapType) throws IOException{
+				boolean saveNewMap = true;
+				//IF map does not exist in map table THEN
+				if (mapTable.get(mapName) != null){
+					System.out.println("Map Already exists");
+					saveNewMap = false;
+				}
+				//STORE map in masterMapList 
+				else{
+					fileProcessing.saveMapToMaster(mapName, mapImgURL, mapType);
+				}
+				return saveNewMap;
 	}
 	// Yixiao 2015-11-15
 	public List<Node> getNodeList(){
@@ -63,39 +135,33 @@ public class MainModel {
 		}
 	}
 	public void loadAdmin() throws IOException{
-		fileProcessing.readAdmin(admins, "ModelFiles"+System.getProperty("file.separator")+"adminFile.txt");
+		fileProcessing.readAdmin(admins);
 	}
 	
-	public void createMapGraph(String mapName) throws IOException{
+	public boolean createMapGraph(String mapName) throws IOException{
 		
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
-
-		// Yixiao 2015-11-16 In case try to loadin a map which File has not been created
-		
-		//fileProcessing.readNodesFile(nodes, MapNodeURLS.TEST_MAP_NODES);
-		//fileProcessing.readEdgesFile(nodes, edges, MapEdgeURLS.TEST_MAP_EDGES);
-		String NodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
-		String EdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";		
-		fileProcessing.readNodesFile(nodes, NodeURL);
-		fileProcessing.readEdgesFile(nodes, edges, EdgeURL);		
-		
-		if(nodes.isEmpty()||edges.isEmpty()){
-			System.out.println("creating New Map/Graph for" + mapName);
+		boolean createMapGraphSuccess = true;
+		if(!mapTable.containsKey(mapName)){
+			createMapGraphSuccess = false;
+			System.out.println("Map does not exist in table");
+			return createMapGraphSuccess;
 		}
+		fileProcessing.readNodesFile(nodes, mapName);
+		fileProcessing.readEdgesFile(nodes, edges, mapName);		
 		
 		graph = new CoordinateGraph(nodes, edges);
-		tempMap = new Map(mapName, graph, null);
-		mapTable.put(mapName, tempMap);
+		mapTable.get(mapName).setGraph(graph);
+
+		return createMapGraphSuccess;
 	}
 	
 	public void saveMapGraph(String mapName) throws IOException{		
-
 		// Save to existing File
 		Map saveMap = mapTable.get(mapName);
 		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
 		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
-	
 	}
 	
 	//Overrode method to handle controller temporary list for nodes and edges
@@ -226,11 +292,7 @@ public class MainModel {
 		return EdgeList;
 	}
 	
-	// Temporarily
-	private Node convertPnt2Node(Point2D inputPnt){
-		Node outPutNode = new Node(0,0,0);
-		return outPutNode;		
-	}
+
 	
 	public void testDij(String mapName){
 		
@@ -357,6 +419,12 @@ public class MainModel {
 		}
 		System.out.println("END PATH");
 	}
+	public void printMaps(){
+		for(String value: mapTable.keySet()){
+			System.out.println(value);
+		}
+	}
+
 	public Path getPath(){
 		return this.path;
 	}
@@ -376,19 +444,7 @@ public class MainModel {
 		}
 		return tempArrayOfMapNames;
 	}
-	//admin create a point
-    public boolean newNode(String mapName,Point point)
-    {
-    	nodes=mapTable.get(mapName).getGraph().getNodes();
-	Node node=new Node(nodes.get(nodes.size()-1).getID()+1,point.x,point.y);
-	nodes.add(node);
-    	try {
-		saveMapGraph(mapName);
-	     } catch (IOException e) {
-	    	 e.printStackTrace();
-	    }
-    	return true;
-    }
+	
     
     //find node Id for the start of the edge
     public int findNodeId(String mapName,Point point)
@@ -401,64 +457,5 @@ public class MainModel {
 			}
     	}
 		return 0;
-    }
-	
-	//admin specifies an edge
-    public boolean newEdge(String mapName,Point source,Point destination)
-    {
-    	nodes=mapTable.get(mapName).getGraph().getNodes();
-    	edges=mapTable.get(mapName).getGraph().getEdges();
-    	Point point=validatePoint(mapName,source.x,source.y);
-    	if((point.x==0)&&(point.y==0))
-    	  {
-    		newNode(mapName,point);
-    		point=validatePoint(mapName,source.x,source.y);
-    	  }
-    	Node sourceNode=new Node(findNodeId(mapName,point),point.x,point.y);	
-    	Node destinationNode=new Node(nodes.get(nodes.size()-1).getID()+1,destination.x,destination.y);
-    	nodes.add(destinationNode);
-    	//Don't need to calculate edgeLength. It will be calculated when loading edges 
-    	Edge edge=new Edge(edges.get(edges.size()-1).getEdgeID()+1,sourceNode,destinationNode,0);
-    	edges.add(edge);
-    	try {
-			saveMapGraph(mapName);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return true;
-    }
-    
-    //admin create a path
-    public boolean newPath(String mapName,List<Point> points)
-    {
-    	nodes=mapTable.get(mapName).getGraph().getNodes();
-    	edges=mapTable.get(mapName).getGraph().getEdges();
-    	Iterator iterator=points.iterator();
-    	//the start node of an edge
-    	Node startNode=null;
-    	//the end Node of an edge
-    	Node endNode=null;
-    	Point point=null;
-    	Edge edge=null;
-    	while(iterator.hasNext())
-    	{
-    	  point=(Point)iterator.next();
-    	  endNode=new Node(nodes.get(nodes.size()-1).getID()+1,point.x,point.y);
-    	  nodes.add(endNode);
-    	  if(startNode!=null)
-    	  {
-    	     edge=new Edge(edges.get(edges.size()-1).getEdgeID()+1,startNode,endNode,0);
-    	     edges.add(edge);
-    	  }
-    	  startNode=endNode;
-    	}
-    	try {
-		saveMapGraph(mapName);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return true;
     }
 }
