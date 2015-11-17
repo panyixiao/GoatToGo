@@ -78,13 +78,27 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		String newDescription;
 		JTextField description = new JTextField(10);
 		JTextField entranceId = new JTextField(3);
+		JTextField building = new JTextField(3);
+		building.setText(this.building);
+		JTextField floor = new JTextField(3);
+		floor.setText(this.floor);
 		JPanel panel = new JPanel(new GridLayout(0, 1));
-		panel.add(new JLabel("Description:"));
-		panel.add(description);
+		
+		panel.add(Box.createHorizontalStrut(5)); // a spacer
+		panel.add(new JLabel("Building:"));
+		panel.add(building);
+
+		panel.add(Box.createHorizontalStrut(5)); // a spacer
+		panel.add(new JLabel("Floor:"));
+		panel.add(floor);
+
 		panel.add(Box.createHorizontalStrut(5)); // a spacer
 		panel.add(new JLabel("Entrance ID:"));
 		panel.add(entranceId);
+		panel.add(Box.createHorizontalStrut(5)); // a spacer 
 
+		panel.add(new JLabel("Description:"));
+		panel.add(description); 
 		if (me.getButton() == MouseEvent.BUTTON1) {
 			switch (this.mode) {
 			case "Create Points":
@@ -174,13 +188,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			adminViewPageHandle.deletePoint(point2bDeleted);
 			case "Select Neighbors":
 				//check if point is part of an edge
-				int n =checkIfPointIsInEdge(point2bDeleted);
-				if(n>=0){
-					System.out.println("I will delete edge");
-					adminViewPageHandle.pointNeighbors.remove(n);
-					adminViewPageHandle.pointNeighbors.remove(n);
-					;
-				}
+				adminViewPageHandle.DeleteEdge(point2bDeleted);
 			}
 			
 		}
@@ -253,22 +261,5 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		
 	}
 	
-	//See if selected point is a part of an existing edge
-	// If the distance between the selected point 
-	public int checkIfPointIsInEdge(Point2D P){
-		double AB, AP, PB;
-		int r = -1;
-		for(int i=0; i<adminViewPageHandle.pointNeighbors.size()-1; i+=2){
-			AB= adminViewPageHandle.pointNeighbors.get(i).distance(adminViewPageHandle.pointNeighbors.get(i+1));
-			AP=adminViewPageHandle.pointNeighbors.get(i).distance(P);
-			PB = P.distance(adminViewPageHandle.pointNeighbors.get(i+1));
-			if(Math.abs(AB-(AP+PB))<=2){
-				r=i;
-				System.out.println("Point " + P + "is part of an edge");
-				break;
-			}
-			}
-		System.out.println("Is point " + P+ "in an edge? " + r);
-		return r;
-	}
+
 }
