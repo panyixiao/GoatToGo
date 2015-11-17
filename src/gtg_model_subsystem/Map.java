@@ -3,21 +3,22 @@ package gtg_model_subsystem;
 import java.awt.Image;
 
 public class Map {
-		 /**The background image is loaded into Map
-		 */
-		 private Image img;
+
 		
 		/**The graph contains the nodes in a map which
 		*will be used to calculate the path
 		*/
 		private CoordinateGraph graph;
+		private String mapName;
+		private String mapType;
+		private String mapImgURL;
 		
-		String mapName;
-		
-		public Map(String mapName, CoordinateGraph graph, Image img){
-			this.img = null;
+		public Map(String mapName, CoordinateGraph graph, String mapImgURL,String mapType){
+			//create image
+			this.mapImgURL = mapImgURL;
 			this.graph = graph;
 		    this.mapName = mapName;
+		    this.mapType=mapType;
 		}
 		/**Load the image into the map 
 		*according to the image's path
@@ -29,11 +30,7 @@ public class Map {
 		public void setGraph(CoordinateGraph graph){
 			this.graph = graph;
 		}
-		/**return img
-		*/
-		public Image getImg(){
-			return this.img;
-		}
+		
 
 		 /**
 		 * return the graph
