@@ -1,146 +1,265 @@
 package gtg_view_subsystem;
 
+import gtg_view_subsystem.AdminMapEditPage;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import javax.imageio.ImageIO;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
+import java.awt.Dialog;
+import java.util.ArrayList;
+
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
+import javax.swing.JTextField;
 
-public class MapMapDisplayPanel extends MapDisplayPanel{
-	private JPopupMenu popup;
-	private JMenuItem menuItem, menuItem_1;
-	private SelectedPoints selectedPoints = null;
-	private Image locationImage;
-	private String map;
-	private Point startEndPoint;
-	private MapPage parent;
+//import gtg_control_subsystem.MainController;
+
+public class AdminMapDisplayPanel extends MapDisplayPanel {
+	private Point2D newPoint, newStart,newEnd;
+	private int circleWidthHeight = 10;
+	private ImageIcon icon;
+	private JPanel imputPopup;
+	private String currentMap, mode, building, floor;
+	private AdminMapEditPage adminViewPageHandle;
+
 	/**
 	 * Create the panel.
-	 * @param mapPage 
-	 * @param selectedPoints 
 	 */
-	public MapMapDisplayPanel(MapPage parent, JScrollPane mapPanelHolder, String mapName, String mapurl, SelectedPoints selectedPoints) {
+	public AdminMapDisplayPanel(JScrollPane mapPanelHolder, String mapurl, AdminMapEditPage adminViewPage) {
 		super(mapPanelHolder, mapurl);
-		this.parent = parent;
-		this.map = mapName;
-		this.selectedPoints = selectedPoints;
-
-		super.loadImage(mapurl);
-		this.loadLocationImage();
-	    
-	    this.popup = new JPopupMenu();
-	    this.popup.setFont(new Font("Meiryo", Font.PLAIN, 22));
-	    this.popup.setVisible(false);
-	    this.menuItem = new JMenuItem(ViewStringLiterals.SET_AS_START_LOCATION);
-	    this.menuItem.setFont(new Font("Meiryo", Font.PLAIN, 22));
-	    this.menuItem.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		startEndPoint = parent.sentPointToModel(startEndPoint, ViewStringLiterals.FROM, map);
-	    		selectedPoints.setStartLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
-	    		parent.displayPointInTextfield(ViewStringLiterals.FROM, startEndPoint.getX(), startEndPoint.getY());
-	    		revalidate();
-	    		repaint();
-	    	}
-	    });
-
-	    this.popup.add(this.menuItem);
-	    this.menuItem_1 = new JMenuItem(ViewStringLiterals.SET_AS_END_LOCATION);
-	    this.menuItem_1.setFont(new Font("Meiryo", Font.PLAIN, 22));
-	    this.menuItem_1.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		startEndPoint = parent.sentPointToModel(startEndPoint, ViewStringLiterals.TO, map);
-	    		selectedPoints.setEndLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
-	    		parent.displayPointInTextfield(ViewStringLiterals.TO, startEndPoint.getX(), startEndPoint.getY());
-	    		revalidate();
-	    		repaint();
-	    	}
-	    });
-	    this.popup.add(this.menuItem_1);
+		this.currentMap = mapurl;
+		this.mode="Create Points";
+		adminViewPageHandle = adminViewPage;
+		this.newStart = new Point2D.Double(0,0);
+		this.newEnd = new Point2D.Double(0,0);
+		
+		//building = adminViewPage.
 	}
-	    
+
 	@Override
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D)g;
-    	if(this.selectedPoints.getStartMapName() == this.map){
-    		g2.drawImage(this.locationImage, (int)this.selectedPoints.getStartX() - 10, (int)this.selectedPoints.getStartY() - 25, 20, 25, null);
-    	}
-    	
-    	if(this.selectedPoints.getEndMapName() == this.map){
-    		g2.drawImage(this.locationImage, (int)this.selectedPoints.getEndX() - 10, (int)this.selectedPoints.getEndY() - 25, 20, 25, null);
-    	}
-	}
-	
-	@Override
-	public void mousePressed(MouseEvent me){
-		super.mousePressed(me);
-		this.maybeShowPopup(me);
+		Graphics2D g2 = (Graphics2D) g;
+		
+		// Here, need to get points, which have been created and stored in controller;
+		
+		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
+			Point2D p = adminViewPageHandle.pointPositions.get(i);
+			Ellipse2D.Double circle = new Ellipse2D.Double(p.getX() - (circleWidthHeight * super.getScale() / 2),
+					p.getY() - (circleWidthHeight * super.getScale() / 2), circleWidthHeight * super.getScale(),
+					circleWidthHeight * super.getScale());
+			//System.out.println("Will Draw at:"+p.getX()+","+p.getY());
+			g2.fill(circle);
+		}
+		
+		// Here, need to get edges, which have been created and stored in controller;
+		for(int i=0; i<adminViewPageHandle.pointNeighbors.size()-1; i+=2){
+			Point2D p1 = adminViewPageHandle.pointNeighbors.get(i);
+			Point2D p2 = adminViewPageHandle.pointNeighbors.get(i+1);				
+			g2.drawLine((int)p1.getX(), (int)p1.getY(), (int)p2.getX(), (int)p2.getY());
+		}
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent me) {
-		this.maybeShowPopup(me);
+	public void mouseClicked(MouseEvent me) {
+		double scale = super.getScale();
+		String newEnterenceId;
+		String newDescription;
+		JTextField description = new JTextField(10);
+		JTextField entranceId = new JTextField(3);
+		JTextField building = new JTextField(3);
+		building.setText(this.building);
+		JTextField floor = new JTextField(3);
+		floor.setText(this.floor);
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+		
+		panel.add(Box.createHorizontalStrut(5)); // a spacer
+		panel.add(new JLabel("Building:"));
+		panel.add(building);
+
+		panel.add(Box.createHorizontalStrut(5)); // a spacer
+		panel.add(new JLabel("Floor:"));
+		panel.add(floor);
+
+		panel.add(Box.createHorizontalStrut(5)); // a spacer
+		panel.add(new JLabel("Entrance ID:"));
+		panel.add(entranceId);
+		panel.add(Box.createHorizontalStrut(5)); // a spacer 
+
+		panel.add(new JLabel("Description:"));
+		panel.add(description); 
+		if (me.getButton() == MouseEvent.BUTTON1) {
+			switch (this.mode) {
+			case "Create Points":
+				int result = JOptionPane.showConfirmDialog(null, panel, "Please Describe Point",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+					if (scale > 1.0) {
+						newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+						adminViewPageHandle.CreatePoint(newPoint);
+					} else {
+						newPoint = new Point2D.Double(me.getX(), me.getY());
+						adminViewPageHandle.CreatePoint(newPoint);
+					}
+
+					newEnterenceId = entranceId.getText();
+					newDescription = description.getText();
+					if(newEnterenceId.isEmpty()){
+						newEnterenceId = "0";
+					}
+					if(newDescription == null){
+						newDescription = "Null";
+					}
+					System.out.println("Building: " + this.building);
+					System.out.println("Floor: " + this.floor);
+					System.out.println("Description: " + description.getText());
+					System.out.println("Exit ID: " + entranceId.getText());
+				}
+				break;
+			case "Create Path":
+				
+				Point2D checkResult = adminViewPageHandle.returnLastPointInList();
+				 
+				if (checkResult.getX() != 0){
+					this.addStart(checkResult);
+					newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+					adminViewPageHandle.CreatePoint(newPoint);				 
+					this.addNeighbors(me.getPoint());
+				}
+				
+				else{			
+					newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+					adminViewPageHandle.CreatePoint(newPoint);
+				}
+				break;
+				
+			case "Select Neighbors":
+
+				this.newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+				
+				JPopupMenu selectAction = new JPopupMenu();
+				JMenuItem selectPoint, selectNeighbor;
+				selectPoint = new JMenuItem("From here");
+				selectPoint.addActionListener(
+						new ActionListener() {
+							public void actionPerformed(ActionEvent e){
+								addStart(me.getPoint());
+							}
+						});
+				
+				selectNeighbor = new JMenuItem("To here");
+				selectNeighbor.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						addNeighbors(me.getPoint());
+					}
+				});
+				
+				selectAction.add(selectPoint);
+				selectAction.add(selectNeighbor);				
+				selectAction.show(this, (int)newPoint.getX(), (int)newPoint.getY());
+				
+				//System.out.println("Start: "+ this.newStart);
+				//System.out.println("End: "+ this.newEnd);
+				//System.out.println("Paths: "+ this.adminViewPageHandle.pointNeighbors);
+
+				break;
+
+			default:
+				System.out.println("No mode selected, Please select a mode");
+			}
+			
+		} else if (me.getButton() == MouseEvent.BUTTON3) {
+			Point2D point2bDeleted = new Point2D.Double(me.getX()/scale,me.getY()/scale);
+			switch (this.mode) {
+			case "Create Points":
+			// Check back in the controller list, delete it if the point exist.
+			// checkIfPointIsDrawn(me.getX(), me.getY(), scale);
+			adminViewPageHandle.deletePoint(point2bDeleted);
+			case "Select Neighbors":
+				//check if point is part of an edge
+				adminViewPageHandle.DeleteEdge(point2bDeleted);
+			}
+			
+		}
+		
+		revalidate();
+		repaint();
 	}
 
-	public void loadLocationImage() {
-        try {
-            this.locationImage = ImageIO.read(new File(ImageURLS.LOCATION_IMAGE));
-        }
-        catch(MalformedURLException mue) {
-            System.out.println("URL trouble: " + mue.getMessage());
-        }
-        catch(IOException ioe) {
-        	System.out.println("read trouble: " + ioe.getMessage());
-        }
+	public void addNeighbors(Point2D p){
+		Point2D result = adminViewPageHandle.checkPoint(p);
+		if(result.getX()!= 0)
+		{
+			this.newEnd = result;
+			if(newStart.getX()!= 0){
+				this.adminViewPageHandle.CreateEdge(newStart, newEnd);
+				//this.adminViewPageHandle.pointNeighbors.add(this.newStart);
+				//this.adminViewPageHandle.pointNeighbors.add(this.newEnd);				
+				this.newStart = new Point2D.Double(0,0);
+				this.newEnd = new Point2D.Double(0,0);
+			}
+			else{
+				System.out.println("Please select a start Point first!");
+			}
+		}
+		revalidate();
+		repaint();
 	}
-	
-	private void maybeShowPopup(MouseEvent me) {
-        if (me.isPopupTrigger()) {
-            this.popup.show(me.getComponent(), me.getX(), me.getY());
-            
-            double scale = super.getScale();
-            if(scale > 1.0){
-            	 this.startEndPoint= new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
-			} else {
-				 this.startEndPoint= new Point(me.getX(), me.getY());
-			}
-        }
-    }
 
-	public void deletePoint(String location) {
-		if(location == ViewStringLiterals.FROM){
-			if(this.selectedPoints.getStartMapName() == this.map){
-				this.selectedPoints.resetStart();
-				this.revalidate();
-				this.repaint();
-			} else {
-				this.selectedPoints.resetStart();
-			}
-		} else if(location == ViewStringLiterals.TO){
-			if(this.selectedPoints.getEndMapName() == this.map){
-				this.selectedPoints.resetEnd();
-				this.revalidate();
-				this.repaint();
-			} else {
-				this.selectedPoints.resetEnd();
+	public void addStart(Point2D p) {
+		Point2D result = adminViewPageHandle.checkPoint(p);
+		if(result.getX()!=0){
+			this.newStart = result;
+			System.out.println("New start" + this.newStart);
+		}
+	}
+
+	public void checkIfPointIsDrawn(int x, int y, double scale) {
+		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
+			Point2D p = adminViewPageHandle.pointPositions.get(i);
+			if (isInCircle(p.getX(), p.getY(), circleWidthHeight / 2, x / scale, y / scale, scale)) {
+				adminViewPageHandle.pointPositions.remove(i);
+				revalidate();
+				repaint();
 			}
 		}
 	}
 
-	public void displayPoint() {
-		// display point to user
+	public boolean isInCircle(double circleX, double circleY, int r, double x, double y, double scale) {
+		double d = Math.sqrt(Math.pow(circleX - x, 2) + Math.pow(circleY - y, 2));
+		return d <= r * scale;
+	}
+
+	public void setMode(String m) {
+		this.mode = m;
+	}
+
+	public void setBuilding(String b) {
+		this.building = b;
+	}
+
+	public void setFloor(String f) {
+		this.floor = f;
+	}
+	
+	public void clearAll(){
+		adminViewPageHandle.pointNeighbors.clear();
+		adminViewPageHandle.pointPositions.clear();
 		revalidate();
 		repaint();
+		
 	}
+	
+
 }
