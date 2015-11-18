@@ -124,8 +124,8 @@ public class MainView {
 		
 	}
 
-	public void saveFromAdmin() {
-		this.mainController.createCoordinateGraph("BH_Basement");
+	public void saveFromAdmin(String mapName) {
+		this.mainController.createCoordinateGraph(mapName);
 	}
 
 	/*

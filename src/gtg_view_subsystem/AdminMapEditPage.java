@@ -236,7 +236,7 @@ public class AdminMapEditPage extends JPanel {
 		this.saveBtn = new JButton();
 		saveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				parent.saveFromAdmin();
+				parent.saveFromAdmin(mapName);
 			}
 		});
 		this.saveBtn.setBounds(150, 569, 80, 42);
@@ -261,7 +261,7 @@ public class AdminMapEditPage extends JPanel {
 		this.rightPanel.add(this.backBtn);
 		
 		// Yixiao 2015-11-15 For display Current node & Edges
-		this.parent.mainController.LoadingPntsAndEdges();
+		this.parent.mainController.LoadingPntsAndEdges(mapName);
 		pointPositions = this.parent.mainController.getDisplayPnt();	
 		pointNeighbors = this.parent.mainController.getDisplayEdge();
 		
