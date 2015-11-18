@@ -146,8 +146,9 @@ public class FileProcessing {
 		File file = new File(mapNodeURL);
 		BufferedReader buffer = null;
 		
-		if(createFile(file)){
-			return readSuccess;
+		if(!checkFileExsistance(file)){
+			System.out.print("Create a new Node File for:" + mapName);
+			return createFile(file);
 		}
 		else{
 			try{
@@ -179,9 +180,10 @@ public class FileProcessing {
 		File file = new File(mapEdgeURL);
 		BufferedReader buffer = null; 
 		boolean readSuccess = true;
-		if(createFile(file)){
-			return readSuccess;
-		}
+		// Yixiao 2015-11-17
+		if(!checkFileExsistance(file)){
+			return createFile(file);
+		}		
 		else{
 			try{
 				buffer = new BufferedReader(new FileReader(file));
@@ -258,20 +260,32 @@ public class FileProcessing {
 			System.out.println(E.toString());
 		}
 	}
-	private boolean createFile(File file){
-		boolean noFileFound = true;
-		//IF file does not exist create new file
-		if(!file.exists()){
-			try{
-				file.createNewFile();
-			}catch(IOException e){
-				System.out.println(e.toString());
-				return noFileFound;
-			}
+	
+	// Yixiao 2015-11-17
+	private boolean checkFileExsistance(File file){
+		boolean fileExist = true;
+		if(file.exists()){
+			System.out.print("File exist!");
 		}
-		return noFileFound;
-		
+		else{
+			fileExist = false;
+		}
+		return fileExist;
 	}
+	
+	// Yixiao 2015-11-17
+	private boolean createFile(File file){
+
+		boolean fileCreated = false;		
+		try{
+			file.createNewFile();
+			fileCreated = true;
+		}catch(IOException e){
+			System.out.println(e.toString());
+		}		
+		return fileCreated;		
+	}
+	
 	private double calculateDistance(double x1, double x2, double y1, double y2)
 	{
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));

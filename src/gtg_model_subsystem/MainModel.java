@@ -29,7 +29,7 @@ public class MainModel {
 		mapTable = new Hashtable<String, Map>();
 		path = new Path(null, null, null);
 		try {			
-			loadMaps();
+			loadMapLists();
 			loadAdmin();			
 			//loadMapListFile();
 			loadFiles("BH_Basement");	// Yixiao
@@ -46,7 +46,7 @@ public class MainModel {
 	 * @return true if load and store the map table successfully
 	 * 		   false if maps does not exist
 	 */
-	public boolean loadMaps()
+	public boolean loadMapLists()
 	{
 		ArrayList<Map> masterMapList=null;
 		try {
@@ -57,10 +57,10 @@ public class MainModel {
 			e.printStackTrace();
 		}
 		if(masterMapList==null){
-			System.out.println("master list is null");
+			System.out.println("Map list is null");
 			return false;
 		} else{
-			System.out.println("Attempting to store in master list");
+			System.out.println("Map List");
 			//access each map and store it into map table
 			for(Map map:masterMapList){
 				System.out.println(map.getMapName());
@@ -116,23 +116,25 @@ public class MainModel {
 				return saveNewMap;
 	}
 	// Yixiao 2015-11-15
-	public List<Node> getNodeList(){
-		List<Node> currentNodeList = tempMap.getGraph().getNodes();		
+	public List<Node> getNodeList(String mapName){
+		List<Node> currentNodeList = mapTable.get(mapName).getGraph().getNodes();	
 		return currentNodeList;		
 	}
 	// Yixiao 2015-11-15
-	public List<Edge> getEdgeList(){
-		List<Edge> currentEdgeList = tempMap.getGraph().getEdges();		
+	public List<Edge> getEdgeList(String mapName){
+		List<Edge> currentEdgeList = mapTable.get(mapName).getGraph().getEdges();	
 		return currentEdgeList;
 	}
 	
 	//re-add string mapName future
-	public void loadFiles(String mapName){
+	public boolean loadFiles(String mapName){
+		boolean mapCreated = false;
 		try{
-			createMapGraph(mapName);
+			mapCreated = createMapGraph(mapName);
 		}catch(IOException e){
 			System.out.println(e.toString());
-		}
+		}		
+		return mapCreated;		
 	}
 	public void loadAdmin() throws IOException{
 		fileProcessing.readAdmin(admins);
@@ -187,23 +189,13 @@ public class MainModel {
 					}
 					for(Edge newEdge:edgeList){
 						edges.add(newEdge);
-					}		
-					
-					// Yixiao 2015-11-16 In case saving a new map
-					if(newMap){
-						String NodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
-						String EdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";	
-						fileProcessing.saveNodesFile(nodes, NodeURL);	
-						fileProcessing.saveEdgesFile(edges, EdgeURL);	
-						System.out.println("New map file: "+ mapName + " saved!");		
-					}
-					else{
-						
-						fileProcessing.saveNodesFile(nodes, MapNodeURLS.TEST_MAP_NODES);	
-						fileProcessing.saveEdgesFile(edges, MapEdgeURLS.TEST_MAP_EDGES);	
-						System.out.println("File saved successfully");	
-						
-					}
+					}					
+					// Yixiao 2015-11-17
+					String NodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
+					String EdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";	
+					fileProcessing.saveNodesFile(nodes, NodeURL);	
+					fileProcessing.saveEdgesFile(edges, EdgeURL);		
+					System.out.println("File saved successfully");	
 				}	
 			}
 		}catch(IOException e){
