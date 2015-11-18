@@ -56,11 +56,10 @@ public class MainModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//IF the master map list failed to load THEN
 		if(masterMapList==null){
-			System.out.println("Map list is null");
 			return false;
 		} else{
-			System.out.println("Map List");
 			//access each map and store it into map table
 			for(Map map:masterMapList){
 				System.out.println(map.getMapName());
@@ -115,18 +114,8 @@ public class MainModel {
 				}
 				return saveNewMap;
 	}
-	// Yixiao 2015-11-15
-	public List<Node> getNodeList(String mapName){
-		List<Node> currentNodeList = mapTable.get(mapName).getGraph().getNodes();	
-		return currentNodeList;		
-	}
-	// Yixiao 2015-11-15
-	public List<Edge> getEdgeList(String mapName){
-		List<Edge> currentEdgeList = mapTable.get(mapName).getGraph().getEdges();	
-		return currentEdgeList;
-	}
 	
-	//re-add string mapName future
+	
 	public boolean loadFiles(String mapName){
 		boolean mapCreated = false;
 		try{
@@ -159,22 +148,10 @@ public class MainModel {
 		return createMapGraphSuccess;
 	}
 	
-	public void saveMapGraph(String mapName) throws IOException{		
-		// Save to existing File
-		Map saveMap = mapTable.get(mapName);
-		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
-		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
-	}
-	
+
 	//Overrode method to handle controller temporary list for nodes and edges
-	public void saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
+	public boolean saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
 		try{
-			// Yixiao 2015-11-16 In case creating a new map
-			Boolean newMap = false;
-			// Save a new map
-			if(mapTable.get(mapName) == null){
-				newMap = true;
-			}
 			
 			List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
 			if(!nodeList.isEmpty()){
@@ -189,17 +166,16 @@ public class MainModel {
 					}
 					for(Edge newEdge:edgeList){
 						edges.add(newEdge);
-					}					
-					// Yixiao 2015-11-17
-					String NodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
-					String EdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";	
-					fileProcessing.saveNodesFile(nodes, NodeURL);	
-					fileProcessing.saveEdgesFile(edges, EdgeURL);		
+					}											
+					fileProcessing.saveNodesFile(nodes, mapName);	
+					fileProcessing.saveEdgesFile(edges, mapName);		
 					System.out.println("File saved successfully");	
 				}	
 			}
+			return true;
 		}catch(IOException e){
 			System.out.println(e.toString());
+			return false;
 		}
 		
 }
@@ -211,26 +187,15 @@ public class MainModel {
 			System.out.println("Point List is Empty, there is nothing to save");			
 			return NodeList;
 		}
-		
-		// Yixiao 2015-11-16 In case generating a new map		
-		Boolean NewMap = false;
-		if(mapTable.get(mapName) == null){
-			NewMap = true;
-		}
-		
+			
 		for(int i = 0; i<inputPointList.size(); i++)
 		{
 			Point2D tempPnt = inputPointList.get(i);
 			int X = (int)tempPnt.getX();
 			int Y = (int)tempPnt.getY();			
-			if(NewMap){
-				Node tempNode = new Node(i+1, X, Y);
-				NodeList.add(tempNode);				
-			}
-			else{
-				Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size()+i+1, X, Y);
-				NodeList.add(tempNode);	
-			}
+			Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size()+i+1, X, Y);
+			NodeList.add(tempNode);	
+
 		}	
 		return NodeList;
 	}
@@ -243,12 +208,6 @@ public class MainModel {
 			return EdgeList;
 		}
 		
-		// Yixiao 2015-11-16 In case generating a new map
-		Boolean NewMap = false;
-		if(mapTable.get(mapName) == null){
-			NewMap = true;
-		}
-
 		for (int i = 0; i<inputEdgeList.size(); i+=2)
 		{
 			System.out.println(i);
@@ -270,14 +229,8 @@ public class MainModel {
 			}
 			
 			if (startNode.getID()!=0&&endNode.getID()!=0){
-				if(NewMap){
-					EdgeList.add(new Edge(i+1, startNode, endNode, 1));	
-					EdgeList.add(new Edge(i+2, endNode, startNode, 1));
-				}
-				else{
-					EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+1, startNode, endNode, 1));	
-					EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+2, endNode, startNode, 1));					
-				}
+				EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+1, startNode, endNode, 1));	
+				EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+2, endNode, startNode, 1));					
 			}
 		}
 		
@@ -354,7 +307,7 @@ public class MainModel {
 			return pnt;
 		}
 		double currentDiff = 0.0;
-		double previousDiff = 1.0/0.0;
+		double previousDiff = Double.POSITIVE_INFINITY;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			currentDiff = Math.sqrt(Math.pow(node.getX()-x, 2)+ Math.pow(node.getY() - y, 2));
 			if(currentDiff < previousDiff){
@@ -436,7 +389,14 @@ public class MainModel {
 		}
 		return tempArrayOfMapNames;
 	}
-	
+	public List<Node> getNodeList(String mapName){
+		List<Node> currentNodeList = mapTable.get(mapName).getGraph().getNodes();	
+		return currentNodeList;		
+	}
+	public List<Edge> getEdgeList(String mapName){
+		List<Edge> currentEdgeList = mapTable.get(mapName).getGraph().getEdges();	
+		return currentEdgeList;
+	}
     
     //find node Id for the start of the edge
     public int findNodeId(String mapName,Point point)

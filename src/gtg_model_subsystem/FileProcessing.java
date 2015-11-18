@@ -146,9 +146,8 @@ public class FileProcessing {
 		File file = new File(mapNodeURL);
 		BufferedReader buffer = null;
 		
-		if(!checkFileExsistance(file)){
-			System.out.print("Create a new Node File for:" + mapName);
-			return createFile(file);
+		if(createFile(file)){
+			return readSuccess;
 		}
 		else{
 			try{
@@ -180,10 +179,10 @@ public class FileProcessing {
 		File file = new File(mapEdgeURL);
 		BufferedReader buffer = null; 
 		boolean readSuccess = true;
-		// Yixiao 2015-11-17
-		if(!checkFileExsistance(file)){
-			return createFile(file);
-		}		
+
+		if(createFile(file)){
+			return readSuccess;
+		}	
 		else{
 			try{
 				buffer = new BufferedReader(new FileReader(file));
@@ -230,7 +229,8 @@ public class FileProcessing {
 		}
 		buffer.close();
 	}
-	public void saveNodesFile(List<Node> nodes, String mapNodeURL) throws IOException{
+	public void saveNodesFile(List<Node> nodes, String mapName) throws IOException{
+		String mapNodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
 		try{
 		    FileWriter fstream = new FileWriter(mapNodeURL);
 		    BufferedWriter out = new BufferedWriter(fstream);
@@ -245,7 +245,8 @@ public class FileProcessing {
 			System.out.println(E.toString());
 		}
 	}
-	public void saveEdgesFile(List<Edge> edges, String mapEdgeURL) throws IOException{
+	public void saveEdgesFile(List<Edge> edges, String mapName) throws IOException{
+		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";
 		try{
 		    FileWriter fstream = new FileWriter(mapEdgeURL);
 		    BufferedWriter out = new BufferedWriter(fstream);
@@ -261,29 +262,19 @@ public class FileProcessing {
 		}
 	}
 	
-	// Yixiao 2015-11-17
-	private boolean checkFileExsistance(File file){
-		boolean fileExist = true;
-		if(file.exists()){
-			System.out.print("File exist!");
-		}
-		else{
-			fileExist = false;
-		}
-		return fileExist;
-	}
-	
-	// Yixiao 2015-11-17
 	private boolean createFile(File file){
-
-		boolean fileCreated = false;		
-		try{
-			file.createNewFile();
-			fileCreated = true;
-		}catch(IOException e){
-			System.out.println(e.toString());
-		}		
-		return fileCreated;		
+		boolean pathFound = true;
+		//IF file does not exist create new file
+		if(!file.exists()){
+			try{
+				file.createNewFile();
+			}catch(IOException e){
+				System.out.println(e.toString());
+				pathFound = false;
+				return pathFound;
+			}
+		}
+		return pathFound;
 	}
 	
 	private double calculateDistance(double x1, double x2, double y1, double y2)

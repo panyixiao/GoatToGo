@@ -14,18 +14,12 @@ public class Map {
 		private String mapImgURL;
 		
 		public Map(String mapName, CoordinateGraph graph, String mapImgURL,String mapType){
-			//create image
 			this.mapImgURL = mapImgURL;
 			this.graph = graph;
 		    this.mapName = mapName;
 		    this.mapType=mapType;
 		}
-		/**Load the image into the map 
-		*according to the image's path
-		*@pre image exists
-		*@post img!=NULL
-		*/
-		//public void drawMap(String filePath){}
+
 		
 		public void setGraph(CoordinateGraph graph){
 			this.graph = graph;

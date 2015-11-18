@@ -34,7 +34,9 @@ public class Node
 		}
 		// construction
 		public Node(int id, int x, int y) {
-			this(id, x, y, 0, "", "");
+			this.id = id;
+			this.x = x;
+			this.y = y;
 		}
 		// overload construction
 		
