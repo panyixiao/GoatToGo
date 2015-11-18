@@ -353,10 +353,10 @@ public class MainModel {
 			System.out.println("MapTable is empty, Validation Failed");
 			return pnt;
 		}
-		int currentDiff = 0;
-		int previousDiff = Integer.MAX_VALUE;
+		double currentDiff = 0.0;
+		double previousDiff = 1.0/0.0;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-			currentDiff = (int) Math.sqrt(Math.pow(node.getX()-x, 2)+ Math.pow(node.getY() - y, 2));
+			currentDiff = Math.sqrt(Math.pow(node.getX()-x, 2)+ Math.pow(node.getY() - y, 2));
 			if(currentDiff < previousDiff){
 				previousDiff = currentDiff;
 				validatedNode = node;
