@@ -14,16 +14,16 @@ public class MainView {
 	private ResultPage resultPage = new ResultPage(this);
 	private LoginPage loginPage = new LoginPage(this);
 	private JPanel currentPage = new JPanel();
-	private AdminMapEditPage adminMapPage = new AdminMapEditPage(this);
-	
+	private AdminMapEditPage adminMapPage; 
+	//= new AdminMapEditPage(this);
+	private AddDeleteMapPage addDeleteMapPage = new AddDeleteMapPage(this);
+
 	public MainController mainController;
 	
 	public MainView(MainController mainController){
 		this.mainController = mainController;
 		page = new Page(this);
 		this.showWelcomePage();
-		//page.addPage(welcomePage);
-		//currentPage = welcomePage;
 	}
 	
 	public void showMapPage(){
@@ -52,6 +52,14 @@ public class MainView {
 		currentPage = loginPage;
 	}
 	
+	public void showAddDeleteMapPage(){
+		page.hideAdminButton();
+		page.hideLogoutButton();
+		page.removePage(currentPage);
+		page.addPage(addDeleteMapPage);
+		currentPage = addDeleteMapPage;
+	}
+
 	public void showResultPage(){
 		page.showAdminButton();
 		page.hideLogoutButton();
@@ -60,28 +68,39 @@ public class MainView {
 		currentPage = resultPage;
 	}
 	
+
+
 	public void checkAdminValid(String userName, String passWord){
 		Boolean userValid = this.mainController.adminQualification(userName, passWord);
 		if(userValid == true){
 			page.showLogoutButton();
 			page.removePage(currentPage);
-			page.addPage(adminMapPage);
-			currentPage = adminMapPage;
+			page.addPage(addDeleteMapPage);
+			currentPage = addDeleteMapPage;
+			addDeleteMapPage.showMapList(this.mainController.getMapList("admin"));
 		} else {
 			loginPage.showInvalidUsernameDialog();
 		}
+	}
+	public void showAdminMapEditPage(String mapName) {
+		System.out.println("(Mainview switchToAdminMapEditPage)" + mapName);
+		page.removePage(currentPage);
+		adminMapPage = new AdminMapEditPage(this,mapName);
+		adminMapPage.setMapName(mapName);
+		page.addPage(adminMapPage);
+		currentPage = adminMapPage;
 		
 	}
 
-	// Original Function
-	/*public void sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
-		//send the point to controller
-		System.out.println("Selected Point is" + startEndPoint);
-		System.out.println("Selected Point type" + selectedPointType);
-		System.out.println("Selected Map " + mapName);
-		this.mainController.setTaskPnt(startEndPoint, selectedPointType, mapName);
-		//this.mapPage.setPoint();
-	}*/
+	public void showAdddDeleteMapPage() {
+		page.showLogoutButton();
+		page.removePage(currentPage);
+		page.addPage(addDeleteMapPage);
+		currentPage = addDeleteMapPage;
+		addDeleteMapPage.showMapList(this.mainController.getMapList("admin"));
+		
+	}
+
 	// Yixiao's change
 	public Point sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
 		//send the point to controller
@@ -91,12 +110,9 @@ public class MainView {
 		System.out.println("Selected Map " + mapName);
 		pntToBeMapped = this.mainController.setTaskPnt(startEndPoint, selectedPointType, mapName);
 		return pntToBeMapped;
-		//this.mapPage.setPoint();
 	}
 
 	public void getPathResult() {
-		// TODO Auto-generated method stub
-		//PathData path = this.createDummyDataForResult();
 		PathData path = mainController.getPathData();
 		showResultPage();
 		this.resultPage.displayPath(path);
@@ -104,42 +120,44 @@ public class MainView {
 
 	public void deleteSelectedPoint(String selectedPointType) {
 		System.out.println("Point is deleted" + selectedPointType);
-		// TODO Auto-generated method stub
-		//this.mainController.deleteSelectedPoint(selectedPointType);
 		this.mapPage.deletePoint(selectedPointType);
 		
 	}
-	
-	public PathData createDummyDataForResult(){
-		PathData path = new PathData();
-		path.setStartPoint(new Point(112, 381));
-		path.setEndPoint(new Point(863, 842));
-		
-		ArrayList<String> tempMapNames = new ArrayList<String>();
-		tempMapNames.add("BH_BASEMENT");
-		path.setArrayOfMapNames(tempMapNames);
-		
-		ArrayList<Point> tempPoints = new ArrayList<Point>();
-		tempPoints.add(new Point(112, 381));
-		tempPoints.add(new Point(147, 364));
-		tempPoints.add(new Point(147, 364));
-		tempPoints.add(new Point(246, 364));
-		tempPoints.add(new Point(295, 363));
-		tempPoints.add(new Point(361, 365));
-		tempPoints.add(new Point(389, 493));
-		tempPoints.add(new Point(491, 529));
-		tempPoints.add(new Point(658, 542));
-		tempPoints.add(new Point(777, 542));
-		tempPoints.add(new Point(857, 538));
-		tempPoints.add(new Point(863, 842));
-		
-		path.setWayPoints(tempPoints);
-		
-		return path;
+
+	public void saveFromAdmin(String mapName) {
+		this.mainController.createCoordinateGraph(mapName);
 	}
 
-	public void saveFromAdmin() {
-		// TODO Auto-generated method stub
-		this.mainController.createCoordinateGraph("BH_Basement");
+	/*
+	 * This method is called from the admin addDeleteMapPage to fetch the map url.
+	 */
+	public void fetchMapURLAdmin(String mapName) {
+		addDeleteMapPage.showMapImage(this.mainController.getMapURL(mapName));
+	}
+
+	/*
+	 * This method is called from the admin addDeleteMapPage to add new map data into the .txt file.
+	 */
+	public void sendAddMapData(String mapName, String mapImageURL, String mapType) {
+		boolean result = this.mainController.addNewMap(mapName, mapImageURL, mapType);
+		if(result == true){
+			addDeleteMapPage.showMapList(this.mainController.getMapList("admin"));
+		} else {
+			addDeleteMapPage.showAddMapError();
+		}
+	}
+
+
+	/*
+	 * This method is called from the admin addDeleteMapPage to delete the map from the .txt file.
+	 */
+	public void deleteMap(String mapName) {
+		System.out.println("(Mainview deleteMap)" + mapName);
+		boolean result = this.mainController.deleteMap(mapName);
+		if(result == true){
+			addDeleteMapPage.showMapList(this.mainController.getMapList("admin"));
+		} else {
+			addDeleteMapPage.showDeleteMapError();
+		}
 	}
 }

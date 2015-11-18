@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import gtg_model_subsystem.MainModel;
 import gtg_model_subsystem.Node;
+import gtg_model_subsystem.Edge;
 import gtg_model_subsystem.Path;
 
 import gtg_view_subsystem.PathData;
@@ -16,50 +17,75 @@ import java.util.ArrayList;
 
 public class MainController{
 	
+	/*Added by neha. Yixio this is the temporary list to store map names and map urls. This is done to check
+	integration between the controller and the view subsystem.*/	
+	private ArrayList<String> listofMaps = new ArrayList<String>();
+	private ArrayList<String> urlsofMaps = new ArrayList<String>();
+
+	
 	public MainModel mapModel;
 	/**/
 	private ViewController viewController;
 	private MapEditController mapEditor;
 	private PathSearchController pathSearchController;
 	private AdminController userChecker;
-	
-	/*This is only for Tuesday show*/
-	private int StartID;
-	private int EndID;
-	
-	private ArrayList<Point2D> tempPntList;
-	private ArrayList<Point2D> tempEdgeList;
+		
+	private ArrayList<Point2D> tempPntList  = new ArrayList<Point2D>();
+	private ArrayList<Point2D> tempEdgeList = new ArrayList<Point2D>();
 	
 	/**/
 	public MainController(MainModel mapModel){
-		this.mapModel = mapModel;	
-		tempPntList = new ArrayList<Point2D>();
-		tempEdgeList = new ArrayList<Point2D>();
+		this.mapModel = mapModel;
+		MapListIntial();
 	}
 	
-	
-	/**/
-	public String getMapImage(String mapName){
-		String ImageURL ="";
+	// temporarily initializer, will be moved to Model-subsystem in the future
+	private void MapListIntial(){
+		listofMaps.add("BH_Basement");
+		listofMaps.add("BH_FirstFloor");
+		listofMaps.add("BH_SecondFloor");
+		listofMaps.add("BH_ThirdFloor");
 		
-		return ImageURL;
+		// map urls
+		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
+		String BH_FIRST_FLOOR = "images"+System.getProperty("file.separator")+"BH_FirstFloor.png";
+		String BH_SECOND_FLOOR = "images"+System.getProperty("file.separator")+"BH_SecondFloor.png";
+		String BH_THIRD_FLOOR = "images"+System.getProperty("file.separator")+"BH_ThirdFloor.png";
+		
+		urlsofMaps.add(BH_BASEMENT);
+		urlsofMaps.add(BH_FIRST_FLOOR);
+		urlsofMaps.add(BH_SECOND_FLOOR);
+		urlsofMaps.add(BH_THIRD_FLOOR);		
 	}
 	
-	public ArrayList<String> getMapList(){
-		ArrayList<String> mapData= new ArrayList<String>();
-		mapData=mapModel.getArrayOfMapNames();
-		/*for (String temp: mapData) {
-			System.out.println("Map Name: "+temp);
-		}*/
-		return mapData;		
-	}
-	/*
 	public ArrayList<String> getMapDate(String mapName){
 		ArrayList<String> mapData= new ArrayList<String>();
 		mapData=mapModel.getArrayOfMapNames();
-		return mapData;		
+		return mapData;
 	}
-	*/
+	/* Added by neha
+	 * This method should fetch the map url from the model and return the url to the view subsystem.
+	 */
+	public String getMapURL(String mapName){
+		String mapurl = "";
+		int index = listofMaps.indexOf(mapName);
+		mapurl = urlsofMaps.get(index);
+		return mapurl;
+	}
+	
+	/* Added by Neha
+	 * For integration the method return me the hardcoded arraylist.
+	 * Once a method from model is available the method should return me an arrayList of mapnames.
+	 * The input parameter mapName will help us to use the same method in the map page
+	 * i.e if mapName is admin means the list should conatins all the map names
+	 * if mapName is campus then the list will contain all building names
+	 * if mapName is building then the list will contain all the floor names of the building and the campus map also.
+	 * You will have to implement the switch case.
+	 */
+	public ArrayList<String> getMapList(String mapName){
+		return listofMaps;		
+	}
+
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		//TargetPntInfo targetPnt = new TargetPntInfo();
 		Point targetPnt = new Point();
@@ -103,42 +129,6 @@ public class MainController{
 		return path;
 	}
 	
-	/*public PathData testCalculation(Point start, Point end, String mapName){
-		
-		Point startNode=mapData.validatePoint(mapName, start.x, start.y);
-		Point endNode=mapData.validatePoint(mapName, end.x, end.y);
-		mapData.runJDijkstra(startNode.getID(), endNode.getID());
-		Map testMap=mapData.getTestMap();
-		List<Node> wayPnt=testMap.getPath().getWayPoints();
-		
-		Point newStart=new Point(startNode.getX(), startNode.getY());
-		Point newEnd=new Point(endNode.getX(), endNode.getY());
-		PathData path = new PathData();
-		path.setStartPoint(newStart);
-		path.setEndPoint(newEnd);
-		
-		ArrayList<String> tempMapNames = new ArrayList<String>();
-		tempMapNames.add(mapName);
-		path.setArrayOfMapNames(tempMapNames);
-		
-		ArrayList<Point> tempPoints = new ArrayList<Point>();
-		for (Node n:wayPnt){
-			tempPoints.add(new Point(n.getX(),n.getY()));
-		}
-		path.setArrayOfPoints(tempPoints);
-		
-		return path;
-	} */
-	/* need the package from modelsubsystem
-	 * 
-	 * public MultilayerPath getDirections(){
-	 * 
-	 * MultilayerPath path = new MultilayerPath();
-	 * 
-	 * return path;
-	 * }
-	 * 
-	 * */	
 	public Boolean adminQualification(String userName, String passWord){
 		Boolean isAdmin = false;
 		isAdmin = mapModel.isValidAdmin(userName, passWord);
@@ -151,7 +141,39 @@ public class MainController{
 	
 	/* Used for create the "MapName.txt" file, 
 	 * correspond to a button "Generate Road Map" on the Admin page
-	 * Used to save the temporal point graph to file*/
+	 * Used to save the temporal point graph to file*/	
+	public Boolean LoadingPntsAndEdges(String mapName){
+		if(mapModel.loadFiles(mapName)){
+			List<Node> currentNode = mapModel.getNodeList(mapName);
+			List<Edge> currentEdge = mapModel.getEdgeList(mapName);
+			tempPntList = transferNodeToPnt2D(currentNode);
+			tempEdgeList = transferEdgeToPnt2D(currentEdge);		
+			return true;	
+		}
+		else{
+			System.out.println("Loading File failed");
+			return false;
+		}
+	}
+	
+	private ArrayList<Point2D> transferNodeToPnt2D(List<Node> targetList){
+		ArrayList<Point2D> pntList = new ArrayList<Point2D>();
+		for(Node nd:targetList){
+			Point2D pnt = new Point2D.Double(nd.getX(),nd.getY());
+			pntList.add(pnt);			
+		}
+		return pntList;
+	}
+	private ArrayList<Point2D> transferEdgeToPnt2D(List<Edge> targetList){
+		ArrayList<Point2D> edgeList = new ArrayList<Point2D>();
+		for(Edge eg:targetList){
+			Point2D pnt_1 = new Point2D.Double(eg.getSource().getX(),eg.getSource().getY());
+			Point2D pnt_2 = new Point2D.Double(eg.getDestination().getX(),eg.getDestination().getY());
+			edgeList.add(pnt_1);
+			edgeList.add(pnt_2);
+		}
+		return edgeList;
+	}
 	
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
@@ -165,12 +187,37 @@ public class MainController{
 		return success;
 	}
 	
+	/* Added by  neha. For now this method just pushes the data into the listofMaps and urlsofMaps.
+	 * Once the model method is available call that method with the same paramaters.
+	 * The model method should return a boolean value:
+	 * True if mapName and mapImageURL are stored succesfully into the .txt file
+	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
+	 */
+	public Boolean addNewMap(String mapName, String mapImageURL, String mapType){
+		System.out.println(mapName);
+		System.out.println(mapImageURL);
+		System.out.println(mapType);
+		listofMaps.add(mapName);
+		urlsofMaps.add(mapImageURL);
+		return true;
+	}
+	
+	/* Added by  neha. For now this method just deletes the map from listofMaps and urlsofMaps.
+	 * Once the model method is available call that method with the same paramaters.
+	 * The model method should return a boolean value:
+	 * True if mapName and mapImageURL are deleted succesfully from the .txt file
+	 * False if mapName and mapImageURL are not deleted succesfully from the .txt file
+	 */
+	public Boolean deleteMap(String mapName){
+		int index = listofMaps.indexOf(mapName);
+		listofMaps.remove(index);
+		urlsofMaps.remove(index);
+		return true;
+	}
+	
+	// Create point on temporal the point graph created in MapEditor
 	public Boolean addPoint(Point2D inputPnt){
 		Boolean success = false;
-		/*
-		 * Create point on temporal the point graph created in MapEditor
-		 * 
-		 * */
 		if(CheckPntExistence(inputPnt,tempPntList)==0){
 			tempPntList.add(inputPnt);	
 			success = true;
@@ -183,6 +230,7 @@ public class MainController{
 		// Check Edge Redundancy
 		int PointID_1 = CheckPntExistence(pnt1,tempEdgeList);
 		int PointID_2 = CheckPntExistence(pnt2,tempEdgeList);
+		// Check if edge already exist in the edge list
 		if(PointID_1 !=0 && PointID_2!=0 && 
 		   Math.abs(PointID_1-PointID_2) == 1){
 			success = false;
@@ -270,7 +318,6 @@ public class MainController{
 			}
 		}
 		return pntID;
-	}
-	
+	}	
 
 }
