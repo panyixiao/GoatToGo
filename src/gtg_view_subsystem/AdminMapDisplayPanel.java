@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -82,21 +83,24 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		building.setText(this.building);
 		JTextField floor = new JTextField(3);
 		floor.setText(this.floor);
-		JPanel panel = new JPanel(new GridLayout(0, 1));
+		JPanel panel = new JPanel(new GridLayout(0, 2));
+		String[] listPointTypes = {"Classroom", "Office", "Elevator", "Stairs", "Building","Parking Lot","Men's Restroom","Woman's Restroom","Cafe","Vending","Water fountian","Waypoint"};
+
+		JComboBox pointType = new JComboBox(listPointTypes); 
 		
-		panel.add(Box.createHorizontalStrut(5)); // a spacer
+
 		panel.add(new JLabel("Building:"));
 		panel.add(building);
 
-		panel.add(Box.createHorizontalStrut(5)); // a spacer
 		panel.add(new JLabel("Floor:"));
 		panel.add(floor);
 
-		panel.add(Box.createHorizontalStrut(5)); // a spacer
 		panel.add(new JLabel("Entrance ID:"));
 		panel.add(entranceId);
-		panel.add(Box.createHorizontalStrut(5)); // a spacer 
 
+		panel.add(new JLabel("Type:"));
+		panel.add(pointType);
+		
 		panel.add(new JLabel("Description:"));
 		panel.add(description); 
 		if (me.getButton() == MouseEvent.BUTTON1) {
@@ -261,5 +265,4 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		
 	}
 	
-
 }
