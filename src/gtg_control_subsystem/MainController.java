@@ -18,8 +18,7 @@ import java.util.ArrayList;
 public class MainController{
 	
 	/*Added by neha. Yixio this is the temporary list to store map names and map urls. This is done to check
-	integration between the controller and the view subsystem.*/
-	
+	integration between the controller and the view subsystem.*/	
 	private ArrayList<String> listofMaps = new ArrayList<String>();
 	private ArrayList<String> urlsofMaps = new ArrayList<String>();
 
@@ -59,7 +58,6 @@ public class MainController{
 		urlsofMaps.add(BH_THIRD_FLOOR);		
 	}
 	
-	
 	public ArrayList<String> getMapDate(String mapName){
 		ArrayList<String> mapData= new ArrayList<String>();
 		mapData=mapModel.getArrayOfMapNames();
@@ -67,7 +65,7 @@ public class MainController{
 	}
 	/* Added by neha
 	 * This method should fetch the map url from the model and return the url to the view subsystem.
-	 * */
+	 */
 	public String getMapURL(String mapName){
 		String mapurl = "";
 		int index = listofMaps.indexOf(mapName);
@@ -145,16 +143,17 @@ public class MainController{
 	 * correspond to a button "Generate Road Map" on the Admin page
 	 * Used to save the temporal point graph to file*/	
 	public Boolean LoadingPntsAndEdges(String mapName){
-		mapModel.loadFiles(mapName);
-		List<Node> currentNode = mapModel.getNodeList();
-		List<Edge> currentEdge = mapModel.getEdgeList();
-		if(currentNode.isEmpty()||currentEdge.isEmpty()){
-			System.out.println("Current Node/Edge List is empty");
+		if(mapModel.loadFiles(mapName)){
+			List<Node> currentNode = mapModel.getNodeList(mapName);
+			List<Edge> currentEdge = mapModel.getEdgeList(mapName);
+			tempPntList = transferNodeToPnt2D(currentNode);
+			tempEdgeList = transferEdgeToPnt2D(currentEdge);		
+			return true;	
+		}
+		else{
+			System.out.println("Loading File failed");
 			return false;
-		}		
-		tempPntList = transferNodeToPnt2D(currentNode);
-		tempEdgeList = transferEdgeToPnt2D(currentEdge);		
-		return true;
+		}
 	}
 	
 	private ArrayList<Point2D> transferNodeToPnt2D(List<Node> targetList){

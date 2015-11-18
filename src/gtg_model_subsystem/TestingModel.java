@@ -15,9 +15,9 @@ public class TestingModel {
 		MainModel test = new MainModel();
 		//remind alyssa and neha that we need relative path and not absolute
 		try {
-			//test.saveNewMap("BH_Basement", "images\\BH_Basement.png", "Floor");
+			test.saveNewMap("BH_Basement", "images\\BH_Basement.png", "Floor");
 			test.printMaps();
-			test.createMapGraph("BH_Basement");
+			//test.createMapGraph("BH_Basement");
 			//test.createMapGraph("BH_LAME");
 			//test.deleteMap("BH_Basement");
 		} catch (IOException e) {
