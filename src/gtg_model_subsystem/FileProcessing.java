@@ -145,11 +145,13 @@ public class FileProcessing {
 		boolean readSuccess = true;
 		File file = new File(mapNodeURL);
 		BufferedReader buffer = null;
-		
+		//CHECK to see if there is a new file that needs to be created
+		//true of created
+		//false if file exists
 		if(createFile(file)){
-			return readSuccess;
-		}
-		else{
+			//return true because we created a new file
+			return true;
+		}else{
 			try{
 				System.out.println("Reading instead");
 				buffer = new BufferedReader(new FileReader(file));
@@ -179,9 +181,12 @@ public class FileProcessing {
 		File file = new File(mapEdgeURL);
 		BufferedReader buffer = null; 
 		boolean readSuccess = true;
-
+		//CHECK to see if there is a new file that needs to be created
+		//true of created
+		//false if file exists
 		if(createFile(file)){
-			return readSuccess;
+			//return true because we created a new file
+			return true;
 		}	
 		else{
 			try{
@@ -263,23 +268,23 @@ public class FileProcessing {
 	}
 	
 	private boolean createFile(File file){
-		boolean pathFound = true;
+		boolean createFile = true;
 		//IF file does not exist create new file
 		if(!file.exists()){
 			try{
 				file.createNewFile();
 			}catch(IOException e){
 				System.out.println(e.toString());
-				pathFound = false;
-				return pathFound;
+				
 			}
 		}
-		return pathFound;
+		else{
+			return false;
+		}
+		return createFile;
 	}
-	
 	private double calculateDistance(double x1, double x2, double y1, double y2)
 	{
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
 	}
-	
 }

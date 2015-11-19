@@ -150,6 +150,7 @@ public class MainController{
 			this.edgeList = (ArrayList<Edge>) mapModel.getEdgeList(mapName);	
 			this.tempPntList = this.transferNodeToPnt2D(nodeList);
 			this.tempEdgeList = this.transferEdgeToPnt2D(edgeList);
+
 			return true;	
 		}
 		else{
