@@ -76,5 +76,4 @@ public class Node
 			return this.nodeDescription;
 		}
 		
-		
 	}

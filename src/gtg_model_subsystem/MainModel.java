@@ -150,16 +150,16 @@ public class MainModel {
 	
 
 	//Overrode method to handle controller temporary list for nodes and edges
-	public boolean saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
+	public boolean saveMapGraph(String mapName, ArrayList<Node> tempNodeList, ArrayList<Edge> tempEdgeList) throws IOException{
 		try{
-			
-			List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
+			List<Node> nodeList = tempNodeList;	
 			if(!nodeList.isEmpty()){
 				System.out.println("Node List created!");
-				List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
+				List<Edge> edgeList = tempEdgeList;
 				if(!edgeList.isEmpty()){
 					System.out.println("Edge List Created!");
-
+					nodes.clear();
+					edges.clear();
 					// Adding to the existing nodeList and Edge list;
 					for(Node newNode:nodeList){
 						nodes.add(newNode);
@@ -180,7 +180,7 @@ public class MainModel {
 		
 }
 	
-	private List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
+	/*private List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
 		List<Node> NodeList = new ArrayList<Node>();
 		
 		if(inputPointList.isEmpty()){
@@ -235,7 +235,7 @@ public class MainModel {
 		}
 		
 		return EdgeList;
-	}
+	}*/
 	
 
 	
@@ -410,4 +410,5 @@ public class MainModel {
     	}
 		return 0;
     }
+   
 }

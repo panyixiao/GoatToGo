@@ -161,7 +161,12 @@ public class FileProcessing {
 					
 					Node node = new Node(Integer.parseInt(lines[0]), 
 										 Integer.parseInt(lines[1]), 
-										 Integer.parseInt(lines[2])
+										 Integer.parseInt(lines[2]),
+										 Integer.parseInt(lines[3]),
+										 Integer.parseInt(lines[4]),
+										 lines[5],
+										 lines[6],
+										 lines[7]
 										 );
 					nodes.add(node);
 				}
@@ -195,13 +200,11 @@ public class FileProcessing {
 					
 					//Subtract one for arraylist index value
 					nodeId1 = Integer.parseInt(lines[1]) - 1;
-					nodeId2 = Integer.parseInt(lines[2]) - 1;
+					nodeId2 = Integer.parseInt(lines[4]) - 1;
 		
 					Edge edge = new Edge(Integer.parseInt(lines[0]), 
 										 nodes.get(nodeId1), 
-										 nodes.get(nodeId2),
-										 calculateDistance(nodes.get(nodeId1).getX(), nodes.get(nodeId2).getX(), nodes.get(nodeId1).getY(), nodes.get(nodeId2).getY())
-										 );
+										 nodes.get(nodeId2));
 					
 					edges.add(edge);
 				}
@@ -232,10 +235,10 @@ public class FileProcessing {
 	public void saveNodesFile(List<Node> nodes, String mapName) throws IOException{
 		String mapNodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
 		try{
-		    FileWriter fstream = new FileWriter(mapNodeURL);
+			FileWriter fstream = new FileWriter(mapNodeURL);
 		    BufferedWriter out = new BufferedWriter(fstream);
 		    for(Node node: nodes){
-		    	out.write(node.getID() + " " + node.getX()+ " " + node.getY());
+		    	out.write(node.getID() + " " + node.getX()+ " " + node.getY()+ " " + node.getBuildingName() + " "+node.getFloorNum()+ " " + node.getEntranceID() + " " + node.getNodeDescription());
 		    	out.newLine();
 		    }
 		    System.out.println("File Node Write Success!");
@@ -248,10 +251,11 @@ public class FileProcessing {
 	public void saveEdgesFile(List<Edge> edges, String mapName) throws IOException{
 		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";
 		try{
-		    FileWriter fstream = new FileWriter(mapEdgeURL);
+			
+			FileWriter fstream = new FileWriter(mapEdgeURL);
 		    BufferedWriter out = new BufferedWriter(fstream);
 		    for(Edge edge: edges){
-		    	out.write(edge.getEdgeID() + " " + edge.getSource().getID() + " " + edge.getDestination().getID());
+		    	out.write(edge.getEdgeID() + " " + edge.getSource().getID() + " " + edge.getSource().getBuildingName() + " " + edge.getSource().getFloorNum() + " " + edge.getDestination().getID() + " " + edge.getDestination().getBuildingName() + " " + edge.getDestination().getFloorNum() + " " + edge.getEdgeLength());
 		    	out.newLine();
 		    }
 		    System.out.println("File Edge Write Success!");
