@@ -289,6 +289,13 @@ public class AdminMapEditPage extends JPanel {
 		return success;
 	}
 	
+	public Boolean DeleteEdge(Point2D p){
+		Boolean success = false;
+		success = this.parent.mainController.deleteEdge(p);
+		pointNeighbors = this.parent.mainController.getDisplayEdge();
+		return success;
+	}
+	
 	public Boolean deletePoint(Point2D inputPoint){
 		Boolean pointDeleted = false;
 		pointDeleted = this.parent.mainController.deletePoint(inputPoint);
