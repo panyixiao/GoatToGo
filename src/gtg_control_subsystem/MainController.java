@@ -319,5 +319,34 @@ public class MainController{
 		}
 		return pntID;
 	}	
+	public boolean deleteEdge(Point2D P){
+		int n =checkIfPointIsInEdge(P);
+		if(n>=0){
+			System.out.println("I will delete edge");
+			tempEdgeList.remove(n);
+			tempEdgeList.remove(n);
+			return true;		
+		}
+		return false;
+	}
+	
+	//See if selected point is a part of an existing edge
+	// If the distance between the selected point 
+	public int checkIfPointIsInEdge(Point2D P){
+		double AB, AP, PB;
+		int r = -1;
+		for(int i=0; i<tempEdgeList.size()-1; i+=2){
+			AB= tempEdgeList.get(i).distance(tempEdgeList.get(i+1));
+			AP=tempEdgeList.get(i).distance(P);
+			PB = P.distance(tempEdgeList.get(i+1));
+			if(Math.abs(AB-(AP+PB))<=5){
+				r=i; 
+				System.out.println("Point " + P + "is part of an edge");
+				break;
+			}
+			}
+		System.out.println("Is point " + P+ "in an edge? " + r);
+		return r;
+	}
 
 }
