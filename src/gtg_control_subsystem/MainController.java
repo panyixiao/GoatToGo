@@ -32,6 +32,7 @@ public class MainController{
 		
 	private ArrayList<Point2D> tempPntList  = new ArrayList<Point2D>();
 	private ArrayList<Point2D> tempEdgeList = new ArrayList<Point2D>();
+	private ArrayList<Node> tempNodeList= new ArrayList<Node>();
 	
 	/**/
 	public MainController(MainModel mapModel){
@@ -58,7 +59,7 @@ public class MainController{
 		urlsofMaps.add(BH_THIRD_FLOOR);		
 	}
 	
-	public ArrayList<String> getMapDate(String mapName){
+	public ArrayList<String> getMapData(String mapName){
 		ArrayList<String> mapData= new ArrayList<String>();
 		mapData=mapModel.getArrayOfMapNames();
 		return mapData;
@@ -216,6 +217,16 @@ public class MainController{
 	}
 	
 	// Create point on temporal the point graph created in MapEditor
+	public Boolean addPoint(Point2D inputPnt, int entranceID, String description){
+		Boolean success = false;
+		if(CheckPntExistence(inputPnt,tempPntList)==0){
+			tempPntList.add(inputPnt);	
+			success = true;
+		}
+		return success;
+	}
+	// unfinished method 
+	
 	public Boolean addPoint(Point2D inputPnt){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt,tempPntList)==0){

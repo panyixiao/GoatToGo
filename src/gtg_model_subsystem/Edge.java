@@ -28,6 +28,10 @@ public class Edge
 			this.edgeLength = edgeLength;
 		}
 		
+		public Edge(int edgeID, Node source, Node destination){
+			this(edgeID, source, destination, Math.sqrt(Math.pow(source.getX()-destination.getX(), 2)+Math.pow(source.getY()-destination.getY(), 2)));
+		}
+		
 		/**return source of the edge
 		*/
 		public Node getSource(){
