@@ -246,7 +246,7 @@ public class FileProcessing {
 		}
 	}
 	public void saveEdgesFile(List<Edge> edges, String mapName) throws IOException{
-		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";
+		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"EdgeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";
 		try{
 		    FileWriter fstream = new FileWriter(mapEdgeURL);
 		    BufferedWriter out = new BufferedWriter(fstream);
