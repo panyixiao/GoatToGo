@@ -29,8 +29,9 @@ public class MainModel {
 		mapTable = new Hashtable<String, Map>();
 		path = new Path(null, null, null);
 		try {			
+			loadMapLists();
 			loadAdmin();			
-			loadMapListFile();
+			//loadMapListFile();
 			loadFiles("BH_Basement");	// Yixiao
 			
 		} catch (IOException e) {
@@ -39,158 +40,252 @@ public class MainModel {
 		}
 		
 	}
-
-	// Yixiao 2015-11-15	
-	public void loadMapListFile(){
-	}
-	// Yixiao 2015-11-15
-	public List<Node> getNodeList(){
-		List<Node> currentNodeList = tempMap.getGraph().getNodes();		
-		return currentNodeList;		
-	}
-	// Yixiao 2015-11-15
-	public List<Edge> getEdgeList(){
-		List<Edge> currentEdgeList = tempMap.getGraph().getEdges();		
-		return currentEdgeList;
-	}
-	
-	//re-add string mapName future
-	public void loadFiles(String mapName){
-		try{
-			createMapGraph(mapName);
-		}catch(IOException e){
-			System.out.println(e.toString());
+    
+	/**
+	 * Load maps from master map text file and store into table of maps
+	 * @return true if load and store the map table successfully
+	 * 		   false if maps does not exist
+	 */
+	public boolean loadMapLists()
+	{
+		ArrayList<Map> masterMapList=null;
+		try {
+			//load maps from master text file
+			masterMapList=fileProcessing.loadMapList();		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//IF the master map list failed to load THEN
+		if(masterMapList==null){
+			return false;
+		} else{
+			//access each map and store it into map table
+			for(Map map:masterMapList){
+				System.out.println(map.getMapName());
+				mapTable.put(map.getMapName(), map);
+			}
+			
+			return true;
 		}
 	}
-	public void loadAdmin() throws IOException{
-		fileProcessing.readAdmin(admins, "ModelFiles"+System.getProperty("file.separator")+"adminFile.txt");
+	/**
+	 * deleteMap will delete map from the map table and the master list text file
+	 * @param mapName the name of the map the admin wishes to delete
+	 * @return true if deletion was successful false otherwise
+	 * @throws IOException 
+	 */
+	public boolean deleteMap(String mapName) throws IOException{
+			boolean deleteSuccess = true;
+			if(mapTable.get(mapName) == null){
+				System.out.println("Map does not exist");
+				deleteSuccess = false;
+			}
+			//IF map exists in map table THEN
+			if(mapTable.get(mapName) != null){
+				//will this delete from memory??
+				//REMOVE map from map table
+				mapTable.remove(mapName);
+				//REMOVE map from master map list so it will not be re-loaded
+				fileProcessing.deleteMapFromMaster(mapName);
+				System.out.println("Delete Success");
+			}
+			return deleteSuccess;
 	}
 	
-	public void createMapGraph(String mapName) throws IOException{
+	/**
+	 * Method to save newly created maps added by admin from admin view to the list of maps.
+	 * @param mapName the name of new map to be saved
+	 * @param mapNameURL the name of new map URL to be saved
+	 * @param mapType the type of map that we are saving
+	 * @return true if map was successfully created false otherwise
+	 * @throws IOException 
+	 */
+	public boolean saveNewMap(String mapName, String mapImgURL, String mapType) throws IOException{
+				boolean saveNewMap = true;
+				//IF map does not exist in map table THEN
+				if (mapTable.get(mapName) != null){
+					System.out.println("Map Already exists");
+					saveNewMap = false;
+				}
+				//STORE map in masterMapList 
+				else{
+					fileProcessing.saveMapToMaster(mapName, mapImgURL, mapType);
+				}
+				return saveNewMap;
+	}
+	
+	
+	public boolean loadFiles(String mapName){
+		boolean mapCreated = false;
+		try{
+			mapCreated = createMapGraph(mapName);
+		}catch(IOException e){
+			System.out.println(e.toString());
+		}		
+		return mapCreated;		
+	}
+	public void loadAdmin() throws IOException{
+		fileProcessing.readAdmin(admins);
+	}
+	
+	public boolean createMapGraph(String mapName) throws IOException{
 		
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
-
-		// Yixiao 2015-11-16 In case try to loadin a map which File has not been created
-		
-		//fileProcessing.readNodesFile(nodes, MapNodeURLS.TEST_MAP_NODES);
-		//fileProcessing.readEdgesFile(nodes, edges, MapEdgeURLS.TEST_MAP_EDGES);
-		String NodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
-		String EdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";		
-		fileProcessing.readNodesFile(nodes, NodeURL);
-		fileProcessing.readEdgesFile(nodes, edges, EdgeURL);		
-		
-		if(nodes.isEmpty()||edges.isEmpty()){
-			System.out.println("creating New Map/Graph for" + mapName);
+		boolean createMapGraphSuccess = true;
+		if(!mapTable.containsKey(mapName)){
+			createMapGraphSuccess = false;
+			System.out.println("Map does not exist in table");
+			return createMapGraphSuccess;
 		}
+		fileProcessing.readNodesFile(nodes, mapName);
+		fileProcessing.readEdgesFile(nodes, edges, mapName);		
 		
 		graph = new CoordinateGraph(nodes, edges);
-		tempMap = new Map(mapName, graph, null);
-		mapTable.put(mapName, tempMap);
-	}
-	
-	public void saveMapGraph(String mapName) throws IOException{		
+		mapTable.get(mapName).setGraph(graph);
 
-		// Save to existing File
-		Map saveMap = mapTable.get(mapName);
-		fileProcessing.saveNodesFile(saveMap.getGraph().getNodes(), MapNodeURLS.TEST_MAP_NODES);
-		fileProcessing.saveEdgesFile(saveMap.getGraph().getEdges(), MapEdgeURLS.TEST_MAP_EDGES);
-	
+		return createMapGraphSuccess;
 	}
 	
-	//Overrode method to handle controller temporary list for nodes and edges
-	public void saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
-		try{
-			// Yixiao 2015-11-16 In case creating a new map
-			Boolean newMap = false;
-			// Save a new map
-			if(mapTable.get(mapName) == null){
-				newMap = true;
+	/**
+	 * The saveMapGraph method will save the temporarily stored nodes and edges from the controller into their 
+	 * appropriate text files based on mapName. First, it will generate the node list by seeing if there is already
+	 * a unique node on maps node list. Secondly, it will generate the edge list based on unique node identifiers in the
+	 * node list. Lastly, it will save the newly created nodes and edges to their appropriate map specified text files.
+	 * @param mapName the name of the map that the nodes and edges belong to
+	 * @param tempPntList the temporary points that need to be converted to nodes and saved.
+	 * @param tempEdgeList the temporary list that has unique node IDs to generate edges.
+	 * @return true of write was successful, false otherwise
+	 * @throws IOException
+	 */
+	public boolean saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
+			//Generate new nodes from the temporary point list to be added to graph
+			List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
+			printNodes(nodeList);
+			//IF the node list is not empty THEN
+			if(!nodeList.isEmpty()){
+				//Signal node list was created
+				System.out.println("New nodes to be added to graph!");
+				
+				// Add the newly created nodes to graphs current node list for graph
+				for(Node newNode:nodeList){
+					mapTable.get(mapName).getGraph().getNodes().add(newNode);
+				}
+				try{
+				//STORE the new nodes and edges
+				fileProcessing.saveNodesFile(mapTable.get(mapName).getGraph().getNodes(), mapName);	
+				}catch(IOException e){
+					//Signal input output error to controller based on false
+					System.out.println(e.toString());
+					return false;
+				}
+			}else{
+				System.out.println("No new nodes added to graph");
 			}
 			
-			List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
-			if(!nodeList.isEmpty()){
-				System.out.println("Node List created!");
-				List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
-				if(!edgeList.isEmpty()){
-					System.out.println("Edge List Created!");
-
-					// Adding to the existing nodeList and Edge list;
-					for(Node newNode:nodeList){
-						nodes.add(newNode);
-					}
-					for(Edge newEdge:edgeList){
-						edges.add(newEdge);
-					}		
-					
-					// Yixiao 2015-11-16 In case saving a new map
-					if(newMap){
-						String NodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
-						String EdgeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";	
-						fileProcessing.saveNodesFile(nodes, NodeURL);	
-						fileProcessing.saveEdgesFile(edges, EdgeURL);	
-						System.out.println("New map file: "+ mapName + " saved!");		
-					}
-					else{
-						
-						fileProcessing.saveNodesFile(nodes, MapNodeURLS.TEST_MAP_NODES);	
-						fileProcessing.saveEdgesFile(edges, MapEdgeURLS.TEST_MAP_EDGES);	
-						System.out.println("File saved successfully");	
-						
-					}
-				}	
+			//Generate edge list from unique node IDs specified
+			List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
+			
+			//IF the edge list is not empty THEN
+			if(!edgeList.isEmpty()){
+				//Signal edge list was successfully created
+				System.out.println("New edges to be added to graph!");
+				
+				//Add the newly created edges to edge list for graph
+				for(Edge newEdge:edgeList){
+					mapTable.get(mapName).getGraph().getEdges().add(newEdge);
+				}
+				try{
+					fileProcessing.saveEdgesFile(mapTable.get(mapName).getGraph().getEdges(), mapName);	
+				}catch(IOException e){
+					//Signal input output error to controller based on false
+					System.out.println(e.toString());
+					return false;
+				}
+			}else{
+				System.out.println("No new edges to be added to list!");
 			}
-		}catch(IOException e){
-			System.out.println(e.toString());
-		}
+			
+			System.out.println("File saved successfully");	
 		
+			return true;
+			
 }
-	
+	/**
+	 * The generatingNodeList method generates a new temporary list that will have new nodes that need
+	 * to be added to the graph and saved text file.
+	 * @param mapName the name of the map that needs to be checked if nodes exist.
+	 * @param inputPointList the temporary point list that needs to be converted to nodes from controller.
+	 * @return the node list that has the new nodes to be added to the file and graph.
+	 */
 	private List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
-		List<Node> NodeList = new ArrayList<Node>();
+		ArrayList<Node> tempNodeList = new ArrayList<Node>();
 		
 		if(inputPointList.isEmpty()){
 			System.out.println("Point List is Empty, there is nothing to save");			
-			return NodeList;
+			return tempNodeList;
+		}
+			
+		int count = 0;
+		System.out.println(mapTable.get(mapName).getGraph().getNodes().size());
+		for(Point2D point : inputPointList){
+			//IF the point does not match a node in the maps graph THEN
+			if(!checkNodeExist(mapName, point)){
+				//Generate new node and add to temporary list
+				Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size() + count + 1, 
+										(int)point.getX(), 
+										(int)point.getY());
+				//ADD the new node to the list
+				tempNodeList.add(tempNode);
+				count++;
+			}else{
+				//Signal that the node already exists
+				System.out.println("Node already exists in list");
+			}
 		}
 		
-		// Yixiao 2015-11-16 In case generating a new map		
-		Boolean NewMap = false;
-		if(mapTable.get(mapName) == null){
-			NewMap = true;
-		}
-		
-		for(int i = 0; i<inputPointList.size(); i++)
-		{
-			Point2D tempPnt = inputPointList.get(i);
-			int X = (int)tempPnt.getX();
-			int Y = (int)tempPnt.getY();			
-			if(NewMap){
-				Node tempNode = new Node(i+1, X, Y);
-				NodeList.add(tempNode);				
+		return tempNodeList;
+	}
+	/**
+	 * The checkNodeInList method take in mapName to get the node list in the specified map graph. Then
+	 * use x and y parameters to check to see if node already exists in node list.
+	 * @param mapName the name of map to get graph node list.
+	 * @param x the x value for the current point
+	 * @param y the y value for the current point
+	 * @return true if node already exists in node list; false otherwise.
+	 */
+	private boolean checkNodeExist(String mapName, Point2D point){
+			boolean nodeExist = false;
+			//FOR EACH node in the maps node list
+			for(Node node :  mapTable.get(mapName).getGraph().getNodes()){
+					//Check to see if point matches node
+					if((node.getX() == (int)point.getX() && (node.getY() == (int)point.getY()))){
+						//return true if the node already exists
+						nodeExist = true;
+						break;
+					}
 			}
-			else{
-				Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size()+i+1, X, Y);
-				NodeList.add(tempNode);	
-			}
-		}	
-		return NodeList;
+			return nodeExist;
 	}
 	
+	/**
+	 * generatingEdgeList will generate the temp edges list that need to be stored where edges are unique
+	 * @param mapName the map that has the edges
+	 * @param inputEdgeList the edges from the map
+	 * @param tempNodeList the new unique edges list that will be output
+	 * @return the the new unique edges list
+	 */
 	private List<Edge> generatingEdgeList(String mapName, ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
-		List<Edge> EdgeList = new ArrayList<Edge>();
+		ArrayList<Edge> tempEdgeList = new ArrayList<Edge>();
 		// It is also better to add odd/even number judgement here in the future
+		
 		if(inputEdgeList.isEmpty()){
 			System.out.println("Edge List is Empty, there is nothing to save");			
-			return EdgeList;
+			return tempEdgeList;
 		}
 		
-		// Yixiao 2015-11-16 In case generating a new map
-		Boolean NewMap = false;
-		if(mapTable.get(mapName) == null){
-			NewMap = true;
-		}
-
+		
 		for (int i = 0; i<inputEdgeList.size(); i+=2)
 		{
 			System.out.println(i);
@@ -198,6 +293,7 @@ public class MainModel {
 			Point2D pnt_2 = inputEdgeList.get(i+1);
 			Node startNode= new Node(0,0,0);
 			Node endNode= new Node(0,0,0);
+			
 			for(Node n:tempNodeList){
 				if(n.getX() == (int)pnt_1.getX() && n.getY() == (int)pnt_1.getY()){
 					startNode = n;
@@ -212,25 +308,17 @@ public class MainModel {
 			}
 			
 			if (startNode.getID()!=0&&endNode.getID()!=0){
-				if(NewMap){
-					EdgeList.add(new Edge(i+1, startNode, endNode, 1));	
-					EdgeList.add(new Edge(i+2, endNode, startNode, 1));
-				}
-				else{
-					EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+1, startNode, endNode, 1));	
-					EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+2, endNode, startNode, 1));					
-				}
+				tempEdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+1, 
+						startNode, 
+						endNode, 
+						calculateDistance(startNode.getX(),startNode.getY(),endNode.getX(),endNode.getY())));					
 			}
 		}
 		
-		return EdgeList;
+		return tempEdgeList;
 	}
 	
-	// Temporarily
-	private Node convertPnt2Node(Point2D inputPnt){
-		Node outPutNode = new Node(0,0,0);
-		return outPutNode;		
-	}
+
 	
 	public void testDij(String mapName){
 		
@@ -285,7 +373,7 @@ public class MainModel {
 	}
 	/**
 	 * Validates the point for the view. By returning a Node for the controller to extract a point.
-	 * Intake x and y values for user chosen node points, then cycle through each node on current coordinate graph node list.
+	 * Take in x and y values for user chosen node points, then cycle through each node on current coordinate graph node list.
 	 * Then keep track of current difference in x and y value. If the current difference is less then the previous difference;
 	 * of both x and y points then set the new validated point as the new closest point.
 	 * @param x the x value for the given point
@@ -299,10 +387,10 @@ public class MainModel {
 			System.out.println("MapTable is empty, Validation Failed");
 			return pnt;
 		}
-		int currentDiff = 0;
-		int previousDiff = Integer.MAX_VALUE;
+		double currentDiff = 0.0;
+		double previousDiff = Double.POSITIVE_INFINITY;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-			currentDiff = (int) Math.sqrt(Math.pow(node.getX()-x, 2)+ Math.pow(node.getY() - y, 2));
+			currentDiff = Math.sqrt(Math.pow(node.getX()-x, 2)+ Math.pow(node.getY() - y, 2));
 			if(currentDiff < previousDiff){
 				previousDiff = currentDiff;
 				validatedNode = node;
@@ -337,6 +425,16 @@ public class MainModel {
 		System.out.println(count);
 		System.out.println("END PRINT NODES");
 	}
+	public void printNodes(List<Node> nodes){
+		int count = 0;
+		System.out.println("PRINTING NODES");
+		for(Node node: nodes){
+			count++;
+			System.out.print(node.getID() + " " + node.getX() + " " + node.getY());
+			System.out.println();
+		}
+		System.out.println("END PRINT NODES");
+	}
 	public void printEdges(){
 		for(Edge edge: edges){
 			System.out.print(edge.getEdgeID() + " " + edge.getSource().getID() + " " + edge.getDestination().getID() + " " + edge.getEdgeLength());
@@ -357,6 +455,12 @@ public class MainModel {
 		}
 		System.out.println("END PATH");
 	}
+	public void printMaps(){
+		for(String value: mapTable.keySet()){
+			System.out.println(value);
+		}
+	}
+
 	public Path getPath(){
 		return this.path;
 	}
@@ -376,20 +480,18 @@ public class MainModel {
 		}
 		return tempArrayOfMapNames;
 	}
-	//admin create a point
-    public boolean newNode(String mapName,Point point)
-    {
-    	nodes=mapTable.get(mapName).getGraph().getNodes();
-	Node node=new Node(nodes.get(nodes.size()-1).getID()+1,point.x,point.y);
-	nodes.add(node);
-    	try {
-		saveMapGraph(mapName);
-	     } catch (IOException e) {
-	    	 e.printStackTrace();
-	    }
-    	return true;
-    }
-    
+	public List<Node> getNodeList(String mapName){
+		List<Node> currentNodeList = mapTable.get(mapName).getGraph().getNodes();	
+		return currentNodeList;		
+	}
+	public List<Edge> getEdgeList(String mapName){
+		List<Edge> currentEdgeList = mapTable.get(mapName).getGraph().getEdges();	
+		return currentEdgeList;
+	}
+	private double calculateDistance(double x1, double x2, double y1, double y2)
+	{
+		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
+	}
     //find node Id for the start of the edge
     public int findNodeId(String mapName,Point point)
     {
@@ -401,64 +503,5 @@ public class MainModel {
 			}
     	}
 		return 0;
-    }
-	
-	//admin specifies an edge
-    public boolean newEdge(String mapName,Point source,Point destination)
-    {
-    	nodes=mapTable.get(mapName).getGraph().getNodes();
-    	edges=mapTable.get(mapName).getGraph().getEdges();
-    	Point point=validatePoint(mapName,source.x,source.y);
-    	if((point.x==0)&&(point.y==0))
-    	  {
-    		newNode(mapName,point);
-    		point=validatePoint(mapName,source.x,source.y);
-    	  }
-    	Node sourceNode=new Node(findNodeId(mapName,point),point.x,point.y);	
-    	Node destinationNode=new Node(nodes.get(nodes.size()-1).getID()+1,destination.x,destination.y);
-    	nodes.add(destinationNode);
-    	//Don't need to calculate edgeLength. It will be calculated when loading edges 
-    	Edge edge=new Edge(edges.get(edges.size()-1).getEdgeID()+1,sourceNode,destinationNode,0);
-    	edges.add(edge);
-    	try {
-			saveMapGraph(mapName);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return true;
-    }
-    
-    //admin create a path
-    public boolean newPath(String mapName,List<Point> points)
-    {
-    	nodes=mapTable.get(mapName).getGraph().getNodes();
-    	edges=mapTable.get(mapName).getGraph().getEdges();
-    	Iterator iterator=points.iterator();
-    	//the start node of an edge
-    	Node startNode=null;
-    	//the end Node of an edge
-    	Node endNode=null;
-    	Point point=null;
-    	Edge edge=null;
-    	while(iterator.hasNext())
-    	{
-    	  point=(Point)iterator.next();
-    	  endNode=new Node(nodes.get(nodes.size()-1).getID()+1,point.x,point.y);
-    	  nodes.add(endNode);
-    	  if(startNode!=null)
-    	  {
-    	     edge=new Edge(edges.get(edges.size()-1).getEdgeID()+1,startNode,endNode,0);
-    	     edges.add(edge);
-    	  }
-    	  startNode=endNode;
-    	}
-    	try {
-		saveMapGraph(mapName);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return true;
     }
 }
