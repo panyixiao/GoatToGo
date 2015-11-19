@@ -65,6 +65,7 @@ public class MainController{
 		mapData=mapModel.getArrayOfMapNames();
 		return mapData;
 	}
+	
 	/* Added by neha
 	 * This method should fetch the map url from the model and return the url to the view subsystem.
 	 */
@@ -91,8 +92,7 @@ public class MainController{
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		//TargetPntInfo targetPnt = new TargetPntInfo();
 		Point targetPnt = new Point();
-		System.out.println("Task Type:" + pntType);
-		
+		System.out.println("Task Type:" + pntType);		
 		targetPnt = mapModel.validatePoint(mapName, taskPnt.x, taskPnt.y);
 		System.out.println("Mapping To point: " + targetPnt.x + ", " + targetPnt.y);
 		mapModel.setStartEndPathPoint(targetPnt, pntType, mapName);		
@@ -143,7 +143,8 @@ public class MainController{
 	
 	/* Used for create the "MapName.txt" file, 
 	 * correspond to a button "Generate Road Map" on the Admin page
-	 * Used to save the temporal point graph to file*/	
+	 * Used to save the temporal point graph to file
+	 * */	
 	public Boolean LoadingPntsAndEdges(String mapName){
 		if(mapModel.loadFiles(mapName)){
 			this.nodeList = (ArrayList<Node>) mapModel.getNodeList(mapName);
@@ -167,6 +168,7 @@ public class MainController{
 		}
 		return pntList;
 	}
+	
 	private ArrayList<Point2D> transferEdgeToPnt2D(List<Edge> targetList){
 		ArrayList<Point2D> edgeList = new ArrayList<Point2D>();
 		for(Edge eg:targetList){
