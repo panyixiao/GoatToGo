@@ -26,6 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ */
 public class AddDeleteMapPage extends JPanel{
 	private JButton addBtn, deleteBtn, editBtn, previewBtn, browseFileBtn;
 	private ImageIcon addBtnImage, deleteBtnImage, editBtnImage, previewBtnImage, browseFileBtnImage;
@@ -42,6 +44,10 @@ public class AddDeleteMapPage extends JPanel{
 	private String mapType = ViewStringLiterals.FLOOR;
 	/*
 	 * Initialize the contents of the page.
+	 */
+	/**
+	 * Constructor for AddDeleteMapPage.
+	 * @param mainView MainView
 	 */
 	public AddDeleteMapPage(MainView mainView) {
 		this.parent = mainView;
@@ -267,6 +273,10 @@ public class AddDeleteMapPage extends JPanel{
 	 * Displays the list of map names.
 	 * input: ArrayList of mapnames.
 	 */
+	/**
+	 * Method showMapList.
+	 * @param listofMaps ArrayList<String>
+	 */
 	public void showMapList(ArrayList<String> listofMaps){
 		if(listofMaps.size() == 0){
 			this.mapListEmpty.setVisible(true);
@@ -283,6 +293,10 @@ public class AddDeleteMapPage extends JPanel{
 	/*
 	 * Displays the map in the map preview holder.
 	 * input: Map url.
+	 */
+	/**
+	 * Method showMapImage.
+	 * @param mapurl String
 	 */
 	public void showMapImage(String mapurl) {
 		BufferedImage img;

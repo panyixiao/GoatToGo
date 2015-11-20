@@ -13,6 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
+/**
+ */
 public class Page extends JFrame {
 	private JPanel mainPanel, headerPanel, dragpanel;
 	private JLabel wpiLogoHolder, lblGoattogo;
@@ -133,12 +135,20 @@ public class Page extends JFrame {
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Method addPage.
+	 * @param page JPanel
+	 */
 	public void addPage(JPanel page){
 		this.mainPanel.setLayout(new java.awt.GridLayout());
 		this.mainPanel.add(page);
 		this.mainPanel.revalidate();
 	}
 	
+	/**
+	 * Method removePage.
+	 * @param page JPanel
+	 */
 	public void removePage(JPanel page){
 		this.mainPanel.remove(page);
 		this.mainPanel.revalidate();

@@ -17,6 +17,8 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
+/**
+ */
 public class MapMapDisplayPanel extends MapDisplayPanel{
 	private JPopupMenu popup;
 	private JMenuItem menuItem, menuItem_1;
@@ -27,8 +29,12 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	private MapPage parent;
 	/**
 	 * Create the panel.
-	 * @param mapPage 
+	
 	 * @param selectedPoints 
+	 * @param parent MapPage
+	 * @param mapPanelHolder JScrollPane
+	 * @param mapName String
+	 * @param mapurl String
 	 */
 	public MapMapDisplayPanel(MapPage parent, JScrollPane mapPanelHolder, String mapName, String mapurl, SelectedPoints selectedPoints) {
 		super(mapPanelHolder, mapurl);
@@ -69,6 +75,10 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    this.popup.add(this.menuItem_1);
 	}
 	    
+	/**
+	 * Method paintComponent.
+	 * @param g Graphics
+	 */
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -82,12 +92,22 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
     	}
 	}
 	
+	/**
+	 * Method mousePressed.
+	 * @param me MouseEvent
+	 * @see java.awt.event.MouseListener#mousePressed(MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent me){
 		super.mousePressed(me);
 		this.maybeShowPopup(me);
 	}
 
+	/**
+	 * Method mouseReleased.
+	 * @param me MouseEvent
+	 * @see java.awt.event.MouseListener#mouseReleased(MouseEvent)
+	 */
 	@Override
 	public void mouseReleased(MouseEvent me) {
 		this.maybeShowPopup(me);
@@ -105,6 +125,10 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
         }
 	}
 	
+	/**
+	 * Method maybeShowPopup.
+	 * @param me MouseEvent
+	 */
 	private void maybeShowPopup(MouseEvent me) {
         if (me.isPopupTrigger()) {
             this.popup.show(me.getComponent(), me.getX(), me.getY());
@@ -118,6 +142,10 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
         }
     }
 
+	/**
+	 * Method deletePoint.
+	 * @param location String
+	 */
 	public void deletePoint(String location) {
 		if(location == ViewStringLiterals.FROM){
 			if(this.selectedPoints.getStartMapName() == this.map){

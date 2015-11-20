@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ */
 public class WelcomePage extends JPanel {
 	private JButton continueBtn;
 	private JLabel backgroundHolder, wpiLogoHolder, gtgTextHolder;

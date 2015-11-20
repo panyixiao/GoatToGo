@@ -1,11 +1,10 @@
 package gtg_model_subsystem;
 
-import gtg_model_subsystem.Node;
-import gtg_model_subsystem.Edge;
-import gtg_model_subsystem.Path;
 
 import java.util.List;
 
+/**
+ */
 public class CoordinateGraph
 {
 	/**All the nodes stored in a particular graph. 
@@ -16,6 +15,11 @@ public class CoordinateGraph
 	*/
 	private List<Edge> edges;
 
+	/**
+	 * Constructor for CoordinateGraph.
+	 * @param nodes List<Node>
+	 * @param edges List<Edge>
+	 */
 	public CoordinateGraph(List<Node> nodes, List<Edge> edges){
 		this.nodes = nodes;
 		this.edges = edges;
@@ -24,6 +28,7 @@ public class CoordinateGraph
 	 *@pre Node is not NULL
 	 *@post return true
 	 *@post a Node is added into the nodes
+	 * @return List<Node>
 	 */
 	//public boolean addNode(Node node){
 	//	
@@ -40,6 +45,10 @@ public class CoordinateGraph
 	public List<Node> getNodes(){
 		return nodes;
 	}
+	/**
+	 * Method getEdges.
+	 * @return List<Edge>
+	 */
 	public List<Edge> getEdges(){
 		return edges;
 	}

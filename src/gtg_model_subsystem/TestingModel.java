@@ -8,8 +8,13 @@ import java.io.IOException;
  * To run and see what is there so far right click main model -> Run As -> Java Application
  * @author Joshua
  *
+ * @version $Revision: 1.0 $
  */
 public class TestingModel {
+	/**
+	 * Method main.
+	 * @param args String[]
+	 */
 	public static void main(String args[])
 	{
 		MainModel test = new MainModel();

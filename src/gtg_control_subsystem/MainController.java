@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 
+/**
+ */
 public class MainController{
 	
 	/*Added by neha. Yixio this is the temporary list to store map names and map urls. This is done to check
@@ -36,6 +38,10 @@ public class MainController{
 	private ArrayList<Edge> edgeList = new ArrayList<Edge>();
 	
 	/**/
+	/**
+	 * Constructor for MainController.
+	 * @param mapModel MainModel
+	 */
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;
 		MapListIntial();
@@ -60,6 +66,11 @@ public class MainController{
 		urlsofMaps.add(BH_THIRD_FLOOR);		
 	}
 	
+	/**
+	 * Method getMapData.
+	 * @param mapName String
+	 * @return ArrayList<String>
+	 */
 	public ArrayList<String> getMapData(String mapName){
 		ArrayList<String> mapData= new ArrayList<String>();
 		mapData=mapModel.getArrayOfMapNames();
@@ -68,6 +79,11 @@ public class MainController{
 	
 	/* Added by neha
 	 * This method should fetch the map url from the model and return the url to the view subsystem.
+	 */
+	/**
+	 * Method getMapURL.
+	 * @param mapName String
+	 * @return String
 	 */
 	public String getMapURL(String mapName){
 		String mapurl = "";
@@ -85,10 +101,22 @@ public class MainController{
 	 * if mapName is building then the list will contain all the floor names of the building and the campus map also.
 	 * You will have to implement the switch case.
 	 */
+	/**
+	 * Method getMapList.
+	 * @param mapName String
+	 * @return ArrayList<String>
+	 */
 	public ArrayList<String> getMapList(String mapName){
 		return listofMaps;		
 	}
 
+	/**
+	 * Method setTaskPnt.
+	 * @param taskPnt Point
+	 * @param pntType String
+	 * @param mapName String
+	 * @return Point
+	 */
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		//TargetPntInfo targetPnt = new TargetPntInfo();
 		Point targetPnt = new Point();
@@ -99,6 +127,10 @@ public class MainController{
 		return targetPnt;
 	}
 	
+	/**
+	 * Method getPathData.
+	 * @return PathData
+	 */
 	public PathData getPathData(){
 		PathData path = new PathData();
 		// 
@@ -131,6 +163,12 @@ public class MainController{
 		return path;
 	}
 	
+	/**
+	 * Method adminQualification.
+	 * @param userName String
+	 * @param passWord String
+	 * @return Boolean
+	 */
 	public Boolean adminQualification(String userName, String passWord){
 		Boolean isAdmin = false;
 		isAdmin = mapModel.isValidAdmin(userName, passWord);
@@ -142,6 +180,11 @@ public class MainController{
 	}
 	
 	// This function is called each time when View is changing page
+	/**
+	 * Method LoadingPntsAndEdges.
+	 * @param mapName String
+	 * @return Boolean
+	 */
 	public Boolean LoadingPntsAndEdges(String mapName){
 		if(mapModel.loadFiles(mapName)){
 			//this.nodeList = (ArrayList<Node>) mapModel.getNodeList(mapName);
@@ -163,6 +206,10 @@ public class MainController{
 	 * so we will create a new memory and copy the original NodeList / EdgeList into it, 
 	 * So we won't change anything in the model.
 	 */
+	/**
+	 * Method LoadInNodeList.
+	 * @param mapName String
+	 */
 	private void LoadInNodeList(String mapName){
 		// Clear the temporary nodeList before add new point into it;
 		this.nodeList.clear();
@@ -173,6 +220,10 @@ public class MainController{
 		//return copySuccess;		
 	}
 	
+	/**
+	 * Method LoadInEdgeList.
+	 * @param mapName String
+	 */
 	private void LoadInEdgeList(String mapName){
 		// Clear the temporary edgeList before add new point into it;
 		this.edgeList.clear();
@@ -182,6 +233,11 @@ public class MainController{
 		}
 	}
 	
+	/**
+	 * Method transferNodeToPnt2D.
+	 * @param targetList List<Node>
+	 * @return ArrayList<Point2D>
+	 */
 	private ArrayList<Point2D> transferNodeToPnt2D(List<Node> targetList){
 		ArrayList<Point2D> pntList = new ArrayList<Point2D>();
 		for(Node nd:targetList){
@@ -191,6 +247,11 @@ public class MainController{
 		return pntList;
 	}
 	
+	/**
+	 * Method transferEdgeToPnt2D.
+	 * @param targetList List<Edge>
+	 * @return ArrayList<Point2D>
+	 */
 	private ArrayList<Point2D> transferEdgeToPnt2D(List<Edge> targetList){
 		ArrayList<Point2D> edgeList = new ArrayList<Point2D>();
 		for(Edge eg:targetList){
@@ -202,6 +263,11 @@ public class MainController{
 		return edgeList;
 	}
 	
+	/**
+	 * Method createCoordinateGraph.
+	 * @param mapName String
+	 * @return Boolean
+	 */
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
 		try{
@@ -223,6 +289,13 @@ public class MainController{
 	 * True if mapName and mapImageURL are stored succesfully into the .txt file
 	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
 	 */
+	/**
+	 * Method addNewMap.
+	 * @param mapName String
+	 * @param mapImageURL String
+	 * @param mapType String
+	 * @return Boolean
+	 */
 	public Boolean addNewMap(String mapName, String mapImageURL, String mapType){
 		System.out.println(mapName);
 		System.out.println(mapImageURL);
@@ -238,6 +311,11 @@ public class MainController{
 	 * True if mapName and mapImageURL are deleted succesfully from the .txt file
 	 * False if mapName and mapImageURL are not deleted succesfully from the .txt file
 	 */
+	/**
+	 * Method deleteMap.
+	 * @param mapName String
+	 * @return Boolean
+	 */
 	public Boolean deleteMap(String mapName){
 		int index = listofMaps.indexOf(mapName);
 		listofMaps.remove(index);
@@ -245,6 +323,10 @@ public class MainController{
 		return true;
 	}	
 	
+	/**
+	 * Method getMaxNodeID.
+	 * @return int
+	 */
 	public int getMaxNodeID() {
 		int maxNodeID=0;
 		for (Node n:nodeList) {
@@ -255,6 +337,10 @@ public class MainController{
 		return maxNodeID;
 	}
 	
+	/**
+	 * Method getMaxEdgeID.
+	 * @return int
+	 */
 	public int getMaxEdgeID() {
 		int maxEdgeID=0;
 		for (Edge e:edgeList) {
@@ -265,6 +351,16 @@ public class MainController{
 		return maxEdgeID;
 	}
 	
+	/**
+	 * Method addPoint.
+	 * @param inputPnt Point2D
+	 * @param floorNum int
+	 * @param entranceID int
+	 * @param buildingName String
+	 * @param pointType String
+	 * @param pointDescription String
+	 * @return Boolean
+	 */
 	public Boolean addPoint(Point2D inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt)==0){
@@ -277,6 +373,11 @@ public class MainController{
 		return success;
 	}
 	
+	/**
+	 * Method addPoint.
+	 * @param inputPnt Point2D
+	 * @return Boolean
+	 */
 	public Boolean addPoint(Point2D inputPnt){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt)==0){
@@ -288,6 +389,12 @@ public class MainController{
 		return success;
 	}
 
+	/**
+	 * Method createEdge.
+	 * @param pnt1 Point2D
+	 * @param pnt2 Point2D
+	 * @return Boolean
+	 */
 	public Boolean createEdge(Point2D pnt1, Point2D pnt2){
 		Boolean success = false;
 		// Check Edge Redundancy
@@ -331,6 +438,11 @@ public class MainController{
 		edgeList.clear();
 	}
 	
+	/**
+	 * Method deletePoint.
+	 * @param inputPnt Point2D
+	 * @return boolean
+	 */
 	public boolean deletePoint(Point2D inputPnt){
 		Boolean pointDeleted = false;
 
@@ -358,6 +470,11 @@ public class MainController{
 		return pointDeleted;
 	}
 
+	/**
+	 * Method deleteEdge.
+	 * @param p Point2D
+	 * @return boolean
+	 */
 	public boolean deleteEdge(Point2D p){
 		int edgeID = checkIfPointIsInEdge(p);
 		
@@ -398,6 +515,11 @@ public class MainController{
 	
 	//See if selected point is a part of an existing edge
 	// If the distance between the selected point 
+	/**
+	 * Method checkIfPointIsInEdge.
+	 * @param p Point2D
+	 * @return int
+	 */
 	public int checkIfPointIsInEdge(Point2D p){
 		double ab, ap, pb;
 		int r = 0;
@@ -417,6 +539,11 @@ public class MainController{
 		return r;
 	}
 
+	/**
+	 * Method CheckPntExistence.
+	 * @param pnt Point2D
+	 * @return int
+	 */
 	private int CheckPntExistence(Point2D pnt){
 		int pntID = 0;
 		int toleranceRadius = 15;	// 15 pixels
@@ -433,6 +560,11 @@ public class MainController{
 		return pntID;
 	}	
 	
+	/**
+	 * Method pointMapping.
+	 * @param inputPnt Point2D
+	 * @return Point2D
+	 */
 	public Point2D pointMapping(Point2D inputPnt){		
 		Point2D searchingResult = new Point2D.Double(0,0);
 		
@@ -450,6 +582,10 @@ public class MainController{
 		return searchingResult;
 	}
 	
+	/**
+	 * Method getLastPnt.
+	 * @return Point2D
+	 */
 	public Point2D getLastPnt()
 	{
 		Point2D pnt = new Point2D.Double(0,0);
@@ -461,10 +597,18 @@ public class MainController{
 		return pnt;		
 	}
 	
+	/**
+	 * Method getDisplayPnt.
+	 * @return ArrayList<Point2D>
+	 */
 	public ArrayList<Point2D> getDisplayPnt(){		
 		return tempPntList;
 	}
 	
+	/**
+	 * Method getDisplayEdge.
+	 * @return ArrayList<Point2D>
+	 */
 	public ArrayList<Point2D> getDisplayEdge(){
 		return tempEdgeList;
 	}

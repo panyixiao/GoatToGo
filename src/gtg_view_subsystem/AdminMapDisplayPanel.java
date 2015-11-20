@@ -26,6 +26,8 @@ import javax.swing.JTextField;
 
 //import gtg_control_subsystem.MainController;
 
+/**
+ */
 public class AdminMapDisplayPanel extends MapDisplayPanel {
 	private Point2D newPoint, newStart,newEnd;
 	private int circleWidthHeight = 10;
@@ -36,6 +38,9 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 
 	/**
 	 * Create the panel.
+	 * @param mapPanelHolder JScrollPane
+	 * @param mapurl String
+	 * @param adminViewPage AdminMapEditPage
 	 */
 	public AdminMapDisplayPanel(JScrollPane mapPanelHolder, String mapurl, AdminMapEditPage adminViewPage) {
 		super(mapPanelHolder, mapurl);
@@ -48,6 +53,10 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		//building = adminViewPage.
 	}
 
+	/**
+	 * Method paintComponent.
+	 * @param g Graphics
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -72,6 +81,11 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		}
 	}
 
+	/**
+	 * Method mouseClicked.
+	 * @param me MouseEvent
+	 * @see java.awt.event.MouseListener#mouseClicked(MouseEvent)
+	 */
 	@Override
 	public void mouseClicked(MouseEvent me) {
 		double scale = super.getScale();
@@ -207,6 +221,10 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		repaint();
 	}
 
+	/**
+	 * Method addNeighbors.
+	 * @param p Point2D
+	 */
 	public void addNeighbors(Point2D p){
 		Point2D result = adminViewPageHandle.checkPoint(p);
 		if(result.getX()!= 0)
@@ -227,6 +245,10 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		repaint();
 	}
 
+	/**
+	 * Method addStart.
+	 * @param p Point2D
+	 */
 	public void addStart(Point2D p) {
 		Point2D result = adminViewPageHandle.checkPoint(p);
 		if(result.getX()!=0){
@@ -235,6 +257,12 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		}
 	}
 
+	/**
+	 * Method checkIfPointIsDrawn.
+	 * @param x int
+	 * @param y int
+	 * @param scale double
+	 */
 	public void checkIfPointIsDrawn(int x, int y, double scale) {
 		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
 			Point2D p = adminViewPageHandle.pointPositions.get(i);
@@ -246,19 +274,41 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		}
 	}
 
+	/**
+	 * Method isInCircle.
+	 * @param circleX double
+	 * @param circleY double
+	 * @param r int
+	 * @param x double
+	 * @param y double
+	 * @param scale double
+	 * @return boolean
+	 */
 	public boolean isInCircle(double circleX, double circleY, int r, double x, double y, double scale) {
 		double d = Math.sqrt(Math.pow(circleX - x, 2) + Math.pow(circleY - y, 2));
 		return d <= r * scale;
 	}
 
+	/**
+	 * Method setMode.
+	 * @param m String
+	 */
 	public void setMode(String m) {
 		this.mode = m;
 	}
 
+	/**
+	 * Method setBuilding.
+	 * @param b String
+	 */
 	public void setBuilding(String b) {
 		this.building = b;
 	}
 
+	/**
+	 * Method setFloor.
+	 * @param f String
+	 */
 	public void setFloor(String f) {
 		this.floor = f;
 	}

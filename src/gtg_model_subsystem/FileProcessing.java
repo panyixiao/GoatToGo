@@ -1,24 +1,22 @@
 package gtg_model_subsystem;
 
-import gtg_model_subsystem.Node;
-import gtg_model_subsystem.Edge;
-import gtg_model_subsystem.Admin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ */
 public class FileProcessing {
 	
 	/**
 	 * The method loadMapList load maps from master map list stored in masterMapList.txt
-	 * @return master map list
-	 * @throws IOException
-	 */
+	
+	
+	 * @return master map list * @throws IOException */
 	public ArrayList<Map> loadMapList() throws IOException
 	{
 		//Get the master map list text file reference
@@ -57,9 +55,9 @@ public class FileProcessing {
 	 * deleteMapFromMaster will take in a map name and delete the given line that is associated with the
 	 * map name given.
 	 * @param mapName the name of the map needs to be deleted from masterMapList.txt
-	 * @return true if delete succeeded false otherwise
-	 * @throws IOException 
-	 */
+	
+	
+	 * @return true if delete succeeded false otherwise * @throws IOException  */
 	public boolean deleteMapFromMaster(String mapName) throws IOException{
 			boolean deleteSuccess = true;
 			//String references to master list and a temporary written master list file
@@ -110,11 +108,12 @@ public class FileProcessing {
 	/**
 	 * saveMapToMaster method saves a newly added map from admin view to master map list.
 	 * @param mapName the name of map to be saved.
-	 * @param mapNameURL the URL for image location.
+	
 	 * @param mapType the type of map that we are saving (IE possible campus map).
-	 * @return true if write was successful false if write failed.
-	 * @throws IOException
-	 */
+	
+	
+	 * @param mapImgURL String
+	 * @return true if write was successful false if write failed. * @throws IOException */
 	public boolean saveMapToMaster(String mapName, String mapImgURL, String mapType) throws IOException{
 			boolean writeSuccess = true;
 			try{
@@ -139,6 +138,13 @@ public class FileProcessing {
 	}
 	
 	
+	/**
+	 * Method readNodesFile.
+	 * @param nodes List<Node>
+	 * @param mapName String
+	 * @return boolean
+	 * @throws IOException
+	 */
 	public boolean readNodesFile(List<Node> nodes, String mapName) throws IOException{
 		String mapNodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
 		System.out.println(mapNodeURL);
@@ -176,6 +182,14 @@ public class FileProcessing {
 			return readSuccess;
 		}
 	}
+	/**
+	 * Method readEdgesFile.
+	 * @param nodes List<Node>
+	 * @param edges List<Edge>
+	 * @param mapName String
+	 * @return boolean
+	 * @throws IOException
+	 */
 	public boolean readEdgesFile(List<Node> nodes, List<Edge> edges, String mapName) throws IOException{
 		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"EdgeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";		
 		File file = new File(mapEdgeURL);
@@ -219,6 +233,11 @@ public class FileProcessing {
 			return readSuccess;
 		}
 	}
+	/**
+	 * Method readAdmin.
+	 * @param admins List<Admin>
+	 * @throws IOException
+	 */
 	public void readAdmin(List<Admin> admins) throws IOException{
 		String adminURL = "ModelFiles"+System.getProperty("file.separator")+"adminFile.txt";
 		File file = new File(adminURL);
@@ -234,6 +253,12 @@ public class FileProcessing {
 		}
 		buffer.close();
 	}
+	/**
+	 * Method saveNodesFile.
+	 * @param nodes List<Node>
+	 * @param mapName String
+	 * @throws IOException
+	 */
 	public void saveNodesFile(List<Node> nodes, String mapName) throws IOException{
 		String mapNodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
 		try{
@@ -250,6 +275,12 @@ public class FileProcessing {
 			System.out.println(E.toString());
 		}
 	}
+	/**
+	 * Method saveEdgesFile.
+	 * @param edges List<Edge>
+	 * @param mapName String
+	 * @throws IOException
+	 */
 	public void saveEdgesFile(List<Edge> edges, String mapName) throws IOException{
 		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"EdgeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";
 		try{
@@ -267,6 +298,11 @@ public class FileProcessing {
 		}
 	}
 	
+	/**
+	 * Method createFile.
+	 * @param file File
+	 * @return boolean
+	 */
 	private boolean createFile(File file){
 		boolean createFile = true;
 		//IF file does not exist create new file
@@ -283,6 +319,14 @@ public class FileProcessing {
 		}
 		return createFile;
 	}
+	/**
+	 * Method calculateDistance.
+	 * @param x1 double
+	 * @param x2 double
+	 * @param y1 double
+	 * @param y2 double
+	 * @return double
+	 */
 	private double calculateDistance(double x1, double x2, double y1, double y2)
 	{
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));

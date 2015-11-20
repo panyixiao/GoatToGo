@@ -19,6 +19,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 
+/**
+ */
 public class MapPage extends JPanel {
 	private JTextField fromTextField, toTextField;
 	private JPanel leftPanel, rightPanel;
@@ -38,7 +40,7 @@ public class MapPage extends JPanel {
 	/**
 	 * Create the panel.
 	 * @param mainView 
-	 * @param mainView 
+	
 	 */
 	public MapPage(MainView mainView) {
 		this.parent = mainView;
@@ -222,6 +224,10 @@ public class MapPage extends JPanel {
 		this.rightPanel.add(this.toClearBtn);
 	}
 	
+	/**
+	 * Method changeMap.
+	 * @param mapName String
+	 */
 	private void changeMap(String mapName){
 		this.mapMapDisplayPanel = null;
 		String mapurl = "";
@@ -247,6 +253,12 @@ public class MapPage extends JPanel {
 		this.currentZoomValue = 1.0;
 	}
 
+	/**
+	 * Method displayPointInTextfield.
+	 * @param locationType String
+	 * @param x double
+	 * @param y double
+	 */
 	public void displayPointInTextfield(String locationType, double x, double y) {
 		switch(locationType){
 		case ViewStringLiterals.FROM:
@@ -263,6 +275,13 @@ public class MapPage extends JPanel {
 	//	parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
 	//}
 	
+	/**
+	 * Method sentPointToModel.
+	 * @param startEndPoint Point
+	 * @param selectedPointType String
+	 * @param mapName String
+	 * @return Point
+	 */
 	public Point  sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
 		Point pntOnGraph = startEndPoint;
 		pntOnGraph = parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
@@ -274,6 +293,10 @@ public class MapPage extends JPanel {
 		
 	}
 	
+	/**
+	 * Method deletePoint.
+	 * @param selectedPointType String
+	 */
 	public void deletePoint(String selectedPointType){
 		if(selectedPointType == ViewStringLiterals.FROM){
 			mapMapDisplayPanel.deletePoint(ViewStringLiterals.FROM);
