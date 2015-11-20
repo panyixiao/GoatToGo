@@ -155,7 +155,6 @@ public class FileProcessing {
 			try{
 				System.out.println("Reading instead");
 				buffer = new BufferedReader(new FileReader(file));
-				System.out.println("uffer good");
 				String line;
 				String[] lines;
 				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
@@ -202,22 +201,29 @@ public class FileProcessing {
 		else{
 			try{
 				buffer = new BufferedReader(new FileReader(file));
-				System.out.println("Buffer too good");
 				String line;
 				String[] lines;
-				int nodeId1, nodeId2;
 				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 					line = line.trim();
 					lines = line.split("[\\s+]");
 					
 					//Subtract one for arraylist index value
-					nodeId1 = Integer.parseInt(lines[1]) - 1;
-					nodeId2 = Integer.parseInt(lines[2]) - 1;
-		
+					Node tempNode1 = getNode(nodes, Integer.parseInt(lines[1]));
+					Node tempNode2 = getNode(nodes, Integer.parseInt(lines[2]));
+					if(tempNode1 == null){
+						System.out.println("Node1  could not be read for edge");
+						readSuccess = false;
+						break;
+					}
+					if(tempNode2 == null){
+						System.out.println("Node2  could not be read for edge");
+						readSuccess = false;
+						break;
+					}
 					Edge edge = new Edge(Integer.parseInt(lines[0]), 
-										 nodes.get(nodeId1), 
-										 nodes.get(nodeId2),
-										 calculateDistance(nodes.get(nodeId1).getX(), nodes.get(nodeId2).getX(), nodes.get(nodeId1).getY(), nodes.get(nodeId2).getY())
+										 tempNode1, 
+										 tempNode2,
+										 calculateDistance(tempNode1.getX(), tempNode2.getX(), tempNode1.getY(), tempNode2.getY())
 										 );
 					
 					edges.add(edge);
@@ -231,6 +237,16 @@ public class FileProcessing {
 			}
 			return readSuccess;
 		}
+	}
+	public Node getNode(List<Node> nodes, int nodeID){
+			Node nodeFound = null;
+			for(Node node: nodes){
+				if(node.getID() == nodeID){
+					nodeFound = node;
+					break;
+				}
+			}
+			return nodeFound;
 	}
 	/**
 	 * Method readAdmin.
@@ -268,10 +284,8 @@ public class FileProcessing {
 		try{
 		    FileWriter fstream = new FileWriter(mapNodeURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
-		    int idCount = 1;
 		    for(Node node: nodes){
-		    	out.write(idCount + " " + node.getX()+ " " + node.getY() + System.getProperty("line.separator"));
-		    	idCount++;
+		    	out.write(node.getID() + " " + node.getX()+ " " + node.getY() + System.getProperty("line.separator"));
 		    }
 		    System.out.println("File Node Write Success!");
 		    out.close();
@@ -291,10 +305,8 @@ public class FileProcessing {
 		try{
 		    FileWriter fstream = new FileWriter(mapEdgeURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
-		    int idCount = 1;
 		    for(Edge edge: edges){
-		    	out.write(idCount + " " + edge.getSource().getID() + " " + edge.getDestination().getID() + System.getProperty("line.separator"));
-		    	idCount++;
+		    	out.write(edge.getEdgeID() + " " + edge.getSource().getID() + " " + edge.getDestination().getID() + System.getProperty("line.separator"));
 		    }
 		    System.out.println("File Edge Write Success!");
 		    out.close();
