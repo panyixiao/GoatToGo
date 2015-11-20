@@ -34,8 +34,9 @@ public class FileProcessing {
 			buffer = new BufferedReader(new FileReader(file));
 			tempMapList = new ArrayList<Map>();
 			
-			while((line=buffer.readLine())!=null){
+			while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 				line.trim();
+				if(line.equals("")){break;}
 				lines = line.split("[\\s+]");
 				//create a Map using stored types(name,graph,img url,type) for each map
 				tempMap=new Map(lines[0], null, lines[1],lines[2]);
@@ -75,7 +76,7 @@ public class FileProcessing {
 				reader = new BufferedReader(new FileReader(originalFile));
 				writer = new BufferedWriter(new FileWriter(tempFile));
 				//WHILE a line exists in master list text file
-				while((line = reader.readLine()) != null){
+				while((line = reader.readLine()) != null && !(line.trim().equals(""))){
 						//remove the end line
 						line.trim();
 						//split values and store into lines array
@@ -154,9 +155,10 @@ public class FileProcessing {
 			try{
 				System.out.println("Reading instead");
 				buffer = new BufferedReader(new FileReader(file));
+				System.out.println("uffer good");
 				String line;
 				String[] lines;
-				while((line = buffer.readLine()) != null){
+				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 					line = line.trim();
 					lines = line.split("[\\s+]");
 					
@@ -167,7 +169,9 @@ public class FileProcessing {
 					nodes.add(node);
 				}
 			}catch(Exception e){
+				System.out.println("Nodes broke");
 				System.out.println(e.toString());
+				
 				readSuccess = false;
 			}finally{
 				buffer.close();
@@ -198,10 +202,11 @@ public class FileProcessing {
 		else{
 			try{
 				buffer = new BufferedReader(new FileReader(file));
+				System.out.println("Buffer too good");
 				String line;
 				String[] lines;
 				int nodeId1, nodeId2;
-				while((line = buffer.readLine()) != null){
+				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 					line = line.trim();
 					lines = line.split("[\\s+]");
 					
@@ -218,6 +223,7 @@ public class FileProcessing {
 					edges.add(edge);
 				}
 			}catch(Exception e){
+				System.out.println("Edges broke");
 				System.out.println(e.toString());
 				readSuccess = false;
 			}finally{
@@ -238,8 +244,9 @@ public class FileProcessing {
 		BufferedReader buffer = new BufferedReader(new FileReader(file));
 		String line;
 		String[] lines;
-		while((line = buffer.readLine()) != null){
+		while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 				line = line.trim();
+				if(line.equals("")){break;}
 				lines = line.split("[\\s+]");
 				
 				Admin admin = new Admin(lines[0], lines[1]);
@@ -261,8 +268,10 @@ public class FileProcessing {
 		try{
 		    FileWriter fstream = new FileWriter(mapNodeURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
+		    int idCount = 1;
 		    for(Node node: nodes){
-		    	out.write(node.getID() + " " + node.getX()+ " " + node.getY() + System.getProperty("line.separator"));
+		    	out.write(idCount + " " + node.getX()+ " " + node.getY() + System.getProperty("line.separator"));
+		    	idCount++;
 		    }
 		    System.out.println("File Node Write Success!");
 		    out.close();
@@ -282,8 +291,10 @@ public class FileProcessing {
 		try{
 		    FileWriter fstream = new FileWriter(mapEdgeURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
+		    int idCount = 1;
 		    for(Edge edge: edges){
-		    	out.write(edge.getEdgeID() + " " + edge.getSource().getID() + " " + edge.getDestination().getID() + System.getProperty("line.separator"));
+		    	out.write(idCount + " " + edge.getSource().getID() + " " + edge.getDestination().getID() + System.getProperty("line.separator"));
+		    	idCount++;
 		    }
 		    System.out.println("File Edge Write Success!");
 		    out.close();
