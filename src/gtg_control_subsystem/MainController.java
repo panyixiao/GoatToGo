@@ -65,6 +65,7 @@ public class MainController{
 		mapData=mapModel.getArrayOfMapNames();
 		return mapData;
 	}
+	
 	/* Added by neha
 	 * This method should fetch the map url from the model and return the url to the view subsystem.
 	 */
@@ -91,8 +92,7 @@ public class MainController{
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		//TargetPntInfo targetPnt = new TargetPntInfo();
 		Point targetPnt = new Point();
-		System.out.println("Task Type:" + pntType);
-		
+		System.out.println("Task Type:" + pntType);		
 		targetPnt = mapModel.validatePoint(mapName, taskPnt.x, taskPnt.y);
 		System.out.println("Mapping To point: " + targetPnt.x + ", " + targetPnt.y);
 		mapModel.setStartEndPathPoint(targetPnt, pntType, mapName);		
@@ -141,21 +141,44 @@ public class MainController{
 		return isAdmin;
 	}
 	
-	/* Used for create the "MapName.txt" file, 
-	 * correspond to a button "Generate Road Map" on the Admin page
-	 * Used to save the temporal point graph to file*/	
+	// This function is called each time when View is changing page
 	public Boolean LoadingPntsAndEdges(String mapName){
 		if(mapModel.loadFiles(mapName)){
-			this.nodeList = (ArrayList<Node>) mapModel.getNodeList(mapName);
-			this.edgeList = (ArrayList<Edge>) mapModel.getEdgeList(mapName);	
-			this.tempPntList = this.transferNodeToPnt2D(nodeList);
-			this.tempEdgeList = this.transferEdgeToPnt2D(edgeList);
+			//this.nodeList = (ArrayList<Node>) mapModel.getNodeList(mapName);
+			//this.edgeList = (ArrayList<Edge>) mapModel.getEdgeList(mapName);	
+			LoadInNodeList(mapName);
+			LoadInEdgeList(mapName);			 
+			this.tempPntList = this.transferNodeToPnt2D(this.nodeList);
+			this.tempEdgeList = this.transferEdgeToPnt2D(this.edgeList);
 
-			return true;	
+			return true;
 		}
 		else{
 			System.out.println("Loading File failed");
 			return false;
+		}
+	}
+	
+	/* Yixiao 2015-11-19, Since the NodeList/ EdgeList returned from Model is a reference, 
+	 * so we will create a new memory and copy the original NodeList / EdgeList into it, 
+	 * So we won't change anything in the model.
+	 */
+	private void LoadInNodeList(String mapName){
+		// Clear the temporary nodeList before add new point into it;
+		this.nodeList.clear();
+		ArrayList<Node> tempNode = (ArrayList<Node>)mapModel.getNodeList(mapName);		
+		for(Node nd:tempNode){
+			this.nodeList.add(nd);
+		}
+		//return copySuccess;		
+	}
+	
+	private void LoadInEdgeList(String mapName){
+		// Clear the temporary edgeList before add new point into it;
+		this.edgeList.clear();
+		ArrayList<Edge> tempEdge = (ArrayList<Edge>)mapModel.getEdgeList(mapName);		
+		for(Edge eg:tempEdge){
+			this.edgeList.add(eg);
 		}
 	}
 	
@@ -167,6 +190,7 @@ public class MainController{
 		}
 		return pntList;
 	}
+	
 	private ArrayList<Point2D> transferEdgeToPnt2D(List<Edge> targetList){
 		ArrayList<Point2D> edgeList = new ArrayList<Point2D>();
 		for(Edge eg:targetList){
@@ -181,7 +205,9 @@ public class MainController{
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
 		try{
-			//mapModel.saveMapGraph(mapName, nodeList, edgeList);			
+			//mapModel.saveMapGraph(mapName, nodeList, edgeList);
+			System.out.println("Totally "+tempPntList.size()+" nodes will be saved");
+			System.out.println("Totally "+tempEdgeList.size()+" edges will be saved");
 			mapModel.saveMapGraph(mapName, tempPntList, tempEdgeList);
 		}
 		catch(IOException e){
@@ -217,17 +243,7 @@ public class MainController{
 		listofMaps.remove(index);
 		urlsofMaps.remove(index);
 		return true;
-	}
-	
-	// Create point on temporal the point graph created in MapEditor
-/*	public Boolean addPoint(Point2D inputPnt){
-		Boolean success = false;
-		if(CheckPntExistence(inputPnt,tempPntList)==0){
-			tempPntList.add(inputPnt);	
-			success = true;
-		}
-		return success;
-	}*/
+	}	
 	
 	public int getMaxNodeID() {
 		int maxNodeID=0;
@@ -249,18 +265,18 @@ public class MainController{
 		return maxEdgeID;
 	}
 	
-	
-	
 	public Boolean addPoint(Point2D inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt)==0){
 			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), floorNum, entranceID, buildingName, pointType, pointDescription));	
-			nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
+			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
+			nodeList.add(new Node(this.nodeList.size()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
 			this.tempPntList=this.transferNodeToPnt2D(nodeList);
 			success = true;
 		}
 		return success;
 	}
+	
 	public Boolean addPoint(Point2D inputPnt){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt)==0){
@@ -297,15 +313,16 @@ public class MainController{
 			if ((start==null)||(end==null)) {
 				return success;
 			}
-			//edgeList.add(new Edge(this.getMaxEdgeID()+1, start, end));
-			edgeList.add(new Edge(this.getMaxEdgeID()+1, start, end ,Math.sqrt(Math.pow(start.getX()-end.getX(), 2)+Math.pow(start.getY()-end.getY(), 2))));
+			
+			//edgeList.add(new Edge(this.getMaxEdgeID()+1, start, end ,Math.sqrt(Math.pow(start.getX()-end.getX(), 2)+Math.pow(start.getY()-end.getY(), 2))));
+			edgeList.add(new Edge(edgeList.size()+1, start, end ,Math.sqrt(Math.pow(start.getX()-end.getX(), 2)+Math.pow(start.getY()-end.getY(), 2))));
+			
 			this.tempEdgeList = this.transferEdgeToPnt2D(edgeList);
 			success=true;
 			return success;
 		}
 		return success;
 	}
-	// need to be changed.
 	
 	public void clearAllTempData(){
 		tempPntList.clear();
@@ -316,21 +333,24 @@ public class MainController{
 	
 	public boolean deletePoint(Point2D inputPnt){
 		Boolean pointDeleted = false;
-		int pntID=this.CheckPntExistence(inputPnt);
-		if(nodeList.isEmpty()||(pntID==0)){
-			System.out.println("List is empty, nothing to delete.");
+
+		if(nodeList.isEmpty()){
+			System.out.println("Node List is empty, nothing to delete.");
+			return pointDeleted;
+		}
+		
+
+		int pntID = this.CheckPntExistence(inputPnt);
+		if(pntID == 0){
+			System.out.println("Can't find point in the List, Will not delete point");
 			return pointDeleted;
 		}		
+		
 		for(Node n: nodeList){
 			if (n.getID()==pntID){
-				nodeList.remove(pntID);
-				for (Edge e: edgeList) {
-					if ((e.getSource().getID()==pntID)||(e.getDestination().getID()==pntID)){
-						edgeList.remove(pntID);
-					}
-				}
+				nodeList.remove(n);
+				reNumberNodeList();				
 				this.tempPntList=this.transferNodeToPnt2D(nodeList);
-				this.tempEdgeList=this.transferEdgeToPnt2D(edgeList);
 				pointDeleted =true;
 				return pointDeleted;
 			}
@@ -339,46 +359,74 @@ public class MainController{
 	}
 
 	public boolean deleteEdge(Point2D p){
-		boolean success=false;
-		int n =checkIfPointIsInEdge(p);
-		if(n>0){
-			System.out.println("I will delete edge");
-			edgeList.remove(n);
-			this.tempEdgeList=this.transferEdgeToPnt2D(edgeList);
-			return true;		
+		int edgeID = checkIfPointIsInEdge(p);
+		
+		if(edgeID>0){			
+			System.out.println("Edge "+ edgeID+ " will be deleted");
+			
+			// The edgeID can't be used as the index here!
+			for(Edge e: this.edgeList){
+				if(e.getEdgeID() == edgeID){
+					this.edgeList.remove(e);					
+					reNumberEdgeList();					
+					this.tempEdgeList=this.transferEdgeToPnt2D(edgeList);
+					return true;		
+				}
+			}
 		}
 		return false;
 	}
+	
+	private void reNumberNodeList(){
+		
+	}
+	private void reNumberEdgeList(){
+		
+	}
+	
+ 	private void testPrintNodeEdgeList(){
+		System.out.println("There are currently total "+this.nodeList.size()+" Nodes in Controller's memory");
+		for(Node n:this.nodeList){
+			System.out.println("Node"+n.getID()+":"+n.getX()+" "+n.getY());
+		}		
+		
+		System.out.println("There are currently total "+this.edgeList.size()+" Edges in Controller's memory");
+		for(Edge e:this.edgeList){
+			System.out.println("Edge "+e.getEdgeID()+":"+e.getSource().getID()+" -> "+e.getDestination().getID());
+		}
+	}
+	
 	//See if selected point is a part of an existing edge
 	// If the distance between the selected point 
 	public int checkIfPointIsInEdge(Point2D p){
 		double ab, ap, pb;
 		int r = 0;
 		for(Edge e: edgeList){
-			ab=e.getEdgeLength();
+			
+			ab=e.getEdgeLength();			
 			ap=Math.sqrt(Math.pow(e.getSource().getX()-p.getX(), 2)+Math.pow(e.getSource().getY()-p.getY(), 2));
 			pb=Math.sqrt(Math.pow(e.getDestination().getX()-p.getX(), 2)+Math.pow(e.getDestination().getY()-p.getY(), 2));
+			
 			if(Math.abs(ab-(ap+pb))<=5){
-				r=e.getEdgeID(); 
-				System.out.println("Point " + p + "is part of an edge");
+				r=e.getEdgeID();				
+				System.out.println("Point " + p + " belongs to Edge "+r);
 				return r;
 			}
-			}
-		System.out.println("Is point " + p+ "in an edge? " + r);
+		}
+		System.out.println("This Point doesn't belongs to any Edge");
 		return r;
 	}
-	
 
 	private int CheckPntExistence(Point2D pnt){
 		int pntID = 0;
-		int toleranceRadius = 15;	// 5 pixels
+		int toleranceRadius = 15;	// 15 pixels
 		for (Node tempN: nodeList){
 			double d = Math.sqrt(Math.pow(pnt.getX() - tempN.getX(), 2) + 
 							     Math.pow(pnt.getY() - tempN.getY(), 2));
 			
 			if(d <= toleranceRadius){
 				pntID = tempN.getID();
-				System.out.println("Point Exist!");
+				System.out.println("Point "+pntID+" is Found in the nodeList!");
 				return pntID;
 			}
 		}
@@ -416,6 +464,7 @@ public class MainController{
 	public ArrayList<Point2D> getDisplayPnt(){		
 		return tempPntList;
 	}
+	
 	public ArrayList<Point2D> getDisplayEdge(){
 		return tempEdgeList;
 	}
