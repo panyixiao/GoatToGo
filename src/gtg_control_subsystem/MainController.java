@@ -47,6 +47,19 @@ public class MainController{
 		MapListIntial();
 	}
 	
+	/**********************************************************************************************
+	 * View controller realize Function List
+	 * MapListIntial()
+	 * getMapData()
+	 * getMapURL
+	 * getMapList
+	 * LoadingPntsAndEdges
+	 * getDisplayPnt
+	 * getDisplayEdge
+	 * 
+	 * **********************************************************************************************
+	 * */
+	
 	// temporarily initializer, will be moved to Model-subsystem in the future
 	private void MapListIntial(){
 		listofMaps.add("BH_Basement");
@@ -109,6 +122,13 @@ public class MainController{
 	public ArrayList<String> getMapList(String mapName){
 		return listofMaps;		
 	}
+	
+	/***********************************************************************************************
+	 * Patj controller realize Function
+	 * setTaskPnt()
+	 * getPathData()
+	 * **********************************************************************************************
+	 * */
 
 	/**
 	 * Method setTaskPnt.
@@ -162,6 +182,13 @@ public class MainController{
 		
 		return path;
 	}
+	
+	/***********************************************************************************************
+	 * Admin controller realize Function
+	 * adminQualification()
+	 * getPathData()
+	 * **********************************************************************************************
+	 * */
 	
 	/**
 	 * Method adminQualification.
@@ -616,8 +643,5 @@ public class MainController{
 		return tempEdgeList;
 	}
 	
-	
-
-
 
 }
