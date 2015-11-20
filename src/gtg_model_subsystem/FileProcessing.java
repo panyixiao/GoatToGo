@@ -14,8 +14,6 @@ public class FileProcessing {
 	
 	/**
 	 * The method loadMapList load maps from master map list stored in masterMapList.txt
-	
-	
 	 * @return master map list * @throws IOException */
 	public ArrayList<Map> loadMapList() throws IOException
 	{
@@ -55,8 +53,6 @@ public class FileProcessing {
 	 * deleteMapFromMaster will take in a map name and delete the given line that is associated with the
 	 * map name given.
 	 * @param mapName the name of the map needs to be deleted from masterMapList.txt
-	
-	
 	 * @return true if delete succeeded false otherwise * @throws IOException  */
 	public boolean deleteMapFromMaster(String mapName) throws IOException{
 			boolean deleteSuccess = true;
@@ -108,10 +104,7 @@ public class FileProcessing {
 	/**
 	 * saveMapToMaster method saves a newly added map from admin view to master map list.
 	 * @param mapName the name of map to be saved.
-	
-	 * @param mapType the type of map that we are saving (IE possible campus map).
-	
-	
+	 * @param mapType the type of map that we are saving (IE possible campus map).	
 	 * @param mapImgURL String
 	 * @return true if write was successful false if write failed. * @throws IOException */
 	public boolean saveMapToMaster(String mapName, String mapImgURL, String mapType) throws IOException{
@@ -240,6 +233,7 @@ public class FileProcessing {
 	 */
 	public void readAdmin(List<Admin> admins) throws IOException{
 		String adminURL = "ModelFiles"+System.getProperty("file.separator")+"adminFile.txt";
+		try{
 		File file = new File(adminURL);
 		BufferedReader buffer = new BufferedReader(new FileReader(file));
 		String line;
@@ -252,6 +246,9 @@ public class FileProcessing {
 				admins.add(admin);
 		}
 		buffer.close();
+		}catch(IOException e){
+			System.out.println(e.toString());
+		}
 	}
 	/**
 	 * Method saveNodesFile.
@@ -262,11 +259,10 @@ public class FileProcessing {
 	public void saveNodesFile(List<Node> nodes, String mapName) throws IOException{
 		String mapNodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
 		try{
-		    FileWriter fstream = new FileWriter(mapNodeURL);
+		    FileWriter fstream = new FileWriter(mapNodeURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
 		    for(Node node: nodes){
-		    	out.write(node.getID() + " " + node.getX()+ " " + node.getY());
-		    	out.newLine();
+		    	out.write(node.getID() + " " + node.getX()+ " " + node.getY() + System.getProperty("line.separator"));
 		    }
 		    System.out.println("File Node Write Success!");
 		    out.close();
@@ -284,11 +280,10 @@ public class FileProcessing {
 	public void saveEdgesFile(List<Edge> edges, String mapName) throws IOException{
 		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"EdgeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";
 		try{
-		    FileWriter fstream = new FileWriter(mapEdgeURL);
+		    FileWriter fstream = new FileWriter(mapEdgeURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
 		    for(Edge edge: edges){
-		    	out.write(edge.getEdgeID() + " " + edge.getSource().getID() + " " + edge.getDestination().getID());
-		    	out.newLine();
+		    	out.write(edge.getEdgeID() + " " + edge.getSource().getID() + " " + edge.getDestination().getID() + System.getProperty("line.separator"));
 		    }
 		    System.out.println("File Edge Write Success!");
 		    out.close();

@@ -178,51 +178,23 @@ public class MainModel {
 	public boolean saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
 			//Generate new nodes from the temporary point list to be added to graph
 			List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
-			printNodes(nodeList);
-			//IF the node list is not empty THEN
-			if(!nodeList.isEmpty()){
-				//Signal node list was created
-				System.out.println("New nodes to be added to graph!");
-				
-				// Add the newly created nodes to graphs current node list for graph
-				for(Node newNode:nodeList){
-					mapTable.get(mapName).getGraph().getNodes().add(newNode);
-				}
-				try{
-				//STORE the new nodes and edges
-				fileProcessing.saveNodesFile(mapTable.get(mapName).getGraph().getNodes(), mapName);	
-				}catch(IOException e){
-					//Signal input output error to controller based on false
-					System.out.println(e.toString());
-					return false;
-				}
-			}else{
-				System.out.println("No new nodes added to graph");
-			}
-			
 			//Generate edge list from unique node IDs specified
 			List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
 			
-			//IF the edge list is not empty THEN
-			if(!edgeList.isEmpty()){
-				//Signal edge list was successfully created
-				System.out.println("New edges to be added to graph!");
-				
-				//Add the newly created edges to edge list for graph
-				for(Edge newEdge:edgeList){
-					mapTable.get(mapName).getGraph().getEdges().add(newEdge);
-				}
-				try{
-					fileProcessing.saveEdgesFile(mapTable.get(mapName).getGraph().getEdges(), mapName);	
-				}catch(IOException e){
-					//Signal input output error to controller based on false
-					System.out.println(e.toString());
-					return false;
-				}
-			}else{
-				System.out.println("No new edges to be added to list!");
+			graph = new CoordinateGraph(nodeList, edgeList);
+			mapTable.get(mapName).setGraph(graph);
+			//IF the node list is not empty THEN
+
+			try{
+				//STORE the new nodes and edges
+				fileProcessing.saveNodesFile(mapTable.get(mapName).getGraph().getNodes(), mapName);	
+				fileProcessing.saveEdgesFile(mapTable.get(mapName).getGraph().getEdges(), mapName);	
+
+			}catch(IOException e){
+				//Signal input output error to controller based on false
+				System.out.println(e.toString());
+				return false;
 			}
-			
 			System.out.println("File saved successfully");	
 		
 			return true;
@@ -246,8 +218,6 @@ public class MainModel {
 		int count = 0;
 		System.out.println(mapTable.get(mapName).getGraph().getNodes().size());
 		for(Point2D point : inputPointList){
-			//IF the point does not match a node in the maps graph THEN
-			if(!checkNodeExist(mapName, point)){
 				//Generate new node and add to temporary list
 				Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size() + count + 1, 
 										(int)point.getX(), 
@@ -255,10 +225,8 @@ public class MainModel {
 				//ADD the new node to the list
 				tempNodeList.add(tempNode);
 				count++;
-			}else{
 				//Signal that the node already exists
 				System.out.println("Node already exists in list");
-			}
 		}
 		
 		return tempNodeList;
