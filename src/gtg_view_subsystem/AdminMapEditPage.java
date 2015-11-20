@@ -299,6 +299,7 @@ public class AdminMapEditPage extends JPanel {
 	public Boolean deletePoint(Point2D inputPoint){
 		Boolean pointDeleted = false;
 		pointDeleted = this.parent.mainController.deletePoint(inputPoint);
+		pointPositions = this.parent.mainController.getDisplayPnt();
 		return pointDeleted;
 	}
 	

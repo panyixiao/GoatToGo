@@ -185,15 +185,21 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
 			Point2D point2bDeleted = new Point2D.Double(me.getX()/scale,me.getY()/scale);
-			switch (this.mode) {
-			case "Create Points":
-			// Check back in the controller list, delete it if the point exist.
-			// checkIfPointIsDrawn(me.getX(), me.getY(), scale);
+			
+			// Try to Delete Edge first
+			adminViewPageHandle.DeleteEdge(point2bDeleted);
+			// Try to Delete Point Secnd
 			adminViewPageHandle.deletePoint(point2bDeleted);
+			
+/*			switch (this.mode) {
+			case "Create Points":
+				// Check back in the controller list, delete it if the point exist.
+				// checkIfPointIsDrawn(me.getX(), me.getY(), scale);
+				adminViewPageHandle.deletePoint(point2bDeleted);
 			case "Select Neighbors":
 				//check if point is part of an edge
 				adminViewPageHandle.DeleteEdge(point2bDeleted);
-			}
+			}*/
 			
 		}
 		
