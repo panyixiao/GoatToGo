@@ -285,7 +285,7 @@ public class MainModel {
 			return tempEdgeList;
 		}
 		
-		
+		int edgeCount = 0;
 		for (int i = 0; i<inputEdgeList.size(); i+=2)
 		{
 			System.out.println(i);
@@ -308,10 +308,11 @@ public class MainModel {
 			}
 			
 			if (startNode.getID()!=0&&endNode.getID()!=0){
-				tempEdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+1, 
+				tempEdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + edgeCount +1, 
 						startNode, 
 						endNode, 
-						calculateDistance(startNode.getX(),startNode.getY(),endNode.getX(),endNode.getY())));					
+						calculateDistance(startNode.getX(),startNode.getY(),endNode.getX(),endNode.getY())));
+				edgeCount++;
 			}
 		}
 		
