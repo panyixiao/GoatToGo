@@ -24,6 +24,8 @@ import javax.swing.border.Border;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 
+/**
+ */
 public class AdminMapEditPage extends JPanel {
 	private JPanel leftPanel, rightPanel;
 	private JButton zoomInBtn, zoomOutBtn, clearAllBtn, saveBtn, backBtn;
@@ -53,6 +55,7 @@ public class AdminMapEditPage extends JPanel {
 	/**
 	 * Create the panel.
 	 * @param mainView 
+	 * @param mapName String
 	 */
 	public AdminMapEditPage(MainView mainView,String mapName) {
 		this.parent = mainView;
@@ -268,6 +271,11 @@ public class AdminMapEditPage extends JPanel {
 		System.out.println(this.modeBtns.getSelection());
 	}
 	
+	/**
+	 * Method CreatePoint.
+	 * @param inputPoint Point2D
+	 * @return Boolean
+	 */
 	public Boolean CreatePoint(Point2D inputPoint){
 		Boolean success = false;
 		success = this.parent.mainController.addPoint(inputPoint);
@@ -278,6 +286,12 @@ public class AdminMapEditPage extends JPanel {
 		return success;
 	}
 	
+	/**
+	 * Method CreateEdge.
+	 * @param pnt1 Point2D
+	 * @param pnt2 Point2D
+	 * @return Boolean
+	 */
 	public Boolean CreateEdge(Point2D pnt1, Point2D pnt2){
 		Boolean success = false;
 		success = this.parent.mainController.createEdge(pnt1, pnt2);		
@@ -289,6 +303,11 @@ public class AdminMapEditPage extends JPanel {
 		return success;
 	}
 	
+	/**
+	 * Method DeleteEdge.
+	 * @param p Point2D
+	 * @return Boolean
+	 */
 	public Boolean DeleteEdge(Point2D p){
 		Boolean success = false;
 		success = this.parent.mainController.deleteEdge(p);
@@ -296,6 +315,11 @@ public class AdminMapEditPage extends JPanel {
 		return success;
 	}
 	
+	/**
+	 * Method deletePoint.
+	 * @param inputPoint Point2D
+	 * @return Boolean
+	 */
 	public Boolean deletePoint(Point2D inputPoint){
 		Boolean pointDeleted = false;
 		pointDeleted = this.parent.mainController.deletePoint(inputPoint);
@@ -303,6 +327,11 @@ public class AdminMapEditPage extends JPanel {
 		return pointDeleted;
 	}
 	
+	/**
+	 * Method checkPoint.
+	 * @param inputPoint Point2D
+	 * @return Point2D
+	 */
 	public Point2D checkPoint(Point2D inputPoint){	
 		Point2D pointInGraph = this.parent.mainController.pointMapping(inputPoint);		
 		return pointInGraph;
@@ -316,6 +345,10 @@ public class AdminMapEditPage extends JPanel {
 	
 	
 	
+	/**
+	 * Method returnLastPointInList.
+	 * @return Point2D
+	 */
 	public Point2D returnLastPointInList()
 	{
 		Point2D pnt = new Point2D.Double(0,0);
@@ -323,6 +356,10 @@ public class AdminMapEditPage extends JPanel {
 		return pnt;
 	}
 	
+	/**
+	 * Method setMode.
+	 * @param mode String
+	 */
 	private void setMode(String mode){
 		this.adminMapDisplayPanel.setMode(mode);
 	}
@@ -331,6 +368,10 @@ public class AdminMapEditPage extends JPanel {
 		this.adminMapDisplayPanel.clearAll();
 	}
 	
+	/**
+	 * Method setMapName.
+	 * @param s String
+	 */
 	public void setMapName(String s){
 		this.mapName = s;
 	}

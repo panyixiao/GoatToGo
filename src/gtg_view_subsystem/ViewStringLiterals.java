@@ -1,5 +1,7 @@
 package gtg_view_subsystem;
 
+/**
+ */
 public class ViewStringLiterals {
 	public static final String ADMIN_LOGIN = "ADMIN LOGIN";
 	public static final String USERNAME = "Username";

@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
+/**
+ */
 public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotionListener{
 	private Point origin;
 	private JScrollPane mapPanelHolder;
@@ -26,8 +28,10 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
 	private BufferedImage image;
 	/**
 	 * Create the panel.
-	 * @param mapPage 
-	 * @param selectedPoints 
+	
+	
+	 * @param mapPanelHolder JScrollPane
+	 * @param mapurl String
 	 */
 	public MapDisplayPanel(JScrollPane mapPanelHolder, String mapurl) {
 		this.mapPanelHolder = mapPanelHolder;
@@ -37,6 +41,10 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
 	    this.scale = 1.0;
 	}
 
+	/**
+	 * Method getPreferredSize.
+	 * @return Dimension
+	 */
 	@Override
 	public Dimension getPreferredSize() {
 		int w = 0;
@@ -49,12 +57,20 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
 		return new Dimension(w, h);
     }
 	  
+	 /**
+	  * Method setScale.
+	  * @param s double
+	  */
 	 public void setScale(double s) {
         this.scale = s;
         this.revalidate();
         this.repaint();
 	 }
 	    
+	/**
+	 * Method paintComponent.
+	 * @param g Graphics
+	 */
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -66,32 +82,62 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
         g2.drawRenderedImage(this.image, at);
 	}
 	
+	/**
+	 * Method mousePressed.
+	 * @param me MouseEvent
+	 * @see java.awt.event.MouseListener#mousePressed(MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent me){
 		this.origin = new Point(me.getPoint());
 	}
 
+	/**
+	 * Method mouseClicked.
+	 * @param me MouseEvent
+	 * @see java.awt.event.MouseListener#mouseClicked(MouseEvent)
+	 */
 	@Override
 	public void mouseClicked(MouseEvent me) {
 	}
 
+	/**
+	 * Method mouseEntered.
+	 * @param arg0 MouseEvent
+	 * @see java.awt.event.MouseListener#mouseEntered(MouseEvent)
+	 */
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Method mouseExited.
+	 * @param arg0 MouseEvent
+	 * @see java.awt.event.MouseListener#mouseExited(MouseEvent)
+	 */
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * Method mouseReleased.
+	 * @param me MouseEvent
+	 * @see java.awt.event.MouseListener#mouseReleased(MouseEvent)
+	 */
 	@Override
 	public void mouseReleased(MouseEvent me) {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * Method mouseDragged.
+	 * @param me MouseEvent
+	 * @see java.awt.event.MouseMotionListener#mouseDragged(MouseEvent)
+	 */
 	@Override
 	public void mouseDragged(MouseEvent me) {
 		 if (this.origin != null) {
@@ -109,12 +155,21 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
          }
 	}
 
+	/**
+	 * Method mouseMoved.
+	 * @param arg0 MouseEvent
+	 * @see java.awt.event.MouseMotionListener#mouseMoved(MouseEvent)
+	 */
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 	
+	/**
+	 * Method loadImage.
+	 * @param mapurl String
+	 */
 	public void loadImage(String mapurl) {
         try {
             this.image = ImageIO.read(new File(mapurl));
@@ -127,6 +182,10 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
         }
 	}
 
+	/**
+	 * Method getScale.
+	 * @return double
+	 */
 	public double getScale() {
 		// TODO Auto-generated method stub
 		return this.scale;

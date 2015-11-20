@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JScrollPane;
 
+/**
+ */
 public class ResultMapDisplayPanel extends MapDisplayPanel{
 	private Image locationImage;
 	private String map;
@@ -26,8 +28,12 @@ public class ResultMapDisplayPanel extends MapDisplayPanel{
 	private int circleWidthHeight = 10;
 	/**
 	 * Create the panel.
-	 * @param mapPage 
-	 * @param selectedPoints 
+	
+	
+	 * @param parent ResultPage
+	 * @param mapPanelHolder JScrollPane
+	 * @param mapName String
+	 * @param mapurl String
 	 */
 	public ResultMapDisplayPanel(ResultPage parent, JScrollPane mapPanelHolder, String mapName, String mapurl) {
 		super(mapPanelHolder, mapurl);
@@ -38,6 +44,10 @@ public class ResultMapDisplayPanel extends MapDisplayPanel{
 		this.loadLocationImage();
 	}
 	    
+	/**
+	 * Method paintComponent.
+	 * @param g Graphics
+	 */
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -77,6 +87,10 @@ public class ResultMapDisplayPanel extends MapDisplayPanel{
         }
 	}
 
+	/**
+	 * Method displayPoints.
+	 * @param arrayOfPoints ArrayList<Point>
+	 */
 	public void displayPoints(ArrayList<Point> arrayOfPoints) {
 		System.out.println("inside display Points");
 		// TODO Auto-generated method stub

@@ -1,5 +1,7 @@
 package gtg_model_subsystem;
 
+/**
+ */
 public class Node
 	{
 		/** the node's id
@@ -15,6 +17,9 @@ public class Node
 		
 		/** the information about the node
 		 *such as its name and location
+		 * @param id int
+		 * @param x int
+		 * @param y int
 		 */
 		//private NodeAttribute attribute;
 		
@@ -24,14 +29,26 @@ public class Node
 			this.y = y;
 		}
 		
+		/**
+		 * Method getID.
+		 * @return int
+		 */
 		public int getID(){
 			return this.id;
 		}
+		/**
+		 * Method getX.
+		 * @return int
+		 */
 		public int getX(){
 			return this.x;
 		}
 		
 
+		/**
+		 * Method getY.
+		 * @return int
+		 */
 		public int getY(){
 			return this.y;
 		}

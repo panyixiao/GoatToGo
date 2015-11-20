@@ -7,9 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import gtg_model_subsystem.Node;
-import gtg_model_subsystem.Edge;
-import gtg_model_subsystem.CoordinateGraph;
+/**
+ */
 public class JDijkstra {
 	  private final List<Node> nodes;
 	  private final List<Edge> edges;
@@ -18,12 +17,20 @@ public class JDijkstra {
 	  private Map<Node, Node> predecessors;
 	  private Map<Node, Integer> distance;
 
+	  /**
+	   * Constructor for JDijkstra.
+	   * @param graph CoordinateGraph
+	   */
 	  public JDijkstra(CoordinateGraph graph) {
 	    // create a copy of the array so that we can operate on this array
 	    this.nodes = new ArrayList<Node>(graph.getNodes());
 	    this.edges = new ArrayList<Edge>(graph.getEdges());
 	  }
 
+	  /**
+	   * Method execute.
+	   * @param source Node
+	   */
 	  public void execute(Node source) {
 	    settledNodes = new HashSet<Node>();
 	    unSettledNodes = new HashSet<Node>();
@@ -39,6 +46,10 @@ public class JDijkstra {
 	    }
 	  }
 
+	  /**
+	   * Method findMinimalDistances.
+	   * @param node Node
+	   */
 	  private void findMinimalDistances(Node node) {
 	    List<Node> adjacentNodes = getNeighbors(node);
 	    for (Node target : adjacentNodes) {
@@ -51,6 +62,12 @@ public class JDijkstra {
 
 	  }
 
+	  /**
+	   * Method getDistance.
+	   * @param node Node
+	   * @param target Node
+	   * @return int
+	   */
 	  private int getDistance(Node node, Node target) {
 	    for (Edge edge : edges) {
 	      if (edge.getSource().equals(node) && edge.getDestination().equals(target)) {
@@ -60,6 +77,11 @@ public class JDijkstra {
 	    throw new RuntimeException("Should not happen");
 	  }
 
+	  /**
+	   * Method getNeighbors.
+	   * @param node Node
+	   * @return List<Node>
+	   */
 	  private List<Node> getNeighbors(Node node) {
 	    List<Node> neighbors = new ArrayList<Node>();
 	   
@@ -71,6 +93,11 @@ public class JDijkstra {
 	    return neighbors;
 	  }
 
+	  /**
+	   * Method getMinimum.
+	   * @param Nodees Set<Node>
+	   * @return Node
+	   */
 	  private Node getMinimum(Set<Node> Nodees) {
 	    Node minimum = null;
 	    for (Node Node : Nodees) {
@@ -86,10 +113,20 @@ public class JDijkstra {
 	    return minimum;
 	  }
 
+	  /**
+	   * Method isSettled.
+	   * @param Node Node
+	   * @return boolean
+	   */
 	  private boolean isSettled(Node Node) {
 	    return settledNodes.contains(Node);
 	  }
 
+	  /**
+	   * Method getShortestDistance.
+	   * @param destination Node
+	   * @return int
+	   */
 	  private int getShortestDistance(Node destination) {
 	    Integer d = distance.get(destination);
 	    if (d == null) {
@@ -102,6 +139,11 @@ public class JDijkstra {
 	  /*
 	   * This method returns the path from the source to the selected target and
 	   * NULL if no path exists
+	   */
+	  /**
+	   * Method getPath.
+	   * @param target Node
+	   * @return LinkedList<Node>
 	   */
 	  public LinkedList<Node> getPath(Node target) {
 	    LinkedList<Node> path = new LinkedList<Node>();
