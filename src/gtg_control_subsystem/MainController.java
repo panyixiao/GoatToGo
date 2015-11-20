@@ -149,7 +149,10 @@ public class MainController{
 			LoadInNodeList(mapName);
 			LoadInEdgeList(mapName);			 
 			this.tempPntList = this.transferNodeToPnt2D(this.nodeList);
-			this.tempEdgeList = this.transferEdgeToPnt2D(this.edgeList);
+			this.tempEdgeList = this.transferEdgeToPnt2D(this.edgeList);			
+
+			System.out.println("Totally "+tempPntList.size()+" nodes have been loaded");
+			System.out.println("Totally "+tempEdgeList.size()+" edges have been loaded");
 
 			return true;
 		}
