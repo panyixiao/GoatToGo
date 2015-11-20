@@ -181,7 +181,9 @@ public class MainModel {
 			//Generate edge list from unique node IDs specified
 			List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
 			
+			//Generate a new coordinate graph to be saved by admin
 			graph = new CoordinateGraph(nodeList, edgeList);
+			//STORE it as the new graph
 			mapTable.get(mapName).setGraph(graph);
 			//IF the node list is not empty THEN
 

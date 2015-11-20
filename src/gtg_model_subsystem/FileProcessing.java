@@ -34,8 +34,9 @@ public class FileProcessing {
 			buffer = new BufferedReader(new FileReader(file));
 			tempMapList = new ArrayList<Map>();
 			
-			while((line=buffer.readLine())!=null){
+			while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 				line.trim();
+				if(line.equals("")){break;}
 				lines = line.split("[\\s+]");
 				//create a Map using stored types(name,graph,img url,type) for each map
 				tempMap=new Map(lines[0], null, lines[1],lines[2]);
@@ -75,7 +76,7 @@ public class FileProcessing {
 				reader = new BufferedReader(new FileReader(originalFile));
 				writer = new BufferedWriter(new FileWriter(tempFile));
 				//WHILE a line exists in master list text file
-				while((line = reader.readLine()) != null){
+				while((line = reader.readLine()) != null && !(line.trim().equals(""))){
 						//remove the end line
 						line.trim();
 						//split values and store into lines array
@@ -156,7 +157,7 @@ public class FileProcessing {
 				buffer = new BufferedReader(new FileReader(file));
 				String line;
 				String[] lines;
-				while((line = buffer.readLine()) != null){
+				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 					line = line.trim();
 					lines = line.split("[\\s+]");
 					
@@ -167,7 +168,9 @@ public class FileProcessing {
 					nodes.add(node);
 				}
 			}catch(Exception e){
+				System.out.println("Nodes broke");
 				System.out.println(e.toString());
+				
 				readSuccess = false;
 			}finally{
 				buffer.close();
@@ -200,24 +203,33 @@ public class FileProcessing {
 				buffer = new BufferedReader(new FileReader(file));
 				String line;
 				String[] lines;
-				int nodeId1, nodeId2;
-				while((line = buffer.readLine()) != null){
+				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 					line = line.trim();
 					lines = line.split("[\\s+]");
 					
 					//Subtract one for arraylist index value
-					nodeId1 = Integer.parseInt(lines[1]) - 1;
-					nodeId2 = Integer.parseInt(lines[2]) - 1;
-		
+					Node tempNode1 = getNode(nodes, Integer.parseInt(lines[1]));
+					Node tempNode2 = getNode(nodes, Integer.parseInt(lines[2]));
+					if(tempNode1 == null){
+						System.out.println("Node1  could not be read for edge");
+						readSuccess = false;
+						break;
+					}
+					if(tempNode2 == null){
+						System.out.println("Node2  could not be read for edge");
+						readSuccess = false;
+						break;
+					}
 					Edge edge = new Edge(Integer.parseInt(lines[0]), 
-										 nodes.get(nodeId1), 
-										 nodes.get(nodeId2),
-										 calculateDistance(nodes.get(nodeId1).getX(), nodes.get(nodeId2).getX(), nodes.get(nodeId1).getY(), nodes.get(nodeId2).getY())
+										 tempNode1, 
+										 tempNode2,
+										 calculateDistance(tempNode1.getX(), tempNode2.getX(), tempNode1.getY(), tempNode2.getY())
 										 );
 					
 					edges.add(edge);
 				}
 			}catch(Exception e){
+				System.out.println("Edges broke");
 				System.out.println(e.toString());
 				readSuccess = false;
 			}finally{
@@ -225,6 +237,16 @@ public class FileProcessing {
 			}
 			return readSuccess;
 		}
+	}
+	public Node getNode(List<Node> nodes, int nodeID){
+			Node nodeFound = null;
+			for(Node node: nodes){
+				if(node.getID() == nodeID){
+					nodeFound = node;
+					break;
+				}
+			}
+			return nodeFound;
 	}
 	/**
 	 * Method readAdmin.
@@ -238,8 +260,9 @@ public class FileProcessing {
 		BufferedReader buffer = new BufferedReader(new FileReader(file));
 		String line;
 		String[] lines;
-		while((line = buffer.readLine()) != null){
+		while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 				line = line.trim();
+				if(line.equals("")){break;}
 				lines = line.split("[\\s+]");
 				
 				Admin admin = new Admin(lines[0], lines[1]);
