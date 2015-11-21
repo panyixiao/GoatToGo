@@ -15,8 +15,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -366,7 +368,13 @@ public class AdminMapEditPage extends JPanel {
 	}
 
 	public void clearAllBtnPressed(){
+		 JDialog.setDefaultLookAndFeelDecorated(true);
+		 int response = JOptionPane.showConfirmDialog(null, "WARNING!!\n You will erase ALL data \n Do you want to continue?", "Warning",
+		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    if (response == JOptionPane.YES_OPTION) {
+		    
 		this.adminMapDisplayPanel.clearAll();
+		    }
 	}
 	
 	/**
