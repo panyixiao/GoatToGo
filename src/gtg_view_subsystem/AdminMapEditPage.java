@@ -169,7 +169,7 @@ public class AdminMapEditPage extends JPanel {
 		this.floorLabel.setBounds(50, 265, 150, 50);
 		this.floorLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.floorLabel);
-		
+		adminMapDisplayPanel.setFloor("1");	
 		this.floor = new JTextField();
 		this.floor.setBounds(50, 310, 307, 53);
 		this.floor.setBackground(null);
@@ -231,6 +231,7 @@ public class AdminMapEditPage extends JPanel {
 		this.clearAllBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				clearAllBtnPressed();
+				clearTempData();
 			}
 		});
 		
@@ -276,9 +277,9 @@ public class AdminMapEditPage extends JPanel {
 	 * @param inputPoint Point2D
 	 * @return Boolean
 	 */
-	public Boolean CreatePoint(Point2D inputPoint){
+	public Boolean CreatePoint(Point2D inputPoint, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
-		success = this.parent.mainController.addPoint(inputPoint);
+		success = this.parent.mainController.addPoint(inputPoint,floorNum,entranceID,buildingName,pointType,pointDescription);
 		pointPositions = this.parent.mainController.getDisplayPnt();		
 		for(Point2D pnt: pointPositions){
 			System.out.println(pnt.getX() + "," + pnt.getY());
