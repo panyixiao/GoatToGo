@@ -54,7 +54,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		this.newStart = new Point2D.Double(0, 0);
 		this.newEnd = new Point2D.Double(0, 0);
 
-		// building = adminViewPage.
+		this.building = adminViewPage.getBuilding();
+		this.floor = adminViewPage.getFloor();
 	}
 
 	/**
@@ -102,18 +103,29 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		String newEnterenceIdString, newType, newDescription, newBuilding;
 		int newEnterenceId;
 		int floorNum;
-		JTextField description = new JTextField(10);
-		JTextField entranceId = new JTextField(3);
-		JTextField building = new JTextField(3);
+		JTextField description = new JTextField();
+		JTextField entranceId = new JTextField();
+		JTextField building = new JTextField();
 		building.setText(this.building);
-		JTextField floor = new JTextField(3);
+		if (this.building.equals("Campus")) {
+			building.setEditable(true);
+		} else {
+			building.setEditable(false);
+		}
+		JTextField floor = new JTextField();
 		floor.setText(this.floor);
+		if (this.floor.equals("Campus")) {
+			floor.setEditable(true);
+		} else {
+			floor.setEditable(false);
+		}
 		JPanel panel = new JPanel(new GridLayout(0, 2));
 		String[] listPointTypes = { "Classroom", "Office", "Elevator", "Stairs", "Building", "Parking Lot",
 				"Men's Restroom", "Woman's Restroom", "Cafe", "Vending", "Water fountian", "Waypoint" };
 
 		JComboBox pointType = new JComboBox(listPointTypes);
 
+		entranceId.setText("0");
 		panel.add(new JLabel("Building:"));
 		panel.add(building);
 
@@ -149,7 +161,11 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 						floorNum = 1;
 
 					} else {
-						floorNum = Integer.parseInt(floor.getText());
+						try {
+							floorNum = Integer.parseInt(floor.getText());
+						} catch (NumberFormatException e) {
+							floorNum = 0;
+						}
 					}
 					if (building.getText().isEmpty()) {
 						newBuilding = "Null";
@@ -235,7 +251,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 
 			// Try to Delete Edge first
 			adminViewPageHandle.DeleteEdge(point2bDeleted);
-			// Try to Delete Point Secnd
+			// Try to Delete Point Second
 			adminViewPageHandle.deletePoint(point2bDeleted);
 
 			/*
@@ -379,7 +395,12 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			floorNum = 1;
 
 		} else {
-			floorNum = Integer.parseInt(this.floor);
+			try {
+				floorNum = Integer.parseInt(this.floor);
+			} catch (NumberFormatException e) {
+				floorNum = 0;
+			}
+
 		}
 		if (this.building.isEmpty()) {
 			newBuilding = "Null";
