@@ -545,7 +545,7 @@ public class MainController{
 	 * @param pnt Point2D
 	 * @return int
 	 */
-	public int CheckPntExistence(Point2D pnt){
+	private int CheckPntExistence(Point2D pnt){
 		int pntID = 0;
 		int toleranceRadius = 15;	// 15 pixels
 		for (Node tempN: nodeList){
@@ -562,79 +562,6 @@ public class MainController{
 	}	
 	
 
-	private Node findNodeInList (int nodeID) {
-		Node node=null;
-		for (Node n:nodeList) {
-			if (n.getID()==nodeID) {
-				node=n;
-				return node;
-			}
-		}
-		return node;
-	}
-	
-	public boolean setDescriptionOfNode (int nodeID){
-		boolean success=false;
-		if (this.findNodeInList(nodeID)!=null){
-			//this.findNodeInList(nodeID).setDescription();
-			//waiting for extension of node class;
-			success=true;
-			return success;
-		}
-		return success;
-	}
-	
-	public boolean setEntranceIDOfNode (int nodeID){
-		boolean success=false;
-		if (this.findNodeInList(nodeID)!=null){
-			//this.findNodeInList(nodeID).setEntranceID();
-			//waiting for extension of node class;
-			success=true;
-			return success;
-		}
-		return success;
-	}
-	
-	public boolean setTypeOfNode (int nodeID){
-		boolean success=false;
-		if (this.findNodeInList(nodeID)!=null){
-			//this.findNodeInList(nodeID).setType();
-			//waiting for extension of node class;
-			success=true;
-			return success;
-		}
-		return success;
-	}
-	
-	public String getDescriptionOfNode (int nodeID){
-		String description=new String();
-		if (this.findNodeInList(nodeID)!=null){
-			//description=this.findNodeInList(nodeID).getDescription();
-			//waiting for extension of node class;
-			return description;
-		}
-		return description;
-	}
-	
-	public int getEntranceIDOfNode (int nodeID){
-		int entranceID=-1;
-		if (this.findNodeInList(nodeID)!=null){
-			//entranceID=this.findNodeInList(nodeID).getEntranceID();
-			//waiting for extension of node class;
-			return entranceID;
-		}
-		return entranceID;
-	}
-	
-	public String getTypeOfNode (int nodeID){
-		String nodeType=new String();
-		if (this.findNodeInList(nodeID)!=null){
-			//nodeType=this.findNodeInList(nodeID).getType();
-			//waiting for extension of node class;
-			return nodeType;
-		}
-		return nodeType;
-	}
 	
 	/**
 	 * Method pointMapping.

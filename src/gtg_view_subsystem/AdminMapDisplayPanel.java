@@ -249,12 +249,6 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
 			Point2D point2bDeleted = new Point2D.Double(me.getX() / scale, me.getY() / scale);
 
-			//adminViewPageHandle.deletePoint(point2bDeleted);
-			//adminViewPageHandle.DeleteEdge(point2bDeleted);
-			//Vincent: Alyssa can you change the order of deletion? when admin right-click near a point, the point is deleted first then adjacent edges.
-			//It would be even better if you check if a point exists(I will give you the public method to call), then you delete point only.
-			//otherwise, check if there is an edge(checkIfPointIsInEdge in main controller), then delete edge.
-			//else do nothing.
 			// Try to Delete Edge first
 			adminViewPageHandle.DeleteEdge(point2bDeleted);
 			// Try to Delete Point Second

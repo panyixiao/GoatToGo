@@ -329,9 +329,6 @@ public class AdminMapEditPage extends JPanel {
 		Boolean pointDeleted = false;
 		pointDeleted = this.parent.mainController.deletePoint(inputPoint);
 		pointPositions = this.parent.mainController.getDisplayPnt();
-		//pointNeighbors = this.parent.mainController.getDisplayEdge();
-		//Vincent: could you please add this line? because both edges and nodes are going to change after deletion.
-		//or UI will only display the deletion of one point and one node. thanks.
 		return pointDeleted;
 	}
 	
