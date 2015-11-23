@@ -270,10 +270,10 @@ public class MainController{
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
 		try{
-			//mapModel.saveMapGraph(mapName, nodeList, edgeList);
+			mapModel.saveMapGraph(mapName, nodeList, edgeList);
 			System.out.println("Totally "+tempPntList.size()+" nodes will be saved");
 			System.out.println("Totally "+tempEdgeList.size()+" edges will be saved");
-			mapModel.saveMapGraph(mapName, tempPntList, tempEdgeList);
+			//mapModel.saveMapGraph(mapName, tempPntList, tempEdgeList);
 		}
 		catch(IOException e){
 			System.out.println(e.toString());
@@ -572,8 +572,7 @@ public class MainController{
 		Point2D searchingResult = new Point2D.Double(0,0);
 		
 		for (Point2D temPnt : tempPntList){
-			double d = Math.sqrt(Math.pow(inputPnt.getX() - temPnt.getX(), 2) + 
-							     Math.pow(inputPnt.getY() - temPnt.getY(), 2));
+			double d = mapModel.calculateDistance(inputPnt.getX(), temPnt.getX(), inputPnt.getY(), temPnt.getY());
 			if(d <= 15){
 				
 				System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
@@ -616,9 +615,4 @@ public class MainController{
 	public ArrayList<Point2D> getDisplayEdge(){
 		return tempEdgeList;
 	}
-	
-	
-
-
-
 }

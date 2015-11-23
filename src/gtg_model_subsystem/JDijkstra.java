@@ -10,8 +10,8 @@ import java.util.Set;
 /**
  */
 public class JDijkstra {
-	  private final List<Node> nodes;
-	  private final List<Edge> edges;
+	  private List<Node> nodes;
+	  private List<Edge> edges;
 	  private Set<Node> settledNodes;
 	  private Set<Node> unSettledNodes;
 	  private Map<Node, Node> predecessors;
@@ -24,7 +24,8 @@ public class JDijkstra {
 	  public JDijkstra(CoordinateGraph graph) {
 	    // create a copy of the array so that we can operate on this array
 	    this.nodes = new ArrayList<Node>(graph.getNodes());
-	    this.edges = new ArrayList<Edge>(graph.getEdges());
+	    //this.edges = new ArrayList<Edge>(graph.getEdges());
+	    this.edges = createDoubleEdge(graph);
 	  }
 
 	  /**
@@ -161,4 +162,35 @@ public class JDijkstra {
 	    Collections.reverse(path);
 	    return path;
 	  }
+	  public List<Edge> createDoubleEdge(CoordinateGraph graph){
+		  	List<Edge> tempEdges = new ArrayList<Edge>();
+		  	//Create the double edge
+		  	for(Edge edge: graph.getEdges()){
+		  			System.out.println(edge.getEdgeID()+ " ORIGINAL ID " + 
+		  							   edge.getSource().getID()+ " SOURCE ID "  + 
+		  							   edge.getDestination().getID()+ " DEST ID "+
+		  							   edge.getEdgeLength() + " ORIGINAL LENGTH \n");
+		  			edge.getSource().getID();
+		  			edge.getDestination().getID();
+		  			Edge newEdge = new Edge(graph.getEdges().size()+1,
+		  									edge.getDestination(),
+		  									edge.getSource(),
+		  									calculateDistance(edge.getDestination().getX(),
+		  													  edge.getSource().getX(),
+		  													  edge.getDestination().getY(),
+		  													  edge.getSource().getY()));
+
+		  			System.out.println(newEdge.getEdgeID()+ " NEW EDGE ID " + 
+		  					newEdge.getSource().getID()+ " SOURCE ID " + 
+		  					newEdge.getDestination().getID()+ " DEST ID " + 
+		  					newEdge.getEdgeLength()+" NEW EDGE LENGTH\n");
+		  			tempEdges.add(edge);
+		  			tempEdges.add(newEdge);
+		  	}
+		  	
+		  	return tempEdges;
+	  }
+	  private double calculateDistance(double x1, double x2, double y1, double y2){
+			return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
+	  } 
 }
