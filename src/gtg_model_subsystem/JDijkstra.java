@@ -162,33 +162,35 @@ public class JDijkstra {
 	    Collections.reverse(path);
 	    return path;
 	  }
+	  /**
+	   * Create double edge method takes in a coordinategraph and creates a temporary double edge between two points.
+	   * This allows for a complete connection throughout the graph without requiring to save all of the double edges.
+	   * First it will get the original edges from the graph and then recreate the edges list to make a dual connection.
+	   * @param graph the graph in which we want to create the double edge
+	   * @return the double edge list
+	   */
 	  public List<Edge> createDoubleEdge(CoordinateGraph graph){
-		  	List<Edge> tempEdges = new ArrayList<Edge>();
+		  	List<Edge> doubleEdgeList = new ArrayList<Edge>();
 		  	//Create the double edge
+		  	//For EACH edge inside of the graph
 		  	for(Edge edge: graph.getEdges()){
-		  			System.out.println(edge.getEdgeID()+ " ORIGINAL ID " + 
-		  							   edge.getSource().getID()+ " SOURCE ID "  + 
-		  							   edge.getDestination().getID()+ " DEST ID "+
-		  							   edge.getEdgeLength() + " ORIGINAL LENGTH \n");
-		  			edge.getSource().getID();
-		  			edge.getDestination().getID();
+		  			//Create a new edge with an temporary edge ID 
 		  			Edge newEdge = new Edge(graph.getEdges().size()+1,
+		  			//Set the origin dest node as new source
 		  									edge.getDestination(),
+		  			//Set the origin src node ad new dest
 		  									edge.getSource(),
+		  			//Distance should be same, incase of change recalculate
 		  									calculateDistance(edge.getDestination().getX(),
 		  													  edge.getSource().getX(),
 		  													  edge.getDestination().getY(),
 		  													  edge.getSource().getY()));
-
-		  			System.out.println(newEdge.getEdgeID()+ " NEW EDGE ID " + 
-		  					newEdge.getSource().getID()+ " SOURCE ID " + 
-		  					newEdge.getDestination().getID()+ " DEST ID " + 
-		  					newEdge.getEdgeLength()+" NEW EDGE LENGTH\n");
-		  			tempEdges.add(edge);
-		  			tempEdges.add(newEdge);
+		  			//Add the original edge and the new edge to the double edge list
+		  			doubleEdgeList.add(edge);
+		  			doubleEdgeList.add(newEdge);
 		  	}
 		  	
-		  	return tempEdges;
+		  	return doubleEdgeList;
 	  }
 	  private double calculateDistance(double x1, double x2, double y1, double y2){
 			return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
