@@ -1,5 +1,7 @@
 package gtg_view_subsystem;
 
+/**
+ */
 public class ImageURLS {
 	public static final String LOGIN_BUTTON = "images"+System.getProperty("file.separator")+"sign_in_btn.png";
 	public static final String LOGIN_BACKGROUND = "images"+System.getProperty("file.separator")+"login_background_new.png";
