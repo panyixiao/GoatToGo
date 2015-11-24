@@ -1,0 +1,11 @@
+NODES
+1 110 373 0 BH 0 Waypoint
+2 310 363 0 BH 0 Waypoint
+3 401 402 0 BH 0 Waypoint
+4 419 487 0 BH 0 Waypoint
+5 607 532 0 BH 0 Waypoint
+EDGES
+1 1 2
+2 2 3
+3 3 4
+4 4 5
