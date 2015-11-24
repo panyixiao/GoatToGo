@@ -1,5 +1,7 @@
 package gtg_model_subsystem;
 
+/**
+ */
 public class Node
 	{
 		/** the node's id
@@ -13,53 +15,41 @@ public class Node
 		 */
 		private int  y;
 		
-		private int entranceID;
-		// entrance ID, 0 means it is not an entrance
-		private String nodeType;
-		// type of node, for example, classroom, staircase or restroom.
-		private String nodeDescription;
-		// text description of node
 		/** the information about the node
 		 *such as its name and location
+		 * @param id int
+		 * @param x int
+		 * @param y int
 		 */
 		//private NodeAttribute attribute;
 		
-		public Node(int id, int x, int y, int entranceID, String nodeType, String nodeDescription) {
-			this.id = id;
-			this.x = x;
-			this.y = y;
-			this.entranceID=entranceID;
-			this.nodeType=nodeType;
-			this.nodeDescription=nodeDescription;
-		}
-		// construction
-		public Node(int id, int x, int y) {
+		public Node(int id, int x, int y){
 			this.id = id;
 			this.x = x;
 			this.y = y;
 		}
-		// overload construction
 		
+		/**
+		 * Method getID.
+		 * @return int
+		 */
 		public int getID(){
 			return this.id;
 		}
+		/**
+		 * Method getX.
+		 * @return int
+		 */
 		public int getX(){
 			return this.x;
 		}
 		
 
+		/**
+		 * Method getY.
+		 * @return int
+		 */
 		public int getY(){
 			return this.y;
 		}
-		public int getEntranceID(){
-			return this.entranceID;
-		}
-		public String getNodeType(){
-			return this.nodeType;
-		}
-		public String getNodeDescription(){
-			return this.nodeDescription;
-		}
-		
-		
 	}

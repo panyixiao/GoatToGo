@@ -16,6 +16,8 @@ import javax.swing.border.Border;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ */
 public class ResultPage extends JPanel {
 	private JTextField fromTextField, toTextField, currentMapName, totalMaps;
 	private JPanel leftPanel, rightPanel;
@@ -184,6 +186,10 @@ public class ResultPage extends JPanel {
 		this.mapPanelHolder.setViewportView(resultMapDisplayPanel);
 		this.currentZoomValue = 1.0;
 	}
+	/**
+	 * Method displayPath.
+	 * @param path PathData
+	 */
 	public void displayPath(PathData path) {
 		System.out.println(path.getWayPoints());
 		// TODO Auto-generated method stub

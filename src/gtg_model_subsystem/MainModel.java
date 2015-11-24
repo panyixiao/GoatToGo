@@ -2,9 +2,7 @@
 package gtg_model_subsystem;
 import java.awt.Point;
 import java.awt.geom.Point2D;
-import gtg_model_subsystem.Node;
-import gtg_model_subsystem.CoordinateGraph;
-import gtg_model_subsystem.Edge;
+
 
 import java.util.List;
 import java.io.IOException;
@@ -14,6 +12,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Hashtable;
 
+/**
+ */
 public class MainModel {
 	private List<Node> nodes;
 	private List<Edge> edges;
@@ -43,9 +43,9 @@ public class MainModel {
     
 	/**
 	 * Load maps from master map text file and store into table of maps
+	
 	 * @return true if load and store the map table successfully
-	 * 		   false if maps does not exist
-	 */
+	 * 		   false if maps does not exist */
 	public boolean loadMapLists()
 	{
 		ArrayList<Map> masterMapList=null;
@@ -72,9 +72,9 @@ public class MainModel {
 	/**
 	 * deleteMap will delete map from the map table and the master list text file
 	 * @param mapName the name of the map the admin wishes to delete
-	 * @return true if deletion was successful false otherwise
-	 * @throws IOException 
-	 */
+	
+	
+	 * @return true if deletion was successful false otherwise * @throws IOException  */
 	public boolean deleteMap(String mapName) throws IOException{
 			boolean deleteSuccess = true;
 			if(mapTable.get(mapName) == null){
@@ -96,11 +96,12 @@ public class MainModel {
 	/**
 	 * Method to save newly created maps added by admin from admin view to the list of maps.
 	 * @param mapName the name of new map to be saved
-	 * @param mapNameURL the name of new map URL to be saved
+	
 	 * @param mapType the type of map that we are saving
-	 * @return true if map was successfully created false otherwise
-	 * @throws IOException 
-	 */
+	
+	
+	 * @param mapImgURL String
+	 * @return true if map was successfully created false otherwise * @throws IOException  */
 	public boolean saveNewMap(String mapName, String mapImgURL, String mapType) throws IOException{
 				boolean saveNewMap = true;
 				//IF map does not exist in map table THEN
@@ -116,6 +117,11 @@ public class MainModel {
 	}
 	
 	
+	/**
+	 * Method loadFiles.
+	 * @param mapName String
+	 * @return boolean
+	 */
 	public boolean loadFiles(String mapName){
 		boolean mapCreated = false;
 		try{
@@ -125,10 +131,20 @@ public class MainModel {
 		}		
 		return mapCreated;		
 	}
+	/**
+	 * Method loadAdmin.
+	 * @throws IOException
+	 */
 	public void loadAdmin() throws IOException{
 		fileProcessing.readAdmin(admins);
 	}
 	
+	/**
+	 * Method createMapGraph.
+	 * @param mapName String
+	 * @return boolean
+	 * @throws IOException
+	 */
 	public boolean createMapGraph(String mapName) throws IOException{
 		
 		nodes = new ArrayList<Node>();
@@ -139,8 +155,8 @@ public class MainModel {
 			System.out.println("Map does not exist in table");
 			return createMapGraphSuccess;
 		}
-		fileProcessing.readNodesFile(nodes, mapName);
-		fileProcessing.readEdgesFile(nodes, edges, mapName);		
+		fileProcessing.readGraphInformation(nodes, edges, mapName);
+		
 		
 		graph = new CoordinateGraph(nodes, edges);
 		mapTable.get(mapName).setGraph(graph);
@@ -148,97 +164,48 @@ public class MainModel {
 		return createMapGraphSuccess;
 	}
 	
-
-	//Overrode method to handle controller temporary list for nodes and edges
-	public boolean saveMapGraph(String mapName, ArrayList<Point2D> tempPntList, ArrayList<Point2D> tempEdgeList) throws IOException{
-		try{
+	/**
+	 * The saveMapGraph method will save the temporarily stored nodes and edges from the controller into their 
+	 * appropriate text files based on mapName. First, it will generate the node list by seeing if there is already
+	 * a unique node on maps node list. Secondly, it will generate the edge list based on unique node identifiers in the
+	 * node list. Lastly, it will save the newly created nodes and edges to their appropriate map specified text files.
+	 * @param mapName the name of the map that the nodes and edges belong to
+	 * @param tempPntList the temporary points that need to be converted to nodes and saved.
+	 * @param tempEdgeList the temporary list that has unique node IDs to generate edges.
+	
+	
+	 * @return true of write was successful, false otherwise * @throws IOException */
+	public boolean saveMapGraph(String mapName, List<Node> tempNodeList, List<Edge> tempEdgeList) throws IOException{
+			//Generate new nodes from the temporary point list to be added to graph
+			//List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
+			//Generate edge list from unique node IDs specified
+			//List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
 			
-			List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
-			if(!nodeList.isEmpty()){
-				System.out.println("Node List created!");
-				List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
-				if(!edgeList.isEmpty()){
-					System.out.println("Edge List Created!");
+			//Generate a new coordinate graph to be saved by admin
+			graph = new CoordinateGraph(tempNodeList, tempEdgeList);
+			//STORE it as the new graph
+			mapTable.get(mapName).setGraph(graph);
+			//IF the node list is not empty THEN
 
-					// Adding to the existing nodeList and Edge list;
-					for(Node newNode:nodeList){
-						nodes.add(newNode);
-					}
-					for(Edge newEdge:edgeList){
-						edges.add(newEdge);
-					}											
-					fileProcessing.saveNodesFile(nodes, mapName);	
-					fileProcessing.saveEdgesFile(edges, mapName);		
-					System.out.println("File saved successfully");	
-				}	
+			try{
+				//STORE the new nodes and edges
+				fileProcessing.saveGraphInformation(mapTable.get(mapName).getGraph().getNodes(), 
+													mapTable.get(mapName).getGraph().getEdges(), 
+													mapName);
+			}catch(IOException e){
+				//Signal input output error to controller based on false
+				System.out.println(e.toString());
+				return false;
 			}
+			System.out.println("File saved successfully");	
+		
 			return true;
-		}catch(IOException e){
-			System.out.println(e.toString());
-			return false;
 		}
-		
-}
 	
-	private List<Node> generatingNodeList(String mapName, ArrayList<Point2D> inputPointList){
-		List<Node> NodeList = new ArrayList<Node>();
-		
-		if(inputPointList.isEmpty()){
-			System.out.println("Point List is Empty, there is nothing to save");			
-			return NodeList;
-		}
-			
-		for(int i = 0; i<inputPointList.size(); i++)
-		{
-			Point2D tempPnt = inputPointList.get(i);
-			int X = (int)tempPnt.getX();
-			int Y = (int)tempPnt.getY();			
-			Node tempNode = new Node(mapTable.get(mapName).getGraph().getNodes().size()+i+1, X, Y);
-			NodeList.add(tempNode);	
-
-		}	
-		return NodeList;
-	}
-	
-	private List<Edge> generatingEdgeList(String mapName, ArrayList<Point2D> inputEdgeList, List<Node> tempNodeList){
-		List<Edge> EdgeList = new ArrayList<Edge>();
-		// It is also better to add odd/even number judgement here in the future
-		if(inputEdgeList.isEmpty()){
-			System.out.println("Edge List is Empty, there is nothing to save");			
-			return EdgeList;
-		}
-		
-		for (int i = 0; i<inputEdgeList.size(); i+=2)
-		{
-			System.out.println(i);
-			Point2D pnt_1 = inputEdgeList.get(i);
-			Point2D pnt_2 = inputEdgeList.get(i+1);
-			Node startNode= new Node(0,0,0);
-			Node endNode= new Node(0,0,0);
-			for(Node n:tempNodeList){
-				if(n.getX() == (int)pnt_1.getX() && n.getY() == (int)pnt_1.getY()){
-					startNode = n;
-					break;
-				}
-			}
-			for(Node n:tempNodeList){
-				if(n.getX() == (int)pnt_2.getX() && n.getY() == (int)pnt_2.getY()){
-					endNode = n;
-					break;
-				}
-			}
-			
-			if (startNode.getID()!=0&&endNode.getID()!=0){
-				EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+1, startNode, endNode, 1));	
-				EdgeList.add(new Edge(mapTable.get(mapName).getGraph().getEdges().size() + i+2, endNode, startNode, 1));					
-			}
-		}
-		
-		return EdgeList;
-	}
-	
-
-	
+	/**
+	 * Method testDij.
+	 * @param mapName String
+	 */
 	public void testDij(String mapName){
 		
 		//testing for loading of nodes/edges
@@ -254,8 +221,7 @@ public class MainModel {
 	/** Temporary java dijkstra algorithim implemented by Joshua until he speaks with Libin about
 	 *  fixing his up. First set the current maps graph into the algorithim. Next cycle through the nodes
 	 *  and pluck out 
-	 * @param start node ID
-	 * @param end node ID
+	 * @param mapName String
 	 */
 	public void runJDijkstra(String mapName){
 		//Create object instance with temporary dijkstra algorithim
@@ -276,8 +242,8 @@ public class MainModel {
 	 * isValidAdmin method validates if the user that has choosen to login as admin is an admin.
 	 * @param userName the string representation of the login username
 	 * @param password the string representation of the login password
-	 * @return true if user is admin; otherwise false.
-	 */
+	
+	 * @return true if user is admin; otherwise false. */
 	public boolean isValidAdmin(String userName, String password){
 		//Assume user is not an admin
 		boolean isAdmin = false;
@@ -292,13 +258,14 @@ public class MainModel {
 	}
 	/**
 	 * Validates the point for the view. By returning a Node for the controller to extract a point.
-	 * Intake x and y values for user chosen node points, then cycle through each node on current coordinate graph node list.
+	 * Take in x and y values for user chosen node points, then cycle through each node on current coordinate graph node list.
 	 * Then keep track of current difference in x and y value. If the current difference is less then the previous difference;
 	 * of both x and y points then set the new validated point as the new closest point.
 	 * @param x the x value for the given point
 	 * @param y the y value for the given point
-	 * @return the more accurate validated point
-	 */
+	
+	 * @param mapName String
+	 * @return the more accurate validated point */
 	public Point validatePoint(String mapName, int x, int y){
 		Node validatedNode = null;
 		if(mapTable.isEmpty()){
@@ -309,7 +276,7 @@ public class MainModel {
 		double currentDiff = 0.0;
 		double previousDiff = Double.POSITIVE_INFINITY;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-			currentDiff = Math.sqrt(Math.pow(node.getX()-x, 2)+ Math.pow(node.getY() - y, 2));
+			currentDiff = calculateDistance(node.getX(),x,node.getY(),y);
 			if(currentDiff < previousDiff){
 				previousDiff = currentDiff;
 				validatedNode = node;
@@ -318,15 +285,22 @@ public class MainModel {
 		Point correctedPoint = new Point(validatedNode.getX(), validatedNode.getY());
 		return correctedPoint;
 	}
+	/**
+	 * Method setStartEndPathPoint.
+	 * @param point Point
+	 * @param pointType String
+	 * @param mapName String
+	 * @return boolean
+	 */
 	public boolean setStartEndPathPoint(Point point, String pointType, String mapName){
 			boolean isSet = false;
 			for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-				if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "FROM")){
+				if((point.x == node.getX()) && (point.y == node.getY()) && (pointType.equals("FROM"))){
 					System.out.println("Set Start point");
 					path.setStartPoint(node);
 					isSet = true;
 				}
-				else if((point.x == node.getX()) && (point.y == node.getY()) && (pointType == "TO")){
+				else if((point.x == node.getX()) && (point.y == node.getY()) && (pointType.equals("TO"))){
 					System.out.println("Set End point");
 					path.setEndPoint(node);
 					isSet = true;
@@ -334,6 +308,10 @@ public class MainModel {
 			}
 			return isSet;
 	}
+	/**
+	 * Method printNodes.
+	 * @param mapName String
+	 */
 	public void printNodes(String mapName){
 		int count = 0;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
@@ -342,6 +320,20 @@ public class MainModel {
 			System.out.println();
 		}
 		System.out.println(count);
+		System.out.println("END PRINT NODES");
+	}
+	/**
+	 * Method printNodes.
+	 * @param nodes List<Node>
+	 */
+	public void printNodes(List<Node> nodes){
+		int count = 0;
+		System.out.println("PRINTING NODES");
+		for(Node node: nodes){
+			count++;
+			System.out.print(node.getID() + " " + node.getX() + " " + node.getY());
+			System.out.println();
+		}
 		System.out.println("END PRINT NODES");
 	}
 	public void printEdges(){
@@ -358,6 +350,10 @@ public class MainModel {
 		}
 		System.out.println("END OF PRINT ADMIN");
 	}
+	/**
+	 * Method printPath.
+	 * @param mapName String
+	 */
 	public void printPath(String mapName){
 		for(Node node: path.getWayPoints()){
 			System.out.println(node.getID());
@@ -370,9 +366,17 @@ public class MainModel {
 		}
 	}
 
+	/**
+	 * Method getPath.
+	 * @return Path
+	 */
 	public Path getPath(){
 		return this.path;
 	}
+	/**
+	 * Method convertWayPointsToPoints.
+	 * @return ArrayList<Point>
+	 */
 	public ArrayList<Point> convertWayPointsToPoints(){
 		ArrayList<Point> tempWayPoints = new ArrayList<Point>();
 		for(Node node : path.getWayPoints()){
@@ -380,6 +384,10 @@ public class MainModel {
 		}
 		return tempWayPoints;
 	}
+	/**
+	 * Method getArrayOfMapNames.
+	 * @return ArrayList<String>
+	 */
 	public ArrayList<String> getArrayOfMapNames(){
 		ArrayList<String> tempArrayOfMapNames = new ArrayList<String>();
 		Enumeration e = mapTable.keys();
@@ -389,18 +397,43 @@ public class MainModel {
 		}
 		return tempArrayOfMapNames;
 	}
+	/**
+	 * Method getNodeList.
+	 * @param mapName String
+	 * @return List<Node>
+	 */
 	public List<Node> getNodeList(String mapName){
 		List<Node> currentNodeList = mapTable.get(mapName).getGraph().getNodes();	
 		return currentNodeList;		
 	}
+	/**
+	 * Method getEdgeList.
+	 * @param mapName String
+	 * @return List<Edge>
+	 */
 	public List<Edge> getEdgeList(String mapName){
 		List<Edge> currentEdgeList = mapTable.get(mapName).getGraph().getEdges();	
 		return currentEdgeList;
 	}
-    
+	/**
+	 * Method calculateDistance.
+	 * @param x1 double
+	 * @param x2 double
+	 * @param y1 double
+	 * @param y2 double
+	 * @return double
+	 */
+	public double calculateDistance(double x1, double x2, double y1, double y2){
+		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
+	}
     //find node Id for the start of the edge
-    public int findNodeId(String mapName,Point point)
-    {
+    /**
+     * Method findNodeId.
+     * @param mapName String
+     * @param point Point
+     * @return int
+     */
+    public int findNodeId(String mapName,Point point){
     	for(Node node: mapTable.get(mapName).getGraph().getNodes())
     	{
 			if((node.getX()==point.x)&&(node.getY()==point.y))
@@ -409,5 +442,9 @@ public class MainModel {
 			}
     	}
 		return 0;
+    }
+    public Hashtable<String, Map> getMapTable()
+    {
+    	return this.mapTable;
     }
 }

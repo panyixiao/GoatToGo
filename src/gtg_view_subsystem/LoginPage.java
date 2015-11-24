@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ */
 public class LoginPage extends JPanel {
 	private JTextField usernameTextField, passwordTextField;
 	private JLabel adminLoginLabel, usernameLabel, passwordLabel, backgroundHolder;

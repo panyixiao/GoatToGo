@@ -1,7 +1,8 @@
 package gtg_model_subsystem;
 
-import gtg_model_subsystem.Node;
 
+/**
+ */
 public class Edge
 {
 		/**One endpoint of the edge
@@ -21,6 +22,13 @@ public class Edge
 		private double edgeLength;
 		
 		
+		/**
+		 * Constructor for Edge.
+		 * @param edgeID int
+		 * @param source Node
+		 * @param destination Node
+		 * @param edgeLength double
+		 */
 		public Edge(int edgeID, Node source, Node destination, double edgeLength){
 			this.source = source;
 			this.destination = destination;
@@ -29,25 +37,29 @@ public class Edge
 		}
 		
 		/**return source of the edge
-		*/
+	 * @return Node
+			*/
 		public Node getSource(){
 			return this.source;
 		}
 		
 		/**return destination of the edge
-		*/
+	 * @return Node
+			*/
 		public Node getDestination() {
 			return this.destination;
 		}
 		
 		/**return id of the edge
-		*/
+	 * @return int
+			*/
 		public int getEdgeID() {
 			return this.edgeID;
 		}
 		
 		/**return length of the edge
-		*/
+	 * @return double
+			*/
 		public double getEdgeLength() {
 			return this.edgeLength;
 		}

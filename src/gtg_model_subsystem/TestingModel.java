@@ -8,25 +8,23 @@ import java.io.IOException;
  * To run and see what is there so far right click main model -> Run As -> Java Application
  * @author Joshua
  *
+ * @version $Revision: 1.0 $
  */
 public class TestingModel {
+	/**
+	 * Method main.
+	 * @param args String[]
+	 */
 	public static void main(String args[])
 	{
 		MainModel test = new MainModel();
 		//remind alyssa and neha that we need relative path and not absolute
-		try {
-			test.saveNewMap("BH_Basement", "images\\BH_Basement.png", "Floor");
-			test.printMaps();
-			//test.createMapGraph("BH_Basement");
-			//test.createMapGraph("BH_LAME");
-			//test.deleteMap("BH_Basement");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		//TEST CASE 1
-		/**test.loadFiles("BH_Basement");
-		test.printNodes("BH_Basement");
+		test.loadFiles("BH_Basement");
+		JDijkstra jtest = new JDijkstra(test.getMapTable().get("BH_Basement").getGraph());
+		
+		/**test.printNodes("BH_Basement");
 		test.setStartEndPathPoint(new Point(590,346), "FROM", "BH_Basement");
 		test.setStartEndPathPoint(new Point(632,189), "TO", "BH_Basement");
 		System.out.println(test.getPath().getStartPoint().getID());

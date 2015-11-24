@@ -7,23 +7,31 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import gtg_model_subsystem.Node;
-import gtg_model_subsystem.Edge;
-import gtg_model_subsystem.CoordinateGraph;
+/**
+ */
 public class JDijkstra {
-	  private final List<Node> nodes;
-	  private final List<Edge> edges;
+	  private List<Node> nodes;
+	  private List<Edge> edges;
 	  private Set<Node> settledNodes;
 	  private Set<Node> unSettledNodes;
 	  private Map<Node, Node> predecessors;
 	  private Map<Node, Integer> distance;
 
+	  /**
+	   * Constructor for JDijkstra.
+	   * @param graph CoordinateGraph
+	   */
 	  public JDijkstra(CoordinateGraph graph) {
 	    // create a copy of the array so that we can operate on this array
 	    this.nodes = new ArrayList<Node>(graph.getNodes());
-	    this.edges = new ArrayList<Edge>(graph.getEdges());
+	    //this.edges = new ArrayList<Edge>(graph.getEdges());
+	    this.edges = createDoubleEdge(graph);
 	  }
 
+	  /**
+	   * Method execute.
+	   * @param source Node
+	   */
 	  public void execute(Node source) {
 	    settledNodes = new HashSet<Node>();
 	    unSettledNodes = new HashSet<Node>();
@@ -39,6 +47,10 @@ public class JDijkstra {
 	    }
 	  }
 
+	  /**
+	   * Method findMinimalDistances.
+	   * @param node Node
+	   */
 	  private void findMinimalDistances(Node node) {
 	    List<Node> adjacentNodes = getNeighbors(node);
 	    for (Node target : adjacentNodes) {
@@ -51,6 +63,12 @@ public class JDijkstra {
 
 	  }
 
+	  /**
+	   * Method getDistance.
+	   * @param node Node
+	   * @param target Node
+	   * @return int
+	   */
 	  private int getDistance(Node node, Node target) {
 	    for (Edge edge : edges) {
 	      if (edge.getSource().equals(node) && edge.getDestination().equals(target)) {
@@ -60,6 +78,11 @@ public class JDijkstra {
 	    throw new RuntimeException("Should not happen");
 	  }
 
+	  /**
+	   * Method getNeighbors.
+	   * @param node Node
+	   * @return List<Node>
+	   */
 	  private List<Node> getNeighbors(Node node) {
 	    List<Node> neighbors = new ArrayList<Node>();
 	   
@@ -71,6 +94,11 @@ public class JDijkstra {
 	    return neighbors;
 	  }
 
+	  /**
+	   * Method getMinimum.
+	   * @param Nodees Set<Node>
+	   * @return Node
+	   */
 	  private Node getMinimum(Set<Node> Nodees) {
 	    Node minimum = null;
 	    for (Node Node : Nodees) {
@@ -86,10 +114,20 @@ public class JDijkstra {
 	    return minimum;
 	  }
 
+	  /**
+	   * Method isSettled.
+	   * @param Node Node
+	   * @return boolean
+	   */
 	  private boolean isSettled(Node Node) {
 	    return settledNodes.contains(Node);
 	  }
 
+	  /**
+	   * Method getShortestDistance.
+	   * @param destination Node
+	   * @return int
+	   */
 	  private int getShortestDistance(Node destination) {
 	    Integer d = distance.get(destination);
 	    if (d == null) {
@@ -102,6 +140,11 @@ public class JDijkstra {
 	  /*
 	   * This method returns the path from the source to the selected target and
 	   * NULL if no path exists
+	   */
+	  /**
+	   * Method getPath.
+	   * @param target Node
+	   * @return LinkedList<Node>
 	   */
 	  public LinkedList<Node> getPath(Node target) {
 	    LinkedList<Node> path = new LinkedList<Node>();
@@ -119,4 +162,37 @@ public class JDijkstra {
 	    Collections.reverse(path);
 	    return path;
 	  }
+	  /**
+	   * Create double edge method takes in a coordinategraph and creates a temporary double edge between two points.
+	   * This allows for a complete connection throughout the graph without requiring to save all of the double edges.
+	   * First it will get the original edges from the graph and then recreate the edges list to make a dual connection.
+	   * @param graph the graph in which we want to create the double edge
+	   * @return the double edge list
+	   */
+	  public List<Edge> createDoubleEdge(CoordinateGraph graph){
+		  	List<Edge> doubleEdgeList = new ArrayList<Edge>();
+		  	//Create the double edge
+		  	//For EACH edge inside of the graph
+		  	for(Edge edge: graph.getEdges()){
+		  			//Create a new edge with an temporary edge ID 
+		  			Edge newEdge = new Edge(graph.getEdges().size()+1,
+		  			//Set the origin dest node as new source
+		  									edge.getDestination(),
+		  			//Set the origin src node ad new dest
+		  									edge.getSource(),
+		  			//Distance should be same, incase of change recalculate
+		  									calculateDistance(edge.getDestination().getX(),
+		  													  edge.getSource().getX(),
+		  													  edge.getDestination().getY(),
+		  													  edge.getSource().getY()));
+		  			//Add the original edge and the new edge to the double edge list
+		  			doubleEdgeList.add(edge);
+		  			doubleEdgeList.add(newEdge);
+		  	}
+		  	
+		  	return doubleEdgeList;
+	  }
+	  private double calculateDistance(double x1, double x2, double y1, double y2){
+			return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
+	  } 
 }
