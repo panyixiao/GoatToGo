@@ -170,10 +170,7 @@ public class MainController{
 	public Boolean adminQualification(String userName, String passWord){
 		Boolean isAdmin = false;
 		isAdmin = mapModel.isValidAdmin(userName, passWord);
-		if(!isAdmin){
-			System.out.println("Sorry You are not Admin!");
-			mapModel.printAdmins();
-		}
+
 		return isAdmin;
 	}
 	
@@ -349,23 +346,25 @@ public class MainController{
 	 * @param pointDescription String
 	 * @return Boolean
 	 */
-	public Boolean addPoint(Point2D inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
+	public Boolean addPoint(Point2D inputPnt, String floor, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt)==0){
-			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), floorNum, entranceID, buildingName, pointType, pointDescription));	
-			nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
+			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), floorNum, entranceID, buildingName, pointType, pointDescription));
+			//Changed to have floor as a String will be less confusing in the long run -J
+			nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), entranceID, buildingName, floor, pointType));	
+			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
 			transferNodeToPnt2D(nodeList);
 			success = true;
 		}
 		return success;
 	}
-	
+	//DO WE NEED BELOW METHOD? SEEMS LIKE NO?
 	/**
 	 * Method addPoint.
 	 * @param inputPnt Point2D
 	 * @return Boolean
 	 */
-	public Boolean addPoint(Point2D inputPnt){
+	/**public Boolean addPoint(Point2D inputPnt){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt)==0){
 			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), 1, 0, "null", "null", "null"));	
@@ -374,7 +373,7 @@ public class MainController{
 			success = true;
 		}
 		return success;
-	}
+	}*/
 
 	/**
 	 * Method createEdge.

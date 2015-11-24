@@ -281,9 +281,10 @@ public class AdminMapEditPage extends JPanel {
 	 * @param inputPoint Point2D
 	 * @return Boolean
 	 */
-	public Boolean CreatePoint(Point2D inputPoint, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
+	public Boolean CreatePoint(Point2D inputPoint, String floor, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
-		success = this.parent.mainController.addPoint(inputPoint,floorNum,entranceID,buildingName,pointType,pointDescription);
+		//Changed floor to string because a number is ambigious and will be confusing -Joshua
+		success = this.parent.mainController.addPoint(inputPoint,floor,entranceID,buildingName,pointType,pointDescription);
 		pointPositions = this.parent.mainController.getDisplayPnt();		
 		for(Point2D pnt: pointPositions){
 			System.out.println(pnt.getX() + "," + pnt.getY());

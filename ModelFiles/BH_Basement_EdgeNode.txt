@@ -1,0 +1,9 @@
+NODES
+1 110 379 0 BH Basement Waypoint
+2 294 377 0 BH Basement Waypoint
+3 384 386 0 BH Basement Waypoint
+4 439 480 0 BH Basement Waypoint
+EDGES
+1 1 2
+2 2 3
+3 3 4

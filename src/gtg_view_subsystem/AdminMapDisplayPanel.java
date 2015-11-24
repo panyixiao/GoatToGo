@@ -183,7 +183,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 					if (newDescription == null) {
 						newDescription = "Null";
 					}
-					adminViewPageHandle.CreatePoint(newPoint, floorNum, newEnterenceId, newBuilding, newType,
+					//Changed to string because things can get confusing -J
+					adminViewPageHandle.CreatePoint(newPoint, floor.getText(), newEnterenceId, newBuilding, newType,
 							newDescription);
 
 					System.out.println("Building: " + this.building);
@@ -391,7 +392,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	public void createPathPoint(Point2D p) {
 		int floorNum;
 		String newBuilding;
-		if (this.floor.isEmpty()) {
+		/**if (this.floor.isEmpty()) {
 			floorNum = 1;
 
 		} else {
@@ -401,15 +402,16 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 				floorNum = 0;
 			}
 
-		}
+		}*///We are saving the building floors as names and not numbers will be less confusing
+		//Will the building ever be empty?
 		if (this.building.isEmpty()) {
 			newBuilding = "Null";
 
 		} else {
 			newBuilding = this.building;
 		}
-
-		adminViewPageHandle.CreatePoint(p, floorNum, 0, newBuilding, "Waypoint", "NULL");
+		//changed to string because floor num will be confusing
+		adminViewPageHandle.CreatePoint(p, this.floor, 0, newBuilding, "Waypoint", "NULL");
 
 	}
 }
