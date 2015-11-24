@@ -352,8 +352,25 @@ public class MainController{
 	public Boolean addPoint(Point2D inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt)==0){
-			nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), entranceID, buildingName, floorNum, pointType));	
+			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), entranceID, buildingName, floorNum, pointType));	
 			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
+			
+			/* 2015-11-24 Yixiao, This is for test */
+			int coord_X = (int)inputPnt.getX();
+			int coord_Y = (int)inputPnt.getY();			
+			//System.out.println("Coordinate for New InputPoint is: "+ coord_X+" , "+coord_Y);			
+			for(Node nd:nodeList){
+				if(Math.abs(nd.getX() - coord_X)<5){
+					//System.out.println("Mapping Input Point Coord_X into "+ nd.getX());
+					coord_X = nd.getX();					
+				}
+				if(Math.abs(nd.getY() - coord_Y)<5){
+					//System.out.println("Mapping Input Point Coord_Y into "+ nd.getY());
+					coord_Y = nd.getY();					
+				}
+			}			
+			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType));
+			
 			transferNodeToPnt2D(nodeList);
 			success = true;
 		}
