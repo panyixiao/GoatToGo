@@ -23,20 +23,25 @@ import javax.swing.JComboBox;
  */
 public class MapPage extends JPanel {
 	private JTextField fromTextField, toTextField;
-	private JPanel leftPanel, rightPanel;
+	private JPanel leftPanel, rightPanel, slidePanel;
 	private JButton zoomInBtn, zoomOutBtn, getDirectionsBtn, fromClearBtn, toClearBtn;
+	private JButton cafeBtn, classroomBtn, elevatorBtn, mensRestroomBtn, womensRestroomBtn, officeBtn, vendingBtn, parkingLotBtn, doneBtn;
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, getDirectionsBtnImage, fromClearBtnImage, toClearBtnImage;
+	private ImageIcon cafeBtnImage, classroomBtnImage, elevatorBtnImage, mensRestroomBtnImage, womensRestroomBtnImage, officeBtnImage, vendingBtnImage, parkingLotBtnImage;
 	private JLabel dropDownLabel, fromLabel, toLabel;
 	private MapMapDisplayPanel mapMapDisplayPanel;
-	private JScrollPane mapPanelHolder;
-	private JLayeredPane layeredPane;
+	private JScrollPane mapPanelHolder, filterScrollPane;
+	private JLayeredPane layeredPane, rightlayeredPane;
 	private JComboBox comboBox;
 	private double MAX_ZOOM_IN = 2.0;
 	private double MAX_ZOOM_OUT = 1.0;
 	private double currentZoomValue = 1.0;
 	private double zoomFactor = 0.1;
 	private SelectedPoints selectedPoints = new SelectedPoints();
+	private Animate animate = new Animate();
 	private MainView parent;
+	private Boolean animationStarted = false;
+	private Boolean slidePanelIsOpen = false;
 	/**
 	 * Create the panel.
 	 * @param mainView 
@@ -101,15 +106,27 @@ public class MapPage extends JPanel {
 		this.mapPanelHolder.setViewportBorder(border);
 		this.mapPanelHolder.setBorder(border);
 
+		this.rightlayeredPane = new JLayeredPane();
+		this.rightlayeredPane.setBounds(955, 5, 405, 650);
+		this.add(this.rightlayeredPane);
+
+		this.slidePanel = new JPanel();
+		this.slidePanel.setBounds(359, 0, 405, 650);
+		this.slidePanel.setBackground(new Color(0xf0e6e6));
+		this.slidePanel.setLayout(null);
+		this.rightlayeredPane.add(this.slidePanel, new Integer(1));
+
+		this.createSlidePanelUI();
+
 		this.rightPanel = new JPanel();
-		this.rightPanel.setBounds(955, 5, 405, 650);
+		this.rightPanel.setBounds(0, 0, 405, 650);
 		this.rightPanel.setLayout(null);
 		this.rightPanel.setBackground(null);
-		this.add(this.rightPanel);
+		this.rightlayeredPane.add(this.rightPanel, new Integer(0));
 		
 		this.dropDownLabel = new JLabel(ViewStringLiterals.SELECT_BUILDING + ": ");
 		this.dropDownLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.dropDownLabel.setBounds(50, 54, 253, 25);
+		this.dropDownLabel.setBounds(15, 54, 253, 25);
 		this.dropDownLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.dropDownLabel);
 
@@ -126,18 +143,18 @@ public class MapPage extends JPanel {
 		this.comboBox.setBackground(null);
 		this.comboBox.setSelectedIndex(0);
 		this.comboBox.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
-		this.comboBox.setBounds(60, 95, 307, 53);
+		this.comboBox.setBounds(15, 96, 271, 53);
 		this.rightPanel.add(this.comboBox);
 		
 		this.fromLabel = new JLabel(ViewStringLiterals.FROM + " :");
 		this.fromLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.fromLabel.setBounds(50, 222, 98, 25);
+		this.fromLabel.setBounds(25, 222, 98, 25);
 		this.fromLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.fromLabel);
 
 		this.toLabel = new JLabel(ViewStringLiterals.TO + " :");
 		this.toLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.toLabel.setBounds(50, 342, 57, 25);
+		this.toLabel.setBounds(25, 343, 57, 25);
 		this.toLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.toLabel);
 
@@ -162,7 +179,7 @@ public class MapPage extends JPanel {
 		});
 		this.getDirectionsBtn.setContentAreaFilled(false);
 		this.getDirectionsBtn.setBorder(null);
-		this.getDirectionsBtn.setBounds(128, 558, 173, 42);
+		this.getDirectionsBtn.setBounds(100, 561, 173, 42);
 		this.getDirectionsBtnImage = new ImageIcon(ImageURLS.GET_DIRECTIONS_BUTTON);
 		this.getDirectionsBtn.setIcon(this.getDirectionsBtnImage);
 		this.rightPanel.add(this.getDirectionsBtn);
@@ -170,7 +187,7 @@ public class MapPage extends JPanel {
 		this.fromTextField = new JTextField();
 		this.fromTextField.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.fromTextField.setEditable(false);
-		this.fromTextField.setBounds(60, 263, 292, 47);
+		this.fromTextField.setBounds(25, 263, 261, 47);
 		this.fromTextField.setColumns(10);
 		this.fromTextField.setForeground(new Color(0x5b1010));
 		this.fromTextField.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
@@ -188,7 +205,7 @@ public class MapPage extends JPanel {
 				}
 			}
 		});
-		this.fromClearBtn.setBounds(364, 275, 20, 20);
+		this.fromClearBtn.setBounds(295, 275, 20, 20);
 		this.fromClearBtn.setContentAreaFilled(false);
 		this.fromClearBtn.setBorder(null);
 		this.fromClearBtnImage = new ImageIcon(ImageURLS.CLEAR_BUTTON);
@@ -200,7 +217,7 @@ public class MapPage extends JPanel {
 		this.toTextField.setForeground(new Color(0x5b1010));
 		this.toTextField.setEditable(false);
 		this.toTextField.setColumns(10);
-		this.toTextField.setBounds(60, 383, 292, 47);
+		this.toTextField.setBounds(25, 384, 261, 47);
 		this.toTextField.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 		this.rightPanel.add(this.toTextField);
 
@@ -216,7 +233,7 @@ public class MapPage extends JPanel {
 				}
 			}
 		});
-		this.toClearBtn.setBounds(364, 395, 20, 20);
+		this.toClearBtn.setBounds(295, 395, 20, 20);
 		this.toClearBtn.setContentAreaFilled(false);
 		this.toClearBtn.setBorder(null);
 		this.toClearBtnImage = new ImageIcon(ImageURLS.CLEAR_BUTTON);
@@ -224,6 +241,131 @@ public class MapPage extends JPanel {
 		this.rightPanel.add(this.toClearBtn);
 	}
 	
+	private void createSlidePanelUI() {
+		this.cafeBtn = new JButton();
+		cafeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				showFilterPanel();
+			}
+		});
+		this.cafeBtn.setBounds(0, 10, 50, 50);
+		this.cafeBtn.setContentAreaFilled(false);
+		this.cafeBtn.setBorder(null);
+		this.cafeBtnImage = new ImageIcon(ImageURLS.CAFE_BUTTON);
+		this.cafeBtn.setIcon(this.cafeBtnImage);
+		this.slidePanel.add(this.cafeBtn);
+		
+		this.classroomBtn = new JButton();
+		classroomBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				showFilterPanel();
+			}
+		});
+		this.classroomBtn.setBounds(0, 80, 50, 50);
+		this.classroomBtn.setContentAreaFilled(false);
+		this.classroomBtn.setBorder(null);
+		this.classroomBtnImage = new ImageIcon(ImageURLS.CLASSROOM_BUTTON);
+		this.classroomBtn.setIcon(this.classroomBtnImage);
+		this.slidePanel.add(this.classroomBtn);
+		
+		this.elevatorBtn = new JButton();
+		elevatorBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFilterPanel();
+			}
+		});
+		this.elevatorBtn.setBounds(0, 150, 50, 50);
+		this.elevatorBtn.setContentAreaFilled(false);
+		this.elevatorBtn.setBorder(null);
+		this.elevatorBtnImage = new ImageIcon(ImageURLS.ELEVATOR_BUTTON);
+		this.elevatorBtn.setIcon(this.elevatorBtnImage);
+		this.slidePanel.add(this.elevatorBtn);
+		
+		this.mensRestroomBtn = new JButton();
+		mensRestroomBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFilterPanel();
+			}
+		});
+		this.mensRestroomBtn.setBounds(0, 220, 50, 50);
+		this.mensRestroomBtn.setContentAreaFilled(false);
+		this.mensRestroomBtn.setBorder(null);
+		this.mensRestroomBtnImage = new ImageIcon(ImageURLS.MENS_RESTROOM_BUTTON);
+		this.mensRestroomBtn.setIcon(this.mensRestroomBtnImage);
+		this.slidePanel.add(this.mensRestroomBtn);
+		
+		this.womensRestroomBtn = new JButton();
+		womensRestroomBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFilterPanel();
+			}
+		});
+		this.womensRestroomBtn.setBounds(0, 290, 50, 50);
+		this.womensRestroomBtn.setContentAreaFilled(false);
+		this.womensRestroomBtn.setBorder(null);
+		this.womensRestroomBtnImage = new ImageIcon(ImageURLS.WOMENS_RESTROOM_BUTTON);
+		this.womensRestroomBtn.setIcon(this.womensRestroomBtnImage);
+		this.slidePanel.add(this.womensRestroomBtn);
+		
+		this.officeBtn = new JButton();
+		officeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFilterPanel();
+			}
+		});
+		this.officeBtn.setBounds(0, 360, 50, 50);
+		this.officeBtn.setContentAreaFilled(false);
+		this.officeBtn.setBorder(null);
+		this.officeBtnImage = new ImageIcon(ImageURLS.OFFICE_BUTTON);
+		this.officeBtn.setIcon(this.officeBtnImage);
+		this.slidePanel.add(this.officeBtn);
+		
+		this.vendingBtn = new JButton();
+		vendingBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFilterPanel();
+			}
+		});
+		this.vendingBtn.setBounds(0, 430, 50, 50);
+		this.vendingBtn.setContentAreaFilled(false);
+		this.vendingBtn.setBorder(null);
+		this.vendingBtnImage = new ImageIcon(ImageURLS.VENDING_BUTTON);
+		this.vendingBtn.setIcon(this.vendingBtnImage);
+		this.slidePanel.add(this.vendingBtn);
+		
+		this.parkingLotBtn = new JButton();
+		parkingLotBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showFilterPanel();
+			}
+		});
+		this.parkingLotBtn.setBounds(0, 500, 50, 50);
+		this.parkingLotBtn.setContentAreaFilled(false);
+		this.parkingLotBtn.setBorder(null);
+		this.parkingLotBtnImage = new ImageIcon(ImageURLS.PARKING_LOT_BUTTON);
+		this.parkingLotBtn.setIcon(this.parkingLotBtnImage);
+		this.slidePanel.add(this.parkingLotBtn);
+		
+		this.doneBtn = new JButton(ViewStringLiterals.DONE);
+		this.doneBtn.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 3));
+		this.doneBtn.setBackground(Color.WHITE);
+		this.doneBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.doneBtn.setForeground(new Color(204, 0, 0));
+		this.doneBtn.setFocusPainted(false);
+		this.doneBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				hideFilterPanel();
+			}
+		});
+		this.doneBtn.setBounds(160, 580, 100, 40);
+		this.slidePanel.add(this.doneBtn);
+		
+		this.filterScrollPane = new JScrollPane();
+		this.filterScrollPane.setBounds(70, 10, 310, 450);
+		this.filterScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 2));
+		this.slidePanel.add(this.filterScrollPane);
+	}
+
 	/**
 	 * Method changeMap.
 	 * @param mapName String
@@ -317,6 +459,30 @@ public class MapPage extends JPanel {
 		this.selectedPoints.resetStart();
 		if(this.mapMapDisplayPanel != null){
 			this.mapMapDisplayPanel.displayPoint();
+		}
+	}
+	
+	public void animationStarted(){
+		this.animationStarted = true;
+	}
+	
+	public void animationEnd(){
+		this.animationStarted = false;
+	}
+	
+	public void showFilterPanel(){
+		if(this.animationStarted == false && slidePanelIsOpen == false){
+			animate.setAnimationPanel(this, slidePanel, 355, 10);
+			animate.startAnimationLeft();
+			slidePanelIsOpen = true;
+		}
+	}
+	
+	public void hideFilterPanel(){
+		if(animationStarted == false){
+			animate.setAnimationPanel(this, slidePanel, 10, 355);
+			animate.startAnimationRight();
+			slidePanelIsOpen = false;
 		}
 	}
 }
