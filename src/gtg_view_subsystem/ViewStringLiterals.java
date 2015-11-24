@@ -21,7 +21,6 @@ public class ViewStringLiterals {
 	public static final String USERNAME_PASSWORD_NOT_CORRECT = "Please enter valid credentials";
 	public static final String AVAILABLE_MAP_LIST = "List of available maps";
 	public static final String MAP_PREVIEW = "Map preview";
-	public static final String ENTER_MAP_NAME = "Enter map name";
 	public static final String SELECT_MAP_IMAGE = "Select map image";
 	public static final String MAP_LIST_EMPTY = "No data found.Map list is empty.";
 	public static final String MAP_NAME_EMPTY = "Map name cannot be empty.";
@@ -34,4 +33,7 @@ public class ViewStringLiterals {
 	public static final String IS_CAMPUS_MAP = "Is this a campus map?";
 	public static final String CAMPUS = "Campus";
 	public static final String FLOOR = "Floor";
+	public static final String BUILDING_NAME = "Building Name";
+	public static final String FLOOR_NUMBER_EMPTY = "Please enter a valid floor number";
+	public static final String DEFAULT_CAMPUS_FLOOR_NUMBER = "0";
 }

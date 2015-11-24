@@ -23,7 +23,7 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	private JPopupMenu popup;
 	private JMenuItem menuItem, menuItem_1;
 	private SelectedPoints selectedPoints = null;
-	private Image locationImage;
+	private Image locationImage, locationEndImage;
 	private String map;
 	private Point startEndPoint;
 	private MapPage parent;
@@ -44,6 +44,7 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 
 		super.loadImage(mapurl);
 		this.loadLocationImage();
+		this.loadLocationEndImage();
 	    
 	    this.popup = new JPopupMenu();
 	    this.popup.setFont(new Font("Meiryo", Font.PLAIN, 22));
@@ -88,7 +89,7 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
     	}
     	
     	if(this.selectedPoints.getEndMapName() == this.map){
-    		g2.drawImage(this.locationImage, (int)this.selectedPoints.getEndX() - 10, (int)this.selectedPoints.getEndY() - 25, 20, 25, null);
+    		g2.drawImage(this.locationEndImage, (int)this.selectedPoints.getEndX() - 10, (int)this.selectedPoints.getEndY() - 25, 20, 25, null);
     	}
 	}
 	
@@ -116,6 +117,18 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	public void loadLocationImage() {
         try {
             this.locationImage = ImageIO.read(new File(ImageURLS.LOCATION_IMAGE));
+        }
+        catch(MalformedURLException mue) {
+            System.out.println("URL trouble: " + mue.getMessage());
+        }
+        catch(IOException ioe) {
+        	System.out.println("read trouble: " + ioe.getMessage());
+        }
+	}
+	
+	public void loadLocationEndImage() {
+        try {
+            this.locationEndImage = ImageIO.read(new File(ImageURLS.LOCATION_END_ICON));
         }
         catch(MalformedURLException mue) {
             System.out.println("URL trouble: " + mue.getMessage());
