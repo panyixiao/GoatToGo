@@ -211,16 +211,16 @@ public class MainController{
 		if(mapModel.loadFiles(mapName)){
 			LoadInNodeList(mapName);
 			LoadInEdgeList(mapName);			 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 			this.tempPntList = this.transferNodeToPnt2D(this.nodeList);
 			this.tempEdgeList = this.transferEdgeToPnt2D(this.edgeList);			
 
 			System.out.println("Totally "+tempPntList.size()+" nodes have been loaded");
 			System.out.println("Totally "+tempEdgeList.size()+" edges have been loaded");
-=======
+=======*/
 			transferNodeToPnt2D(this.nodeList);
 			transferEdgeToPnt2D(this.edgeList);
->>>>>>> 0537f761f6d90d636b6fa4867111d3f2854431a7
+//>>>>>>> 0537f761f6d90d636b6fa4867111d3f2854431a7
 
 			return true;
 		}
@@ -386,7 +386,25 @@ public class MainController{
 		if(CheckPntExistence(inputPnt)==0){
 			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), floorNum, entranceID, buildingName, pointType, pointDescription));
 			//Changed to have floor as a String will be less confusing in the long run -J
-			nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), entranceID, buildingName, floor, pointType));	
+			
+			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), entranceID, buildingName, floor, pointType));
+			
+			/* 2015-11-24 Yixiao, This is for test */
+			int coord_X = (int)inputPnt.getX();
+			int coord_Y = (int)inputPnt.getY();			
+			//System.out.println("Coordinate for New InputPoint is: "+ coord_X+" , "+coord_Y);			
+			for(Node nd:nodeList){
+				if(Math.abs(nd.getX() - coord_X)<5){
+					//System.out.println("Mapping Input Point Coord_X into "+ nd.getX());
+					coord_X = nd.getX();					
+				}
+				if(Math.abs(nd.getY() - coord_Y)<5){
+					//System.out.println("Mapping Input Point Coord_Y into "+ nd.getY());
+					coord_Y = nd.getY();					
+				}
+			}			
+			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floor, pointType));			
+			
 			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
 			transferNodeToPnt2D(nodeList);
 			success = true;
@@ -558,10 +576,10 @@ public class MainController{
 		for (Node tempN: nodeList){
 			double d = Math.sqrt(Math.pow(pnt.getX() - tempN.getX(), 2) + 
 							     Math.pow(pnt.getY() - tempN.getY(), 2));
-			System.out.println("the distance is : "+d);
+			//System.out.println("the distance is : "+d);
 			if(d <= toleranceRadius){
 				pntID = tempN.getID();
-				System.out.println("Point "+pntID+" is Found in the nodeList!");
+				//System.out.println("Point "+pntID+" is Found in the nodeList!");
 				return pntID;
 			}
 		}
@@ -654,12 +672,12 @@ public class MainController{
 			double d = mapModel.calculateDistance(inputPnt.getX(), temPnt.getX(), inputPnt.getY(), temPnt.getY());
 			if(d <= 15){
 				
-				System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
+				//System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
 				searchingResult = temPnt;
 				return searchingResult;
 			}
 		}		
-		System.out.println("Invalid Input!!");
+		System.out.println("Can't find Valid Mapping");
 		return searchingResult;
 	}
 	
@@ -672,7 +690,7 @@ public class MainController{
 		Point2D pnt = new Point2D.Double(0,0);
 		if(tempPntList.size()!=0){
 			pnt = tempPntList.get(tempPntList.size()-1);
-			System.out.println("The last Point is: "+pnt.getX()+ "" + pnt.getY());
+			//System.out.println("The last Point is: "+pnt.getX()+ "" + pnt.getY());
 			return pnt;
 		}	
 		System.out.println("There is no Pnt in the list!");
@@ -694,9 +712,4 @@ public class MainController{
 	public ArrayList<Point2D> getDisplayEdge(){
 		return tempEdgeList;
 	}
-<<<<<<< HEAD
-	
-
-=======
->>>>>>> 0537f761f6d90d636b6fa4867111d3f2854431a7
 }
