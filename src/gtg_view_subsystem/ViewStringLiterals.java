@@ -37,4 +37,5 @@ public class ViewStringLiterals {
 	public static final String BUILDING_NAME = "Building Name";
 	public static final String FLOOR_NUMBER_EMPTY = "Please enter a valid floor number";
 	public static final String DEFAULT_CAMPUS_FLOOR_NUMBER = "0";
+	public static final String DONE = "Done";
 }
