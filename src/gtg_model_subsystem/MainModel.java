@@ -23,6 +23,7 @@ public class MainModel {
 	private FileProcessing fileProcessing;
 	private Map tempMap;
 	private Hashtable<String, Map> mapTable;
+	private Hashtable<String, Path> mapPaths;
 	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
@@ -227,6 +228,31 @@ public class MainModel {
 		}//END CATCH loadNodes/Edges
 		
 	}
+	
+	public boolean multiPathCalculate(String[] mapNames){
+		boolean multiPathCalcSuccess = true;
+		for(String mapName: mapNames){
+			singlePathCalculate(mapName);
+		}
+		
+		return multiPathCalcSuccess;
+	}
+	/**
+	 * Method testDij.
+	 * @param mapName String
+	 */
+	public void singlePathCalculate(String mapName){
+		
+		//testing for loading of nodes/edges
+		try {
+			runJDijkstra(mapName);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.toString());
+		}//END CATCH loadNodes/Edges
+		
+	}
 	/** Temporary java dijkstra algorithim implemented by Joshua until he speaks with Libin about
 	 *  fixing his up. First set the current maps graph into the algorithim. Next cycle through the nodes
 	 *  and pluck out 
@@ -244,7 +270,8 @@ public class MainModel {
 		
 		//Create the new path with the start point, end point, and way points
 		path.setPath(wayPoints);
-		
+		//Store the map with the associated path for user
+		mapPaths.put(mapName, path);
 	}
 	
 	/**

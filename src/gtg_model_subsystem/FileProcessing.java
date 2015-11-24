@@ -198,7 +198,7 @@ public class FileProcessing {
 								 Integer.parseInt(lines[2]),//y
 								 Integer.parseInt(lines[3]),//entranceID
 								 lines[4],//building
-								 lines[5],//floor
+								 Integer.parseInt(lines[5]),//floorNum
 								 lines[6]//type
 								 );
 			nodes.add(node);

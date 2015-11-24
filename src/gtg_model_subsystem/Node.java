@@ -16,7 +16,7 @@ public class Node
 		private int  y;
 		private int entranceID;
 		private String building;
-		private String floor;
+		private int floorNum;
 		private String type;
 		
 		
@@ -27,13 +27,13 @@ public class Node
 		 * @param y int
 		 */
 
-		public Node(int id, int x, int y, int entranceID, String building, String floor, String type){
+		public Node(int id, int x, int y, int entranceID, String building, int floorNum, String type){
 			this.id = id;
 			this.x = x;
 			this.y = y;
 			this.entranceID = entranceID;
 			this.building = building;
-			this.floor = floor;
+			this.floorNum = floorNum;
 			this.type = type;
 		}
 
@@ -88,13 +88,13 @@ public class Node
 		}
 
 
-		public String getFloor() {
-			return floor;
+		public int getFloor() {
+			return floorNum;
 		}
 
 
-		public void setFloor(String floor) {
-			this.floor = floor;
+		public void setFloor(int floorNum) {
+			this.floorNum = floorNum;
 		}
 
 
