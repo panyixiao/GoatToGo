@@ -16,7 +16,46 @@ import java.util.ArrayList;
 
 
 /**
+ * MainController:
+ * 	Controller Facade, Interface to ViewSubsystem
+ * 
+ *  Admin Control
+ * 		adminQualification()
+ * 
+ * 	MapData manipulation
+ * 		getMapList()
+ * 		getMapURL()
+ * 		getDisplayPnt()
+ * 		getDisplayEdge()
+ * 		getMapData(String)
+ * 		pointMapping()
+ * 		
+ * 		addNewMap()
+ * 		deleteMap()
+ * 		addPoint()
+ * 		deletePoint()
+ * 		createEdge()
+ * 		deleteEdge() 
+ * 		clearAllMapData()
+ * 
+ *  Path Searching
+ * 		setTaskPnt()
+ * 		getPathData()
+ * 
+ * MapData_Controller:
+ * 	1 Maintaining MapList (Adding / Deleting Map)
+ * 	2 
+ * 	2 Maintaining NodeList / EdgeList of Current Map
+ * 	3 Building List in the future
+ * 
+ * PathSearchingController:
+ * 	1 Task Point
+ * 	2 Get PathData from Model
+ * 	3 Send PathData to View
  */
+
+
+
 public class MainController{
 	
 	/*Added by neha. Yixio this is the temporary list to store map names and map urls. This is done to check
@@ -49,10 +88,10 @@ public class MainController{
 	
 	// temporarily initializer, will be moved to Model-subsystem in the future
 	private void MapListIntial(){
-		listofMaps.add("BoytonHall_2");
-		listofMaps.add("BoytonHall_3");
-		listofMaps.add("BoytonHall_4");
-		listofMaps.add("BoytonHall_5");
+		listofMaps.add("BoyntonHall_Basement");
+		listofMaps.add("BoyntonHall_FirstFloor");
+		listofMaps.add("BoyntonHall_SecondFloor");
+		listofMaps.add("BoyntonHall_ThirdFloor");
 		
 		// map urls
 		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";

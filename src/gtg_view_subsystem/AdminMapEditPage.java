@@ -146,7 +146,7 @@ public class AdminMapEditPage extends JPanel {
 		
 		this.buildingLabel = new JLabel("Building: "+ this.buildingName);
 		this.buildingLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.buildingLabel.setBounds(50, 165, 150, 50);
+		this.buildingLabel.setBounds(50, 165, 250, 50);
 		this.buildingLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.buildingLabel);
 		
@@ -170,7 +170,7 @@ public class AdminMapEditPage extends JPanel {
 		
 		this.floorLabel = new JLabel("Floor:" + this.floorId);
 		this.floorLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.floorLabel.setBounds(50, 265, 150, 50);
+		this.floorLabel.setBounds(50, 265, 250, 50);
 		this.floorLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.floorLabel);
 		
@@ -283,7 +283,12 @@ public class AdminMapEditPage extends JPanel {
 	 */
 	public Boolean CreatePoint(Point2D inputPoint, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
-		success = this.parent.mainController.addPoint(inputPoint,floorNum,entranceID,buildingName,pointType,pointDescription);
+		success = this.parent.mainController.addPoint(inputPoint,
+													  floorNum,
+													  entranceID,
+													  buildingName,
+													  pointType,
+													  pointDescription);
 		pointPositions = this.parent.mainController.getDisplayPnt();		
 		for(Point2D pnt: pointPositions){
 			System.out.println(pnt.getX() + "," + pnt.getY());
