@@ -153,7 +153,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 						newPoint = new Point2D.Double(me.getX(), me.getY());
 
 					}
-
+					
 					newEnterenceIdString = entranceId.getText();
 
 					newDescription = description.getText();
@@ -183,8 +183,12 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 					if (newDescription == null) {
 						newDescription = "Null";
 					}
-					adminViewPageHandle.CreatePoint(newPoint, floorNum, newEnterenceId, newBuilding, newType,
-							newDescription);
+					adminViewPageHandle.CreatePoint(newPoint, 
+													floorNum, 
+													newEnterenceId, 
+													newBuilding, 
+													newType,
+													newDescription);
 
 					System.out.println("Building: " + this.building);
 					System.out.println("Floor: " + this.floor);
@@ -217,14 +221,14 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 
 				JPopupMenu selectAction = new JPopupMenu();
 				JMenuItem selectPoint, selectNeighbor;
-				selectPoint = new JMenuItem("From here");
+				selectPoint = new JMenuItem("From");
 				selectPoint.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						addStart(me.getPoint());
 					}
 				});
 
-				selectNeighbor = new JMenuItem("To here");
+				selectNeighbor = new JMenuItem("To");
 				selectNeighbor.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						addNeighbors(me.getPoint());
