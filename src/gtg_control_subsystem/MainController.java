@@ -44,10 +44,10 @@ public class MainController{
 	public Boolean LoadingPntsAndEdges(String mapName){
 		return mapDataController.LoadingPntsAndEdges(mapName);
 	}
-	public ArrayList<Point2D> getDisplayPnt(){
+	public ArrayList<Point> getDisplayPnt(){
 		return mapDataController.getDisplayPnt();
 	}
-	public ArrayList<Point2D> getDisplayEdge(){
+	public ArrayList<Point> getDisplayEdge(){
 		return mapDataController.getDisplayEdge();
 	}	
 	
@@ -152,8 +152,6 @@ public class MainController{
 			List<Node> nodeToBeSaved =  mapDataController.getNodeList();
 			List<Edge> edgeToBeSaved =  mapDataController.getEdgeList();
 			
-			System.out.print("There totally "+ nodeToBeSaved.size() + "nodes to be saved");
-			
 			mapModel.saveMapGraph(mapName, 
 								  nodeToBeSaved, 
 								  edgeToBeSaved);
@@ -165,19 +163,19 @@ public class MainController{
 		return success;
 	}
 
-	public Boolean addPoint(Point2D inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
+	public Boolean addPoint(Point inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		return mapDataController.addPoint(inputPnt, floorNum, entranceID, buildingName, pointType, pointDescription);
 	}
 
-	public Boolean createEdge(Point2D pnt1, Point2D pnt2){		
+	public Boolean createEdge(Point pnt1, Point pnt2){		
 		return mapDataController.createEdge(pnt1, pnt2);
 	}
 
-	public boolean deletePoint(Point2D inputPnt){
+	public boolean deletePoint(Point inputPnt){
 		return mapDataController.deletePoint(inputPnt);
 	}
 
-	public boolean deleteEdge(Point2D p){
+	public boolean deleteEdge(Point p){
 		return mapDataController.deleteEdge(p);
 	}
 
@@ -249,7 +247,7 @@ public class MainController{
 		return mapDataController.getTypeOfNode(nodeID);
 	}
 
-	public Point2D pointMapping(Point2D inputPnt){		
+	public Point pointMapping(Point inputPnt){		
 		/*Point2D searchingResult = new Point2D.Double(0,0);
 		
 		for (Point2D temPnt : tempPntList){
@@ -265,7 +263,7 @@ public class MainController{
 		return mapDataController.pointMapping(inputPnt);
 	}
 
-	public Point2D getLastPnt()
+	public Point getLastPnt()
 	{
 		/*Point2D pnt = new Point2D.Double(0,0);
 		if(tempPntList.size()!=0){

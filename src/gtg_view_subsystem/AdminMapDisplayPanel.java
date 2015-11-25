@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.Point;
 import java.awt.Dialog;
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ import javax.swing.JTextField;
 /**
  */
 public class AdminMapDisplayPanel extends MapDisplayPanel {
-	private Point2D newPoint, newStart, newEnd;
+	private Point newPoint, newStart, newEnd;
 	private int circleWidthHeight = 10;
 	private ImageIcon icon;
 	private JPanel imputPopup;
@@ -51,8 +52,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		this.currentMap = mapurl;
 		this.mode = "Create Points";
 		adminViewPageHandle = adminViewPage;
-		this.newStart = new Point2D.Double(0, 0);
-		this.newEnd = new Point2D.Double(0, 0);
+		this.newStart = new Point(0, 0);
+		this.newEnd = new Point(0, 0);
 
 		this.building = adminViewPage.getBuilding();
 		this.floor = adminViewPage.getFloor();
@@ -73,7 +74,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		// controller;
 
 		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
-			Point2D p = adminViewPageHandle.pointPositions.get(i);
+			Point p = adminViewPageHandle.pointPositions.get(i);
 			Ellipse2D.Double circle = new Ellipse2D.Double(p.getX() - (circleWidthHeight * super.getScale() / 2),
 					p.getY() - (circleWidthHeight * super.getScale() / 2), circleWidthHeight * super.getScale(),
 					circleWidthHeight * super.getScale());
@@ -84,8 +85,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		// Here, need to get edges, which have been created and stored in
 		// controller;
 		for (int i = 0; i < adminViewPageHandle.pointNeighbors.size() - 1; i += 2) {
-			Point2D p1 = adminViewPageHandle.pointNeighbors.get(i);
-			Point2D p2 = adminViewPageHandle.pointNeighbors.get(i + 1);
+			Point p1 = adminViewPageHandle.pointNeighbors.get(i);
+			Point p2 = adminViewPageHandle.pointNeighbors.get(i + 1);
 			g2.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
 		}
 	}
@@ -147,10 +148,12 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 					if (scale > 1.0) {
-						newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+						int coord_X = (int)(me.getX() / scale);
+						int coord_Y = (int)(me.getY() / scale);
+						newPoint = new Point(coord_X, coord_Y);
 
 					} else {
-						newPoint = new Point2D.Double(me.getX(), me.getY());
+						newPoint = new Point(me.getX(), me.getY());
 
 					}
 					
@@ -200,24 +203,24 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 
 			case "Create Path":
 
-				Point2D checkResult = adminViewPageHandle.returnLastPointInList();
+				Point checkResult = adminViewPageHandle.returnLastPointInList();
 
 				if (checkResult.getX() != 0) {
 					this.addStart(checkResult);
-					newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+					newPoint = new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
 					createPathPoint(newPoint);
 					this.addNeighbors(me.getPoint());
 				}
 
 				else {
-					newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+					newPoint = new Point((int)(me.getX() / scale),(int)( me.getY() / scale));
 					createPathPoint(newPoint);
 				}
 				break;
 
 			case "Select Neighbors":
 
-				this.newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+				this.newPoint = new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
 
 				JPopupMenu selectAction = new JPopupMenu();
 				JMenuItem selectPoint, selectNeighbor;
@@ -251,7 +254,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			}
 
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
-			Point2D point2bDeleted = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+			Point point2bDeleted = new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
 
 			// Try to Delete Edge first
 			adminViewPageHandle.DeleteEdge(point2bDeleted);
@@ -279,16 +282,16 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	 * @param p
 	 *            Point2D
 	 */
-	public void addNeighbors(Point2D p) {
-		Point2D result = adminViewPageHandle.checkPoint(p);
+	public void addNeighbors(Point p) {
+		Point result = adminViewPageHandle.checkPoint(p);
 		if (result.getX() != 0) {
 			this.newEnd = result;
 			if (newStart.getX() != 0) {
 				this.adminViewPageHandle.CreateEdge(newStart, newEnd);
 				// this.adminViewPageHandle.pointNeighbors.add(this.newStart);
 				// this.adminViewPageHandle.pointNeighbors.add(this.newEnd);
-				this.newStart = new Point2D.Double(0, 0);
-				this.newEnd = new Point2D.Double(0, 0);
+				this.newStart = new Point(0, 0);
+				this.newEnd = new Point(0, 0);
 			} else {
 				System.out.println("Please select a start Point first!");
 			}
@@ -303,8 +306,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	 * @param p
 	 *            Point2D
 	 */
-	public void addStart(Point2D p) {
-		Point2D result = adminViewPageHandle.checkPoint(p);
+	public void addStart(Point p) {
+		Point result = adminViewPageHandle.checkPoint(p);
 		if (result.getX() != 0) {
 			this.newStart = result;
 			System.out.println("New start" + this.newStart);
@@ -323,7 +326,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	 */
 	public void checkIfPointIsDrawn(int x, int y, double scale) {
 		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
-			Point2D p = adminViewPageHandle.pointPositions.get(i);
+			Point p = adminViewPageHandle.pointPositions.get(i);
 			if (isInCircle(p.getX(), p.getY(), circleWidthHeight / 2, x / scale, y / scale, scale)) {
 				adminViewPageHandle.pointPositions.remove(i);
 				revalidate();
@@ -392,7 +395,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 
 	}
 
-	public void createPathPoint(Point2D p) {
+	public void createPathPoint(Point p) {
 		int floorNum;
 		String newBuilding;
 		if (this.floor.isEmpty()) {

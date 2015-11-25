@@ -2,6 +2,8 @@ package gtg_control_subsystem;
 
 import java.util.List;
 import java.awt.geom.Point2D;
+import java.awt.Point;
+
 import java.util.ArrayList;
 
 import gtg_model_subsystem.Node;
@@ -15,8 +17,8 @@ public class MapDataController {
 	private ArrayList<String> urlsOfMaps = new ArrayList<String>();
 	private ArrayList<Node> nodeList = new ArrayList<Node>();
 	private ArrayList<Edge> edgeList = new ArrayList<Edge>();
-	private ArrayList<Point2D> tempPntList  = new ArrayList<Point2D>();
-	private ArrayList<Point2D> tempEdgeList = new ArrayList<Point2D>();
+	private ArrayList<Point> tempPntList  = new ArrayList<Point>();
+	private ArrayList<Point> tempEdgeList = new ArrayList<Point>();
 	
 	// Constructor
 	public MapDataController(MainController controlInterface){
@@ -149,7 +151,8 @@ public class MapDataController {
 	private void transferNodeToPnt2D(List<Node> targetList){
 		tempPntList.clear();
 		for(Node nd:targetList){
-			Point2D pnt = new Point2D.Double(nd.getX(),nd.getY());
+			//Point2D pnt = new Point2D.Double(nd.getX(),nd.getY());
+			Point pnt = new Point(nd.getX(),nd.getY());
 			tempPntList.add(pnt);			
 		}
 	}
@@ -157,8 +160,11 @@ public class MapDataController {
 	private void transferEdgeToPnt2D(List<Edge> targetList){
 		tempEdgeList.clear();
 		for(Edge eg:targetList){
-			Point2D pnt_1 = new Point2D.Double(eg.getSource().getX(),eg.getSource().getY());
-			Point2D pnt_2 = new Point2D.Double(eg.getDestination().getX(),eg.getDestination().getY());
+			//Point2D pnt_1 = new Point2D.Double(eg.getSource().getX(),eg.getSource().getY());
+			//Point2D pnt_2 = new Point2D.Double(eg.getDestination().getX(),eg.getDestination().getY());
+			
+			Point pnt_1 = new Point(eg.getSource().getX(),eg.getSource().getY());
+			Point pnt_2 = new Point(eg.getDestination().getX(),eg.getDestination().getY());
 			tempEdgeList.add(pnt_1);
 			tempEdgeList.add(pnt_2);
 		}
@@ -258,10 +264,10 @@ public class MapDataController {
 		return false;
 	}
 	
-	public Point2D pointMapping(Point2D inputPnt){		
-		Point2D searchingResult = new Point2D.Double(0,0);
+	public Point pointMapping(Point inputPnt){		
+		Point searchingResult = new Point(0,0);
 		
-		for (Point2D temPnt : tempPntList){
+		for (Point temPnt : tempPntList){
 			double d = Math.sqrt(Math.pow(inputPnt.getX()-temPnt.getX(), 2)+ Math.pow(inputPnt.getY() - temPnt.getY(), 2));
 			if(d <= 15){
 				System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
@@ -320,11 +326,11 @@ public class MapDataController {
 		return r;
 	}
 
-	public ArrayList<Point2D> getDisplayPnt(){		
+	public ArrayList<Point> getDisplayPnt(){		
 		return tempPntList;
 	}
 	
-	public ArrayList<Point2D> getDisplayEdge(){
+	public ArrayList<Point> getDisplayEdge(){
 		return tempEdgeList;
 	}
 	
@@ -356,9 +362,9 @@ public class MapDataController {
 		return maxEdgeID;
 	}	
 
-	public Point2D getLastPntInPntList()
+	public Point getLastPntInPntList()
 	{
-		Point2D pnt = new Point2D.Double(0,0);
+		Point pnt = new Point(0,0);
 		if(tempPntList.size()!=0){
 			pnt = tempPntList.get(tempPntList.size()-1);
 			System.out.println("The last Point is: "+pnt.getX()+ "" + pnt.getY());
