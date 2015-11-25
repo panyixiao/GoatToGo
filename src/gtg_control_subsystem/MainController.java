@@ -16,7 +16,46 @@ import java.util.ArrayList;
 
 
 /**
+ * MainController:
+ * 	Controller Facade, Interface to ViewSubsystem
+ * 
+ *  Admin Control
+ * 		adminQualification()
+ * 
+ * 	MapData manipulation
+ * 		getMapList()
+ * 		getMapURL()
+ * 		getDisplayPnt()
+ * 		getDisplayEdge()
+ * 		getMapData(String)
+ * 		pointMapping()
+ * 		
+ * 		addNewMap()
+ * 		deleteMap()
+ * 		addPoint()
+ * 		deletePoint()
+ * 		createEdge()
+ * 		deleteEdge() 
+ * 		clearAllMapData()
+ * 
+ *  Path Searching
+ * 		setTaskPnt()
+ * 		getPathData()
+ * 
+ * MapData_Controller:
+ * 	1 Maintaining MapList (Adding / Deleting Map)
+ * 	2 
+ * 	2 Maintaining NodeList / EdgeList of Current Map
+ * 	3 Building List in the future
+ * 
+ * PathSearchingController:
+ * 	1 Task Point
+ * 	2 Get PathData from Model
+ * 	3 Send PathData to View
  */
+
+
+
 public class MainController{
 	
 	/*Added by neha. Yixio this is the temporary list to store map names and map urls. This is done to check
@@ -36,7 +75,6 @@ public class MainController{
 	private ArrayList<Point2D> tempEdgeList = new ArrayList<Point2D>();
 	private ArrayList<Node> nodeList = new ArrayList<Node>();
 	private ArrayList<Edge> edgeList = new ArrayList<Edge>();
-
 	
 	/**/
 	/**
@@ -50,10 +88,10 @@ public class MainController{
 	
 	// temporarily initializer, will be moved to Model-subsystem in the future
 	private void MapListIntial(){
-		listofMaps.add("BH_Basement");
-		listofMaps.add("BH_FirstFloor");
-		listofMaps.add("BH_SecondFloor");
-		listofMaps.add("BH_ThirdFloor");
+		listofMaps.add("BoyntonHall_Basement");
+		listofMaps.add("BoyntonHall_FirstFloor");
+		listofMaps.add("BoyntonHall_SecondFloor");
+		listofMaps.add("BoyntonHall_ThirdFloor");
 		
 		// map urls
 		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
@@ -64,7 +102,7 @@ public class MainController{
 		urlsofMaps.add(BH_BASEMENT);
 		urlsofMaps.add(BH_FIRST_FLOOR);
 		urlsofMaps.add(BH_SECOND_FLOOR);
-		urlsofMaps.add(BH_THIRD_FLOOR);		
+		urlsofMaps.add(BH_THIRD_FLOOR);
 	}
 	
 	/**
@@ -108,7 +146,7 @@ public class MainController{
 	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getMapList(String mapName){
-		return listofMaps;		
+		return listofMaps;
 	}
 
 	/**
@@ -262,6 +300,7 @@ public class MainController{
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
 		try{
+			// Here the mapName passed from View is actually 
 			mapModel.saveMapGraph(mapName, nodeList, edgeList);
 		}
 		catch(IOException e){
@@ -376,23 +415,6 @@ public class MainController{
 		}
 		return success;
 	}
-	
-	//DO WE NEED THIS?
-	/**
-	 * Method addPoint.
-	 * @param inputPnt Point2D
-	 * @return Boolean
-	 
-	public Boolean addPoint(Point2D inputPnt){
-		Boolean success = false;
-		if(CheckPntExistence(inputPnt)==0){
-			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), 1, 0, "null", "null", "null"));	
-			nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
-			transferNodeToPnt2D(nodeList);
-			success = true;
-		}
-		return success;
-	}*/
 
 	/**
 	 * Method createEdge.
@@ -444,18 +466,15 @@ public class MainController{
 	public boolean deletePoint(Point2D inputPnt){
 		Boolean pointDeleted = false;
 		Node nodeFound=null;
-
 		if(nodeList.isEmpty()){
 			System.out.println("Node List is empty, nothing to delete.");
 			return pointDeleted;
 		}
-		
 		int pntID = this.CheckPntExistence(inputPnt);
 		if(pntID == 0){
 			System.out.println("Can't find point in the List, Will not delete any points.");
 			return pointDeleted;
-		}		
-		
+		}
 		nodeFound=findNodeInList(pntID);
 		for (int edgeSeq=edgeList.size()-1; edgeSeq>=0; edgeSeq--){
 			if ((edgeList.get(edgeSeq).getSource().getID()==pntID)||(edgeList.get(edgeSeq).getDestination().getID()==pntID)){
@@ -490,8 +509,6 @@ public class MainController{
 		}
 		return false;
 	}
-	
-
 	
  	private void testPrintNodeEdgeList(){
 		System.out.println("There are currently total "+this.nodeList.size()+" Nodes in Controller's memory");
