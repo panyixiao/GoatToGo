@@ -67,8 +67,10 @@ public class LoginPage extends JPanel {
 		this.loginBtn = new JButton();
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(usernameTextField.getText().equals("") || passwordTextField.getText().equals("")){
-					JOptionPane.showMessageDialog(null, ViewStringLiterals.USERNAME_PASSWORD_NOT_SET, "INVALID", JOptionPane.ERROR_MESSAGE);
+				if(usernameTextField.getText().equals("")){
+					JOptionPane.showMessageDialog(null, ViewStringLiterals.USERNAME_NOT_ENTERED, "INVALID", JOptionPane.ERROR_MESSAGE);
+				} else if(passwordTextField.getText().equals("")){
+					JOptionPane.showMessageDialog(null, ViewStringLiterals.PASSWORD_NOT_ENTERED, "INVALID", JOptionPane.ERROR_MESSAGE);
 				} else {
 					parent.checkAdminValid(usernameTextField.getText(), passwordTextField.getText());
 				}

@@ -28,7 +28,15 @@ public class ImageURLS {
 	public static final String EDIT_BUTTON = "images"+System.getProperty("file.separator")+"edit_btn.png";
 	public static final String PREVIEW_BUTTON = "images"+System.getProperty("file.separator")+"preview_btn.png";
 	public static final String BROWSE_FILE_BUTTON = "images"+System.getProperty("file.separator")+"browse_file_btn.png";
-	
+	public static final String LOCATION_END_ICON = "images"+System.getProperty("file.separator")+"location_end_image.png";
+	public static final String CAFE_BUTTON = "images"+System.getProperty("file.separator")+"cafe.png";
+	public static final String CLASSROOM_BUTTON = "images"+System.getProperty("file.separator")+"classroom.png";
+	public static final String ELEVATOR_BUTTON = "images"+System.getProperty("file.separator")+"elevator.png";
+	public static final String MENS_RESTROOM_BUTTON = "images"+System.getProperty("file.separator")+"mens_restroom.png";
+	public static final String WOMENS_RESTROOM_BUTTON = "images"+System.getProperty("file.separator")+"womens_restroom.png";
+	public static final String OFFICE_BUTTON = "images"+System.getProperty("file.separator")+"office.png";
+	public static final String VENDING_BUTTON = "images"+System.getProperty("file.separator")+"vending.png";
+	public static final String PARKING_LOT_BUTTON = "images"+System.getProperty("file.separator")+"parking_lot.png";
 	// map urls
 	public static final String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
 	public static final String BH_FIRST_FLOOR = "images"+System.getProperty("file.separator")+"BH_FirstFloor.png";

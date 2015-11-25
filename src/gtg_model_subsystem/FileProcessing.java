@@ -193,9 +193,13 @@ public class FileProcessing {
 			boolean readSuccess = true;
 			lines = line.split("[\\s+]");
 			//construct a node
-			Node node = new Node(Integer.parseInt(lines[0]), 
-								 Integer.parseInt(lines[1]), 
-								 Integer.parseInt(lines[2])
+			Node node = new Node(Integer.parseInt(lines[0]),//id 
+								 Integer.parseInt(lines[1]),//x
+								 Integer.parseInt(lines[2]),//y
+								 Integer.parseInt(lines[3]),//entranceID
+								 lines[4],//building
+								 Integer.parseInt(lines[5]),//floorNum
+								 lines[6]//type
 								 );
 			nodes.add(node);
 			return readSuccess;
@@ -284,7 +288,14 @@ public class FileProcessing {
 		    BufferedWriter out = new BufferedWriter(fstream);
 		    out.write("NODES" + System.getProperty("line.separator"));
 		    for(Node node: nodes){
-		    	out.write(node.getID() + " " + node.getX()+ " " + node.getY() + System.getProperty("line.separator"));
+		    	out.write(node.getID() + " " + 
+		    			  node.getX() + " " + 
+		    			  node.getY() + " " +
+		    			  node.getEntranceID() + " " +
+		    			  node.getBuilding() + " " +
+		    			  node.getFloor() + " " +
+		    			  node.getType() +
+		    			  System.getProperty("line.separator"));
 		    }
 		    System.out.println("File Node Write Success!");
 

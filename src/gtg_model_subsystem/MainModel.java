@@ -23,6 +23,7 @@ public class MainModel {
 	private FileProcessing fileProcessing;
 	private Map tempMap;
 	private Hashtable<String, Map> mapTable;
+	private Hashtable<String, Path> mapPaths;
 	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
@@ -31,9 +32,7 @@ public class MainModel {
 		try {			
 			loadMapLists();
 			loadAdmin();			
-			//loadMapListFile();
-			loadFiles("BH_Basement");	// Yixiao
-			
+			loadFiles();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,6 +115,17 @@ public class MainModel {
 				return saveNewMap;
 	}
 	
+	public boolean loadFiles(){
+		boolean mapCreated = false;
+		try{
+			for(String mapName: mapTable.keySet()){
+				mapCreated = createMapGraph(mapName);
+			}
+		}catch(IOException e){
+			System.out.println(e.toString());
+		}		
+		return mapCreated;		
+	}
 	
 	/**
 	 * Method loadFiles.
@@ -218,6 +228,31 @@ public class MainModel {
 		}//END CATCH loadNodes/Edges
 		
 	}
+	
+	public boolean multiPathCalculate(String[] mapNames){
+		boolean multiPathCalcSuccess = true;
+		for(String mapName: mapNames){
+			singlePathCalculate(mapName);
+		}
+		
+		return multiPathCalcSuccess;
+	}
+	/**
+	 * Method testDij.
+	 * @param mapName String
+	 */
+	public void singlePathCalculate(String mapName){
+		
+		//testing for loading of nodes/edges
+		try {
+			runJDijkstra(mapName);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.toString());
+		}//END CATCH loadNodes/Edges
+		
+	}
 	/** Temporary java dijkstra algorithim implemented by Joshua until he speaks with Libin about
 	 *  fixing his up. First set the current maps graph into the algorithim. Next cycle through the nodes
 	 *  and pluck out 
@@ -235,7 +270,8 @@ public class MainModel {
 		
 		//Create the new path with the start point, end point, and way points
 		path.setPath(wayPoints);
-		
+		//Store the map with the associated path for user
+		mapPaths.put(mapName, path);
 	}
 	
 	/**
@@ -275,6 +311,8 @@ public class MainModel {
 		}
 		double currentDiff = 0.0;
 		double previousDiff = Double.POSITIVE_INFINITY;
+		printNodes("BH_Basement");
+		printNodes(mapName);
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			currentDiff = calculateDistance(node.getX(),x,node.getY(),y);
 			if(currentDiff < previousDiff){
@@ -283,6 +321,7 @@ public class MainModel {
 			}				
 		}
 		Point correctedPoint = new Point(validatedNode.getX(), validatedNode.getY());
+		System.out.println(correctedPoint.getX() + " " + correctedPoint.getY());
 		return correctedPoint;
 	}
 	/**
@@ -316,7 +355,7 @@ public class MainModel {
 		int count = 0;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			count++;
-			System.out.print(node.getID() + " " + node.getX() + " " + node.getY());
+			System.out.print(node.getID() + " " + node.getX() + " " + node.getY() + " " + node.getFloor());
 			System.out.println();
 		}
 		System.out.println(count);
@@ -443,8 +482,5 @@ public class MainModel {
     	}
 		return 0;
     }
-    public Hashtable<String, Map> getMapTable()
-    {
-    	return this.mapTable;
-    }
+    
 }

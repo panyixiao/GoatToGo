@@ -22,8 +22,7 @@ public class TestingModel {
 		
 		//TEST CASE 1
 		test.loadFiles("BH_Basement");
-		JDijkstra jtest = new JDijkstra(test.getMapTable().get("BH_Basement").getGraph());
-		
+		test.printNodes("BH_Basement");
 		/**test.printNodes("BH_Basement");
 		test.setStartEndPathPoint(new Point(590,346), "FROM", "BH_Basement");
 		test.setStartEndPathPoint(new Point(632,189), "TO", "BH_Basement");
