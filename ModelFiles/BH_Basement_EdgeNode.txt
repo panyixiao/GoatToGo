@@ -1,11 +1,89 @@
 NODES
-1 110 373 0 BH 0 Waypoint
-2 310 363 0 BH 0 Waypoint
-3 401 402 0 BH 0 Waypoint
-4 419 487 0 BH 0 Waypoint
-5 607 532 0 BH 0 Waypoint
+1 866 805 0 BH 0 Waypoint
+2 866 579 0 BH 0 Waypoint
+3 860 542 0 BH 0 Waypoint
+4 786 542 0 BH 0 Waypoint
+5 729 542 0 BH 0 Waypoint
+6 663 542 0 BH 0 Waypoint
+7 614 542 0 BH 0 Waypoint
+8 500 542 0 BH 0 Waypoint
+9 389 542 0 BH 0 Waypoint
+10 389 367 0 BH 0 Waypoint
+11 302 367 0 BH 0 Waypoint
+12 195 367 0 BH 0 Waypoint
+13 136 376 0 BH 0 Waypoint
+15 107 274 0 BH 0 Classroom
+16 195 326 0 BH 0 Classroom
+17 107 376 0 BH 0 Classroom
+18 136 424 0 BH 0 Classroom
+19 184 407 0 BH 0 Classroom
+20 295 498 0 BH 0 Classroom
+21 233 568 0 BH 0 Classroom
+22 233 655 0 BH 0 Waypoint
+23 233 721 0 BH 0 Waypoint
+24 255 778 0 BH 0 Classroom
+25 184 778 0 BH 0 Classroom
+26 80 778 0 BH 0 Classroom
+27 80 721 0 BH 0 Classroom
+28 325 542 0 BH 0 Classroom
+29 325 611 2 BH 0 Waypoint
+30 488 470 0 BH 0 Classroom
+31 518 284 0 BH 0 Classroom
+32 587 284 0 BH 0 Classroom
+33 587 350 0 BH 0 Classroom
+34 635 191 0 BH 0 Classroom
+35 635 367 0 BH 0 Classroom
+36 614 481 0 BH 0 Waypoint
+37 614 367 0 BH 0 Waypoint
+38 614 284 0 BH 0 Waypoint
+39 614 191 0 BH 0 Waypoint
+40 614 108 0 BH 0 Waypoint
+41 389 589 0 BH 0 Classroom
+42 500 589 0 BH 0 Classroom
+43 663 589 0 BH 0 Classroom
+44 729 589 0 BH 0 Classroom
+45 774 589 0 BH 0 Classroom
 EDGES
 1 1 2
 2 2 3
 3 3 4
 4 4 5
+5 5 6
+6 6 7
+7 7 8
+8 8 9
+9 9 10
+10 10 11
+11 11 12
+12 12 13
+13 15 16
+14 16 12
+15 17 13
+16 21 22
+17 22 23
+18 27 26
+19 27 23
+20 25 23
+21 24 23
+22 21 20
+23 20 28
+24 9 28
+25 28 29
+26 18 13
+27 19 12
+28 36 37
+29 37 38
+30 38 39
+31 39 40
+32 33 37
+33 35 37
+34 31 32
+35 32 38
+36 34 39
+37 36 7
+38 30 8
+39 9 41
+40 8 42
+41 6 43
+42 5 44
+43 4 45

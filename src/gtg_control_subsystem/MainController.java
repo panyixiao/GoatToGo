@@ -36,7 +36,6 @@ public class MainController{
 	private ArrayList<Point2D> tempEdgeList = new ArrayList<Point2D>();
 	private ArrayList<Node> nodeList = new ArrayList<Node>();
 	private ArrayList<Edge> edgeList = new ArrayList<Edge>();
-
 	
 	/**/
 	/**
@@ -50,10 +49,10 @@ public class MainController{
 	
 	// temporarily initializer, will be moved to Model-subsystem in the future
 	private void MapListIntial(){
-		listofMaps.add("BH_Basement");
-		listofMaps.add("BH_FirstFloor");
-		listofMaps.add("BH_SecondFloor");
-		listofMaps.add("BH_ThirdFloor");
+		listofMaps.add("BoytonHall_2");
+		listofMaps.add("BoytonHall_3");
+		listofMaps.add("BoytonHall_4");
+		listofMaps.add("BoytonHall_5");
 		
 		// map urls
 		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
@@ -64,7 +63,7 @@ public class MainController{
 		urlsofMaps.add(BH_BASEMENT);
 		urlsofMaps.add(BH_FIRST_FLOOR);
 		urlsofMaps.add(BH_SECOND_FLOOR);
-		urlsofMaps.add(BH_THIRD_FLOOR);		
+		urlsofMaps.add(BH_THIRD_FLOOR);
 	}
 	
 	/**
@@ -108,7 +107,7 @@ public class MainController{
 	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getMapList(String mapName){
-		return listofMaps;		
+		return listofMaps;
 	}
 
 	/**
@@ -262,6 +261,7 @@ public class MainController{
 	public Boolean createCoordinateGraph(String mapName){
 		Boolean success = false;
 		try{
+			// Here the mapName passed from View is actually 
 			mapModel.saveMapGraph(mapName, nodeList, edgeList);
 		}
 		catch(IOException e){
@@ -376,23 +376,6 @@ public class MainController{
 		}
 		return success;
 	}
-	
-	//DO WE NEED THIS?
-	/**
-	 * Method addPoint.
-	 * @param inputPnt Point2D
-	 * @return Boolean
-	 
-	public Boolean addPoint(Point2D inputPnt){
-		Boolean success = false;
-		if(CheckPntExistence(inputPnt)==0){
-			//nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY(), 1, 0, "null", "null", "null"));	
-			nodeList.add(new Node(this.getMaxNodeID()+1, (int)inputPnt.getX(), (int)inputPnt.getY()));
-			transferNodeToPnt2D(nodeList);
-			success = true;
-		}
-		return success;
-	}*/
 
 	/**
 	 * Method createEdge.
@@ -444,18 +427,15 @@ public class MainController{
 	public boolean deletePoint(Point2D inputPnt){
 		Boolean pointDeleted = false;
 		Node nodeFound=null;
-
 		if(nodeList.isEmpty()){
 			System.out.println("Node List is empty, nothing to delete.");
 			return pointDeleted;
 		}
-		
 		int pntID = this.CheckPntExistence(inputPnt);
 		if(pntID == 0){
 			System.out.println("Can't find point in the List, Will not delete any points.");
 			return pointDeleted;
-		}		
-		
+		}
 		nodeFound=findNodeInList(pntID);
 		for (int edgeSeq=edgeList.size()-1; edgeSeq>=0; edgeSeq--){
 			if ((edgeList.get(edgeSeq).getSource().getID()==pntID)||(edgeList.get(edgeSeq).getDestination().getID()==pntID)){
@@ -490,8 +470,6 @@ public class MainController{
 		}
 		return false;
 	}
-	
-
 	
  	private void testPrintNodeEdgeList(){
 		System.out.println("There are currently total "+this.nodeList.size()+" Nodes in Controller's memory");
