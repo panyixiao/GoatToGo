@@ -1,4 +1,5 @@
 NODES
+<<<<<<< HEAD
 1 866 805 0 BH 0 Waypoint
 2 866 579 0 BH 0 Waypoint
 3 860 542 0 BH 0 Waypoint
@@ -43,6 +44,60 @@ NODES
 43 663 589 0 BH 0 Classroom
 44 729 589 0 BH 0 Classroom
 45 774 589 0 BH 0 Classroom
+=======
+1 865 807 0 BH 0 Waypoint
+2 865 583 0 BH 0 Waypoint
+3 865 548 0 BH 0 Waypoint
+4 788 548 0 BH 0 Waypoint
+5 732 548 0 BH 0 Waypoint
+6 659 548 0 BH 0 Waypoint
+7 611 548 0 BH 0 Waypoint
+8 503 548 0 BH 0 Waypoint
+9 386 548 0 BH 0 Waypoint
+10 386 371 0 BH 0 Waypoint
+11 290 371 0 BH 0 Waypoint
+12 189 371 0 BH 0 Waypoint
+13 139 371 0 BH 0 Waypoint
+14 107 270 0 BH 0 Classroom
+15 189 326 0 BH 0 Classroom
+16 107 376 0 BH 0 Classroom
+17 139 424 0 BH 0 Classroom
+18 189 438 0 BH 0 Classroom
+19 298 497 0 BH 0 Classroom
+20 239 497 0 BH 0 Waypoint
+21 231 570 0 BH 0 Waypoint
+22 231 648 0 BH 0 Waypoint
+23 251 724 0 BH 0 Waypoint
+24 183 724 0 BH 0 Waypoint
+25 77 724 0 BH 0 Waypoint
+26 251 778 0 BH 0 Classroom
+27 183 902 0 BH 0 Classroom
+28 77 902 0 BH 0 Classroom
+29 318 548 0 BH 0 Waypoint
+30 318 613 0 BH 0 Waypoint
+31 318 710 0 BH 0 Waypoint
+32 341 739 0 BH 0 Waypoint
+33 386 660 0 BH 0 Classroom
+34 503 671 0 BH 0 Classroom
+35 659 671 0 BH 0 Classroom
+36 732 671 0 BH 0 Classroom
+37 775 590 0 BH 0 Classroom
+38 487 469 0 BH 0 Classroom
+39 611 469 0 BH 0 Waypoint
+40 611 371 0 BH 0 Waypoint
+41 611 343 0 BH 0 Waypoint
+42 611 280 0 BH 0 Waypoint
+43 611 192 0 BH 0 Waypoint
+44 611 95 0 BH 0 Waypoint
+45 550 343 0 BH 0 Classroom
+46 487 280 0 BH 0 Classroom
+47 560 280 0 BH 0 Classroom
+48 693 192 0 BH 0 Classroom
+49 671 371 0 BH 0 Classroom
+50 788 312 0 BH 0 Classroom
+51 954 312 0 BH 0 Classroom
+52 954 583 0 BH 0 Classroom
+>>>>>>> a7b8b4466d62666997dff4754b79472da262178c
 EDGES
 1 1 2
 2 2 3
@@ -56,6 +111,7 @@ EDGES
 10 10 11
 11 11 12
 12 12 13
+<<<<<<< HEAD
 13 15 16
 14 16 12
 15 17 13
@@ -87,3 +143,45 @@ EDGES
 41 6 43
 42 5 44
 43 4 45
+=======
+13 19 20
+14 20 21
+15 21 22
+16 22 23
+17 23 24
+18 24 25
+19 25 28
+20 24 27
+21 26 23
+22 29 30
+23 30 31
+24 31 32
+25 19 29
+26 9 29
+27 13 16
+28 17 13
+29 12 18
+30 14 15
+31 15 12
+32 4 37
+33 5 36
+34 6 35
+35 8 34
+36 9 33
+37 39 40
+38 40 41
+39 41 42
+40 42 43
+41 43 44
+42 46 47
+43 47 42
+44 45 41
+45 48 43
+46 38 8
+47 39 7
+48 40 49
+49 51 50
+50 50 4
+51 2 52
+52 52 51
+>>>>>>> a7b8b4466d62666997dff4754b79472da262178c
