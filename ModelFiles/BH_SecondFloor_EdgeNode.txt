@@ -1,0 +1,9 @@
+NODES
+1 861 691 0 BH 0 Waypoint
+2 861 371 0 BH 0 Waypoint
+3 796 363 0 BH 0 Waypoint
+4 720 363 0 BH 0 Waypoint
+EDGES
+1 1 2
+2 2 3
+3 3 4
