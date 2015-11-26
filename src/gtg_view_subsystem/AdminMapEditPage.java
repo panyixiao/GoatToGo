@@ -301,6 +301,33 @@ public class AdminMapEditPage extends JPanel {
 		return success;
 	}
 	
+	// 2015-11-25 Yixiao
+	public int checkPointExsitence(Point inputPnt){
+		return this.parent.mainController.getNodeID(inputPnt);
+	}
+	
+	public String getNodeBuildingName(int NodeID){
+		return this.parent.mainController.getNodeBuildingName(NodeID);
+	}
+	
+	public int getNodeFloorNum(int NodeID){
+		return this.parent.mainController.getNodeFloorNum(NodeID);
+	}
+	
+	public String getNodeDescription(int NodeID){
+		return this.parent.mainController.getDescriptionOfNode(NodeID);
+	}
+	
+	public int getNodeEntranceID(int NodeID){
+		return this.parent.mainController.getEntranceIDOfNode(NodeID);
+	}
+	
+	public String getNodeType(int NodeID){
+		return this.parent.mainController.getTypeOfNode(NodeID);
+	}
+	
+	
+	
 	/**
 	 * Method CreateEdge.
 	 * @param pnt1 Point2D

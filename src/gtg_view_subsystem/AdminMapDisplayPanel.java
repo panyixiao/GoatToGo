@@ -13,6 +13,7 @@ import java.awt.geom.Point2D;
 import java.awt.Point;
 import java.awt.Dialog;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -146,53 +147,86 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			case "Create Points":
 				int result = JOptionPane.showConfirmDialog(null, panel, "Please Describe Point",
 						JOptionPane.OK_CANCEL_OPTION);
-				if (result == JOptionPane.OK_OPTION) {
-					if (scale > 1.0) {
-						int coord_X = (int)(me.getX() / scale);
-						int coord_Y = (int)(me.getY() / scale);
-						newPoint = new Point(coord_X, coord_Y);
 
-					} else {
-						newPoint = new Point(me.getX(), me.getY());
+				// 2015-11-25 Yixiao				
+				int coord_X = (int)(me.getX() / scale);
+				int coord_Y = (int)(me.getY() / scale);
+				newPoint = new Point(coord_X, coord_Y);				
+				// First, checking if this point is already been created, if so, click on the same coordinate will edit exist point
+				int NodeID = adminViewPageHandle.checkPointExsitence(newPoint);
+				boolean createNewPoint = true;
+				// Get original Data
+				if(NodeID>0){
+					System.out.println("Get Original Data of current point");
+					createNewPoint = false;
+					String Origin_BuildingName = adminViewPageHandle.getNodeBuildingName(NodeID);
+					int Origin_FloorNum = adminViewPageHandle.getNodeFloorNum(NodeID);
+					String Origin_NodeType = adminViewPageHandle.getNodeType(NodeID);
+					int Origin_EntranceID = adminViewPageHandle.getNodeEntranceID(NodeID);
+					String Origin_Description = adminViewPageHandle.getNodeDescription(NodeID);
+				
+					// Using Original Data to set those text field; NOT WORKING!!!
+					System.out.println("Origin_BuildingName: "+Origin_BuildingName);
+					building.setText(Origin_BuildingName);
 
-					}
+					System.out.println("Origin_FloorNum: "+Origin_FloorNum);
+					floor.setText(Integer.toString(Origin_FloorNum));
 					
-					newEnterenceIdString = entranceId.getText();
-
-					newDescription = description.getText();
+					pointType.setSelectedIndex(Arrays.asList(listPointTypes).indexOf(Origin_NodeType));					
+					
+					entranceId.setText(Integer.toString(Origin_EntranceID));					
+					
+					description.setText(Origin_Description);				
+				}				
+				
+				if (result == JOptionPane.OK_OPTION) {
+					// Get Building Name
+					if (building.getText().isEmpty()) {
+						newBuilding = "Null";
+					} else {
+						newBuilding = building.getText();
+					}		
+					
+					// Get Floor Num
 					if (floor.getText().isEmpty()) {
 						floorNum = 1;
-
 					} else {
 						try {
 							floorNum = Integer.parseInt(floor.getText());
 						} catch (NumberFormatException e) {
 							floorNum = 0;
 						}
-					}
-					if (building.getText().isEmpty()) {
-						newBuilding = "Null";
-
-					} else {
-						newBuilding = building.getText();
-					}
-
+					}			
+					
+					// Get NodeType
 					newType = (String) pointType.getSelectedItem();
+
+					// Get EntranceID
+					newEnterenceIdString = entranceId.getText();					
 					if (newEnterenceIdString.isEmpty()) {
 						newEnterenceIdString = "0";
 					}
 					newEnterenceId = Integer.parseInt(newEnterenceIdString);
 
+					// Get Node Description
+					newDescription = description.getText();
 					if (newDescription == null) {
 						newDescription = "Null";
 					}
-					adminViewPageHandle.CreatePoint(newPoint, 
-													floorNum, 
-													newEnterenceId, 
-													newBuilding, 
-													newType,
-													newDescription);
-
+					// If the point hasn't be created, Create a new point 
+					if(createNewPoint){						
+						adminViewPageHandle.CreatePoint(newPoint, 
+														floorNum, 
+														newEnterenceId, 
+														newBuilding, 
+														newType,
+														newDescription);
+						
+					}
+					// Otherwise, edit current point
+					else{
+						
+					}
 					System.out.println("Building: " + this.building);
 					System.out.println("Floor: " + this.floor);
 					System.out.println("Description: " + description.getText());
