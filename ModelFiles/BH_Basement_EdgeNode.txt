@@ -51,6 +51,9 @@ NODES
 50 788 312 0 BH 0 Classroom
 51 954 312 0 BH 0 Classroom
 52 954 583 0 BH 0 Classroom
+53 290 326 0 BH 0 Classroom
+54 290 260 0 BH 0 Waypoint
+55 262 157 0 BH 0 Classroom
 EDGES
 1 1 2
 2 2 3
@@ -104,3 +107,6 @@ EDGES
 50 50 4
 51 2 52
 52 52 51
+53 53 54
+54 55 54
+55 53 11
