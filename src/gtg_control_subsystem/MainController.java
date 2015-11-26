@@ -62,7 +62,6 @@ public class MainController{
 		mapData=mapModel.getArrayOfMapNames();
 		return mapData;
 	}
-
 	
 	/******************************
 	 * 
@@ -215,6 +214,21 @@ public class MainController{
 			return success;
 		}*/
 		return mapDataController.setTypeOfNode(nodeID);
+	}
+	
+	public int getNodeID(Point inputPnt){
+		int NodeID = -1;
+		//NodeID = mapDataController.getNodeID(inputPnt);
+		NodeID = mapDataController.CheckPntExistence(inputPnt);
+		return NodeID;
+	}
+	
+	public String getNodeBuildingName(int nodeID){
+		return mapDataController.getBuildingNameofNode(nodeID);
+	}
+	
+	public int getNodeFloorNum(int nodeID){
+		return mapDataController.getFloorNumofNode(nodeID);
 	}
 	
 	public String getDescriptionOfNode (int nodeID){

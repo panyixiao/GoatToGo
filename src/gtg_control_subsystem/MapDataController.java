@@ -171,7 +171,7 @@ public class MapDataController {
 		
 	}
 
-	public Boolean addPoint(Point2D inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
+	public Boolean addPoint(Point inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
 		if(CheckPntExistence(inputPnt)==0){
 			
@@ -194,7 +194,7 @@ public class MapDataController {
 		return success;
 	}
 	
-	public Boolean createEdge(Point2D pnt1, Point2D pnt2){
+	public Boolean createEdge(Point pnt1, Point pnt2){
 		Boolean success = false;
 		// Check Edge Redundancy
 		int PointID_1 = CheckPntExistence(pnt1);
@@ -223,7 +223,7 @@ public class MapDataController {
 		return success;
 	}
 	
-	public boolean deletePoint(Point2D inputPnt){
+	public boolean deletePoint(Point inputPnt){
 		Boolean pointDeleted = false;
 		Node nodeFound=null;
 		if(nodeList.isEmpty()){
@@ -290,9 +290,9 @@ public class MapDataController {
 		return node;
 	}
 	
-	private int CheckPntExistence(Point2D pnt){
+	public int CheckPntExistence(Point pnt){
 		int pntID = 0;
-		int toleranceRadius = 15;	// 15 pixels
+		int toleranceRadius = 20;	// 15 pixels
 		for (Node tempN: nodeList){
 			double d = Math.sqrt(Math.pow(pnt.getX() - tempN.getX(), 2) + 
 							     Math.pow(pnt.getY() - tempN.getY(), 2));
@@ -375,6 +375,26 @@ public class MapDataController {
 	}
 	
 	// Get Node properties
+	public int getNodeID(Point inputPnt){
+		int NodeID = -1;
+		if(nodeList.isEmpty()){
+			System.out.println("NodeList is empty, can't find point in NodeList");
+			return NodeID;
+		}
+		else{
+			for(Node nd:nodeList){
+				if(inputPnt.getX() == nd.getX()&&
+				   inputPnt.getY() == nd.getY()){
+					NodeID = nd.getID();
+					return NodeID;
+				}
+			}
+			
+			System.out.println("Can't find point in NodeList");
+		}		
+		return NodeID;
+	}
+	
 	public String getDescriptionOfNode (int nodeID){
 		String description=new String();
 		if (this.findNodeInList(nodeID)!=null){
@@ -385,10 +405,28 @@ public class MapDataController {
 		return description;
 	}
 	
+	public String getBuildingNameofNode(int nodeID){
+		String buildingName = new String();
+		if (this.findNodeInList(nodeID)!=null){
+			buildingName = this.findNodeInList(nodeID).getBuilding();
+			//waiting for extension of node class;
+			}		
+		return buildingName;
+	}	
+	
+	public int getFloorNumofNode(int nodeID){
+		int floorNum = 0;
+		if (this.findNodeInList(nodeID)!=null){
+			floorNum = this.findNodeInList(nodeID).getFloor();
+			//waiting for extension of node class;
+			}		
+		return floorNum;
+	}
+	
 	public int getEntranceIDOfNode (int nodeID){
 		int entranceID=-1;
 		if (this.findNodeInList(nodeID)!=null){
-			//entranceID=this.findNodeInList(nodeID).getEntranceID();
+			entranceID=this.findNodeInList(nodeID).getEntranceID();
 			//waiting for extension of node class;
 			return entranceID;
 		}
@@ -398,7 +436,7 @@ public class MapDataController {
 	public String getTypeOfNode (int nodeID){
 		String nodeType=new String();
 		if (this.findNodeInList(nodeID)!=null){
-			//nodeType=this.findNodeInList(nodeID).getType();
+			nodeType=this.findNodeInList(nodeID).getType();
 			//waiting for extension of node class;
 			return nodeType;
 		}
