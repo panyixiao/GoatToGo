@@ -219,6 +219,7 @@ public class MainView {
 			mapPage.displayDropDownList(mapList);
 			this.getMapURL(mapList.get(0));
 		}
+		// Please create a Inform Box here to inform the user that the map is not exist yet
 	}
 	
 	/**
