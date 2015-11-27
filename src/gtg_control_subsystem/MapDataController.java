@@ -36,20 +36,6 @@ public class MapDataController {
 	 * 			Map Manipulation
 	 * 
 	 * ********************************/
-<<<<<<< HEAD
-	private void mapListInitial(){
-		listOfMaps.add("BoyntonHall_1");
-		listOfMaps.add("BoyntonHall_2");
-		listOfMaps.add("BoyntonHall_3");
-		listOfMaps.add("BoyntonHall_4");
-		/*
-		listOfMaps.add("BH_Basement");
-		listOfMaps.add("BH_FirstFloor");
-		listOfMaps.add("BH_SecondFloor");
-		listOfMaps.add("BH_ThirdFloor");*/
-		
-		// map urls
-=======
 	private void updateMapList(String mapName){
 		listOfMapName.clear();
 		listOfMapURL.clear();
@@ -80,7 +66,7 @@ public class MapDataController {
 		
 	}
 	private void addCampusMap(){
-		listOfMapName.add("CampusMap");
+		listOfMapName.add("CampusMap_0");
 		listOfMapURL.add("");
 	}
 	
@@ -90,13 +76,12 @@ public class MapDataController {
 		listOfMaps.add("BoyntonHall_FirstFloor");
 		listOfMaps.add("BoyntonHall_SecondFloor");
 		listOfMaps.add("BoyntonHall_ThirdFloor");*/
-		listOfMapName.add("BH_Basement");
-		listOfMapName.add("BH_FirstFloor");
-		listOfMapName.add("BH_SecondFloor");
-		listOfMapName.add("BH_ThirdFloor");
+		listOfMapName.add("BoyntonHall_1");
+		listOfMapName.add("BoyntonHall_2");
+		listOfMapName.add("BoyntonHall_3");
+		listOfMapName.add("BoyntonHall_4");
 		
 		// Map urls
->>>>>>> 0d664ef870d4aefa0ccadbd22e09912739f84e2c
 		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
 		String BH_FIRST_FLOOR = "images"+System.getProperty("file.separator")+"BH_FirstFloor.png";
 		String BH_SECOND_FLOOR = "images"+System.getProperty("file.separator")+"BH_SecondFloor.png";
