@@ -21,8 +21,8 @@ public class TestingModel {
 		//remind alyssa and neha that we need relative path and not absolute
 		
 		//TEST CASE 1
-		test.loadFiles("BH_Basement");
-		test.printNodes("BH_Basement");
+		//test.loadFiles("BH_Basement");
+		//test.printNodes("BH_Basement");
 		/**test.printNodes("BH_Basement");
 		test.setStartEndPathPoint(new Point(590,346), "FROM", "BH_Basement");
 		test.setStartEndPathPoint(new Point(632,189), "TO", "BH_Basement");

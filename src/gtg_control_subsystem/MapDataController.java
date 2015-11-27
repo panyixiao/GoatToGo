@@ -5,16 +5,20 @@ import java.awt.geom.Point2D;
 import java.awt.Point;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import gtg_model_subsystem.Node;
 import gtg_model_subsystem.Edge;
+import gtg_model_subsystem.Map;
 
 public class MapDataController {
 	
 	private MainController mainController;
 	
-	private ArrayList<String> listOfMaps = new ArrayList<String>();
-	private ArrayList<String> urlsOfMaps = new ArrayList<String>();
+	private Hashtable<String, String> mapNameAndURLtable;
+	
+	private ArrayList<String> listOfMapName = new ArrayList<String>();
+	private ArrayList<String> listOfMapURL = new ArrayList<String>();
 	private ArrayList<Node> nodeList = new ArrayList<Node>();
 	private ArrayList<Edge> edgeList = new ArrayList<Edge>();
 	private ArrayList<Point> tempPntList  = new ArrayList<Point>();
@@ -24,7 +28,7 @@ public class MapDataController {
 	public MapDataController(MainController controlInterface){
 		//mapModelHandle = mapModel;	
 		mainController = controlInterface;
-		mapListInitial();
+		//mapListInitial();
 	}
 	
 	/* *******************************
@@ -32,27 +36,60 @@ public class MapDataController {
 	 * 			Map Manipulation
 	 * 
 	 * ********************************/
-	private void mapListInitial(){
+	private void updateMapList(String mapName){
+		listOfMapName.clear();
+		listOfMapURL.clear();
+		
+		switch(mapName){
+		case "admin":
+			//addAllMapIntoList();
+			addCampusMap();
+			addBoyntonHall();
+			break;
+			
+		case "CampusMap":
+			addCampusMap();
+			listOfMapName.add("BoyntonHall");
+			break;
+			
+		case "BoyntonHall":
+			addBoyntonHall();
+			break;
+			
+		default:
+			break;
+		}
+	}
+	
+	// Waiting model create a method return me the mapList
+	private void addAllMapIntoList(){
+		
+	}
+	private void addCampusMap(){
+		listOfMapName.add("CampusMap_0");
+		listOfMapURL.add("");
+	}
+	
+	private void addBoyntonHall(){
+		// Map Name
 /*		listOfMaps.add("BoyntonHall_Basement");
 		listOfMaps.add("BoyntonHall_FirstFloor");
 		listOfMaps.add("BoyntonHall_SecondFloor");
 		listOfMaps.add("BoyntonHall_ThirdFloor");*/
+		listOfMapName.add("BoyntonHall_1");
+		listOfMapName.add("BoyntonHall_2");
+		listOfMapName.add("BoyntonHall_3");
+		listOfMapName.add("BoyntonHall_4");
 		
-		listOfMaps.add("BH_Basement");
-		listOfMaps.add("BH_FirstFloor");
-		listOfMaps.add("BH_SecondFloor");
-		listOfMaps.add("BH_ThirdFloor");
-		
-		// map urls
+		// Map urls
 		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
 		String BH_FIRST_FLOOR = "images"+System.getProperty("file.separator")+"BH_FirstFloor.png";
 		String BH_SECOND_FLOOR = "images"+System.getProperty("file.separator")+"BH_SecondFloor.png";
 		String BH_THIRD_FLOOR = "images"+System.getProperty("file.separator")+"BH_ThirdFloor.png";
-		
-		urlsOfMaps.add(BH_BASEMENT);
-		urlsOfMaps.add(BH_FIRST_FLOOR);
-		urlsOfMaps.add(BH_SECOND_FLOOR);
-		urlsOfMaps.add(BH_THIRD_FLOOR);
+		listOfMapURL.add(BH_BASEMENT);
+		listOfMapURL.add(BH_FIRST_FLOOR);
+		listOfMapURL.add(BH_SECOND_FLOOR);
+		listOfMapURL.add(BH_THIRD_FLOOR);
 	}
 	
 	/* Added by  neha. For now this method just pushes the data into the listofMaps and urlsofMaps.
@@ -62,11 +99,11 @@ public class MapDataController {
 	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
 	 */
 	public void addNewMapToList(String mapName){
-		listOfMaps.add(mapName);
+		listOfMapName.add(mapName);
 	}
 	
 	public void addNewMapURLToList(String mapURL){
-		urlsOfMaps.add(mapURL);
+		listOfMapURL.add(mapURL);
 	}
 
 	/* Added by  neha. For now this method just deletes the map from listofMaps and urlsofMaps.
@@ -78,10 +115,10 @@ public class MapDataController {
 	// Remove the map from MapList and MapURLList at the same time;
 	public Boolean removeMapFromList(String mapName){
 		Boolean mapRemoved = false;
-		int index = listOfMaps.indexOf(mapName);
+		int index = listOfMapName.indexOf(mapName);
 		if(index>0){
-			listOfMaps.remove(index);
-			urlsOfMaps.remove(index);
+			listOfMapName.remove(index);
+			listOfMapURL.remove(index);
 			mapRemoved = true;
 		}
 		else{
@@ -99,13 +136,16 @@ public class MapDataController {
 	 * You will have to implement the switch case.
 	 */
 	public ArrayList<String> getMapList(String mapName){
-		return listOfMaps;
+		updateMapList(mapName);
+		return listOfMapName;
 	}
 	
 	public String getMapURL(String mapName){
 		String mapurl = "";
-		int index = listOfMaps.indexOf(mapName);
-		mapurl = urlsOfMaps.get(index);
+		int index = listOfMapName.indexOf(mapName);
+		if(index>0){
+			mapurl = listOfMapURL.get(index);
+		}
 		return mapurl;
 	}
 	
@@ -115,6 +155,9 @@ public class MapDataController {
 	 * 
 	 * ********************************/
 	public Boolean LoadingPntsAndEdges(String mapName){
+		// Clear the temporary node/edge List before add new point into it;
+		this.nodeList.clear();
+		this.edgeList.clear();		
 		if(mainController.mapModel.loadFiles(mapName)){
 			LoadInNodeList(mapName);
 			LoadInEdgeList(mapName);			 
@@ -131,7 +174,6 @@ public class MapDataController {
 	
 	private void LoadInNodeList(String mapName){
 		// Clear the temporary nodeList before add new point into it;
-		this.nodeList.clear();
 		ArrayList<Node> tempNode = (ArrayList<Node>)mainController.mapModel.getNodeList(mapName);		
 		for(Node nd:tempNode){
 			this.nodeList.add(nd);
@@ -140,8 +182,6 @@ public class MapDataController {
 	}
 	
 	private void LoadInEdgeList(String mapName){
-		// Clear the temporary edgeList before add new point into it;
-		this.edgeList.clear();
 		ArrayList<Edge> tempEdge = (ArrayList<Edge>)mainController.mapModel.getEdgeList(mapName);		
 		for(Edge eg:tempEdge){
 			this.edgeList.add(eg);
