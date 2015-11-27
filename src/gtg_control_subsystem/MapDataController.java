@@ -52,7 +52,7 @@ public class MapDataController {
 			
 		case "campus":
 			addCampusMap();
-			listOfMapName.add("BoyntonHall");
+			addAllBuildingInCampus();
 			break;
 			
 		case "BoyntonHall":
@@ -69,17 +69,24 @@ public class MapDataController {
 	private void addAllMapIntoList(){
 		
 	}
+	private void addAllBuildingInCampus(){
+		listOfMapName.add("BoyntonHall");
+		listOfMapURL.add("");
+		listOfMapName.add("FullerLab");
+		listOfMapURL.add("");
+		listOfMapName.add("CampusCenter");
+		listOfMapURL.add("");
+		listOfMapName.add("GordanLibrary");
+		listOfMapURL.add("");
+	}
 	private void addCampusMap(){
 		listOfMapName.add("CampusMap_0");
-		listOfMapURL.add("");
+		String CAMPUS_MAP = "images"+System.getProperty("file.separator")+"WPI_school.png";
+		listOfMapURL.add(CAMPUS_MAP);
 	}
 	
 	private void addBoyntonHall(){
 		// Map Name
-/*		listOfMaps.add("BoyntonHall_Basement");
-		listOfMaps.add("BoyntonHall_FirstFloor");
-		listOfMaps.add("BoyntonHall_SecondFloor");
-		listOfMaps.add("BoyntonHall_ThirdFloor");*/
 		listOfMapName.add("BoyntonHall_1");
 		listOfMapName.add("BoyntonHall_2");
 		listOfMapName.add("BoyntonHall_3");
@@ -162,7 +169,10 @@ public class MapDataController {
 	public Boolean LoadingPntsAndEdges(String mapName){
 		// Clear the temporary node/edge List before add new point into it;
 		this.nodeList.clear();
-		this.edgeList.clear();		
+		this.edgeList.clear();
+		this.tempPntList.clear();
+		this.tempEdgeList.clear();
+		
 		if(mainController.mapModel.loadFiles(mapName)){
 			LoadInNodeList(mapName);
 			LoadInEdgeList(mapName);			 
