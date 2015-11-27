@@ -34,7 +34,10 @@ public class MapDataController {
 	/* *******************************
 	 * 
 	 * 			Map Manipulation
-	 * 
+	 * @Yixiao Added by Neha
+	 * I made change in the case "BoyntonHall" added the campus map name as the last value in the arraylist.
+	 * Also remember that while creating the list of building add the campus map name always in the first position.
+	 * This is required to for view to differentiate between the dropdown list manupulation.
 	 * ********************************/
 	private void updateMapList(String mapName){
 		listOfMapName.clear();
@@ -47,13 +50,14 @@ public class MapDataController {
 			addBoyntonHall();
 			break;
 			
-		case "CampusMap":
+		case "campus":
 			addCampusMap();
 			listOfMapName.add("BoyntonHall");
 			break;
 			
 		case "BoyntonHall":
 			addBoyntonHall();
+			addCampusMap();
 			break;
 			
 		default:
@@ -140,10 +144,11 @@ public class MapDataController {
 		return listOfMapName;
 	}
 	
+	/* Changed > to >= as index starts from 0 value*/
 	public String getMapURL(String mapName){
 		String mapurl = "";
 		int index = listOfMapName.indexOf(mapName);
-		if(index>0){
+		if(index >= 0){
 			mapurl = listOfMapURL.get(index);
 		}
 		return mapurl;
