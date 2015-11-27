@@ -1,4 +1,4 @@
-BH_Basement images\BH_Basement.png Floor
-BH_FirstFloor images\BH_FirstFloor.png Floor
-BH_SecondFloor images\BH_SecondFloor.png Floor
-BH_ThirdFloor images\BH_ThirdFloor.png Floor
+BoyntonHall_1 images\BH_Basement.png Floor
+BoyntonHall_2 images\BH_FirstFloor.png Floor
+BoyntonHall_3 images\BH_SecondFloor.png Floor
+BoyntonHall_4 images\BH_ThirdFloor.png Floor

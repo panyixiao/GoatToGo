@@ -66,7 +66,7 @@ public class MapDataController {
 		
 	}
 	private void addCampusMap(){
-		listOfMapName.add("CampusMap");
+		listOfMapName.add("CampusMap_0");
 		listOfMapURL.add("");
 	}
 	
@@ -76,10 +76,10 @@ public class MapDataController {
 		listOfMaps.add("BoyntonHall_FirstFloor");
 		listOfMaps.add("BoyntonHall_SecondFloor");
 		listOfMaps.add("BoyntonHall_ThirdFloor");*/
-		listOfMapName.add("BH_Basement");
-		listOfMapName.add("BH_FirstFloor");
-		listOfMapName.add("BH_SecondFloor");
-		listOfMapName.add("BH_ThirdFloor");
+		listOfMapName.add("BoyntonHall_1");
+		listOfMapName.add("BoyntonHall_2");
+		listOfMapName.add("BoyntonHall_3");
+		listOfMapName.add("BoyntonHall_4");
 		
 		// Map urls
 		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
