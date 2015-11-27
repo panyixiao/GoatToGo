@@ -16,6 +16,9 @@ public class MapDataController {
 	private MainController mainController;
 	
 	private Hashtable<String, String> mapNameAndURLtable;
+
+	private ArrayList<String> listOfNewMapName = new ArrayList<String>();
+	private ArrayList<String> listOfNewMapURL = new ArrayList<String>();
 	
 	private ArrayList<String> listOfMapName = new ArrayList<String>();
 	private ArrayList<String> listOfMapURL = new ArrayList<String>();
@@ -26,9 +29,7 @@ public class MapDataController {
 	
 	// Constructor
 	public MapDataController(MainController controlInterface){
-		//mapModelHandle = mapModel;	
 		mainController = controlInterface;
-		//mapListInitial();
 	}
 	
 	/* *******************************
@@ -40,6 +41,7 @@ public class MapDataController {
 	 * This is required to for view to differentiate between the dropdown list manupulation.
 	 * ********************************/
 	private void updateMapList(String mapName){
+
 		listOfMapName.clear();
 		listOfMapURL.clear();
 		
@@ -48,6 +50,7 @@ public class MapDataController {
 			//addAllMapIntoList();
 			addCampusMap();
 			addBoyntonHall();
+			addNewMapIntoList();
 			break;
 			
 		case "campus":
@@ -69,6 +72,18 @@ public class MapDataController {
 	private void addAllMapIntoList(){
 		
 	}
+	
+	private void addNewMapIntoList(){
+		if(!listOfNewMapName.isEmpty() && !listOfNewMapURL.isEmpty()){
+			for(String newMapName:listOfNewMapName){
+				listOfMapName.add(newMapName);
+			}
+			for(String newMapURL:listOfNewMapURL){
+				listOfMapURL.add(newMapURL);
+			}			
+		}
+	}
+	
 	private void addAllBuildingInCampus(){
 		listOfMapName.add("BoyntonHall");
 		listOfMapURL.add("");
@@ -79,6 +94,7 @@ public class MapDataController {
 		listOfMapName.add("GordanLibrary");
 		listOfMapURL.add("");
 	}
+
 	private void addCampusMap(){
 		listOfMapName.add("CampusMap_0");
 		String CAMPUS_MAP = "images"+System.getProperty("file.separator")+"WPI_school.png";
@@ -110,11 +126,17 @@ public class MapDataController {
 	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
 	 */
 	public void addNewMapToList(String mapName){
-		listOfMapName.add(mapName);
+		int Index = listOfNewMapName.indexOf(mapName);
+		if(Index == -1){
+			listOfNewMapName.add(mapName);
+		}
 	}
 	
 	public void addNewMapURLToList(String mapURL){
-		listOfMapURL.add(mapURL);
+		int Index = listOfNewMapURL.indexOf(mapURL);
+		if(Index == -1){
+			listOfNewMapURL.add(mapURL);
+		}
 	}
 
 	/* Added by  neha. For now this method just deletes the map from listofMaps and urlsofMaps.
