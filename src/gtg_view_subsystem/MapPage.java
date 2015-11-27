@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Point;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -28,7 +30,7 @@ public class MapPage extends JPanel {
 	private JButton cafeBtn, classroomBtn, elevatorBtn, mensRestroomBtn, womensRestroomBtn, officeBtn, vendingBtn, parkingLotBtn, doneBtn;
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, getDirectionsBtnImage, fromClearBtnImage, toClearBtnImage;
 	private ImageIcon cafeBtnImage, classroomBtnImage, elevatorBtnImage, mensRestroomBtnImage, womensRestroomBtnImage, officeBtnImage, vendingBtnImage, parkingLotBtnImage;
-	private JLabel dropDownLabel, fromLabel, toLabel;
+	private JLabel dropDownLabel, fromLabel, toLabel, noImageLabel;
 	private MapMapDisplayPanel mapMapDisplayPanel;
 	private JScrollPane mapPanelHolder, filterScrollPane;
 	private JLayeredPane layeredPane, rightlayeredPane;
@@ -42,6 +44,9 @@ public class MapPage extends JPanel {
 	private MainView parent;
 	private Boolean animationStarted = false;
 	private Boolean slidePanelIsOpen = false;
+	private String currentDisplayedMap = "";
+	private String mapURL = "";
+	private Boolean isCampusMap = false;
 	/**
 	 * Create the panel.
 	 * @param mainView 
@@ -64,12 +69,21 @@ public class MapPage extends JPanel {
 		this.layeredPane.setBounds(0, 0, 950, 650);
 		this.leftPanel.add(this.layeredPane);
 
+		this.noImageLabel = new JLabel(ViewStringLiterals.MAP_NOT_AVAILABLE);
+		this.noImageLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.noImageLabel.setForeground(new Color(0x5b1010));
+		this.noImageLabel.setBounds(350, 310, 250, 30);
+		this.noImageLabel.setVisible(false);
+		this.layeredPane.add(this.noImageLabel, new Integer(1));
+
 		this.zoomInBtn = new JButton();
 		zoomInBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(currentZoomValue + zoomFactor <= MAX_ZOOM_IN){
-					currentZoomValue = currentZoomValue + zoomFactor;
-					mapMapDisplayPanel.setScale(currentZoomValue);
+				if(mapMapDisplayPanel != null){
+					if(currentZoomValue + zoomFactor <= MAX_ZOOM_IN){
+						currentZoomValue = currentZoomValue + zoomFactor;
+						mapMapDisplayPanel.setScale(currentZoomValue);
+					}
 				}
 			}
 		});
@@ -83,9 +97,11 @@ public class MapPage extends JPanel {
 		this.zoomOutBtn = new JButton();
 		zoomOutBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(currentZoomValue - zoomFactor >= MAX_ZOOM_OUT){
-					currentZoomValue = currentZoomValue - zoomFactor;
-					mapMapDisplayPanel.setScale(currentZoomValue);
+				if(mapMapDisplayPanel != null){
+					if(currentZoomValue - zoomFactor >= MAX_ZOOM_OUT){
+						currentZoomValue = currentZoomValue - zoomFactor;
+						mapMapDisplayPanel.setScale(currentZoomValue);
+					}
 				}
 			}
 		});
@@ -130,18 +146,15 @@ public class MapPage extends JPanel {
 		this.dropDownLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.dropDownLabel);
 
-		String[] floorStrings = {"BH_Basement", "BH_FirstFloor", "BH_SecondFloor", "BH_ThirdFloor"};
-		this.comboBox = new JComboBox(floorStrings);
+		this.comboBox = new JComboBox();
 		comboBox.setFont(new Font("Meiryo", Font.PLAIN, 20));
 		this.comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				 JComboBox cb = (JComboBox)ae.getSource();
-			     String mapName = (String)cb.getSelectedItem();
-			     changeMap(mapName);
+			     updateMapList((String)cb.getSelectedItem());
 			}
 		});
 		this.comboBox.setBackground(null);
-		this.comboBox.setSelectedIndex(0);
 		this.comboBox.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 		this.comboBox.setBounds(15, 96, 271, 53);
 		this.rightPanel.add(this.comboBox);
@@ -241,6 +254,10 @@ public class MapPage extends JPanel {
 		this.rightPanel.add(this.toClearBtn);
 	}
 	
+	/**
+	 * Method createSlidePanelUI.
+	 * This method creates the slide panel UI component for the filters.
+	 */
 	private void createSlidePanelUI() {
 		this.cafeBtn = new JButton();
 		cafeBtn.addActionListener(new ActionListener() {
@@ -370,31 +387,40 @@ public class MapPage extends JPanel {
 	 * Method changeMap.
 	 * @param mapName String
 	 */
-	private void changeMap(String mapName){
-		this.mapMapDisplayPanel = null;
-		String mapurl = "";
-		switch(mapName){
-		case "BH_Basement":
-			mapurl = ImageURLS.BH_BASEMENT;
-			break;
-			
-		case "BH_FirstFloor":
-			mapurl = ImageURLS.BH_FIRST_FLOOR;
-			break;
-			
-		case "BH_SecondFloor":
-			mapurl = ImageURLS.BH_SECOND_FLOOR;
-			break;
-			
-		case "BH_ThirdFloor":
-			mapurl = ImageURLS.BH_THIRD_FLOOR;
-			break;
+	public void changeMapImage(String mapURL){
+		this.mapURL = mapURL;
+		if(mapURL.equals("")){
+			this.noImageLabel.setVisible(true);
+			this.mapPanelHolder.setVisible(false);
+		} else {
+			this.noImageLabel.setVisible(false);
+			this.mapMapDisplayPanel = new MapMapDisplayPanel(this,this.mapPanelHolder, this.currentDisplayedMap, mapURL, selectedPoints);
+			this.mapPanelHolder.setViewportView(mapMapDisplayPanel);
+			this.mapPanelHolder.setVisible(true);
+			this.currentZoomValue = 1.0;
 		}
-		this.mapMapDisplayPanel = new MapMapDisplayPanel(this,this.mapPanelHolder, mapName, mapurl, selectedPoints);
-		this.mapPanelHolder.setViewportView(mapMapDisplayPanel);
-		this.currentZoomValue = 1.0;
 	}
 
+	/**
+	 * Method displayDropDownList.
+	 * @param mapList ArrayList<String>
+	 * This method updates the mapList when a building is selected in the campus map.
+	 */
+	public void displayDropDownList(ArrayList<String> mapList){
+		this.currentDisplayedMap = mapList.get(0);
+		
+		int pos = this.currentDisplayedMap.toLowerCase().indexOf(("campus").toLowerCase());
+		if(pos != -1){
+			this.isCampusMap = true;
+			this.dropDownLabel.setText(ViewStringLiterals.SELECT_BUILDING + ": ");
+		} else {
+			this.isCampusMap = false;
+			this.dropDownLabel.setText(ViewStringLiterals.SELECT_FLOOR + ": ");
+		}
+
+		DefaultComboBoxModel model = new DefaultComboBoxModel(mapList.toArray());
+		this.comboBox.setModel(model);
+	}
 	/**
 	 * Method displayPointInTextfield.
 	 * @param locationType String
@@ -432,7 +458,6 @@ public class MapPage extends JPanel {
 
 	public void setPoint() {
 		this.mapMapDisplayPanel.displayPoint();
-		
 	}
 	
 	/**
@@ -451,38 +476,89 @@ public class MapPage extends JPanel {
 		}
 	}
 
+	/**
+	 * Method reset.
+	 * Resets the value of the attributes when the map page is displayed again.
+	 */
 	public void reset() {
 		// TODO Auto-generated method stub
 		fromTextField.setText("");
 		toTextField.setText("");
 		this.selectedPoints.resetEnd();
 		this.selectedPoints.resetStart();
-		if(this.mapMapDisplayPanel != null){
+		this.animationStarted = false;
+		this.slidePanelIsOpen = false;
+		this.currentDisplayedMap = "";
+		this.mapURL = "";
+		this.isCampusMap = false;
+		this.slidePanel.setLocation(359, 0);
+		/*if(this.mapMapDisplayPanel != null){
 			this.mapMapDisplayPanel.displayPoint();
-		}
+		}*/
 	}
 	
+	/**
+	 * Method animationStarted.
+	 * Method called from the animate class, so that when the slide animation is in progress
+	 * no buttons on the UI are enabled.
+	 */
 	public void animationStarted(){
 		this.animationStarted = true;
 	}
 	
+	/**
+	 * Method animationEnd.
+	 * Method called from the animate class, so that when the slide animation is over
+	 * buttons on the UI are enabled.
+	 */
 	public void animationEnd(){
 		this.animationStarted = false;
 	}
 	
+	/**
+	 * Method showFilterPanel.
+	 * Executes the slide animation of the filter panel to display it.
+	 */
 	public void showFilterPanel(){
-		if(this.animationStarted == false && slidePanelIsOpen == false){
-			animate.setAnimationPanel(this, slidePanel, 355, 10);
-			animate.startAnimationLeft();
-			slidePanelIsOpen = true;
+		if(!this.mapURL.equals("")){
+			if(this.animationStarted == false && slidePanelIsOpen == false){
+				animate.setAnimationPanel(this, slidePanel, 355, 10);
+				animate.startAnimationLeft();
+				slidePanelIsOpen = true;
+			}
 		}
 	}
 	
+	/**
+	 * Method hideFilterPanel.
+	 * Executes the slide animation of the filter panel to hide it.
+	 */
 	public void hideFilterPanel(){
 		if(animationStarted == false){
 			animate.setAnimationPanel(this, slidePanel, 10, 355);
 			animate.startAnimationRight();
 			slidePanelIsOpen = false;
+		}
+	}
+	
+	/**
+	 * Method updateMapList.
+	 * @param String mapName
+	 * Updates the dropdown list values depending upon the type of the selected map.
+	 * If mapName = campus, display list of buildings + campus map name
+	 * If mapName = building, display list of floors + campus map name
+	 */
+	public void updateMapList(String mapName){
+		if(this.isCampusMap == true){
+			this.parent.getListOfFloors(mapName);
+		} else {
+			int pos = mapName.toLowerCase().indexOf(("campus").toLowerCase());
+			if(pos != -1){
+				this.parent.getListOfBuildings();
+			} else {
+				this.currentDisplayedMap = mapName;
+				this.parent.getMapURL(mapName);
+			}
 		}
 	}
 }
