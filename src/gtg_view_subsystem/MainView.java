@@ -127,8 +127,8 @@ public class MainView {
 	public Point sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
 		//send the point to controller
 		Point pntToBeMapped = startEndPoint;
-		System.out.println("Selected Point is" + startEndPoint);
-		System.out.println("Selected Point type" + selectedPointType);
+		System.out.println("Selected Point is " + startEndPoint);
+		System.out.println("Selected Point type " + selectedPointType);
 		System.out.println("Selected Map " + mapName);
 		pntToBeMapped = this.mainController.setTaskPnt(startEndPoint, selectedPointType, mapName);
 		return pntToBeMapped;

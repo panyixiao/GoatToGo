@@ -70,7 +70,7 @@ public class MainController{
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		Point targetPnt = new Point();
-		System.out.println("Task Type:" + pntType);	
+		System.out.println("Task Type: " + pntType);	
 		targetPnt = mapModel.validatePoint(mapName, taskPnt.x, taskPnt.y);
 		mapModel.setStartEndPathPoint(targetPnt, pntType, mapName);	
 		return targetPnt;

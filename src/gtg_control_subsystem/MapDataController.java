@@ -33,15 +33,15 @@ public class MapDataController {
 	 * 
 	 * ********************************/
 	private void mapListInitial(){
-/*		listOfMaps.add("BoyntonHall_Basement");
-		listOfMaps.add("BoyntonHall_FirstFloor");
-		listOfMaps.add("BoyntonHall_SecondFloor");
-		listOfMaps.add("BoyntonHall_ThirdFloor");*/
-		
+		listOfMaps.add("BoyntonHall_1");
+		listOfMaps.add("BoyntonHall_2");
+		listOfMaps.add("BoyntonHall_3");
+		listOfMaps.add("BoyntonHall_4");
+		/*
 		listOfMaps.add("BH_Basement");
 		listOfMaps.add("BH_FirstFloor");
 		listOfMaps.add("BH_SecondFloor");
-		listOfMaps.add("BH_ThirdFloor");
+		listOfMaps.add("BH_ThirdFloor");*/
 		
 		// map urls
 		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
