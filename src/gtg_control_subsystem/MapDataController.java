@@ -16,6 +16,9 @@ public class MapDataController {
 	private MainController mainController;
 	
 	private Hashtable<String, String> mapNameAndURLtable;
+
+	private ArrayList<String> listOfNewMapName = new ArrayList<String>();
+	private ArrayList<String> listOfNewMapURL = new ArrayList<String>();
 	
 	private ArrayList<String> listOfMapName = new ArrayList<String>();
 	private ArrayList<String> listOfMapURL = new ArrayList<String>();
@@ -26,9 +29,7 @@ public class MapDataController {
 	
 	// Constructor
 	public MapDataController(MainController controlInterface){
-		//mapModelHandle = mapModel;	
 		mainController = controlInterface;
-		//mapListInitial();
 	}
 	
 	/* *******************************
@@ -40,6 +41,7 @@ public class MapDataController {
 	 * This is required to for view to differentiate between the dropdown list manupulation.
 	 * ********************************/
 	private void updateMapList(String mapName){
+
 		listOfMapName.clear();
 		listOfMapURL.clear();
 		
@@ -48,11 +50,12 @@ public class MapDataController {
 			//addAllMapIntoList();
 			addCampusMap();
 			addBoyntonHall();
+			addNewMapIntoList();
 			break;
 			
 		case "campus":
 			addCampusMap();
-			listOfMapName.add("BoyntonHall");
+			addAllBuildingInCampus();
 			break;
 			
 		case "BoyntonHall":
@@ -69,17 +72,37 @@ public class MapDataController {
 	private void addAllMapIntoList(){
 		
 	}
+	
+	private void addNewMapIntoList(){
+		if(!listOfNewMapName.isEmpty() && !listOfNewMapURL.isEmpty()){
+			for(String newMapName:listOfNewMapName){
+				listOfMapName.add(newMapName);
+			}
+			for(String newMapURL:listOfNewMapURL){
+				listOfMapURL.add(newMapURL);
+			}			
+		}
+	}
+	
+	private void addAllBuildingInCampus(){
+		listOfMapName.add("BoyntonHall");
+		listOfMapURL.add("");
+		listOfMapName.add("FullerLab");
+		listOfMapURL.add("");
+		listOfMapName.add("CampusCenter");
+		listOfMapURL.add("");
+		listOfMapName.add("GordanLibrary");
+		listOfMapURL.add("");
+	}
+
 	private void addCampusMap(){
 		listOfMapName.add("CampusMap_0");
-		listOfMapURL.add("");
+		String CAMPUS_MAP = "images"+System.getProperty("file.separator")+"WPI_school.png";
+		listOfMapURL.add(CAMPUS_MAP);
 	}
 	
 	private void addBoyntonHall(){
 		// Map Name
-/*		listOfMaps.add("BoyntonHall_Basement");
-		listOfMaps.add("BoyntonHall_FirstFloor");
-		listOfMaps.add("BoyntonHall_SecondFloor");
-		listOfMaps.add("BoyntonHall_ThirdFloor");*/
 		listOfMapName.add("BoyntonHall_1");
 		listOfMapName.add("BoyntonHall_2");
 		listOfMapName.add("BoyntonHall_3");
@@ -103,11 +126,17 @@ public class MapDataController {
 	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
 	 */
 	public void addNewMapToList(String mapName){
-		listOfMapName.add(mapName);
+		int Index = listOfNewMapName.indexOf(mapName);
+		if(Index == -1){
+			listOfNewMapName.add(mapName);
+		}
 	}
 	
 	public void addNewMapURLToList(String mapURL){
-		listOfMapURL.add(mapURL);
+		int Index = listOfNewMapURL.indexOf(mapURL);
+		if(Index == -1){
+			listOfNewMapURL.add(mapURL);
+		}
 	}
 
 	/* Added by  neha. For now this method just deletes the map from listofMaps and urlsofMaps.
@@ -162,7 +191,10 @@ public class MapDataController {
 	public Boolean LoadingPntsAndEdges(String mapName){
 		// Clear the temporary node/edge List before add new point into it;
 		this.nodeList.clear();
-		this.edgeList.clear();		
+		this.edgeList.clear();
+		this.tempPntList.clear();
+		this.tempEdgeList.clear();
+		
 		if(mainController.mapModel.loadFiles(mapName)){
 			LoadInNodeList(mapName);
 			LoadInEdgeList(mapName);			 

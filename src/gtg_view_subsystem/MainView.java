@@ -214,9 +214,12 @@ public class MainView {
 	 */
 	public void getListOfFloors(String mapName){
 		ArrayList<String> mapList = this.mainController.getMapList(mapName);
-		mapPage.displayDropDownList(mapList);
-
-		this.getMapURL(mapList.get(0));
+		// 2015-11-27 Yixiao
+		if(!mapList.isEmpty()){
+			mapPage.displayDropDownList(mapList);
+			this.getMapURL(mapList.get(0));
+		}
+		// Please create a Inform Box here to inform the user that the map is not exist yet
 	}
 	
 	/**
