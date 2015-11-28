@@ -140,14 +140,11 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		panel.add(new JLabel("Type:"));
 		panel.add(pointType);
 
-		panel.add(new JLabel("Description:"));
-		panel.add(description);
+//		panel.add(new JLabel("Description:"));
+//		panel.add(description);
 		if (me.getButton() == MouseEvent.BUTTON1) {
 			switch (this.mode) {
 			case "Create Points":
-				int result = JOptionPane.showConfirmDialog(null, panel, "Please Describe Point",
-						JOptionPane.OK_CANCEL_OPTION);
-
 				// 2015-11-25 Yixiao				
 				int coord_X = (int)(me.getX() / scale);
 				int coord_Y = (int)(me.getY() / scale);
@@ -178,6 +175,10 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 					
 					description.setText(Origin_Description);				
 				}				
+				int result = JOptionPane.showConfirmDialog(null, panel, "Please Describe Point",
+						JOptionPane.OK_CANCEL_OPTION);
+
+			
 				
 				if (result == JOptionPane.OK_OPTION) {
 					// Get Building Name
