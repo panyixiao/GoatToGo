@@ -149,17 +149,18 @@ public class AdminMapEditPage extends JPanel {
 		this.rightPanel.add(this.currentMapLabel);
 				
 		
-		this.buildingLabel = new JLabel("Building: "+ this.buildingName);
+		this.buildingLabel = new JLabel("Building: ");
 		this.buildingLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.buildingLabel.setBounds(50, 165, 250, 50);
 		this.buildingLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.buildingLabel);
 		
-/*		this.buiding = new JLabel(this.buildingName);
+		this.buiding = new JLabel(this.buildingName);
 		this.buiding.setBounds(50, 210, 307, 53);
 		this.buiding.setBackground(null);
 		this.buiding.setFont(new Font("Meiryo", Font.PLAIN, 24));
-	this.buiding.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));*/
+		this.buiding.setForeground(new Color(0x5b1010));
+//	this.buiding.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 		
 		adminMapDisplayPanel.setBuilding(buildingName);
 		
@@ -170,10 +171,10 @@ public class AdminMapEditPage extends JPanel {
 //			     adminMapDisplayPanel.setBuilding(building);
 //			}
 //		});
-//		this.rightPanel.add(buiding);
+		this.rightPanel.add(buiding);
 		
 		
-		this.floorLabel = new JLabel("Floor:" + this.floorId);
+		this.floorLabel = new JLabel("Floor: "  + this.floorId);
 		this.floorLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.floorLabel.setBounds(50, 265, 250, 50);
 		this.floorLabel.setForeground(new Color(0x5b1010));
@@ -204,21 +205,21 @@ public class AdminMapEditPage extends JPanel {
 			
 		this.pointBtn =new JRadioButton();
 		this.pointBtn.setText("Create Points");
-		this.pointBtn.setBounds(55, 425, 253, 25);
+		this.pointBtn.setBounds(55, 375, 253, 25);
 		this.pointBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.pointBtn.setBackground(null);
 		this.pointBtn.addActionListener(this.changeMode);
 	this.pointBtn.setSelected(true);
 		this.pathBtn =new JRadioButton();
 		this.pathBtn.setText("Create Path");
-		this.pathBtn.setBounds(55, 475, 253, 25);
+		this.pathBtn.setBounds(55, 425, 253, 25);
 		this.pathBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.pathBtn.setBackground(null);
 		this.pathBtn.addActionListener(changeMode);
 		
 		this.nbrBtn =new JRadioButton();
 		this.nbrBtn.setText("Select Neighbors");
-		this.nbrBtn.setBounds(55, 525, 253, 25);
+		this.nbrBtn.setBounds(55, 475, 253, 25);
 		this.nbrBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.nbrBtn.setBackground(null);
 		this.nbrBtn.addActionListener(changeMode);
