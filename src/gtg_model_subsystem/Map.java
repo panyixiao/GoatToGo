@@ -22,10 +22,10 @@ public class Map {
 		 * @param mapType String
 		 */
 		public Map(String mapName, CoordinateGraph graph, String mapImgURL,String mapType){
-			this.setMapImgURL(mapImgURL);
+			this.mapImgURL = mapImgURL;
 			this.graph = graph;
 		    this.mapName = mapName;
-		    this.setMapType(mapType);
+		    this.mapType = mapType;
 		}
 
 		

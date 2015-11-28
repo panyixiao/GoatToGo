@@ -130,114 +130,122 @@ public class FileProcessing {
 			}
 			return writeSuccess;
 	}
-	
-	
 	/**
-	 * Method readNodesFile.
-	 * @param nodes List<Node>
-	 * @param mapName String
-	 * @return boolean
+	 * read nodes and edges from the txt file according to the map name
+	 * @param nodes the node list that contains the nodes loaded from the txt file
+	 * @param edges the edges list that contains the edges loaded from the txt file
+	 * @param mapName the mapName specifies which map is loaded
+	 * @return true if creating file or readind nodes,edges successful
+	 *         will not return false
 	 * @throws IOException
 	 */
-	public boolean readNodesFile(List<Node> nodes, String mapName) throws IOException{
-		String mapNodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
-		System.out.println(mapNodeURL);
+	public boolean readGraphInformation(List<Node> nodes, List<Edge> edges, String mapName)throws IOException{
+		String mapGraphInformationURL = "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
 		boolean readSuccess = true;
-		File file = new File(mapNodeURL);
+		int nodeOrEdge = 0;
+		File file = new File(mapGraphInformationURL);
 		BufferedReader buffer = null;
+		String line;
+		String[] lines = null;
 		//CHECK to see if there is a new file that needs to be created
-		//true of created
-		//false if file exists
 		if(createFile(file)){
-			//return true because we created a new file
 			return true;
 		}else{
 			try{
+				//file exists,begin reading
 				System.out.println("Reading instead");
 				buffer = new BufferedReader(new FileReader(file));
-				String line;
-				String[] lines;
+				//read line from file
 				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
 					line = line.trim();
-					lines = line.split("[\\s+]");
-					
-					Node node = new Node(Integer.parseInt(lines[0]), 
-										 Integer.parseInt(lines[1]), 
-										 Integer.parseInt(lines[2])
-										 );
-					nodes.add(node);
+					//encounter keyword NODES
+					if(line.equals("NODES")){
+						continue;
+					}
+					//encounter keyword EDGES,set flag
+					if(line.equals("EDGES")){
+						nodeOrEdge = 1;
+						continue;
+					}
+					//begin reading edges or nodes
+					if(nodeOrEdge == 1){
+						readSuccess = readEdges(nodes, edges, line, lines);
+					}else{
+						readSuccess = readNodes(nodes, line, lines);
+					}
 				}
-			}catch(Exception e){
-				System.out.println("Nodes broke");
-				System.out.println(e.toString());
-				
-				readSuccess = false;
+			}catch(IOException E){
+				System.out.println(E.toString());
 			}finally{
 				buffer.close();
 			}
-			return readSuccess;
 		}
+		return readSuccess;
 	}
 	/**
-	 * Method readEdgesFile.
-	 * @param nodes List<Node>
-	 * @param edges List<Edge>
-	 * @param mapName String
-	 * @return boolean
-	 * @throws IOException
+	 * read a node into the nodes list by reading a line from the txt file
+	 * @param nodes the nodes list that stores the nodes from file
+	 * @param line the line that is read currently
+	 * @param lines the array stores the node id,x,y
+	 * @return true if reading is successful
 	 */
-	public boolean readEdgesFile(List<Node> nodes, List<Edge> edges, String mapName) throws IOException{
-		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"EdgeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";		
-		File file = new File(mapEdgeURL);
-		BufferedReader buffer = null; 
-		boolean readSuccess = true;
-		//CHECK to see if there is a new file that needs to be created
-		//true of created
-		//false if file exists
-		if(createFile(file)){
-			//return true because we created a new file
-			return true;
-		}	
-		else{
-			try{
-				buffer = new BufferedReader(new FileReader(file));
-				String line;
-				String[] lines;
-				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
-					line = line.trim();
-					lines = line.split("[\\s+]");
-					
-					//Subtract one for arraylist index value
-					Node tempNode1 = getNode(nodes, Integer.parseInt(lines[1]));
-					Node tempNode2 = getNode(nodes, Integer.parseInt(lines[2]));
-					if(tempNode1 == null){
-						System.out.println("Node1  could not be read for edge");
-						readSuccess = false;
-						break;
-					}
-					if(tempNode2 == null){
-						System.out.println("Node2  could not be read for edge");
-						readSuccess = false;
-						break;
-					}
-					Edge edge = new Edge(Integer.parseInt(lines[0]), 
-										 tempNode1, 
-										 tempNode2,
-										 calculateDistance(tempNode1.getX(), tempNode2.getX(), tempNode1.getY(), tempNode2.getY())
-										 );
-					
-					edges.add(edge);
-				}
-			}catch(Exception e){
-				System.out.println("Edges broke");
-				System.out.println(e.toString());
-				readSuccess = false;
-			}finally{
-				buffer.close();
-			}
+	public boolean readNodes(List<Node> nodes, String line, String[] lines){
+			boolean readSuccess = true;
+			lines = line.split("[\\s+]");
+			//construct a node
+			Node node = new Node(Integer.parseInt(lines[0]),//id 
+								 Integer.parseInt(lines[1]),//x
+								 Integer.parseInt(lines[2]),//y
+								 Integer.parseInt(lines[3]),//entranceID
+								 lines[4],//building
+								 Integer.parseInt(lines[5]),//floorNum
+								 lines[6]//type
+								 );
+			nodes.add(node);
 			return readSuccess;
-		}
 	}
+	/**
+	 * read an edge into edges list by reading a line from the txt file
+	 * @param nodes the nodes list that stores the nodes list from file
+	 * @param edges the edges list that stored the edges list from file
+	 * @param line the line that is read currently
+	 * @param lines the array stores the edge id,x,y
+	 * @return true if reading is successful
+	 *         false if one of the nodes in the edge does not exist
+	 */
+	public boolean readEdges(List<Node> nodes, List<Edge> edges, String line, String[] lines){
+			boolean readSuccess = true;
+			lines = line.split("[\\s+]");
+			
+			//Subtract one for arraylist index value
+			Node tempNode1 = getNode(nodes, Integer.parseInt(lines[1]));
+			Node tempNode2 = getNode(nodes, Integer.parseInt(lines[2]));
+			//one of the nodes in the edge does not exist
+			if(tempNode1 == null){
+				System.out.println("Node1  could not be read for edge");
+				readSuccess = false;
+			}
+			if(tempNode2 == null){
+				System.out.println("Node2  could not be read for edge");
+				readSuccess = false;
+			}
+			//construct an edge
+			Edge edge = new Edge(Integer.parseInt(lines[0]), 
+								 tempNode1, 
+								 tempNode2,
+								 calculateDistance(tempNode1.getX(), tempNode2.getX(), tempNode1.getY(), tempNode2.getY())
+								 );
+			
+			edges.add(edge);
+			return readSuccess;
+	}
+	/**
+	 * get a node by nodeID
+	 * @param nodes the nodes list
+	 * @param nodeID the ID of the node that we want to find 
+	 * @return a node if it is found
+	 *         null if it does not exist
+	 */
 	public Node getNode(List<Node> nodes, int nodeID){
 			Node nodeFound = null;
 			for(Node node: nodes){
@@ -273,45 +281,33 @@ public class FileProcessing {
 			System.out.println(e.toString());
 		}
 	}
-	/**
-	 * Method saveNodesFile.
-	 * @param nodes List<Node>
-	 * @param mapName String
-	 * @throws IOException
-	 */
-	public void saveNodesFile(List<Node> nodes, String mapName) throws IOException{
-		String mapNodeURL = "ModelFiles"+System.getProperty("file.separator")+"NodeFiles"+System.getProperty("file.separator")+mapName+"_Node.txt";
+	public void saveGraphInformation(List<Node> nodes, List<Edge> edges, String mapName) throws IOException{
+		String mapGraphInformationURL = "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
 		try{
-		    FileWriter fstream = new FileWriter(mapNodeURL, false);
+		    FileWriter fstream = new FileWriter(mapGraphInformationURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
+		    out.write("NODES" + System.getProperty("line.separator"));
 		    for(Node node: nodes){
-		    	out.write(node.getID() + " " + node.getX()+ " " + node.getY() + System.getProperty("line.separator"));
+		    	out.write(node.getID() + " " + 
+		    			  node.getX() + " " + 
+		    			  node.getY() + " " +
+		    			  node.getEntranceID() + " " +
+		    			  node.getBuilding() + " " +
+		    			  node.getFloor() + " " +
+		    			  node.getType() +
+		    			  System.getProperty("line.separator"));
 		    }
 		    System.out.println("File Node Write Success!");
-		    out.close();
-		}
-		catch(Exception E){
-			System.out.println(E.toString());
-		}
-	}
-	/**
-	 * Method saveEdgesFile.
-	 * @param edges List<Edge>
-	 * @param mapName String
-	 * @throws IOException
-	 */
-	public void saveEdgesFile(List<Edge> edges, String mapName) throws IOException{
-		String mapEdgeURL = "ModelFiles"+System.getProperty("file.separator")+"EdgeFiles"+System.getProperty("file.separator")+mapName+"_Edge.txt";
-		try{
-		    FileWriter fstream = new FileWriter(mapEdgeURL, false);
-		    BufferedWriter out = new BufferedWriter(fstream);
+
+		    out.write("EDGES" + System.getProperty("line.separator"));
 		    for(Edge edge: edges){
 		    	out.write(edge.getEdgeID() + " " + edge.getSource().getID() + " " + edge.getDestination().getID() + System.getProperty("line.separator"));
 		    }
 		    System.out.println("File Edge Write Success!");
+
 		    out.close();
-		}
-		catch(Exception E){
+
+		}catch(IOException E){
 			System.out.println(E.toString());
 		}
 	}

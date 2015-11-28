@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 /**
@@ -32,6 +33,7 @@ public class ResultPage extends JPanel {
 	private double currentZoomValue = 1.0;
 	private double zoomFactor = 0.1;
 	private ResultMapDisplayPanel resultMapDisplayPanel;
+	private ArrayList<String> mapNamesArray;
 	/**
 	 * Create the panel.
 	 * @param mainView 
@@ -181,10 +183,6 @@ public class ResultPage extends JPanel {
 		this.newSearchBtnImage = new ImageIcon(ImageURLS.NEW_SEARCH_BUTTON);
 		this.newSearchBtn.setIcon(this.newSearchBtnImage);
 		this.rightPanel.add(this.newSearchBtn);
-
-		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, "BH_BASEMENT", ImageURLS.BH_BASEMENT);
-		this.mapPanelHolder.setViewportView(resultMapDisplayPanel);
-		this.currentZoomValue = 1.0;
 	}
 	/**
 	 * Method displayPath.
@@ -200,6 +198,13 @@ public class ResultPage extends JPanel {
 		
 		this.currentMapName.setText(path.getArrayOfMapNames().get(0));
 		this.totalMaps.setText("1 / " + path.getArrayOfMapNames().size());
+		
+		this.mapNamesArray = path.getArrayOfMapNames();
+		String mapURL = this.parent.tempMapURL(this.mapNamesArray.get(0));
+		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, mapNamesArray.get(0), mapURL);
+		this.mapPanelHolder.setViewportView(resultMapDisplayPanel);
+		this.currentZoomValue = 1.0;
+		
 		this.resultMapDisplayPanel.displayPoints(path.getWayPoints());
 	}
 }
