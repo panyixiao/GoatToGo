@@ -199,6 +199,14 @@ public class AdminMapEditPage extends JPanel {
 			public void actionPerformed(ActionEvent ae) {
 				JRadioButton cb = (JRadioButton)ae.getSource();
 			     String mode = cb.getText();
+			     switch(mode){
+			     case "Create/Edit Points":
+			    	 mode="Create Points";
+			    	 break;
+			     case "<html>Select/Remove<br>Neighbors</html>":
+			    	 mode="Select Neighbors";
+			     }
+			    	 			     
 			     setMode(mode);
 			}
 		};
