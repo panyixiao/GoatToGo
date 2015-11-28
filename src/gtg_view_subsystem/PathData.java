@@ -10,7 +10,8 @@ public class PathData {
 	private Point endPoint;
 	private ArrayList<Point> wayPoints = new ArrayList<Point>();
 	private ArrayList<String> mapNames = new ArrayList<String>();
-	
+	private String mapURL = "";
+
 	public PathData(){
 		
 	}
@@ -77,5 +78,21 @@ public class PathData {
 	 */
 	public ArrayList<String> getArrayOfMapNames(){
 		return this.mapNames;
+	}
+	
+	/**
+	 * Method setMapURL.
+	 * @param mapURL String
+	 */
+	public void setMapURL(String mapURL){
+		this.mapURL = mapURL;
+	}
+	
+	/**
+	 * Method getMapURL.
+	 * @return String
+	 */
+	public String getMapURL(){
+		return this.mapURL;
 	}
 }

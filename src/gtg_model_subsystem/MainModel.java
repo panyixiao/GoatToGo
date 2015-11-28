@@ -311,7 +311,6 @@ public class MainModel {
 		}
 		double currentDiff = 0.0;
 		double previousDiff = Double.POSITIVE_INFINITY;
-		printNodes("BH_Basement");
 		printNodes(mapName);
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			currentDiff = calculateDistance(node.getX(),x,node.getY(),y);
