@@ -78,9 +78,11 @@ public class MainController{
 
 	public PathData getPathData(){
 		PathData path = new PathData();
-	 	mapModel.testDij("BH_Basement");
+		String mapName = "BoyntonHall_1";
+		
+	 	mapModel.testDij(mapName);
 	 	Path calculateResult = mapModel.getPath();
-		mapModel.printPath("BH_Basement");
+		mapModel.printPath(mapName);
 		if(calculateResult.getWayPoints().isEmpty()){
 			System.out.println("WayPoint list is Empty, Display failed!");
 			return path;
@@ -101,7 +103,7 @@ public class MainController{
 		path.setWayPoints(displayWayPnts);
 		// For Test
 		ArrayList<String> mapNames = new ArrayList<String>();
-		mapNames.add("BH_Basement");		
+		mapNames.add(mapName);		
 		path.setArrayOfMapNames(mapNames);
 		return path;
 	}
