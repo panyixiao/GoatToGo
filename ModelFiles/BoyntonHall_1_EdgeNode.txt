@@ -43,7 +43,6 @@ NODES
 42 611 280 0 BH 0 Waypoint
 43 611 192 0 BH 0 Waypoint
 44 611 95 0 BH 0 Waypoint
-45 550 343 0 BH 0 Classroom
 46 487 280 0 BH 0 Classroom
 47 560 280 0 BH 0 Classroom
 48 693 192 0 BH 0 Classroom
@@ -54,6 +53,20 @@ NODES
 53 290 326 0 BH 0 Classroom
 54 290 260 0 BH 0 Waypoint
 55 262 157 0 BH 0 Classroom
+56 55 515 0 BoyntonHall 1 Classroom
+57 554 343 0 BoyntonHall 1 Classroom
+58 554 397 0 BoyntonHall 1 Classroom
+59 611 671 0 BoyntonHall 1 Classroom
+60 788 671 0 BoyntonHall 1 Classroom
+61 560 166 0 BoyntonHall 1 Classroom
+62 487 166 0 BoyntonHall 1 Classroom
+63 267 902 0 BoyntonHall 1 Classroom
+64 55 270 0 BoyntonHall 1 Classroom
+65 167 270 0 BoyntonHall 1 Classroom
+66 55 157 0 BoyntonHall 1 Classroom
+67 167 157 0 BoyntonHall 1 Classroom
+68 873 947 0 BoyntonHall 1 Classroom
+69 55 376 0 BoyntonHall 1 Classroom
 EDGES
 1 1 2
 2 2 3
@@ -98,7 +111,6 @@ EDGES
 41 43 44
 42 46 47
 43 47 42
-44 45 41
 45 48 43
 46 38 8
 47 39 7
@@ -110,3 +122,19 @@ EDGES
 53 53 54
 54 55 54
 55 53 11
+56 17 56
+57 57 41
+58 58 57
+59 59 35
+60 37 60
+61 61 47
+62 62 46
+63 26 63
+64 66 64
+65 64 14
+66 65 14
+67 67 65
+68 65 15
+69 1 68
+70 69 16
+71 22 24
