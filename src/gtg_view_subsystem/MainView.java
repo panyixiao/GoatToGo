@@ -231,7 +231,13 @@ public class MainView {
 	public void getMapURL(String mapName){
 		boolean tempBoolean = this.mainController.LoadingPntsAndEdges(mapName);
 		String mapURL = this.mainController.getMapURL(mapName);
+		
+		ArrayList<Point> graphPoints = new ArrayList<Point>();
+		if(tempBoolean == true){
+			graphPoints = this.mainController.getDisplayPnt();
+		}
 		mapPage.changeMapImage(mapURL);
+		mapPage.addGraphPoints(graphPoints);
 	}
 
 	/**

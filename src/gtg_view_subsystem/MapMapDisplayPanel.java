@@ -7,9 +7,12 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -27,6 +30,9 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	private String map;
 	private Point startEndPoint;
 	private MapPage parent;
+	private ArrayList<Point> graphPoints = new ArrayList<Point>();
+	private Boolean showLocations = false;
+	private int circleWidthHeight = 10;
 	/**
 	 * Create the panel.
 	
@@ -91,6 +97,16 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
     	if(this.selectedPoints.getEndMapName() == this.map){
     		g2.drawImage(this.locationEndImage, (int)this.selectedPoints.getEndX() - 10, (int)this.selectedPoints.getEndY() - 25, 20, 25, null);
     	}
+    	
+    	if(this.showLocations == true){
+    		for(int i = 0; i < this.graphPoints.size(); i++){
+    			Point p = this.graphPoints.get(i);
+    			Ellipse2D.Double circle = new Ellipse2D.Double(p.getX() - (circleWidthHeight * super.getScale() / 2),
+    					p.getY() - (circleWidthHeight * super.getScale() / 2), circleWidthHeight * super.getScale(),
+    					circleWidthHeight * super.getScale());
+    			g2.fill(circle);
+    		}
+    	}
 	}
 	
 	/**
@@ -114,6 +130,11 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 		this.maybeShowPopup(me);
 	}
 
+	/**
+	 * Method loadLocationImage.
+	 * @param none
+	 * Loads the image used for displaying start location on the map image
+	 */
 	public void loadLocationImage() {
         try {
             this.locationImage = ImageIO.read(new File(ImageURLS.LOCATION_IMAGE));
@@ -126,6 +147,11 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
         }
 	}
 	
+	/**
+	 * Method loadLocationEndImage.
+	 * @param none
+	 * Loads the image used for displaying end location on the map image
+	 */
 	public void loadLocationEndImage() {
         try {
             this.locationEndImage = ImageIO.read(new File(ImageURLS.LOCATION_END_ICON));
@@ -179,9 +205,55 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 		}
 	}
 
+	/**
+	 * Method displayPoint.
+	 * @param none
+	 * Whenever user sets a selected point this method is called to update the map view to show the selected point.
+	 */
 	public void displayPoint() {
 		// display point to user
 		revalidate();
 		repaint();
+	}
+	
+	/**
+	 * Method totalGraphPoints.
+	 * @param none
+	 * Returns the total number of graph points created for the map.
+	 */
+	public int totalGraphPoints(){
+		return this.graphPoints.size();
+	}
+	
+	/**
+	 * Method showLocations.
+	 * @param none
+	 * Displays all the graph points
+	 */
+	public void showLocations(){
+		this.showLocations = true;
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Method hideLocations.
+	 * @param none
+	 * Hides all the graph points
+	 */
+	public void hideLocations(){
+		this.showLocations = false;
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Method addGraphPoints.
+	 * @param graphPoints 
+	 * @param none
+	 * Adding graph points to Array
+	 */
+	public void addGraphPoints(ArrayList<Point> graphPoints){
+		this.graphPoints = graphPoints;
 	}
 }

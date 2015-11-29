@@ -26,7 +26,7 @@ import javax.swing.JComboBox;
 public class MapPage extends JPanel {
 	private JTextField fromTextField, toTextField;
 	private JPanel leftPanel, rightPanel, slidePanel;
-	private JButton zoomInBtn, zoomOutBtn, getDirectionsBtn, fromClearBtn, toClearBtn;
+	private JButton zoomInBtn, zoomOutBtn, getDirectionsBtn, fromClearBtn, toClearBtn, showHideLocationsBtn;
 	private JButton cafeBtn, classroomBtn, elevatorBtn, mensRestroomBtn, womensRestroomBtn, officeBtn, vendingBtn, parkingLotBtn, doneBtn;
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, getDirectionsBtnImage, fromClearBtnImage, toClearBtnImage;
 	private ImageIcon cafeBtnImage, classroomBtnImage, elevatorBtnImage, mensRestroomBtnImage, womensRestroomBtnImage, officeBtnImage, vendingBtnImage, parkingLotBtnImage;
@@ -192,11 +192,37 @@ public class MapPage extends JPanel {
 		});
 		this.getDirectionsBtn.setContentAreaFilled(false);
 		this.getDirectionsBtn.setBorder(null);
-		this.getDirectionsBtn.setBounds(100, 561, 173, 42);
+		this.getDirectionsBtn.setBounds(122, 495, 173, 42);
 		this.getDirectionsBtnImage = new ImageIcon(ImageURLS.GET_DIRECTIONS_BUTTON);
 		this.getDirectionsBtn.setIcon(this.getDirectionsBtnImage);
 		this.rightPanel.add(this.getDirectionsBtn);
 		
+		this.showHideLocationsBtn = new JButton(ViewStringLiterals.SHOW_LOCATIONS);
+		this.showHideLocationsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(((JButton)e.getSource()).getText().equals(ViewStringLiterals.SHOW_LOCATIONS)){
+					if(mapMapDisplayPanel != null){
+						if(mapMapDisplayPanel.totalGraphPoints() != 0){
+							mapMapDisplayPanel.showLocations();
+							((JButton)e.getSource()).setText(ViewStringLiterals.HIDE_LOCATIONS);
+						} else {
+							JOptionPane.showMessageDialog(((JButton)e.getSource()).getParent(), ViewStringLiterals.NO_LOCATIONS_CREATED, "ERROR", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} else {
+					((JButton)e.getSource()).setText(ViewStringLiterals.SHOW_LOCATIONS);
+					mapMapDisplayPanel.hideLocations();
+				}
+			}
+		});
+		this.showHideLocationsBtn.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 3));
+		this.showHideLocationsBtn.setBackground(null);
+		this.showHideLocationsBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.showHideLocationsBtn.setForeground(new Color(204, 0, 0));
+		this.showHideLocationsBtn.setFocusPainted(false);
+		this.showHideLocationsBtn.setBounds(105, 550, 210, 42);
+		this.rightPanel.add(this.showHideLocationsBtn);
+
 		this.fromTextField = new JTextField();
 		this.fromTextField.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.fromTextField.setEditable(false);
@@ -389,6 +415,7 @@ public class MapPage extends JPanel {
 	 */
 	public void changeMapImage(String mapURL){
 		this.mapURL = mapURL;
+		this.showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
 		if(mapURL.equals("")){
 			this.noImageLabel.setVisible(true);
 			this.mapPanelHolder.setVisible(false);
@@ -492,6 +519,7 @@ public class MapPage extends JPanel {
 		this.mapURL = "";
 		this.isCampusMap = false;
 		this.slidePanel.setLocation(359, 0);
+		this.showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
 		/*if(this.mapMapDisplayPanel != null){
 			this.mapMapDisplayPanel.displayPoint();
 		}*/
@@ -559,6 +587,12 @@ public class MapPage extends JPanel {
 				this.currentDisplayedMap = mapName;
 				this.parent.getMapURL(mapName);
 			}
+		}
+	}
+
+	public void addGraphPoints(ArrayList<Point> graphPoints) {
+		if(this.mapMapDisplayPanel != null){
+			this.mapMapDisplayPanel.addGraphPoints(graphPoints);
 		}
 	}
 }
