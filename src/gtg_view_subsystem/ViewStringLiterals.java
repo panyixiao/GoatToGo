@@ -40,4 +40,7 @@ public class ViewStringLiterals {
 	public static final String DONE = "Done";
 	public static final String MAP_NOT_AVAILABLE = "Map does not exists";
 	public static final String SELECT_FLOOR = "Select Floor";
+	public static final String SHOW_LOCATIONS = "SHOW LOCATIONS";
+	public static final String HIDE_LOCATIONS = "HIDE LOCATIONS";
+	public static final String NO_LOCATIONS_CREATED = "Locations not available.";
 }
