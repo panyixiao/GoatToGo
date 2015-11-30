@@ -50,6 +50,9 @@ public class MainController{
 	public ArrayList<Point> getDisplayEdge(){
 		return mapDataController.getDisplayEdge();
 	}	
+	public ArrayList<Point> getFilteredList(String pointType){
+		return mapDataController.getFilteredList(pointType);
+	}
 	
 	/* Not used right now,correspond to getMapList() method. Get the
 	 * 
@@ -76,9 +79,9 @@ public class MainController{
 		return targetPnt;
 	}
 
-	public PathData getPathData(){
+	public PathData getPathData(String mapName){
 		PathData path = new PathData();
-		String mapName = "BoyntonHall_1";
+		//String mapName = "BoyntonHall_1";
 		
 	 	mapModel.testDij(mapName);
 	 	Path calculateResult = mapModel.getPath();
@@ -131,20 +134,47 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Boolean addNewMap(String mapName, String mapImageURL, String mapType){
+		boolean mapSaved = false;
 		System.out.println(mapName);
 		System.out.println(mapImageURL);
 		System.out.println(mapType);
-		mapDataController.addNewMapToList(mapName);
-		mapDataController.addNewMapURLToList(mapImageURL);
-		return true;
+		try{
+			// Generate a relative filePath:
+
+			int markPos = mapImageURL.lastIndexOf("images");
+			if(markPos>0){
+				mapImageURL = mapImageURL.substring(markPos);
+			}		
+			
+			System.out.println(mapName);
+			System.out.println(mapImageURL);
+			System.out.println(mapType);
+			
+			if(mapModel.saveNewMap(mapName, mapDataController.changeBackSeparator(mapImageURL), mapType)){
+				mapDataController.addNewMapToList(mapName);
+				mapDataController.addNewMapURLToList(mapImageURL);
+				mapSaved = true;
+			}
+		}
+		catch(IOException e){
+			System.out.println(e.toString());
+		}
+		
+		return mapSaved;
 	}
 	
 	public Boolean deleteMap(String mapName){
-		//int index = listofMaps.indexOf(mapName);
-		//listofMaps.remove(index);
-		//urlsofMaps.remove(index);
-		//return true;
-		return mapDataController.removeMapFromList(mapName);
+		boolean mapDeleted = false;
+		try{
+			if(mapModel.deleteMap(mapName)){
+				mapDataController.removeMapFromList(mapName);
+				mapDeleted = true;
+			}
+		}
+		catch(IOException e){
+			System.out.println(e.toString());	
+		}
+		return mapDeleted;
 	}
 
 	public Boolean createCoordinateGraph(String mapName){

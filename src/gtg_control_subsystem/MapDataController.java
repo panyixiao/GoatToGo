@@ -27,6 +27,8 @@ public class MapDataController {
 	private ArrayList<Point> tempPntList  = new ArrayList<Point>();
 	private ArrayList<Point> tempEdgeList = new ArrayList<Point>();
 	
+	private ArrayList<Point> filteredList = new ArrayList<Point>();
+	
 	// Constructor
 	public MapDataController(MainController controlInterface){
 		mainController = controlInterface;
@@ -40,6 +42,73 @@ public class MapDataController {
 	 * Also remember that while creating the list of building add the campus map name always in the first position.
 	 * This is required to for view to differentiate between the dropdown list manupulation.
 	 * ********************************/
+	
+	private boolean LoadInMapNameList(){
+		boolean success=false;
+		listOfMapName.clear();
+		ArrayList<String> tempList=mainController.mapModel.getArrayOfMapNames();
+		if(!tempList.isEmpty()){
+			for (String mapName: tempList){
+				listOfMapName.add(mapName);
+			}
+			success=true;
+			return success;
+		}
+		System.out.println("Map list from model is empty!");
+		return success;
+	}
+	
+	private boolean LoadInMapURL(){
+		boolean success=false;
+		listOfMapURL.clear();
+		ArrayList<String> tempList=mainController.mapModel.getImgURLS();
+		if(!tempList.isEmpty()){
+			for (String mapName: tempList){
+				listOfMapURL.add(changeSeparator(mapName));
+			}
+			success=true;
+			return success;
+		}
+		System.out.println("Map URL list from model is empty!");
+		return success;
+	}
+	
+	public String changeSeparator(String url){
+		String newUrl=new String();
+		String osName=System.getProperty("os.name");
+		if (osName.contains("Mac")||osName.contains("Linux")){
+			System.out.println(System.getProperty("file.separator"));
+			System.out.println(System.getProperty("os.name"));
+			newUrl=url.replace("\\", System.getProperty("file.separator"));
+			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+		} else {
+			System.out.println(System.getProperty("file.separator"));
+			System.out.println(System.getProperty("os.name"));
+			newUrl=url;
+			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+		}
+		
+		return newUrl;
+	}
+	
+	public String changeBackSeparator(String url){
+		String newUrl=new String();
+		String osName=System.getProperty("os.name");
+		if (osName.contains("Mac")||osName.contains("Linux")){
+			System.out.println(System.getProperty("file.separator"));
+			System.out.println(System.getProperty("os.name"));
+			newUrl=url.replace(System.getProperty("file.separator"), "\\");
+			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+		} else {
+			System.out.println(System.getProperty("file.separator"));
+			System.out.println(System.getProperty("os.name"));
+			newUrl=url;
+			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+		}
+		
+		return newUrl;
+	}
+	
 	private void updateMapList(String mapName){
 
 		listOfMapName.clear();
@@ -48,8 +117,10 @@ public class MapDataController {
 		switch(mapName){
 		case "admin":
 			//addAllMapIntoList();
-			addCampusMap();
-			addBoyntonHall();
+			//addCampusMap();
+			//addBoyntonHall();
+			LoadInMapNameList();
+			LoadInMapURL();
 			addNewMapIntoList();
 			break;
 			
@@ -418,6 +489,15 @@ public class MapDataController {
 	public ArrayList<Edge> getEdgeList(){
 		return edgeList;
 	}	
+	
+	public ArrayList<Point> getFilteredList(String pointType){
+		for (Node n:nodeList){
+			if (n.getType().equals(pointType)){
+				filteredList.add(new Point(n.getX(),n.getY()));
+			}
+		}
+		return filteredList;
+	}
 	
 	private int getMaxNodeID(){
 		int maxNodeID=0;
