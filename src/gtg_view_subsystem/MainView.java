@@ -135,8 +135,8 @@ public class MainView {
 		return pntToBeMapped;
 	}
 
-	public void getPathResult() {
-		PathData path = mainController.getPathData();
+	public void getPathResult(String mapName) {
+		PathData path = mainController.getPathData(mapName);
 		showResultPage();
 		this.resultPage.displayPath(path);
 	}

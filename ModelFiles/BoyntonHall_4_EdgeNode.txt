@@ -1,0 +1,165 @@
+NODES
+1 870 781 0 BoyntonHall 4 Waypoint
+2 870 750 0 BoyntonHall 4 Waypoint
+3 870 651 0 BoyntonHall 4 Waypoint
+4 870 619 0 BoyntonHall 4 Waypoint
+5 888 305 0 BoyntonHall 4 Waypoint
+6 657 290 0 BoyntonHall 4 Waypoint
+7 664 677 0 BoyntonHall 4 Waypoint
+8 635 677 0 BoyntonHall 4 Waypoint
+9 571 677 0 BoyntonHall 4 Waypoint
+10 557 486 0 BoyntonHall 4 Waypoint
+11 550 443 0 BoyntonHall 4 Waypoint
+12 503 435 0 BoyntonHall 4 Waypoint
+13 471 435 0 BoyntonHall 4 Waypoint
+14 432 435 0 BoyntonHall 4 Waypoint
+15 392 435 0 BoyntonHall 4 Waypoint
+16 299 435 0 BoyntonHall 4 Waypoint
+17 231 443 0 BoyntonHall 4 Waypoint
+18 210 443 0 BoyntonHall 4 Waypoint
+19 210 357 0 BoyntonHall 4 Waypoint
+20 294 338 0 BoyntonHall 4 Waypoint
+21 299 11 0 BoyntonHall 4 Waypoint
+22 117 11 0 BoyntonHall 4 Waypoint
+23 107 191 0 BoyntonHall 4 Waypoint
+24 79 211 0 BoyntonHall 4 Waypoint
+25 5 211 0 BoyntonHall 4 Waypoint
+26 13 715 0 BoyntonHall 4 Waypoint
+27 5 934 0 BoyntonHall 4 Waypoint
+28 294 934 0 BoyntonHall 4 Waypoint
+29 299 775 0 BoyntonHall 4 Waypoint
+30 218 769 0 BoyntonHall 4 Waypoint
+31 218 730 0 BoyntonHall 4 Waypoint
+32 307 715 0 BoyntonHall 4 Waypoint
+33 333 715 0 BoyntonHall 4 Waypoint
+34 333 854 0 BoyntonHall 4 Waypoint
+35 446 854 0 BoyntonHall 4 Waypoint
+36 437 656 0 BoyntonHall 4 Waypoint
+37 432 486 0 BoyntonHall 4 Waypoint
+38 948 175 0 BoyntonHall 4 Classroom
+39 525 151 0 BoyntonHall 4 Classroom
+40 402 139 0 BoyntonHall 4 Classroom
+41 333 246 0 BoyntonHall 4 Classroom
+42 392 211 0 BoyntonHall 4 Classroom
+43 372 246 0 BoyntonHall 4 Classroom
+44 503 246 0 BoyntonHall 4 Classroom
+45 482 347 0 BoyntonHall 4 Classroom
+46 427 386 0 BoyntonHall 4 Classroom
+47 392 386 0 BoyntonHall 4 Classroom
+48 70 191 0 BoyntonHall 4 Classroom
+49 42 83 0 BoyntonHall 4 Classroom
+50 264 581 0 BoyntonHall 4 Classroom
+51 231 581 0 BoyntonHall 4 Classroom
+52 855 953 0 BoyntonHall 4 Classroom
+53 843 862 0 BoyntonHall 4 Classroom
+54 924 710 0 BoyntonHall 4 Classroom
+55 919 646 0 BoyntonHall 4 Classroom
+56 989 710 0 BoyntonHall 4 Classroom
+57 983 646 0 BoyntonHall 4 Classroom
+58 677 854 0 BoyntonHall 4 Classroom
+59 801 854 0 BoyntonHall 4 Classroom
+60 596 844 0 BoyntonHall 4 Classroom
+61 677 57 0 BoyntonHall 4 Classroom
+62 830 57 0 BoyntonHall 4 Classroom
+63 602 83 0 BoyntonHall 4 Classroom
+64 596 319 0 BoyntonHall 4 Classroom
+65 602 451 0 BoyntonHall 4 Classroom
+66 141 269 0 BoyntonHall 4 Classroom
+67 199 164 0 BoyntonHall 4 Classroom
+68 117 720 0 BoyntonHall 4 Classroom
+69 117 555 0 BoyntonHall 4 Classroom
+70 830 246 0 BoyntonHall 4 Classroom
+71 793 626 0 BoyntonHall 4 Classroom
+72 491 715 0 BoyntonHall 4 Classroom
+73 476 486 0 BoyntonHall 4 Classroom
+74 907 429 0 BoyntonHall 4 Classroom
+75 983 435 0 BoyntonHall 4 Classroom
+EDGES
+1 1 2
+2 2 3
+3 3 4
+4 4 5
+5 5 6
+6 6 7
+7 7 8
+8 8 9
+9 9 10
+10 10 11
+11 11 12
+12 12 13
+13 13 14
+14 14 15
+15 15 16
+16 16 17
+17 17 18
+18 18 19
+19 19 20
+20 20 21
+21 21 22
+22 22 23
+23 23 24
+24 24 25
+25 25 26
+26 26 27
+27 27 28
+28 28 29
+29 29 30
+30 30 31
+31 31 32
+32 32 33
+33 33 34
+34 34 35
+35 35 36
+36 36 37
+37 38 5
+38 61 6
+39 61 62
+40 62 70
+41 70 5
+42 57 4
+43 55 4
+44 56 57
+45 54 55
+46 53 1
+47 52 53
+48 7 58
+49 71 59
+50 58 59
+51 7 71
+52 71 4
+53 6 4
+54 6 64
+55 63 64
+56 64 65
+57 65 8
+58 9 60
+59 8 60
+60 39 44
+61 44 12
+62 45 12
+63 46 14
+64 47 15
+65 43 47
+66 42 47
+67 43 42
+68 41 43
+69 40 42
+70 14 37
+71 57 75
+72 75 74
+73 74 5
+74 50 51
+75 51 17
+76 51 31
+77 68 51
+78 68 27
+79 26 69
+80 69 18
+81 67 21
+82 67 66
+83 48 24
+84 49 48
+85 24 66
+86 66 19
+87 72 73
+88 73 13

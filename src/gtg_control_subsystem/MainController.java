@@ -50,6 +50,9 @@ public class MainController{
 	public ArrayList<Point> getDisplayEdge(){
 		return mapDataController.getDisplayEdge();
 	}	
+	public ArrayList<Point> getFilteredList(String pointType){
+		return mapDataController.getFilteredList(pointType);
+	}
 	
 	/* Not used right now,correspond to getMapList() method. Get the
 	 * 
@@ -76,9 +79,9 @@ public class MainController{
 		return targetPnt;
 	}
 
-	public PathData getPathData(){
+	public PathData getPathData(String mapName){
 		PathData path = new PathData();
-		String mapName = "BoyntonHall_1";
+		//String mapName = "BoyntonHall_1";
 		
 	 	mapModel.testDij(mapName);
 	 	Path calculateResult = mapModel.getPath();

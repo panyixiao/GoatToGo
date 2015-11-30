@@ -176,7 +176,7 @@ public class MapPage extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//parent.getPathResult();
 				if(selectedPoints.arePointsSelected() == true){
-					parent.getPathResult();
+					parent.getPathResult(currentDisplayedMap);
 				} else {
 					if(selectedPoints.isStartSelected() == false && selectedPoints.isEndSelected() == true) {
 						JOptionPane.showMessageDialog(null, ViewStringLiterals.FROM_POINT_NOT_SET, "INVALID", JOptionPane.ERROR_MESSAGE);
