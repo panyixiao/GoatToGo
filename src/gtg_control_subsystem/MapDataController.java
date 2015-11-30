@@ -41,12 +41,39 @@ public class MapDataController {
 	 * This is required to for view to differentiate between the dropdown list manupulation.
 	 * ********************************/
 	
-	private void LoadInMapNameList(){
-		listOfMapName = mainController.mapModel.getArrayOfMapNames();
+	private boolean LoadInMapNameList(){
+		boolean success=false;
+		listOfMapName.clear();
+		ArrayList<String> tempList=mainController.mapModel.getArrayOfMapNames();
+		if(!tempList.isEmpty()){
+			for (String mapName: tempList){
+				listOfMapName.add(mapName);
+			}
+			success=true;
+			return success;
+		}
+		System.out.println("Map list from model is empty!");
+		return success;
 	}
 	
-	private void LoadInMapURL(){
-		listOfMapURL = mainController.mapModel.getImgURLS();
+	private boolean LoadInMapURL(){
+		boolean success=false;
+		listOfMapURL.clear();
+		ArrayList<String> tempList=mainController.mapModel.getImgURLS();
+		if(!tempList.isEmpty()){
+			for (String mapName: tempList){
+				listOfMapURL.add(changeSeparator(mapName));
+			}
+			success=true;
+			return success;
+		}
+		System.out.println("Map URL list from model is empty!");
+		return success;
+	}
+	
+	private String changeSeparator(String url){
+		String newUrl=url.replaceAll("\\\\", System.getProperty("file.separator"));
+		return newUrl;
 	}
 	
 	private void updateMapList(String mapName){
