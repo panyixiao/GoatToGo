@@ -50,6 +50,9 @@ public class MainController{
 	public ArrayList<Point> getDisplayEdge(){
 		return mapDataController.getDisplayEdge();
 	}	
+	public ArrayList<Point> getFilteredList(String pointType){
+		return mapDataController.getFilteredList(pointType);
+	}
 	
 	/* Not used right now,correspond to getMapList() method. Get the
 	 * 
