@@ -79,9 +79,9 @@ public class MainController{
 		return targetPnt;
 	}
 
-	public PathData getPathData(){
+	public PathData getPathData(String mapName){
 		PathData path = new PathData();
-		String mapName = "BoyntonHall_1";
+		//String mapName = "BoyntonHall_1";
 		
 	 	mapModel.testDij(mapName);
 	 	Path calculateResult = mapModel.getPath();
