@@ -131,20 +131,36 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Boolean addNewMap(String mapName, String mapImageURL, String mapType){
+		boolean mapSaved = false;
 		System.out.println(mapName);
 		System.out.println(mapImageURL);
 		System.out.println(mapType);
-		mapDataController.addNewMapToList(mapName);
-		mapDataController.addNewMapURLToList(mapImageURL);
-		return true;
+		try{
+			if(mapModel.saveNewMap(mapName, mapImageURL, mapType)){
+				mapDataController.addNewMapToList(mapName);
+				mapDataController.addNewMapURLToList(mapImageURL);
+				mapSaved = true;
+			}
+		}
+		catch(IOException e){
+			System.out.println(e.toString());
+		}
+		
+		return mapSaved;
 	}
 	
 	public Boolean deleteMap(String mapName){
-		//int index = listofMaps.indexOf(mapName);
-		//listofMaps.remove(index);
-		//urlsofMaps.remove(index);
-		//return true;
-		return mapDataController.removeMapFromList(mapName);
+		boolean mapDeleted = false;
+		try{
+			if(mapModel.deleteMap(mapName)){
+				mapDataController.removeMapFromList(mapName);
+				mapDeleted = true;
+			}
+		}
+		catch(IOException e){
+			System.out.println(e.toString());	
+		}
+		return mapDeleted;
 	}
 
 	public Boolean createCoordinateGraph(String mapName){
