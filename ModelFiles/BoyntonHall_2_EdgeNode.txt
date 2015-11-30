@@ -2,10 +2,29 @@ NODES
 1 54 251 0 BoyntonHall 2 Waypoint
 2 54 359 0 BoyntonHall 2 Waypoint
 3 188 359 0 BoyntonHall 2 Waypoint
-4 188 481 0 BoyntonHall 2 Waypoint
 5 410 464 0 BoyntonHall 2 Waypoint
+6 188 464 0 BoyntonHall 2 Waypoint
+7 134 464 0 BoyntonHall 2 Waypoint
+8 134 589 0 BoyntonHall 2 Waypoint
+9 113 589 0 BoyntonHall 2 Waypoint
+10 91 589 0 BoyntonHall 2 Waypoint
+11 69 642 0 BoyntonHall 2 Waypoint
+12 188 521 0 BoyntonHall 2 Waypoint
+13 260 521 0 BoyntonHall 2 Waypoint
+14 260 578 0 BoyntonHall 2 Waypoint
+15 260 630 0 BoyntonHall 2 Waypoint
+16 188 295 0 BoyntonHall 2 Classroom
+17 124 295 0 BoyntonHall 2 Waypoint
 EDGES
 1 1 2
 2 2 3
-3 3 4
-4 4 5
+3 5 6
+4 6 7
+5 7 8
+6 8 9
+7 9 10
+8 10 11
+9 12 13
+10 13 14
+11 14 15
+12 16 17
