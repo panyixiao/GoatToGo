@@ -109,14 +109,19 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		JTextField entranceId = new JTextField();
 		JTextField building = new JTextField();
 		building.setText(this.building);
-		if (this.building.equals("Campus")) {
+		
+		int pos = this.building.toLowerCase().indexOf(("campus").toLowerCase());
+
+		//if (this.building.equals("Campus")) {
+		if(pos != -1){
 			building.setEditable(true);
 		} else {
 			building.setEditable(false);
 		}
 		JTextField floor = new JTextField();
 		floor.setText(this.floor);
-		if (this.floor.equals("Campus")) {
+		//if (this.floor.equals("Campus")) {
+		if(pos != -1){
 			floor.setEditable(true);
 		} else {
 			floor.setEditable(false);
