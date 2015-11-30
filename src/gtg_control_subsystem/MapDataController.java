@@ -71,8 +71,39 @@ public class MapDataController {
 		return success;
 	}
 	
-	private String changeSeparator(String url){
-		String newUrl=url.replaceAll("\\\\", System.getProperty("file.separator"));
+	public String changeSeparator(String url){
+		String newUrl=new String();
+		String osName=System.getProperty("os.name");
+		if (osName.contains("Mac")||osName.contains("Linux")){
+			System.out.println(System.getProperty("file.separator"));
+			System.out.println(System.getProperty("os.name"));
+			newUrl=url.replace("\\", System.getProperty("file.separator"));
+			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+		} else {
+			System.out.println(System.getProperty("file.separator"));
+			System.out.println(System.getProperty("os.name"));
+			newUrl=url;
+			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+		}
+		
+		return newUrl;
+	}
+	
+	public String changeBackSeparator(String url){
+		String newUrl=new String();
+		String osName=System.getProperty("os.name");
+		if (osName.contains("Mac")||osName.contains("Linux")){
+			System.out.println(System.getProperty("file.separator"));
+			System.out.println(System.getProperty("os.name"));
+			newUrl=url.replace(System.getProperty("file.separator"), "\\");
+			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+		} else {
+			System.out.println(System.getProperty("file.separator"));
+			System.out.println(System.getProperty("os.name"));
+			newUrl=url;
+			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+		}
+		
 		return newUrl;
 	}
 	
