@@ -27,6 +27,8 @@ public class MapDataController {
 	private ArrayList<Point> tempPntList  = new ArrayList<Point>();
 	private ArrayList<Point> tempEdgeList = new ArrayList<Point>();
 	
+	private ArrayList<Point> filteredList = new ArrayList<Point>();
+	
 	// Constructor
 	public MapDataController(MainController controlInterface){
 		mainController = controlInterface;
@@ -487,6 +489,15 @@ public class MapDataController {
 	public ArrayList<Edge> getEdgeList(){
 		return edgeList;
 	}	
+	
+	public ArrayList<Point> getFilteredList(String pointType){
+		for (Node n:nodeList){
+			if (n.getType().equals(pointType)){
+				filteredList.add(new Point(n.getX(),n.getY()));
+			}
+		}
+		return filteredList;
+	}
 	
 	private int getMaxNodeID(){
 		int maxNodeID=0;
