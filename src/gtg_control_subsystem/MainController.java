@@ -132,18 +132,10 @@ public class MainController{
 	 *******************************/
 	public Boolean addNewMap(String mapName, String mapImageURL, String mapType){
 		boolean mapSaved = false;
+		System.out.println(mapName);
+		System.out.println(mapImageURL);
+		System.out.println(mapType);
 		try{
-			// Generate a relative filePath:
-
-			int markPos = mapImageURL.lastIndexOf("images");
-			if(markPos>0){
-				mapImageURL = mapImageURL.substring(markPos);
-			}		
-			
-			System.out.println(mapName);
-			System.out.println(mapImageURL);
-			System.out.println(mapType);
-			
 			if(mapModel.saveNewMap(mapName, mapImageURL, mapType)){
 				mapDataController.addNewMapToList(mapName);
 				mapDataController.addNewMapURLToList(mapImageURL);

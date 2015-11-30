@@ -72,7 +72,8 @@ public class MapDataController {
 	}
 	
 	private String changeSeparator(String url){
-		String newUrl=url.replaceAll("\\\\", System.getProperty("file.separator"));
+		String newUrl=new String();
+		newUrl=url.replace("\\\\", System.getProperty("file.separator"));
 		return newUrl;
 	}
 	
