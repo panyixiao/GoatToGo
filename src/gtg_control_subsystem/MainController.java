@@ -147,7 +147,7 @@ public class MainController{
 			System.out.println(mapImageURL);
 			System.out.println(mapType);
 			
-			if(mapModel.saveNewMap(mapName, mapImageURL, mapType)){
+			if(mapModel.saveNewMap(mapName, mapDataController.changeBackSeparator(mapImageURL), mapType)){
 				mapDataController.addNewMapToList(mapName);
 				mapDataController.addNewMapURLToList(mapImageURL);
 				mapSaved = true;
