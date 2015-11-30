@@ -40,6 +40,15 @@ public class MapDataController {
 	 * Also remember that while creating the list of building add the campus map name always in the first position.
 	 * This is required to for view to differentiate between the dropdown list manupulation.
 	 * ********************************/
+	
+	private void LoadInMapNameList(){
+		listOfMapName = mainController.mapModel.getArrayOfMapNames();
+	}
+	
+	private void LoadInMapURL(){
+		listOfMapURL = mainController.mapModel.getImgURLS();
+	}
+	
 	private void updateMapList(String mapName){
 
 		listOfMapName.clear();
@@ -48,8 +57,10 @@ public class MapDataController {
 		switch(mapName){
 		case "admin":
 			//addAllMapIntoList();
-			addCampusMap();
-			addBoyntonHall();
+			//addCampusMap();
+			//addBoyntonHall();
+			LoadInMapNameList();
+			LoadInMapURL();
 			addNewMapIntoList();
 			break;
 			
