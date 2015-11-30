@@ -1,2 +1,11 @@
 NODES
+1 54 251 0 BoyntonHall 2 Waypoint
+2 54 359 0 BoyntonHall 2 Waypoint
+3 188 359 0 BoyntonHall 2 Waypoint
+4 188 481 0 BoyntonHall 2 Waypoint
+5 410 464 0 BoyntonHall 2 Waypoint
 EDGES
+1 1 2
+2 2 3
+3 3 4
+4 4 5

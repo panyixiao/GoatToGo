@@ -2,3 +2,4 @@ BoyntonHall_1 images\BH_Basement.png Floor
 BoyntonHall_2 images\BH_FirstFloor.png Floor
 BoyntonHall_3 images\BH_SecondFloor.png Floor
 BoyntonHall_4 images\BH_ThirdFloor.png Floor
+CampusMap_0	images\WPI_school.png CampusMap
