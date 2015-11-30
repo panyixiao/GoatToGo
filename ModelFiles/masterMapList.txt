@@ -3,5 +3,5 @@ BoyntonHall_2 images\BH_FirstFloor.png Floor
 BoyntonHall_3 images\BH_SecondFloor.png Floor
 BoyntonHall_4 images\BH_ThirdFloor.png Floor
 CampusMap_0	images\WPI_school.png CampusMap
-PC_1 R:\Project\GoatToGo\GoatToGo\images\PC_FirstFloor.png Floor
-PC_2_2 R:\Project\GoatToGo\GoatToGo\images\PC_FirstFloor.png Floor
+PC_1_1 images\PC_FirstFloor.png Floor
+PC_2_2 images\PC_FirstFloor.png Floor
