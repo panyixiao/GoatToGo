@@ -127,8 +127,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			floor.setEditable(false);
 		}
 		JPanel panel = new JPanel(new GridLayout(0, 2));
-		String[] listPointTypes = { "Classroom", "Office", "Elevator", "Stairs", "Building", "ParkingLot",
-				"MensRestroom", "WomensRestroom", "Cafe", "Vending", "Fountain", "Waypoint" };
+		String[] listPointTypes = { "Classroom", "Office", "Elevator", "Stairs", "Building", "Parking Lot",
+				"Men's Restroom", "Woman's Restroom", "Cafe", "Vending", "Water fountian", "Waypoint" };
 
 		JComboBox pointType = new JComboBox(listPointTypes);
 
@@ -220,7 +220,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 						newDescription = "Null";
 					}
 					// If the point hasn't be created, Create a new point 
-					//if(createNewPoint){						
+					if(createNewPoint){						
 						adminViewPageHandle.CreatePoint(newPoint, 
 														floorNum, 
 														newEnterenceId, 
@@ -228,11 +228,11 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 														newType,
 														newDescription);
 						
-					//}
+					}
 					// Otherwise, edit current point
-					//else{
+					else{
 						
-					//}
+					}
 					System.out.println("Building: " + this.building);
 					System.out.println("Floor: " + this.floor);
 					System.out.println("Description: " + description.getText());

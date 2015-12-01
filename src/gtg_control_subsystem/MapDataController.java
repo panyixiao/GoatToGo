@@ -321,8 +321,7 @@ public class MapDataController {
 
 	public Boolean addPoint(Point inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
-		int i=CheckPntExistence(inputPnt);
-		if(i==0){
+		if(CheckPntExistence(inputPnt)==0){
 			
 			int coord_X = (int)inputPnt.getX();
 			int coord_Y = (int)inputPnt.getY();						
@@ -339,14 +338,6 @@ public class MapDataController {
 			
 			transferNodeToPnt2D(nodeList);
 			success = true;
-		}else if (i>0){
-			Node n=findNodeInList(i);
-			n.setBuilding(buildingName);
-			n.setFloor(floorNum);
-			n.setEntranceID(entranceID);
-			n.setType(pointType);
-			System.out.println("Node ID: "+ n.getID()+"Type: "+ n.getType() +" "+ pointType);
-			success= true;
 		}
 		return success;
 	}
