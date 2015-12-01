@@ -38,4 +38,6 @@ public class ImageURLS {
 	public static final String OFFICE_BUTTON = filePath+"office.png";
 	public static final String VENDING_BUTTON = filePath+"vending.png";
 	public static final String PARKING_LOT_BUTTON = filePath+"parking_lot.png";
+	public static final String BUILDING_BUTTON = filePath+"building.png";
+	public static final String STAIRS_BUTTON = filePath+"stairs.png";
 }

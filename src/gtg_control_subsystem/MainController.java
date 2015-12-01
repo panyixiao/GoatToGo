@@ -21,10 +21,12 @@ public class MainController{
 	
 	private PathSearchController pathSearchController;
 	private AdminController userChecker;
-	private MapDataController mapDataController = new MapDataController(this);
+	
+	private MapDataController mapDataController;
 
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;
+		mapDataController = new MapDataController(this);
 	}	
 	
 	/******************************
@@ -49,7 +51,8 @@ public class MainController{
 	}
 	public ArrayList<Point> getDisplayEdge(){
 		return mapDataController.getDisplayEdge();
-	}	
+	}
+	
 	public ArrayList<Point> getFilteredList(String pointType){
 		return mapDataController.getFilteredList(pointType);
 	}
@@ -139,8 +142,11 @@ public class MainController{
 		System.out.println(mapImageURL);
 		System.out.println(mapType);
 		try{
+			if(mapDataController.mapIsInTheOldList(mapName)){
+				System.out.println("Map already in the old list");
+				return mapSaved;
+			}
 			// Generate a relative filePath:
-
 			int markPos = mapImageURL.lastIndexOf("images");
 			if(markPos>0){
 				mapImageURL = mapImageURL.substring(markPos);

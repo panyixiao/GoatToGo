@@ -14,24 +14,24 @@ import gtg_model_subsystem.Map;
 public class MapDataController {
 	
 	private MainController mainController;
-	
-	private Hashtable<String, String> mapNameAndURLtable;
-
-	private ArrayList<String> listOfNewMapName = new ArrayList<String>();
-	private ArrayList<String> listOfNewMapURL = new ArrayList<String>();
-	
+		
 	private ArrayList<String> listOfMapName = new ArrayList<String>();
 	private ArrayList<String> listOfMapURL = new ArrayList<String>();
+	
+	private ArrayList<String> listOfMapNameForReturn = new ArrayList<String>();
+	private ArrayList<String> listOfMapURLForReturn = new ArrayList<String>();
+	
 	private ArrayList<Node> nodeList = new ArrayList<Node>();
 	private ArrayList<Edge> edgeList = new ArrayList<Edge>();
 	private ArrayList<Point> tempPntList  = new ArrayList<Point>();
 	private ArrayList<Point> tempEdgeList = new ArrayList<Point>();
 	
-	private ArrayList<Point> filteredList = new ArrayList<Point>();
-	
 	// Constructor
 	public MapDataController(MainController controlInterface){
 		mainController = controlInterface;
+		LoadInMapNameList();	
+		LoadInMapURL();
+
 	}
 	
 	/* *******************************
@@ -46,10 +46,12 @@ public class MapDataController {
 	private boolean LoadInMapNameList(){
 		boolean success=false;
 		listOfMapName.clear();
-		ArrayList<String> tempList=mainController.mapModel.getArrayOfMapNames();
+		ArrayList<String> tempList = mainController.mapModel.getArrayOfMapNames();
 		if(!tempList.isEmpty()){
 			for (String mapName: tempList){
-				listOfMapName.add(mapName);
+				if(listOfMapName.indexOf(mapName)<0){
+					listOfMapName.add(mapName);
+				}
 			}
 			success=true;
 			return success;
@@ -63,8 +65,10 @@ public class MapDataController {
 		listOfMapURL.clear();
 		ArrayList<String> tempList=mainController.mapModel.getImgURLS();
 		if(!tempList.isEmpty()){
-			for (String mapName: tempList){
-				listOfMapURL.add(changeSeparator(mapName));
+			for (String mapURL: tempList){
+				if(listOfMapURL.indexOf(mapURL)<0){
+					listOfMapURL.add(changeSeparator(mapURL));
+				}
 			}
 			success=true;
 			return success;
@@ -73,19 +77,19 @@ public class MapDataController {
 		return success;
 	}
 	
-	public String changeSeparator(String url){
+	private String changeSeparator(String url){
 		String newUrl=new String();
 		String osName=System.getProperty("os.name");
 		if (osName.contains("Mac")||osName.contains("Linux")){
-			System.out.println(System.getProperty("file.separator"));
-			System.out.println(System.getProperty("os.name"));
+			//System.out.println(System.getProperty("file.separator"));
+			//System.out.println(System.getProperty("os.name"));
 			newUrl=url.replace("\\", System.getProperty("file.separator"));
-			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+			//System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
 		} else {
-			System.out.println(System.getProperty("file.separator"));
-			System.out.println(System.getProperty("os.name"));
+			//System.out.println(System.getProperty("file.separator"));
+			//System.out.println(System.getProperty("os.name"));
 			newUrl=url;
-			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+			//System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
 		}
 		
 		return newUrl;
@@ -95,101 +99,88 @@ public class MapDataController {
 		String newUrl=new String();
 		String osName=System.getProperty("os.name");
 		if (osName.contains("Mac")||osName.contains("Linux")){
-			System.out.println(System.getProperty("file.separator"));
-			System.out.println(System.getProperty("os.name"));
+			//System.out.println(System.getProperty("file.separator"));
+			//System.out.println(System.getProperty("os.name"));
 			newUrl=url.replace(System.getProperty("file.separator"), "\\");
-			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+			//System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
 		} else {
-			System.out.println(System.getProperty("file.separator"));
-			System.out.println(System.getProperty("os.name"));
+			//System.out.println(System.getProperty("file.separator"));
+			//System.out.println(System.getProperty("os.name"));
 			newUrl=url;
-			System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
+			//System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
 		}
-		
 		return newUrl;
 	}
 	
-	private void updateMapList(String mapName){
+	public boolean mapIsInTheOldList(String mapName){
+		boolean mapInTheList = false;
+		if(listOfMapName.indexOf(mapName)>0){
+			mapInTheList = true;
+		}
+		return mapInTheList;
+	}
+	
+	private void updateMapList(String mapRequestCommand){
 
-		listOfMapName.clear();
-		listOfMapURL.clear();
+		listOfMapNameForReturn.clear();
+		listOfMapURLForReturn.clear();
 		
-		switch(mapName){
+		switch(mapRequestCommand){
 		case "admin":
-			//addAllMapIntoList();
-			//addCampusMap();
-			//addBoyntonHall();
+			mainController.mapModel.loadMapLists();
 			LoadInMapNameList();
 			LoadInMapURL();
-			addNewMapIntoList();
+			getAllManNameAndURL();
 			break;
-			
-		case "campus":
-			addCampusMap();
-			addAllBuildingInCampus();
-			break;
-			
-		case "BoyntonHall":
-			addBoyntonHall();
-			addCampusMap();
-			break;
-			
+		case "CampusMap":
+			getDesiredMapFromMapList(mapRequestCommand);
+			addAllBuildingIntoList();
+			break;		
+		// Get All the buildingMap
 		default:
+			getDesiredMapFromMapList(mapRequestCommand);
+			getDesiredMapFromMapList("CampusMap");
 			break;
+		}
+	}
+	
+	private void getAllManNameAndURL(){
+		for(String mapName:listOfMapName){
+			listOfMapNameForReturn.add(mapName);
+		}
+		for(String mapURL:listOfMapURL){
+			listOfMapURLForReturn.add(mapURL);
 		}
 	}
 	
 	// Waiting model create a method return me the mapList
-	private void addAllMapIntoList(){
-		
-	}
-	
-	private void addNewMapIntoList(){
-		if(!listOfNewMapName.isEmpty() && !listOfNewMapURL.isEmpty()){
-			for(String newMapName:listOfNewMapName){
-				listOfMapName.add(newMapName);
+	private void addAllBuildingIntoList(){
+		for(String mapName:listOfMapName){
+			String buildingName ="";
+			int end = mapName.lastIndexOf("_");
+			buildingName=mapName.substring(0, end);
+			// Check if we have add the building into the list
+			if(!buildingName.equals("CampusMap") && listOfMapNameForReturn.indexOf(buildingName)<0){
+				listOfMapNameForReturn.add(buildingName);
+				listOfMapURLForReturn.add("");
 			}
-			for(String newMapURL:listOfNewMapURL){
-				listOfMapURL.add(newMapURL);
-			}			
 		}
 	}
 	
-	private void addAllBuildingInCampus(){
-		listOfMapName.add("BoyntonHall");
-		listOfMapURL.add("");
-		listOfMapName.add("FullerLab");
-		listOfMapURL.add("");
-		listOfMapName.add("CampusCenter");
-		listOfMapURL.add("");
-		listOfMapName.add("GordanLibrary");
-		listOfMapURL.add("");
+	private void getDesiredMapFromMapList(String desiredMap){
+		for(String mapName:listOfMapName){
+			String Section_1 ="";
+			int end = mapName.lastIndexOf("_");
+			Section_1=mapName.substring(0, end);
+			if(desiredMap.equals(Section_1)){
+				listOfMapNameForReturn.add(mapName);
+				int mapIndex = listOfMapName.indexOf(mapName);
+				String mapURL = listOfMapURL.get(mapIndex);
+				listOfMapURLForReturn.add(mapURL);
+			}
+		}
 	}
 
-	private void addCampusMap(){
-		listOfMapName.add("CampusMap_0");
-		String CAMPUS_MAP = "images"+System.getProperty("file.separator")+"WPI_school.png";
-		listOfMapURL.add(CAMPUS_MAP);
-	}
-	
-	private void addBoyntonHall(){
-		// Map Name
-		listOfMapName.add("BoyntonHall_1");
-		listOfMapName.add("BoyntonHall_2");
-		listOfMapName.add("BoyntonHall_3");
-		listOfMapName.add("BoyntonHall_4");
-		
-		// Map urls
-		String BH_BASEMENT = "images"+System.getProperty("file.separator")+"BH_Basement.png";
-		String BH_FIRST_FLOOR = "images"+System.getProperty("file.separator")+"BH_FirstFloor.png";
-		String BH_SECOND_FLOOR = "images"+System.getProperty("file.separator")+"BH_SecondFloor.png";
-		String BH_THIRD_FLOOR = "images"+System.getProperty("file.separator")+"BH_ThirdFloor.png";
-		listOfMapURL.add(BH_BASEMENT);
-		listOfMapURL.add(BH_FIRST_FLOOR);
-		listOfMapURL.add(BH_SECOND_FLOOR);
-		listOfMapURL.add(BH_THIRD_FLOOR);
-	}
-	
 	/* Added by  neha. For now this method just pushes the data into the listofMaps and urlsofMaps.
 	 * Once the model method is available call that method with the same paramaters.
 	 * The model method should return a boolean value:
@@ -197,16 +188,14 @@ public class MapDataController {
 	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
 	 */
 	public void addNewMapToList(String mapName){
-		int Index = listOfNewMapName.indexOf(mapName);
-		if(Index == -1){
-			listOfNewMapName.add(mapName);
+		if(listOfMapName.indexOf(mapName)<0){
+			listOfMapName.add(mapName);
 		}
 	}
 	
 	public void addNewMapURLToList(String mapURL){
-		int Index = listOfNewMapURL.indexOf(mapURL);
-		if(Index == -1){
-			listOfNewMapURL.add(mapURL);
+		if(listOfMapURL.indexOf(mapURL)<0){
+			listOfMapURL.add(mapURL);
 		}
 	}
 
@@ -241,15 +230,15 @@ public class MapDataController {
 	 */
 	public ArrayList<String> getMapList(String mapName){
 		updateMapList(mapName);
-		return listOfMapName;
+		return listOfMapNameForReturn;
 	}
 	
 	/* Changed > to >= as index starts from 0 value*/
 	public String getMapURL(String mapName){
 		String mapurl = "";
-		int index = listOfMapName.indexOf(mapName);
+		int index = listOfMapNameForReturn.indexOf(mapName);
 		if(index >= 0){
-			mapurl = listOfMapURL.get(index);
+			mapurl = listOfMapURLForReturn.get(index);
 		}
 		return mapurl;
 	}
@@ -321,7 +310,8 @@ public class MapDataController {
 
 	public Boolean addPoint(Point inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
-		if(CheckPntExistence(inputPnt)==0){
+		int i=CheckPntExistence(inputPnt);
+		if(i==0){
 			
 			int coord_X = (int)inputPnt.getX();
 			int coord_Y = (int)inputPnt.getY();						
@@ -338,6 +328,13 @@ public class MapDataController {
 			
 			transferNodeToPnt2D(nodeList);
 			success = true;
+		}else if (i>0){
+			Node n=findNodeInList(i);
+			n.setBuilding(buildingName);
+			n.setFloor(floorNum);
+			n.setEntranceID(entranceID);
+			n.setType(pointType);
+			success= true;
 		}
 		return success;
 	}
@@ -417,7 +414,7 @@ public class MapDataController {
 		
 		for (Point temPnt : tempPntList){
 			double d = Math.sqrt(Math.pow(inputPnt.getX()-temPnt.getX(), 2)+ Math.pow(inputPnt.getY() - temPnt.getY(), 2));
-			if(d <= 15){
+			if(d <= 10){
 				System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
 				searchingResult = temPnt;
 				return searchingResult;
@@ -491,6 +488,7 @@ public class MapDataController {
 	}	
 	
 	public ArrayList<Point> getFilteredList(String pointType){
+		ArrayList<Point> filteredList = new ArrayList<Point>();
 		for (Node n:nodeList){
 			if (n.getType().equals(pointType)){
 				filteredList.add(new Point(n.getX(),n.getY()));
