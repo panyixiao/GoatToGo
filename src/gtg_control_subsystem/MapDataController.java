@@ -112,6 +112,14 @@ public class MapDataController {
 		return newUrl;
 	}
 	
+	public boolean mapIsInTheOldList(String mapName){
+		boolean mapInTheList = false;
+		if(listOfMapName.indexOf(mapName)>0){
+			mapInTheList = true;
+		}
+		return mapInTheList;
+	}
+	
 	private void updateMapList(String mapRequestCommand){
 
 		listOfMapNameForReturn.clear();
