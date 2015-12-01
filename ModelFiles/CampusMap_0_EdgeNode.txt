@@ -1,14 +1,11 @@
 NODES
 1 446 133 0 CampusMap 0 Building
-2 551 224 0 CampusMap 0 Building
 3 640 277 0 CampusMap 0 Building
 5 819 324 0 CampusMap 0 Building
 6 721 297 0 CampusMap 0 Building
 7 996 398 0 CampusMap 0 Building
-8 887 484 0 CampusMap 0 Building
 9 979 491 0 CampusMap 0 Building
 10 972 527 0 CampusMap 0 Building
-11 819 471 0 CampusMap 0 Building
 12 788 566 0 CampusMap 0 Building
 13 794 644 0 CampusMap 0 Building
 14 864 691 0 CampusMap 0 Building
@@ -24,14 +21,10 @@ NODES
 24 571 906 0 CampusMap 0 Building
 25 436 788 0 CampusMap 0 Building
 26 640 415 0 CampusMap 0 Building
-27 551 339 0 CampusMap 0 Building
 28 544 462 0 CampusMap 0 Building
-29 436 289 0 CampusMap 0 Building
 30 364 133 0 CampusMap 0 Building
 31 347 178 0 CampusMap 0 Building
 32 313 191 0 CampusMap 0 Building
-33 374 302 0 CampusMap 0 Building
-34 394 408 0 CampusMap 0 Building
 35 481 408 0 CampusMap 0 Building
 37 529 554 0 CampusMap 0 Building
 38 380 614 0 CampusMap 0 Building
@@ -40,8 +33,6 @@ NODES
 41 325 391 0 CampusMap 0 Building
 42 218 370 0 CampusMap 0 Building
 43 95 428 0 CampusMap 0 Building
-45 33 666 0 CampusMap 0 Building
-46 83 666 0 CampusMap 0 Building
 47 72 691 0 CampusMap 0 Building
 48 109 747 0 CampusMap 0 Building
 49 145 889 0 CampusMap 0 Building
@@ -54,17 +45,16 @@ NODES
 56 213 978 0 CampusMap 0 Building
 57 172 686 0 CampusMap 0 Building
 58 232 699 0 CampusMap 0 Building
-59 43 712 0 CampusMap 0 Parking Lot
-60 264 691 0 CampusMap 0 Parking Lot
-61 369 724 0 CampusMap 0 Parking Lot
-62 759 813 0 CampusMap 0 Parking Lot
-63 881 614 0 CampusMap 0 Parking Lot
-64 158 95 0 CampusMap 0 Parking Lot
-65 709 441 0 CampusMap 0 Parking Lot
-66 744 462 0 CampusMap 0 Parking Lot
-67 721 535 0 CampusMap 0 Parking Lot
-68 693 527 0 CampusMap 0 Parking Lot
-69 716 614 0 CampusMap 0 Parking Lot
+60 264 691 0 CampusMap 0 Parking
+61 369 724 0 CampusMap 0 Parking
+62 759 813 0 CampusMap 0 Parking
+63 881 614 0 CampusMap 0 Parking
+64 158 95 0 CampusMap 0 Parking
+65 709 441 0 CampusMap 0 Parking
+66 744 462 0 CampusMap 0 Parking
+67 721 535 0 CampusMap 0 Parking
+68 693 527 0 CampusMap 0 Parking
+69 716 614 0 CampusMap 0 Parking
 70 979 1016 0 CampusMap 0 Waypoint
 71 989 955 0 CampusMap 0 Waypoint
 72 864 962 0 CampusMap 0 Waypoint
@@ -112,12 +102,10 @@ NODES
 114 347 535 0 CampusMap 0 Waypoint
 115 330 561 0 CampusMap 0 Waypoint
 116 275 561 0 CampusMap 0 Waypoint
-117 247 566 0 CampusMap 0 Waypoint
 118 237 604 0 CampusMap 0 Waypoint
 119 237 652 0 CampusMap 0 Waypoint
 120 196 644 0 CampusMap 0 Waypoint
 121 158 644 0 CampusMap 0 Waypoint
-122 33 623 0 CampusMap 0 Waypoint
 123 145 699 0 CampusMap 0 Waypoint
 124 134 760 0 CampusMap 0 Waypoint
 125 120 881 0 CampusMap 0 Waypoint
@@ -126,8 +114,8 @@ NODES
 128 839 1016 0 CampusMap 0 Waypoint
 129 1016 754 0 CampusMap 0 Waypoint
 130 984 747 0 CampusMap 0 Waypoint
-131 721 357 0 CampusMap 0 Parking Lot
-132 759 349 0 CampusMap 0 Parking Lot
+131 721 357 0 CampusMap 0 Parking
+132 759 349 0 CampusMap 0 Parking
 133 1011 357 0 CampusMap 0 Waypoint
 134 776 462 0 CampusMap 0 Waypoint
 135 753 224 0 CampusMap 0 Waypoint
@@ -147,7 +135,6 @@ NODES
 149 134 471 0 CampusMap 0 Waypoint
 150 134 522 0 CampusMap 0 Waypoint
 151 166 554 0 CampusMap 0 Waypoint
-152 218 554 0 CampusMap 0 Waypoint
 153 153 581 0 CampusMap 0 Building
 154 196 491 0 CampusMap 0 Waypoint
 155 400 546 0 CampusMap 0 Waypoint
@@ -184,7 +171,6 @@ NODES
 187 686 441 0 CampusMap 0 Waypoint
 188 677 491 0 CampusMap 0 Waypoint
 189 667 527 0 CampusMap 0 Waypoint
-190 400 208 0 CampusMap 0 Parking Lot
 191 145 391 0 CampusMap 0 Waypoint
 192 145 370 0 CampusMap 0 Waypoint
 193 145 339 0 CampusMap 0 Waypoint
@@ -214,7 +200,6 @@ NODES
 218 887 554 0 CampusMap 0 Waypoint
 219 864 554 0 CampusMap 0 Waypoint
 220 839 546 0 CampusMap 0 Waypoint
-221 810 541 0 CampusMap 0 Waypoint
 222 776 535 0 CampusMap 0 Waypoint
 223 446 644 0 CampusMap 0 Waypoint
 224 523 768 0 CampusMap 0 Waypoint
@@ -224,6 +209,41 @@ NODES
 228 158 242 0 CampusMap 0 Waypoint
 229 179 262 0 CampusMap 0 Waypoint
 230 158 297 0 CampusMap 0 Waypoint
+231 487 527 0 CampusMap 0 Waypoint
+232 537 535 0 CampusMap 0 Waypoint
+233 218 561 0 CampusMap 0 Waypoint
+234 892 506 0 CampusMap 0 Building
+235 902 441 0 CampusMap 0 Waypoint
+236 897 471 0 CampusMap 0 Building
+237 819 471 0 CampusMap 0 Building
+238 810 540 0 CampusMap 0 Waypoint
+239 819 506 0 CampusMap 0 Building
+240 109 632 0 CampusMap 0 Waypoint
+241 103 671 0 CampusMap 0 Waypoint
+242 72 660 0 CampusMap 0 Building
+243 57 632 0 CampusMap 0 Waypoint
+244 41 671 0 CampusMap 0 Building
+245 247 554 0 CampusMap 0 Waypoint
+246 529 242 0 CampusMap 0 Building
+247 571 262 0 CampusMap 0 Building
+248 380 297 0 CampusMap 0 Building
+250 431 214 0 CampusMap 0 Waypoint
+251 414 302 0 CampusMap 0 Waypoint
+252 446 289 0 CampusMap 0 Building
+253 400 339 0 CampusMap 0 Waypoint
+254 364 318 0 CampusMap 0 Building
+255 523 324 0 CampusMap 0 Building
+256 544 357 0 CampusMap 0 Building
+257 619 471 0 CampusMap 0 Waypoint
+258 632 506 0 CampusMap 0 Waypoint
+259 632 535 0 CampusMap 0 Waypoint
+260 27 614 0 CampusMap 0 Waypoint
+261 4 581 0 CampusMap 0 Waypoint
+262 4 546 0 CampusMap 0 Waypoint
+263 57 506 0 CampusMap 0 Waypoint
+264 109 506 0 CampusMap 0 Waypoint
+265 95 554 0 CampusMap 0 Building
+266 414 391 0 CampusMap 0 Building
 EDGES
 1 70 71
 2 71 72
@@ -270,13 +290,10 @@ EDGES
 44 113 114
 45 114 115
 46 115 116
-47 116 117
-48 117 118
 49 118 119
 50 119 81
 51 119 120
 52 120 121
-53 121 122
 54 123 124
 55 124 125
 56 125 126
@@ -298,10 +315,6 @@ EDGES
 72 49 125
 73 52 124
 74 123 121
-76 59 45
-77 47 46
-78 45 46
-79 45 122
 80 57 123
 81 48 124
 82 23 86
@@ -330,8 +343,6 @@ EDGES
 105 7 99
 106 9 97
 107 10 97
-108 8 98
-109 11 134
 110 103 134
 111 134 104
 112 132 131
@@ -360,23 +371,17 @@ EDGES
 135 148 149
 136 149 150
 137 150 151
-138 151 152
 139 151 153
-140 43 148
 141 42 147
 142 154 148
 143 154 150
 144 154 151
 145 41 146
-146 34 144
-147 33 143
-148 29 140
 149 114 155
 150 155 112
 151 155 110
 152 6 101
 153 135 101
-154 27 140
 156 157 158
 157 158 159
 158 159 160
@@ -387,7 +392,6 @@ EDGES
 163 164 165
 164 165 166
 165 166 167
-166 167 168
 167 168 169
 168 169 170
 169 170 171
@@ -400,11 +404,7 @@ EDGES
 176 177 139
 177 26 172
 178 3 175
-179 2 175
-180 2 139
 181 28 170
-182 37 169
-183 37 167
 184 90 106
 185 178 179
 186 179 180
@@ -419,15 +419,12 @@ EDGES
 195 184 183
 196 35 185
 197 141 185
-198 185 27
 199 186 187
 200 187 188
 201 188 189
 202 189 160
 203 131 186
 204 26 188
-205 190 138
-206 1 190
 207 191 192
 208 192 193
 209 193 194
@@ -461,17 +458,11 @@ EDGES
 240 215 216
 241 216 217
 242 217 208
-243 190 217
-244 214 33
 245 218 219
 246 219 220
-247 220 221
-248 221 222
 249 222 104
 250 218 96
 251 219 63
-252 11 221
-253 8 218
 254 223 109
 255 223 166
 256 110 167
@@ -487,3 +478,60 @@ EDGES
 266 230 194
 267 196 230
 268 199 228
+269 37 182
+270 231 167
+271 231 232
+272 232 169
+273 198 228
+274 191 43
+275 5 102
+276 151 233
+278 98 235
+279 235 236
+280 234 218
+281 239 238
+282 238 220
+283 238 222
+284 134 237
+285 240 121
+286 240 241
+288 241 242
+289 241 47
+290 243 244
+291 243 240
+292 245 154
+293 245 118
+294 233 245
+295 245 116
+296 246 139
+297 247 175
+298 248 214
+300 217 250
+301 250 138
+302 250 216
+303 252 140
+304 251 250
+305 251 142
+306 251 253
+307 253 143
+308 254 143
+309 254 253
+310 185 172
+311 255 140
+312 256 185
+313 257 258
+314 258 259
+315 172 257
+316 259 160
+317 260 261
+318 261 262
+319 262 263
+320 263 264
+321 243 260
+322 264 150
+323 264 149
+324 150 265
+325 1 250
+326 217 1
+327 255 141
+328 142 266
