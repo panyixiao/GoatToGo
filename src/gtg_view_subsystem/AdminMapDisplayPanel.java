@@ -127,8 +127,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			floor.setEditable(false);
 		}
 		JPanel panel = new JPanel(new GridLayout(0, 2));
-		String[] listPointTypes = { "Classroom", "Office", "Elevator", "Stairs", "Building", "Parking Lot",
-				"Men's Restroom", "Woman's Restroom", "Cafe", "Vending", "Water fountian", "Waypoint" };
+		String[] listPointTypes = { "Classroom", "Office", "Elevator", "Stairs", "Building", "Parking_Lot",
+				"Men's_Restroom", "Woman's_Restroom", "Cafe", "Vending", "Water_fountian", "Waypoint" };
 
 		JComboBox pointType = new JComboBox(listPointTypes);
 
