@@ -142,6 +142,10 @@ public class MainController{
 		System.out.println(mapImageURL);
 		System.out.println(mapType);
 		try{
+			if(mapDataController.mapIsInTheOldList(mapName)){
+				System.out.println("Map already in the old list");
+				return mapSaved;
+			}
 			// Generate a relative filePath:
 			int markPos = mapImageURL.lastIndexOf("images");
 			if(markPos>0){

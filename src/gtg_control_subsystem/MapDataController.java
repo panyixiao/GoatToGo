@@ -112,6 +112,14 @@ public class MapDataController {
 		return newUrl;
 	}
 	
+	public boolean mapIsInTheOldList(String mapName){
+		boolean mapInTheList = false;
+		if(listOfMapName.indexOf(mapName)>0){
+			mapInTheList = true;
+		}
+		return mapInTheList;
+	}
+	
 	private void updateMapList(String mapRequestCommand){
 
 		listOfMapNameForReturn.clear();
@@ -406,7 +414,7 @@ public class MapDataController {
 		
 		for (Point temPnt : tempPntList){
 			double d = Math.sqrt(Math.pow(inputPnt.getX()-temPnt.getX(), 2)+ Math.pow(inputPnt.getY() - temPnt.getY(), 2));
-			if(d <= 15){
+			if(d <= 10){
 				System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
 				searchingResult = temPnt;
 				return searchingResult;

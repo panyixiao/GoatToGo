@@ -32,7 +32,7 @@ public class ViewStringLiterals {
 	public static final String YES = "Yes";
 	public static final String NO = "No";
 	public static final String IS_CAMPUS_MAP = "Is this a campus map?";
-	public static final String CAMPUS = "Campus";
+	public static final String CAMPUS = "CampusMap";
 	public static final String FLOOR = "Floor";
 	public static final String BUILDING_NAME = "Building Name";
 	public static final String FLOOR_NUMBER_EMPTY = "Please enter a valid floor number";
