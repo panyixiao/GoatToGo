@@ -257,4 +257,15 @@ public class MainView {
 		String mapURL = this.mainController.getMapURL(mapName);
 		return mapURL;
 	}
+
+	/**
+	 * Method getFilteredList.
+	 * @param pointType String
+	 * This methods fetches the list of points depending on the filter value.
+	 * Called from the MapPage
+	 */
+	public void getFilteredList(String pointType) {
+		ArrayList<Point> filteredPoints = this.mainController.getFilteredList(pointType);
+		this.mapPage.populateFilteredList(filteredPoints, pointType);
+	}
 }
