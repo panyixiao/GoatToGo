@@ -242,8 +242,8 @@ NODES
 264 109 506 0 CampusMap 0 Waypoint
 265 95 554 0 CampusMap 0 Building
 267 544 566 2 BoyntonHall 2 Classroom
-268 500 561 1 BoyntonHall 0 Building
-269 523 546 3 BoyntonHall 0 Building
+268 500 561 1 BoyntonHall 2 Building
+269 523 546 3 BoyntonHall 1 Building
 270 544 535 0 CampusMap 0 Classroom
 271 451 471 0 CampusMap 0 Classroom
 272 414 421 0 CampusMap 0 Classroom
