@@ -203,7 +203,7 @@ public class AdminMapEditPage extends JPanel {
 			     case "Create/Edit Points":
 			    	 mode="Create Points";
 			    	 break;
-			     case "<html>Select/Remove<br>Neighbors</html>":
+			     case "Create Neighbors":
 			    	 mode="Select Neighbors";
 			     }
 			    	 			     
@@ -226,7 +226,7 @@ public class AdminMapEditPage extends JPanel {
 		this.pathBtn.addActionListener(changeMode);
 		
 		this.nbrBtn =new JRadioButton();
-		this.nbrBtn.setText("<html>Select/Remove<br>Neighbors</html>");
+		this.nbrBtn.setText("Create Neighbors");
 		this.nbrBtn.setBounds(55, 440, 253, 75);
 		this.nbrBtn.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.nbrBtn.setBackground(null);
