@@ -37,4 +37,10 @@ public class ViewStringLiterals {
 	public static final String BUILDING_NAME = "Building Name";
 	public static final String FLOOR_NUMBER_EMPTY = "Please enter a valid floor number";
 	public static final String DEFAULT_CAMPUS_FLOOR_NUMBER = "0";
+	public static final String DONE = "Done";
+	public static final String MAP_NOT_AVAILABLE = "Map does not exists";
+	public static final String SELECT_FLOOR = "Select Floor";
+	public static final String SHOW_LOCATIONS = "SHOW LOCATIONS";
+	public static final String HIDE_LOCATIONS = "HIDE LOCATIONS";
+	public static final String NO_LOCATIONS_CREATED = "Locations not available.";
 }

@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.awt.Point;
+
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -48,8 +50,11 @@ public class AdminMapEditPage extends JPanel {
 	private MainView parent;
 	private SelectedPoints selectedPoints = new SelectedPoints();
 	private String mapName,buildingName,floorId;
-	public ArrayList<Point2D> pointPositions = new ArrayList<Point2D>();
-	public ArrayList<Point2D> pointNeighbors = new ArrayList<Point2D>();
+	//public ArrayList<Point2D> pointPositions = new ArrayList<Point2D>();
+	//public ArrayList<Point2D> pointNeighbors = new ArrayList<Point2D>();
+	
+	public ArrayList<Point> pointPositions = new ArrayList<Point>();
+	public ArrayList<Point> pointNeighbors = new ArrayList<Point>();
 	
 	// This is only for 1st Version, In the end, it will be updated based on the name in file!!!
 	
@@ -131,7 +136,7 @@ public class AdminMapEditPage extends JPanel {
 		this.add(this.rightPanel);
 
 		this.mapLabel = new JLabel("Current Map :");
-		this.mapLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.mapLabel.setFont(new Font("Meiryo", Font.BOLD, 24));
 		this.mapLabel.setBounds(50, 54, 253, 25);
 		this.mapLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.mapLabel);
@@ -144,17 +149,18 @@ public class AdminMapEditPage extends JPanel {
 		this.rightPanel.add(this.currentMapLabel);
 				
 		
-		this.buildingLabel = new JLabel("Building: "+ this.buildingName);
-		this.buildingLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.buildingLabel.setBounds(50, 165, 150, 50);
+		this.buildingLabel = new JLabel("Building: ");
+		this.buildingLabel.setFont(new Font("Meiryo", Font.BOLD, 24));
+		this.buildingLabel.setBounds(50, 165, 250, 50);
 		this.buildingLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.buildingLabel);
 		
-/*		this.buiding = new JLabel(this.buildingName);
+		this.buiding = new JLabel(this.buildingName);
 		this.buiding.setBounds(50, 210, 307, 53);
 		this.buiding.setBackground(null);
 		this.buiding.setFont(new Font("Meiryo", Font.PLAIN, 24));
-	this.buiding.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));*/
+		this.buiding.setForeground(new Color(0x5b1010));
+//	this.buiding.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 		
 		adminMapDisplayPanel.setBuilding(buildingName);
 		
@@ -165,19 +171,19 @@ public class AdminMapEditPage extends JPanel {
 //			     adminMapDisplayPanel.setBuilding(building);
 //			}
 //		});
-//		this.rightPanel.add(buiding);
+		this.rightPanel.add(buiding);
 		
 		
-		this.floorLabel = new JLabel("Floor:" + this.floorId);
-		this.floorLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.floorLabel.setBounds(50, 265, 150, 50);
+		this.floorLabel = new JLabel("Floor: ");
+		this.floorLabel.setFont(new Font("Meiryo", Font.BOLD, 24));
+		this.floorLabel.setBounds(50, 265, 250, 50);
 		this.floorLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.floorLabel);
-		
-//		this.floor = new JLabel(this.floorId);
-//		this.floor.setBounds(50, 310, 307, 53);
-//		this.floor.setBackground(null);
-//		this.floor.setFont(new Font("Meiryo", Font.PLAIN, 24));
+
+		this.floor = new JLabel(this.floorId);
+		this.floor.setBounds(130, 265, 307, 53);
+		this.floor.setForeground(new Color(0x5b1010));
+		this.floor.setFont(new Font("Meiryo", Font.PLAIN, 24));
 //		this.floor.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 //		this.floor.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent ae) {
@@ -186,35 +192,43 @@ public class AdminMapEditPage extends JPanel {
 //			     adminMapDisplayPanel.setFloor(floor);
 //			}
 //		});
-//		this.rightPanel.add(floor);
+		this.rightPanel.add(floor);
 	
 		
 		this.changeMode = new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				JRadioButton cb = (JRadioButton)ae.getSource();
 			     String mode = cb.getText();
+			     switch(mode){
+			     case "Create/Edit Points":
+			    	 mode="Create Points";
+			    	 break;
+			     case "Create Neighbors":
+			    	 mode="Select Neighbors";
+			     }
+			    	 			     
 			     setMode(mode);
 			}
 		};
 			
 		this.pointBtn =new JRadioButton();
-		this.pointBtn.setText("Create Points");
-		this.pointBtn.setBounds(55, 425, 253, 25);
-		this.pointBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
+		this.pointBtn.setText("Create/Edit Points");
+		this.pointBtn.setBounds(55, 325, 253, 75);
+		this.pointBtn.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.pointBtn.setBackground(null);
 		this.pointBtn.addActionListener(this.changeMode);
 	this.pointBtn.setSelected(true);
 		this.pathBtn =new JRadioButton();
 		this.pathBtn.setText("Create Path");
-		this.pathBtn.setBounds(55, 475, 253, 25);
-		this.pathBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
+		this.pathBtn.setBounds(55, 400, 253, 25);
+		this.pathBtn.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.pathBtn.setBackground(null);
 		this.pathBtn.addActionListener(changeMode);
 		
 		this.nbrBtn =new JRadioButton();
-		this.nbrBtn.setText("Select Neighbors");
-		this.nbrBtn.setBounds(55, 525, 253, 25);
-		this.nbrBtn.setFont(new Font("Meiryo", Font.BOLD, 24));
+		this.nbrBtn.setText("Create Neighbors");
+		this.nbrBtn.setBounds(55, 440, 253, 75);
+		this.nbrBtn.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.nbrBtn.setBackground(null);
 		this.nbrBtn.addActionListener(changeMode);
 		this.modeBtns = new ButtonGroup();
@@ -281,15 +295,47 @@ public class AdminMapEditPage extends JPanel {
 	 * @param inputPoint Point2D
 	 * @return Boolean
 	 */
-	public Boolean CreatePoint(Point2D inputPoint, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
+	public Boolean CreatePoint(Point inputPoint, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
-		success = this.parent.mainController.addPoint(inputPoint,floorNum,entranceID,buildingName,pointType,pointDescription);
+		success = this.parent.mainController.addPoint(inputPoint,
+													  floorNum,
+													  entranceID,
+													  buildingName,
+													  pointType,
+													  pointDescription);
 		pointPositions = this.parent.mainController.getDisplayPnt();		
-		for(Point2D pnt: pointPositions){
+		for(Point pnt: pointPositions){
 			System.out.println(pnt.getX() + "," + pnt.getY());
 		}
 		return success;
 	}
+	
+	// 2015-11-25 Yixiao
+	public int checkPointExsitence(Point inputPnt){
+		return this.parent.mainController.getNodeID(inputPnt);
+	}
+	
+	public String getNodeBuildingName(int NodeID){
+		return this.parent.mainController.getNodeBuildingName(NodeID);
+	}
+	
+	public int getNodeFloorNum(int NodeID){
+		return this.parent.mainController.getNodeFloorNum(NodeID);
+	}
+	
+	public String getNodeDescription(int NodeID){
+		return this.parent.mainController.getDescriptionOfNode(NodeID);
+	}
+	
+	public int getNodeEntranceID(int NodeID){
+		return this.parent.mainController.getEntranceIDOfNode(NodeID);
+	}
+	
+	public String getNodeType(int NodeID){
+		return this.parent.mainController.getTypeOfNode(NodeID);
+	}
+	
+	
 	
 	/**
 	 * Method CreateEdge.
@@ -297,12 +343,12 @@ public class AdminMapEditPage extends JPanel {
 	 * @param pnt2 Point2D
 	 * @return Boolean
 	 */
-	public Boolean CreateEdge(Point2D pnt1, Point2D pnt2){
+	public Boolean CreateEdge(Point pnt1, Point pnt2){
 		Boolean success = false;
 		success = this.parent.mainController.createEdge(pnt1, pnt2);		
 		pointNeighbors = this.parent.mainController.getDisplayEdge();
 		System.out.println("Edge");
-		for(Point2D pnt: pointNeighbors){	
+		for(Point pnt: pointNeighbors){	
 			System.out.println(pnt.getX() + "," + pnt.getY());
 		}
 		return success;
@@ -313,7 +359,7 @@ public class AdminMapEditPage extends JPanel {
 	 * @param p Point2D
 	 * @return Boolean
 	 */
-	public Boolean DeleteEdge(Point2D p){
+	public Boolean DeleteEdge(Point p){
 		Boolean success = false;
 		success = this.parent.mainController.deleteEdge(p);
 		pointNeighbors = this.parent.mainController.getDisplayEdge();
@@ -325,7 +371,7 @@ public class AdminMapEditPage extends JPanel {
 	 * @param inputPoint Point2D
 	 * @return Boolean
 	 */
-	public Boolean deletePoint(Point2D inputPoint){
+	public Boolean deletePoint(Point inputPoint){
 		Boolean pointDeleted = false;
 		pointDeleted = this.parent.mainController.deletePoint(inputPoint);
 		pointPositions = this.parent.mainController.getDisplayPnt();
@@ -338,8 +384,8 @@ public class AdminMapEditPage extends JPanel {
 	 * @param inputPoint Point2D
 	 * @return Point2D
 	 */
-	public Point2D checkPoint(Point2D inputPoint){	
-		Point2D pointInGraph = this.parent.mainController.pointMapping(inputPoint);		
+	public Point checkPoint(Point inputPoint){	
+		Point pointInGraph = this.parent.mainController.pointMapping(inputPoint);		
 		return pointInGraph;
 	}
 	
@@ -355,9 +401,9 @@ public class AdminMapEditPage extends JPanel {
 	 * Method returnLastPointInList.
 	 * @return Point2D
 	 */
-	public Point2D returnLastPointInList()
+	public Point returnLastPointInList()
 	{
-		Point2D pnt = new Point2D.Double(0,0);
+		Point pnt = new Point(0,0);
 		pnt  = this.parent.mainController.getLastPnt();
 		return pnt;
 	}

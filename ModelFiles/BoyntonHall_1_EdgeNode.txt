@@ -1,0 +1,162 @@
+NODES
+1 862 951 0 BoyntonHall 1 Waypoint
+2 862 844 0 BoyntonHall 1 Waypoint
+3 862 577 0 BoyntonHall 1 Waypoint
+4 857 533 0 BoyntonHall 1 Waypoint
+5 783 539 0 BoyntonHall 1 Waypoint
+6 732 539 0 BoyntonHall 1 Waypoint
+7 663 533 0 BoyntonHall 1 Waypoint
+8 605 533 0 BoyntonHall 1 Waypoint
+9 492 533 0 BoyntonHall 1 Waypoint
+10 385 533 0 BoyntonHall 1 Waypoint
+11 385 380 0 BoyntonHall 1 Waypoint
+12 298 365 0 BoyntonHall 1 Waypoint
+13 240 359 0 BoyntonHall 1 Waypoint
+14 189 365 0 BoyntonHall 1 Waypoint
+15 136 374 0 BoyntonHall 1 Waypoint
+16 37 179 0 BoyntonHall 1 Classroom
+17 106 271 0 BoyntonHall 1 Classroom
+18 189 325 0 BoyntonHall 1 Classroom
+19 157 185 0 BoyntonHall 1 Classroom
+20 270 159 0 BoyntonHall 1 Classroom
+21 285 261 0 BoyntonHall 1 Classroom
+22 298 325 0 BoyntonHall 1 Classroom
+23 240 325 0 BoyntonHall 1 Classroom
+24 373 166 0 BoyntonHall 1 Classroom
+25 343 286 0 BoyntonHall 1 Classroom
+26 373 291 0 BoyntonHall 1 Classroom
+27 385 308 0 BoyntonHall 1 Classroom
+28 409 374 0 BoyntonHall 1 Classroom
+29 480 213 0 BoyntonHall 1 Classroom
+30 516 279 0 BoyntonHall 1 Classroom
+31 583 279 0 BoyntonHall 1 Classroom
+32 548 233 0 BoyntonHall 1 Classroom
+33 633 185 0 BoyntonHall 1 Classroom
+34 697 179 0 BoyntonHall 1 Classroom
+35 678 419 0 BoyntonHall 1 Classroom
+36 633 365 0 BoyntonHall 1 Classroom
+37 583 348 0 BoyntonHall 1 Classroom
+38 548 393 0 BoyntonHall 1 Classroom
+39 487 386 0 BoyntonHall 1 Classroom
+40 487 467 0 BoyntonHall 1 Classroom
+41 605 90 0 BoyntonHall 1 Classroom
+42 605 279 0 BoyntonHall 1 Classroom
+43 605 401 0 BoyntonHall 1 Classroom
+44 807 338 0 BoyntonHall 1 Classroom
+45 783 507 0 BoyntonHall 1 Classroom
+46 882 300 0 BoyntonHall 1 Classroom
+47 964 446 0 BoyntonHall 1 Classroom
+48 882 582 0 BoyntonHall 1 Classroom
+49 783 796 0 BoyntonHall 1 Classroom
+50 775 589 0 BoyntonHall 1 Classroom
+51 724 790 0 BoyntonHall 1 Classroom
+52 732 589 0 BoyntonHall 1 Classroom
+53 642 790 0 BoyntonHall 1 Classroom
+54 663 589 0 BoyntonHall 1 Classroom
+55 487 746 0 BoyntonHall 1 Classroom
+56 500 589 0 BoyntonHall 1 Classroom
+57 416 678 0 BoyntonHall 1 Classroom
+58 385 589 0 BoyntonHall 1 Classroom
+59 298 494 0 BoyntonHall 1 Classroom
+60 329 528 0 BoyntonHall 1 Classroom
+61 240 560 0 BoyntonHall 1 Classroom
+62 157 707 0 BoyntonHall 1 Classroom
+63 249 773 0 BoyntonHall 1 Classroom
+64 189 773 0 BoyntonHall 1 Classroom
+65 76 773 0 BoyntonHall 1 Classroom
+66 60 860 0 BoyntonHall 1 Classroom
+67 182 871 0 BoyntonHall 1 Classroom
+68 270 871 0 BoyntonHall 1 Classroom
+69 86 533 0 BoyntonHall 1 Classroom
+70 136 419 0 BoyntonHall 1 Classroom
+71 106 380 0 BoyntonHall 1 Classroom
+72 55 374 0 BoyntonHall 1 Classroom
+73 182 413 0 BoyntonHall 1 Classroom
+74 320 614 0 BoyntonHall 1 Stairs
+75 915 806 0 BoyntonHall 1 Stairs
+76 862 790 0 BoyntonHall 1 Waypoint
+77 815 139 0 BoyntonHall 1 Classroom
+78 971 159 0 BoyntonHall 1 Classroom
+79 985 741 0 BoyntonHall 1 Classroom
+EDGES
+1 1 2
+3 3 4
+4 4 5
+5 5 6
+6 6 7
+7 7 8
+8 8 9
+9 9 10
+10 10 11
+11 11 12
+12 12 13
+13 13 14
+14 14 15
+15 72 71
+16 71 15
+17 70 15
+18 70 69
+19 16 17
+20 19 18
+21 17 18
+22 18 14
+23 73 14
+24 23 13
+25 20 21
+26 21 22
+27 22 12
+28 24 25
+29 26 25
+30 26 27
+31 27 11
+32 28 11
+33 66 65
+34 65 62
+35 64 62
+36 63 62
+37 64 67
+38 63 68
+39 62 61
+40 61 59
+41 59 60
+42 60 10
+43 10 58
+44 58 57
+45 56 9
+46 55 56
+47 7 54
+48 54 53
+49 52 51
+50 52 6
+51 5 50
+52 50 49
+53 29 30
+54 39 40
+55 40 9
+56 38 37
+57 30 32
+58 30 31
+59 32 31
+60 41 42
+61 34 33
+62 33 42
+63 31 42
+64 37 43
+65 36 35
+66 36 43
+67 42 43
+68 43 8
+69 5 45
+70 44 45
+71 44 46
+72 46 47
+73 47 48
+74 48 3
+75 74 60
+76 75 76
+77 2 76
+78 76 3
+79 79 48
+80 46 78
+81 77 46
+82 77 44

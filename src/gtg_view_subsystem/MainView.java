@@ -39,6 +39,7 @@ public class MainView {
 		page.addPage(mapPage);
 		mapPage.reset();
 		currentPage = mapPage;
+		this.getListOfBuildings();
 	}
 	
 	public void showWelcomePage(){
@@ -134,8 +135,8 @@ public class MainView {
 		return pntToBeMapped;
 	}
 
-	public void getPathResult() {
-		PathData path = mainController.getPathData();
+	public void getPathResult(String mapName) {
+		PathData path = mainController.getPathData(mapName);
 		showResultPage();
 		this.resultPage.displayPath(path);
 	}
@@ -203,5 +204,57 @@ public class MainView {
 		} else {
 			addDeleteMapPage.showDeleteMapError();
 		}
+	}
+	
+	/**
+	 * Method getListOfFloors.
+	 * @param mapName String
+	 * This methods fetches the list of floors depending upon the building name.
+	 * Called from the MapPage
+	 */
+	public void getListOfFloors(String mapName){
+		ArrayList<String> mapList = this.mainController.getMapList(mapName);
+		// 2015-11-27 Yixiao
+		if(!mapList.isEmpty()){
+			mapPage.displayDropDownList(mapList);
+			this.getMapURL(mapList.get(0));
+		}
+		// Please create a Inform Box here to inform the user that the map is not exist yet
+	}
+	
+	/**
+	 * Method getMapURL.
+	 * @param String mapName
+	 * This methods fetches the map url for the mapName value.
+	 * Called from the MapPage
+	 */
+	public void getMapURL(String mapName){
+		boolean tempBoolean = this.mainController.LoadingPntsAndEdges(mapName);
+		String mapURL = this.mainController.getMapURL(mapName);
+		
+		ArrayList<Point> graphPoints = new ArrayList<Point>();
+		if(tempBoolean == true){
+			graphPoints = this.mainController.getDisplayPnt();
+		}
+		mapPage.changeMapImage(mapURL);
+		mapPage.addGraphPoints(graphPoints);
+	}
+
+	/**
+	 * Method getListOfBuildings.
+	 * @param none
+	 * This methods fetches the list of building for a campus map.
+	 * Called from the MapPage
+	 */
+	public void getListOfBuildings() {
+		ArrayList<String> mapList = this.mainController.getMapList("CampusMap");
+		mapPage.displayDropDownList(mapList);
+		
+		this.getMapURL(mapList.get(0));
+	}
+	
+	public String tempMapURL(String mapName){
+		String mapURL = this.mainController.getMapURL(mapName);
+		return mapURL;
 	}
 }

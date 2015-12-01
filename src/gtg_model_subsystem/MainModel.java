@@ -95,10 +95,7 @@ public class MainModel {
 	/**
 	 * Method to save newly created maps added by admin from admin view to the list of maps.
 	 * @param mapName the name of new map to be saved
-	
 	 * @param mapType the type of map that we are saving
-	
-	
 	 * @param mapImgURL String
 	 * @return true if map was successfully created false otherwise * @throws IOException  */
 	public boolean saveNewMap(String mapName, String mapImgURL, String mapType) throws IOException{
@@ -185,12 +182,7 @@ public class MainModel {
 	
 	
 	 * @return true of write was successful, false otherwise * @throws IOException */
-	public boolean saveMapGraph(String mapName, List<Node> tempNodeList, List<Edge> tempEdgeList) throws IOException{
-			//Generate new nodes from the temporary point list to be added to graph
-			//List<Node> nodeList = generatingNodeList(mapName, tempPntList);	
-			//Generate edge list from unique node IDs specified
-			//List<Edge> edgeList = generatingEdgeList(mapName,tempEdgeList, nodeList);
-			
+	public boolean saveMapGraph(String mapName, List<Node> tempNodeList, List<Edge> tempEdgeList) throws IOException{	
 			//Generate a new coordinate graph to be saved by admin
 			graph = new CoordinateGraph(tempNodeList, tempEdgeList);
 			//STORE it as the new graph
@@ -311,7 +303,6 @@ public class MainModel {
 		}
 		double currentDiff = 0.0;
 		double previousDiff = Double.POSITIVE_INFINITY;
-		printNodes("BH_Basement");
 		printNodes(mapName);
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			currentDiff = calculateDistance(node.getX(),x,node.getY(),y);
@@ -437,6 +428,29 @@ public class MainModel {
 		return tempArrayOfMapNames;
 	}
 	/**
+	 * Method getImgURLS returns a string arraylist of map URLS
+	 * @return array list of string urls
+	 */
+	public ArrayList<String> getImgURLS(){
+		ArrayList<String> mapImgURLS = new ArrayList<String>();
+		for(String map: mapTable.keySet()){
+			mapImgURLS.add(mapTable.get(map).getMapImgURL());
+		}
+		return mapImgURLS;
+	}
+	/**
+	 * Method getMapTypes returns a string array list of map types
+	 * @return arraylist of map types
+	 */
+	public ArrayList<String> getMapTypes(){
+		ArrayList<String> mapTypes = new ArrayList<String>();
+		for(String map: mapTable.keySet()){
+			mapTypes.add(mapTable.get(map).getMapType());
+		}
+		return mapTypes;
+	}
+	
+	/**
 	 * Method getNodeList.
 	 * @param mapName String
 	 * @return List<Node>
@@ -465,6 +479,7 @@ public class MainModel {
 	public double calculateDistance(double x1, double x2, double y1, double y2){
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
 	}
+
     //find node Id for the start of the edge
     /**
      * Method findNodeId.

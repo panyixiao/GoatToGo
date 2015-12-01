@@ -10,8 +10,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.Point;
 import java.awt.Dialog;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -29,7 +31,7 @@ import javax.swing.JTextField;
 /**
  */
 public class AdminMapDisplayPanel extends MapDisplayPanel {
-	private Point2D newPoint, newStart, newEnd;
+	private Point newPoint, newStart, newEnd;
 	private int circleWidthHeight = 10;
 	private ImageIcon icon;
 	private JPanel imputPopup;
@@ -51,8 +53,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		this.currentMap = mapurl;
 		this.mode = "Create Points";
 		adminViewPageHandle = adminViewPage;
-		this.newStart = new Point2D.Double(0, 0);
-		this.newEnd = new Point2D.Double(0, 0);
+		this.newStart = new Point(0, 0);
+		this.newEnd = new Point(0, 0);
 
 		this.building = adminViewPage.getBuilding();
 		this.floor = adminViewPage.getFloor();
@@ -73,7 +75,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		// controller;
 
 		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
-			Point2D p = adminViewPageHandle.pointPositions.get(i);
+			Point p = adminViewPageHandle.pointPositions.get(i);
 			Ellipse2D.Double circle = new Ellipse2D.Double(p.getX() - (circleWidthHeight * super.getScale() / 2),
 					p.getY() - (circleWidthHeight * super.getScale() / 2), circleWidthHeight * super.getScale(),
 					circleWidthHeight * super.getScale());
@@ -84,8 +86,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		// Here, need to get edges, which have been created and stored in
 		// controller;
 		for (int i = 0; i < adminViewPageHandle.pointNeighbors.size() - 1; i += 2) {
-			Point2D p1 = adminViewPageHandle.pointNeighbors.get(i);
-			Point2D p2 = adminViewPageHandle.pointNeighbors.get(i + 1);
+			Point p1 = adminViewPageHandle.pointNeighbors.get(i);
+			Point p2 = adminViewPageHandle.pointNeighbors.get(i + 1);
 			g2.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
 		}
 	}
@@ -107,21 +109,26 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		JTextField entranceId = new JTextField();
 		JTextField building = new JTextField();
 		building.setText(this.building);
-		if (this.building.equals("Campus")) {
+		
+		int pos = this.building.toLowerCase().indexOf(("campus").toLowerCase());
+
+		//if (this.building.equals("Campus")) {
+		if(pos != -1){
 			building.setEditable(true);
 		} else {
 			building.setEditable(false);
 		}
 		JTextField floor = new JTextField();
 		floor.setText(this.floor);
-		if (this.floor.equals("Campus")) {
+		//if (this.floor.equals("Campus")) {
+		if(pos != -1){
 			floor.setEditable(true);
 		} else {
 			floor.setEditable(false);
 		}
 		JPanel panel = new JPanel(new GridLayout(0, 2));
-		String[] listPointTypes = { "Classroom", "Office", "Elevator", "Stairs", "Building", "Parking Lot",
-				"Men's Restroom", "Woman's Restroom", "Cafe", "Vending", "Water fountian", "Waypoint" };
+		String[] listPointTypes = { "Classroom", "Office", "Elevator", "Stairs", "Building", "Parking_Lot",
+				"Men's_Restroom", "Woman's_Restroom", "Cafe", "Vending", "Water_fountian", "Waypoint" };
 
 		JComboBox pointType = new JComboBox(listPointTypes);
 
@@ -138,54 +145,94 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		panel.add(new JLabel("Type:"));
 		panel.add(pointType);
 
-		panel.add(new JLabel("Description:"));
-		panel.add(description);
+//		panel.add(new JLabel("Description:"));
+//		panel.add(description);
 		if (me.getButton() == MouseEvent.BUTTON1) {
 			switch (this.mode) {
 			case "Create Points":
+				// 2015-11-25 Yixiao				
+				int coord_X = (int)(me.getX() / scale);
+				int coord_Y = (int)(me.getY() / scale);
+				newPoint = new Point(coord_X, coord_Y);				
+				// First, checking if this point is already been created, if so, click on the same coordinate will edit exist point
+				int NodeID = adminViewPageHandle.checkPointExsitence(newPoint);
+				boolean createNewPoint = true;
+				// Get original Data
+				if(NodeID>0){
+					System.out.println("Get Original Data of current point");
+					createNewPoint = false;
+					String Origin_BuildingName = adminViewPageHandle.getNodeBuildingName(NodeID);
+					int Origin_FloorNum = adminViewPageHandle.getNodeFloorNum(NodeID);
+					String Origin_NodeType = adminViewPageHandle.getNodeType(NodeID);
+					int Origin_EntranceID = adminViewPageHandle.getNodeEntranceID(NodeID);
+					String Origin_Description = adminViewPageHandle.getNodeDescription(NodeID);
+				
+					// Using Original Data to set those text field; NOT WORKING!!!
+					System.out.println("Origin_BuildingName: "+Origin_BuildingName);
+					building.setText(Origin_BuildingName);
+
+					System.out.println("Origin_FloorNum: "+Origin_FloorNum);
+					floor.setText(Integer.toString(Origin_FloorNum));
+					
+					pointType.setSelectedIndex(Arrays.asList(listPointTypes).indexOf(Origin_NodeType));					
+					
+					entranceId.setText(Integer.toString(Origin_EntranceID));					
+					
+					description.setText(Origin_Description);				
+				}				
 				int result = JOptionPane.showConfirmDialog(null, panel, "Please Describe Point",
 						JOptionPane.OK_CANCEL_OPTION);
+
+			
+				
 				if (result == JOptionPane.OK_OPTION) {
-					if (scale > 1.0) {
-						newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
-
+					// Get Building Name
+					if (building.getText().isEmpty()) {
+						newBuilding = "Null";
 					} else {
-						newPoint = new Point2D.Double(me.getX(), me.getY());
-
-					}
-
-					newEnterenceIdString = entranceId.getText();
-
-					newDescription = description.getText();
+						newBuilding = building.getText();
+					}		
+					
+					// Get Floor Num
 					if (floor.getText().isEmpty()) {
 						floorNum = 1;
-
 					} else {
 						try {
 							floorNum = Integer.parseInt(floor.getText());
 						} catch (NumberFormatException e) {
 							floorNum = 0;
 						}
-					}
-					if (building.getText().isEmpty()) {
-						newBuilding = "Null";
-
-					} else {
-						newBuilding = building.getText();
-					}
-
+					}			
+					
+					// Get NodeType
 					newType = (String) pointType.getSelectedItem();
+
+					// Get EntranceID
+					newEnterenceIdString = entranceId.getText();					
 					if (newEnterenceIdString.isEmpty()) {
 						newEnterenceIdString = "0";
 					}
 					newEnterenceId = Integer.parseInt(newEnterenceIdString);
 
+					// Get Node Description
+					newDescription = description.getText();
 					if (newDescription == null) {
 						newDescription = "Null";
 					}
-					adminViewPageHandle.CreatePoint(newPoint, floorNum, newEnterenceId, newBuilding, newType,
-							newDescription);
-
+					// If the point hasn't be created, Create a new point 
+					if(createNewPoint){						
+						adminViewPageHandle.CreatePoint(newPoint, 
+														floorNum, 
+														newEnterenceId, 
+														newBuilding, 
+														newType,
+														newDescription);
+						
+					}
+					// Otherwise, edit current point
+					else{
+						
+					}
 					System.out.println("Building: " + this.building);
 					System.out.println("Floor: " + this.floor);
 					System.out.println("Description: " + description.getText());
@@ -196,35 +243,35 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 
 			case "Create Path":
 
-				Point2D checkResult = adminViewPageHandle.returnLastPointInList();
+				Point checkResult = adminViewPageHandle.returnLastPointInList();
 
 				if (checkResult.getX() != 0) {
 					this.addStart(checkResult);
-					newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+					newPoint = new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
 					createPathPoint(newPoint);
 					this.addNeighbors(me.getPoint());
 				}
 
 				else {
-					newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+					newPoint = new Point((int)(me.getX() / scale),(int)( me.getY() / scale));
 					createPathPoint(newPoint);
 				}
 				break;
 
 			case "Select Neighbors":
 
-				this.newPoint = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+				this.newPoint = new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
 
 				JPopupMenu selectAction = new JPopupMenu();
 				JMenuItem selectPoint, selectNeighbor;
-				selectPoint = new JMenuItem("From here");
+				selectPoint = new JMenuItem("From");
 				selectPoint.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						addStart(me.getPoint());
 					}
 				});
 
-				selectNeighbor = new JMenuItem("To here");
+				selectNeighbor = new JMenuItem("To");
 				selectNeighbor.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						addNeighbors(me.getPoint());
@@ -247,7 +294,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 			}
 
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
-			Point2D point2bDeleted = new Point2D.Double(me.getX() / scale, me.getY() / scale);
+			Point point2bDeleted = new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
 
 			// Try to Delete Edge first
 			adminViewPageHandle.DeleteEdge(point2bDeleted);
@@ -275,16 +322,16 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	 * @param p
 	 *            Point2D
 	 */
-	public void addNeighbors(Point2D p) {
-		Point2D result = adminViewPageHandle.checkPoint(p);
+	public void addNeighbors(Point p) {
+		Point result = adminViewPageHandle.checkPoint(p);
 		if (result.getX() != 0) {
 			this.newEnd = result;
 			if (newStart.getX() != 0) {
 				this.adminViewPageHandle.CreateEdge(newStart, newEnd);
 				// this.adminViewPageHandle.pointNeighbors.add(this.newStart);
 				// this.adminViewPageHandle.pointNeighbors.add(this.newEnd);
-				this.newStart = new Point2D.Double(0, 0);
-				this.newEnd = new Point2D.Double(0, 0);
+				this.newStart = new Point(0, 0);
+				this.newEnd = new Point(0, 0);
 			} else {
 				System.out.println("Please select a start Point first!");
 			}
@@ -299,8 +346,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	 * @param p
 	 *            Point2D
 	 */
-	public void addStart(Point2D p) {
-		Point2D result = adminViewPageHandle.checkPoint(p);
+	public void addStart(Point p) {
+		Point result = adminViewPageHandle.checkPoint(p);
 		if (result.getX() != 0) {
 			this.newStart = result;
 			System.out.println("New start" + this.newStart);
@@ -319,7 +366,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 	 */
 	public void checkIfPointIsDrawn(int x, int y, double scale) {
 		for (int i = 0; i < adminViewPageHandle.pointPositions.size(); i++) {
-			Point2D p = adminViewPageHandle.pointPositions.get(i);
+			Point p = adminViewPageHandle.pointPositions.get(i);
 			if (isInCircle(p.getX(), p.getY(), circleWidthHeight / 2, x / scale, y / scale, scale)) {
 				adminViewPageHandle.pointPositions.remove(i);
 				revalidate();
@@ -388,7 +435,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 
 	}
 
-	public void createPathPoint(Point2D p) {
+	public void createPathPoint(Point p) {
 		int floorNum;
 		String newBuilding;
 		if (this.floor.isEmpty()) {
