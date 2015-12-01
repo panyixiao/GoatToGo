@@ -25,21 +25,13 @@ NODES
 30 364 133 0 CampusMap 0 Building
 31 347 178 0 CampusMap 0 Building
 32 313 191 0 CampusMap 0 Building
-<<<<<<< HEAD
-33 374 302 0 CampusMap 0 Building
-=======
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 35 481 408 0 CampusMap 0 Building
 38 380 614 0 CampusMap 0 Building
+39 302 599 0 CampusMap 0 Building
 40 302 491 0 CampusMap 0 Building
 41 325 391 0 CampusMap 0 Building
 42 218 370 0 CampusMap 0 Building
-<<<<<<< HEAD
-45 33 666 0 CampusMap 0 Building
-46 83 666 0 CampusMap 0 Building
-=======
 43 95 428 0 CampusMap 0 Building
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 47 72 691 0 CampusMap 0 Building
 48 109 747 0 CampusMap 0 Building
 49 145 889 0 CampusMap 0 Building
@@ -52,19 +44,6 @@ NODES
 56 213 978 0 CampusMap 0 Building
 57 172 686 0 CampusMap 0 Building
 58 232 699 0 CampusMap 0 Building
-<<<<<<< HEAD
-59 43 712 0 CampusMap 0 Parking
-60 264 691 0 CampusMap 0 Parking
-61 369 724 0 CampusMap 0 Parking
-62 759 813 0 CampusMap 0 Parking
-63 881 614 0 CampusMap 0 Parking
-64 158 95 0 CampusMap 0 Parking
-65 709 441 0 CampusMap 0 Parking
-66 744 462 0 CampusMap 0 Parking
-67 721 535 0 CampusMap 0 Parking
-68 693 527 0 CampusMap 0 Parking
-69 716 614 0 CampusMap 0 Parking
-=======
 60 264 691 0 CampusMap 0 ParkingLot
 61 369 724 0 CampusMap 0 ParkingLot
 62 759 813 0 CampusMap 0 ParkingLot
@@ -75,7 +54,6 @@ NODES
 67 721 535 0 CampusMap 0 ParkingLot
 68 693 527 0 CampusMap 0 ParkingLot
 69 716 614 0 CampusMap 0 ParkingLot
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 70 979 1016 0 CampusMap 0 Waypoint
 71 989 955 0 CampusMap 0 Waypoint
 72 864 962 0 CampusMap 0 Waypoint
@@ -122,10 +100,7 @@ NODES
 113 355 484 0 CampusMap 0 Waypoint
 114 347 535 0 CampusMap 0 Waypoint
 115 330 561 0 CampusMap 0 Waypoint
-<<<<<<< HEAD
-=======
 116 275 561 0 CampusMap 0 Waypoint
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 118 237 604 0 CampusMap 0 Waypoint
 119 237 652 0 CampusMap 0 Waypoint
 120 196 644 0 CampusMap 0 Waypoint
@@ -138,13 +113,8 @@ NODES
 128 839 1016 0 CampusMap 0 Waypoint
 129 1016 754 0 CampusMap 0 Waypoint
 130 984 747 0 CampusMap 0 Waypoint
-<<<<<<< HEAD
-131 721 357 0 CampusMap 0 Parking
-132 759 349 0 CampusMap 0 Parking
-=======
 131 721 357 0 CampusMap 0 ParkingLot
 132 759 349 0 CampusMap 0 ParkingLot
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 133 1011 357 0 CampusMap 0 Waypoint
 134 776 462 0 CampusMap 0 Waypoint
 135 753 224 0 CampusMap 0 Waypoint
@@ -160,13 +130,12 @@ NODES
 145 347 441 0 CampusMap 0 Waypoint
 146 294 428 0 CampusMap 0 ParkingLot
 147 218 415 0 CampusMap 0 Waypoint
+148 166 415 0 CampusMap 0 Waypoint
 149 134 471 0 CampusMap 0 Waypoint
 150 134 522 0 CampusMap 0 Waypoint
-<<<<<<< HEAD
-=======
 151 166 554 0 CampusMap 0 Waypoint
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 153 153 581 0 CampusMap 0 Building
+154 196 491 0 CampusMap 0 Waypoint
 155 400 546 0 CampusMap 0 Waypoint
 157 693 644 0 CampusMap 0 Waypoint
 158 686 599 0 CampusMap 0 Waypoint
@@ -174,6 +143,7 @@ NODES
 160 653 554 0 CampusMap 0 Waypoint
 161 640 581 0 CampusMap 0 Waypoint
 162 612 614 0 CampusMap 0 Waypoint
+163 587 632 0 CampusMap 0 Waypoint
 164 544 652 0 CampusMap 0 Waypoint
 165 500 632 0 CampusMap 0 Waypoint
 166 481 604 0 CampusMap 0 Waypoint
@@ -191,6 +161,7 @@ NODES
 178 709 707 0 CampusMap 0 Waypoint
 179 640 699 0 CampusMap 0 Waypoint
 180 551 691 0 CampusMap 0 Waypoint
+181 529 671 0 CampusMap 0 Waypoint
 182 523 581 0 CampusMap 0 Waypoint
 183 456 428 0 CampusMap 0 Waypoint
 184 481 476 0 CampusMap 0 Building
@@ -199,11 +170,7 @@ NODES
 187 686 441 0 CampusMap 0 Waypoint
 188 677 491 0 CampusMap 0 Waypoint
 189 667 527 0 CampusMap 0 Waypoint
-<<<<<<< HEAD
-190 400 208 0 CampusMap 0 Parking
-=======
 191 145 391 0 CampusMap 0 Waypoint
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 192 145 370 0 CampusMap 0 Waypoint
 193 145 339 0 CampusMap 0 Waypoint
 194 158 318 0 CampusMap 0 Waypoint
@@ -241,23 +208,6 @@ NODES
 228 158 242 0 CampusMap 0 Waypoint
 229 179 262 0 CampusMap 0 Waypoint
 230 158 297 0 CampusMap 0 Waypoint
-<<<<<<< HEAD
-231 302 604 0 MisteryBuilding 0 Classroom
-232 307 566 0 CampusMap 0 Waypoint
-233 275 561 0 CampusMap 0 Waypoint
-234 247 566 0 CampusMap 0 Waypoint
-235 600 632 0 CampusMap 0 Waypoint
-236 582 644 0 CampusMap 0 Waypoint
-237 523 632 0 CampusMap 0 Waypoint
-238 523 660 0 CampusMap 0 Waypoint
-239 529 681 0 CampusMap 0 Waypoint
-240 201 484 0 CampusMap 0 Waypoint
-241 172 554 0 CampusMap 0 Waypoint
-242 218 561 0 CampusMap 0 Waypoint
-243 275 441 0 CampusMap 0 Waypoint
-244 158 428 0 CampusMap 0 Waypoint
-245 140 398 1 Gym 0 Building
-=======
 231 487 527 0 CampusMap 0 Waypoint
 233 218 561 0 CampusMap 0 Waypoint
 234 892 506 0 CampusMap 0 Building
@@ -291,7 +241,7 @@ NODES
 263 57 506 0 CampusMap 0 Waypoint
 264 109 506 0 CampusMap 0 Waypoint
 265 95 554 0 CampusMap 0 Building
-267 544 566 0 CampusMap 0 Classroom
+267 544 566 2 BoyntonHall 2 Classroom
 268 500 561 1 BoyntonHall 0 Building
 269 523 546 3 BoyntonHall 0 Building
 270 544 535 0 CampusMap 0 Classroom
@@ -300,7 +250,6 @@ NODES
 273 374 441 0 CampusMap 0 Classroom
 274 407 178 0 CampusMap 0 Classroom
 275 744 632 0 CampusMap 0 Classroom
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 EDGES
 1 70 71
 2 71 72
@@ -345,10 +294,7 @@ EDGES
 43 112 113
 44 113 114
 45 114 115
-<<<<<<< HEAD
-=======
 46 115 116
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 49 118 119
 50 119 81
 51 119 120
@@ -410,6 +356,7 @@ EDGES
 116 67 66
 117 66 132
 118 38 115
+119 39 115
 120 40 113
 121 40 114
 122 135 136
@@ -424,19 +371,16 @@ EDGES
 131 144 145
 132 145 146
 133 146 147
+134 147 148
+135 148 149
 136 149 150
-<<<<<<< HEAD
-=======
 137 150 151
 139 151 153
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 141 42 147
+142 154 148
+143 154 150
+144 154 151
 145 41 146
-<<<<<<< HEAD
-147 33 143
-148 29 140
-=======
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 149 114 155
 150 155 112
 151 155 110
@@ -447,6 +391,8 @@ EDGES
 158 159 160
 159 160 161
 160 161 162
+161 162 163
+162 163 164
 163 164 165
 164 165 166
 165 166 167
@@ -466,6 +412,8 @@ EDGES
 184 90 106
 185 178 179
 186 179 180
+187 180 181
+188 181 182
 189 182 167
 190 182 168
 191 21 179
@@ -479,12 +427,7 @@ EDGES
 202 189 160
 203 131 186
 204 26 188
-<<<<<<< HEAD
-205 190 138
-206 1 190
-=======
 207 191 192
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
 208 192 193
 209 193 194
 212 196 197
@@ -509,6 +452,7 @@ EDGES
 231 202 205
 232 64 201
 233 64 199
+234 191 148
 235 32 207
 236 31 208
 237 30 208
@@ -529,37 +473,13 @@ EDGES
 259 226 227
 260 227 106
 261 224 108
+262 154 146
 263 113 145
 264 228 229
 265 229 230
 266 230 194
 267 196 230
 268 199 228
-<<<<<<< HEAD
-269 231 232
-270 232 233
-271 233 234
-272 234 118
-273 232 115
-274 235 236
-275 236 164
-276 235 162
-277 237 238
-278 238 239
-279 182 237
-280 239 180
-281 150 241
-282 150 240
-283 241 240
-284 242 241
-285 242 234
-286 243 240
-287 245 244
-288 244 149
-289 244 147
-290 192 244
-291 241 153
-=======
 270 231 167
 273 198 228
 274 191 43
@@ -626,4 +546,3 @@ EDGES
 342 13 275
 343 275 105
 344 275 104
->>>>>>> d76e77c311a6bd973639315681f6ea15bc87d823
