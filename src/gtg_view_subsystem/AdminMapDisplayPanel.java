@@ -128,7 +128,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		}
 		JPanel panel = new JPanel(new GridLayout(0, 2));
 		String[] listPointTypes = { "Classroom", "Office", "Elevator", "Stairs", "Building", "ParkingLot",
-				"MensRestroom", "WomensRestroom", "Cafe", "Vending", "Fountain", "Waypoint" };
+				"Men's_Restroom", "Woman's_Restroom", "Cafe", "Vending", "Water_fountian", "Waypoint" };
+
 
 		JComboBox pointType = new JComboBox(listPointTypes);
 

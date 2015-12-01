@@ -43,4 +43,17 @@ public class ViewStringLiterals {
 	public static final String SHOW_LOCATIONS = "SHOW LOCATIONS";
 	public static final String HIDE_LOCATIONS = "HIDE LOCATIONS";
 	public static final String NO_LOCATIONS_CREATED = "Locations not available.";
+	public static final String NO_DATA_AVAILABLE = "No matching data found";
+	public static final String SELECTED_FILTER = "Selected Filter";
+	public static final String CLASSROOM = "Classroom";
+	public static final String OFFICE = "Office";
+	public static final String ELEVATOR = "Elevator";
+	public static final String STAIRS = "Stairs";
+	public static final String BUILDING = "Building";
+	public static final String PARKING_LOT = "ParkingLot";
+	public static final String MENS_RESTROOM = "Men's_Restroom";
+	public static final String WOMENS_RESTROOM = "Woman's_Restroom";
+	public static final String CAFE = "Cafe";
+	public static final String VENDING = "Vending";
+	public static final String WAYPOINT = "Waypoint";
 }

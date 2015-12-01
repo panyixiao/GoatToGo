@@ -18,6 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 import java.awt.Font;
 
 /**
@@ -33,6 +34,10 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	private ArrayList<Point> graphPoints = new ArrayList<Point>();
 	private Boolean showLocations = false;
 	private int circleWidthHeight = 10;
+	private String filterType = "";
+	private ArrayList<Point> filterPoints = new ArrayList<Point>();
+	private boolean showAllFilteredPoints = false;
+	private Point selectedFilterPoint = null;
 	/**
 	 * Create the panel.
 	
@@ -107,6 +112,65 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
     			g2.fill(circle);
     		}
     	}
+    	
+		switch(this.filterType){
+	    	case ViewStringLiterals.OFFICE:
+	    			g2.setColor(Color.BLUE);
+	    		break;
+	    		
+	    	case ViewStringLiterals.BUILDING:
+	    			g2.setColor(Color.CYAN);
+	    		break;
+	    	
+	    	case ViewStringLiterals.PARKING_LOT:
+	    			g2.setColor(Color.PINK);
+	    		break;
+	    		
+	    	case ViewStringLiterals.CAFE:
+	    			g2.setColor(Color.BLUE);
+	    		break;
+	    		
+	    	case ViewStringLiterals.ELEVATOR:
+	    			g2.setColor(Color.GREEN);
+	    		break;
+	    		
+	    	case ViewStringLiterals.STAIRS:
+	    			g2.setColor(Color.MAGENTA);
+	    		break;
+	    		
+	    	case ViewStringLiterals.MENS_RESTROOM:
+	    			g2.setColor(Color.ORANGE);
+	    		break;
+	    		
+	    	case ViewStringLiterals.WOMENS_RESTROOM:
+	    			g2.setColor(Color.YELLOW);
+	    		break;
+	    		
+	    	case ViewStringLiterals.VENDING:
+	    			g2.setColor(Color.BLUE);
+	    		break;
+	    		
+	    	case ViewStringLiterals.CLASSROOM:
+	    			g2.setColor(Color.PINK);
+	    		break;
+	    	}
+    		
+		if(this.showAllFilteredPoints == true){
+    		for(int i = 0; i < this.filterPoints.size(); i++){
+    			Point p = this.filterPoints.get(i);
+    			Ellipse2D.Double circle = new Ellipse2D.Double(p.getX() - (circleWidthHeight * super.getScale() / 2),
+    					p.getY() - (circleWidthHeight * super.getScale() / 2), circleWidthHeight * super.getScale(),
+    					circleWidthHeight * super.getScale());
+    			g2.fill(circle);
+    		}
+    	}
+		
+		if(this.selectedFilterPoint != null){
+			Ellipse2D.Double circle = new Ellipse2D.Double(this.selectedFilterPoint.getX() - (circleWidthHeight * super.getScale() / 2),
+					this.selectedFilterPoint.getY() - (circleWidthHeight * super.getScale() / 2), circleWidthHeight * super.getScale(),
+					circleWidthHeight * super.getScale());
+			g2.fill(circle);
+		}
 	}
 	
 	/**
@@ -249,11 +313,70 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	
 	/**
 	 * Method addGraphPoints.
-	 * @param graphPoints 
-	 * @param none
+	 * @param graphPoints
 	 * Adding graph points to Array
 	 */
 	public void addGraphPoints(ArrayList<Point> graphPoints){
 		this.graphPoints = graphPoints;
+	}
+	
+	/**
+	 * Method updateFilterPoints.
+	 * @param filteredPoints ArrayList<Point>
+	 * 		  filterType String
+	 * Update the arraylist of filtered points as per the selected filter
+	 */
+	public void updateFilterPoints(ArrayList<Point> filteredPoints, String pointType){
+		this.filterPoints = filteredPoints;
+		this.filterType = pointType;
+		this.showLocations = false;
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Method showAllFilteredPoint.
+	 * @param none
+	 */
+	public void showAllFilteredPoint(){
+		this.selectedFilterPoint = null;
+		this.showAllFilteredPoints = true;
+		this.showLocations = false;
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Method hideAllFilteredPoint.
+	 * @param none
+	 */
+	public void hideAllFilteredPoint(){
+		this.selectedFilterPoint = null;
+		this.showAllFilteredPoints = false;
+		this.showLocations = false;
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Method totalFilteredPoints.
+	 * @param none
+	 * Returns the total number of filtered points created for the map for a particualt filter type.
+	 */
+	public int totalFilteredPoints(){
+		return this.filterPoints.size();
+	}
+	
+	/**
+	 * Method displaySelectedFilterPoint.
+	 * @param Point selectedFilterPoint
+	 * Display a selected point from the filter list
+	 */
+	public void displaySelectedFilterPoint(Point selectedFilterPoint){
+		this.selectedFilterPoint = new Point(selectedFilterPoint);
+		this.showAllFilteredPoints = false;
+		this.showLocations = false;
+		revalidate();
+		repaint();
 	}
 }

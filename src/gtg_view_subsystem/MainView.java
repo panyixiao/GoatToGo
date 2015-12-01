@@ -247,7 +247,7 @@ public class MainView {
 	 * Called from the MapPage
 	 */
 	public void getListOfBuildings() {
-		ArrayList<String> mapList = this.mainController.getMapList("campus");
+		ArrayList<String> mapList = this.mainController.getMapList("CampusMap");
 		mapPage.displayDropDownList(mapList);
 		
 		this.getMapURL(mapList.get(0));
@@ -256,5 +256,16 @@ public class MainView {
 	public String tempMapURL(String mapName){
 		String mapURL = this.mainController.getMapURL(mapName);
 		return mapURL;
+	}
+
+	/**
+	 * Method getFilteredList.
+	 * @param pointType String
+	 * This methods fetches the list of points depending on the filter value.
+	 * Called from the MapPage
+	 */
+	public void getFilteredList(String pointType) {
+		ArrayList<Point> filteredPoints = this.mainController.getFilteredList(pointType);
+		this.mapPage.populateFilteredList(filteredPoints, pointType);
 	}
 }

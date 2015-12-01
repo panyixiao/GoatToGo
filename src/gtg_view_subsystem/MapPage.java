@@ -1,6 +1,7 @@
 package gtg_view_subsystem;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 
@@ -14,7 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import java.awt.event.MouseEvent;
+
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
@@ -25,12 +29,12 @@ import javax.swing.JComboBox;
  */
 public class MapPage extends JPanel {
 	private JTextField fromTextField, toTextField;
-	private JPanel leftPanel, rightPanel, slidePanel;
+	private JPanel leftPanel, rightPanel, slidePanel, filteredScrollPanel;
 	private JButton zoomInBtn, zoomOutBtn, getDirectionsBtn, fromClearBtn, toClearBtn, showHideLocationsBtn;
-	private JButton cafeBtn, classroomBtn, elevatorBtn, mensRestroomBtn, womensRestroomBtn, officeBtn, vendingBtn, parkingLotBtn, doneBtn;
+	private JButton cafeBtn, classroomBtn, elevatorBtn, mensRestroomBtn, womensRestroomBtn, officeBtn, vendingBtn, parkingLotBtn, stairsBtn, doneBtn, buildingBtn, showAllFilterPointBtn;
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, getDirectionsBtnImage, fromClearBtnImage, toClearBtnImage;
-	private ImageIcon cafeBtnImage, classroomBtnImage, elevatorBtnImage, mensRestroomBtnImage, womensRestroomBtnImage, officeBtnImage, vendingBtnImage, parkingLotBtnImage;
-	private JLabel dropDownLabel, fromLabel, toLabel, noImageLabel;
+	private ImageIcon cafeBtnImage, classroomBtnImage, elevatorBtnImage, mensRestroomBtnImage, womensRestroomBtnImage, officeBtnImage, vendingBtnImage, parkingLotBtnImage, stairsBtnImage, buildingBtnImage;
+	private JLabel dropDownLabel, fromLabel, toLabel, noImageLabel, noDataForFilter, selectedFilterLabel, filterType;
 	private MapMapDisplayPanel mapMapDisplayPanel;
 	private JScrollPane mapPanelHolder, filterScrollPane;
 	private JLayeredPane layeredPane, rightlayeredPane;
@@ -41,6 +45,7 @@ public class MapPage extends JPanel {
 	private double zoomFactor = 0.1;
 	private SelectedPoints selectedPoints = new SelectedPoints();
 	private Animate animate = new Animate();
+	private Animate animateRightPanel = new Animate();
 	private MainView parent;
 	private Boolean animationStarted = false;
 	private Boolean slidePanelIsOpen = false;
@@ -288,6 +293,8 @@ public class MapPage extends JPanel {
 		this.cafeBtn = new JButton();
 		cafeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				filterType.setText(ViewStringLiterals.CAFE);
+				parent.getFilteredList(ViewStringLiterals.CAFE);
 				showFilterPanel();
 			}
 		});
@@ -299,12 +306,14 @@ public class MapPage extends JPanel {
 		this.slidePanel.add(this.cafeBtn);
 		
 		this.classroomBtn = new JButton();
-		classroomBtn.addActionListener(new ActionListener() {
+		this.classroomBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				filterType.setText(ViewStringLiterals.CLASSROOM);
+				parent.getFilteredList(ViewStringLiterals.CLASSROOM);
 				showFilterPanel();
 			}
 		});
-		this.classroomBtn.setBounds(0, 80, 50, 50);
+		this.classroomBtn.setBounds(0, 70, 50, 50);
 		this.classroomBtn.setContentAreaFilled(false);
 		this.classroomBtn.setBorder(null);
 		this.classroomBtnImage = new ImageIcon(ImageURLS.CLASSROOM_BUTTON);
@@ -314,10 +323,12 @@ public class MapPage extends JPanel {
 		this.elevatorBtn = new JButton();
 		elevatorBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				filterType.setText(ViewStringLiterals.ELEVATOR);
+				parent.getFilteredList(ViewStringLiterals.ELEVATOR);
 				showFilterPanel();
 			}
 		});
-		this.elevatorBtn.setBounds(0, 150, 50, 50);
+		this.elevatorBtn.setBounds(0, 130, 50, 50);
 		this.elevatorBtn.setContentAreaFilled(false);
 		this.elevatorBtn.setBorder(null);
 		this.elevatorBtnImage = new ImageIcon(ImageURLS.ELEVATOR_BUTTON);
@@ -327,10 +338,12 @@ public class MapPage extends JPanel {
 		this.mensRestroomBtn = new JButton();
 		mensRestroomBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				filterType.setText(ViewStringLiterals.MENS_RESTROOM);
+				parent.getFilteredList(ViewStringLiterals.MENS_RESTROOM);
 				showFilterPanel();
 			}
 		});
-		this.mensRestroomBtn.setBounds(0, 220, 50, 50);
+		this.mensRestroomBtn.setBounds(0, 190, 50, 50);
 		this.mensRestroomBtn.setContentAreaFilled(false);
 		this.mensRestroomBtn.setBorder(null);
 		this.mensRestroomBtnImage = new ImageIcon(ImageURLS.MENS_RESTROOM_BUTTON);
@@ -340,36 +353,42 @@ public class MapPage extends JPanel {
 		this.womensRestroomBtn = new JButton();
 		womensRestroomBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				filterType.setText(ViewStringLiterals.WOMENS_RESTROOM);
+				parent.getFilteredList(ViewStringLiterals.WOMENS_RESTROOM);
 				showFilterPanel();
 			}
 		});
-		this.womensRestroomBtn.setBounds(0, 290, 50, 50);
+		this.womensRestroomBtn.setBounds(0, 250, 50, 50);
 		this.womensRestroomBtn.setContentAreaFilled(false);
 		this.womensRestroomBtn.setBorder(null);
 		this.womensRestroomBtnImage = new ImageIcon(ImageURLS.WOMENS_RESTROOM_BUTTON);
 		this.womensRestroomBtn.setIcon(this.womensRestroomBtnImage);
 		this.slidePanel.add(this.womensRestroomBtn);
 		
-		this.officeBtn = new JButton();
-		officeBtn.addActionListener(new ActionListener() {
+		this.buildingBtn = new JButton();
+		buildingBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				filterType.setText(ViewStringLiterals.BUILDING);
+				parent.getFilteredList(ViewStringLiterals.BUILDING);
 				showFilterPanel();
 			}
 		});
-		this.officeBtn.setBounds(0, 360, 50, 50);
-		this.officeBtn.setContentAreaFilled(false);
-		this.officeBtn.setBorder(null);
-		this.officeBtnImage = new ImageIcon(ImageURLS.OFFICE_BUTTON);
-		this.officeBtn.setIcon(this.officeBtnImage);
-		this.slidePanel.add(this.officeBtn);
+		this.buildingBtn.setBounds(0, 310, 50, 50);
+		this.buildingBtn.setContentAreaFilled(false);
+		this.buildingBtn.setBorder(null);
+		this.buildingBtnImage = new ImageIcon(ImageURLS.BUILDING_BUTTON);
+		this.buildingBtn.setIcon(this.buildingBtnImage);
+		this.slidePanel.add(this.buildingBtn);
 		
 		this.vendingBtn = new JButton();
 		vendingBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				filterType.setText(ViewStringLiterals.VENDING);
+				parent.getFilteredList(ViewStringLiterals.VENDING);
 				showFilterPanel();
 			}
 		});
-		this.vendingBtn.setBounds(0, 430, 50, 50);
+		this.vendingBtn.setBounds(0, 370, 50, 50);
 		this.vendingBtn.setContentAreaFilled(false);
 		this.vendingBtn.setBorder(null);
 		this.vendingBtnImage = new ImageIcon(ImageURLS.VENDING_BUTTON);
@@ -379,16 +398,80 @@ public class MapPage extends JPanel {
 		this.parkingLotBtn = new JButton();
 		parkingLotBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				filterType.setText(ViewStringLiterals.PARKING_LOT);
+				parent.getFilteredList(ViewStringLiterals.PARKING_LOT);
 				showFilterPanel();
 			}
 		});
-		this.parkingLotBtn.setBounds(0, 500, 50, 50);
+		this.parkingLotBtn.setBounds(0, 430, 50, 50);
 		this.parkingLotBtn.setContentAreaFilled(false);
 		this.parkingLotBtn.setBorder(null);
 		this.parkingLotBtnImage = new ImageIcon(ImageURLS.PARKING_LOT_BUTTON);
 		this.parkingLotBtn.setIcon(this.parkingLotBtnImage);
 		this.slidePanel.add(this.parkingLotBtn);
 		
+		this.officeBtn = new JButton();
+		officeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filterType.setText(ViewStringLiterals.OFFICE);
+				parent.getFilteredList(ViewStringLiterals.OFFICE);
+				showFilterPanel();
+			}
+		});
+		this.officeBtn.setBounds(0, 490, 50, 50);
+		this.officeBtn.setContentAreaFilled(false);
+		this.officeBtn.setBorder(null);
+		this.officeBtnImage = new ImageIcon(ImageURLS.OFFICE_BUTTON);
+		this.officeBtn.setIcon(this.officeBtnImage);
+		this.slidePanel.add(this.officeBtn);
+		
+		this.stairsBtn = new JButton();
+		stairsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filterType.setText(ViewStringLiterals.STAIRS);
+				parent.getFilteredList(ViewStringLiterals.STAIRS);
+				showFilterPanel();
+			}
+		});
+		this.stairsBtn.setBounds(0, 550, 50, 50);
+		this.stairsBtn.setContentAreaFilled(false);
+		this.stairsBtn.setBorder(null);
+		this.stairsBtnImage = new ImageIcon(ImageURLS.STAIRS_BUTTON);
+		this.stairsBtn.setIcon(this.stairsBtnImage);
+		this.slidePanel.add(this.stairsBtn);
+
+		this.showAllFilterPointBtn = new JButton(ViewStringLiterals.SHOW_LOCATIONS);
+		this.showAllFilterPointBtn.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 3));
+		this.showAllFilterPointBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				resetShowAllLocations();
+				
+				for(int i= 0 ; i < filteredScrollPanel.getComponentCount(); i++){
+					((JLabel)filteredScrollPanel.getComponent(i)).setBackground(null);
+				}
+
+				if(((JButton)e.getSource()).getText().equals(ViewStringLiterals.SHOW_LOCATIONS)){
+					if(mapMapDisplayPanel != null){
+						if(mapMapDisplayPanel.totalFilteredPoints() != 0){
+							mapMapDisplayPanel.showAllFilteredPoint();
+							((JButton)e.getSource()).setText(ViewStringLiterals.HIDE_LOCATIONS);
+						} else {
+							JOptionPane.showMessageDialog(((JButton)e.getSource()).getParent(), ViewStringLiterals.NO_LOCATIONS_CREATED, "ERROR", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} else {
+					((JButton)e.getSource()).setText(ViewStringLiterals.SHOW_LOCATIONS);
+					mapMapDisplayPanel.hideAllFilteredPoint();
+				}
+			}
+		});
+		this.showAllFilterPointBtn.setBackground(null);
+		this.showAllFilterPointBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.showAllFilterPointBtn.setForeground(new Color(204, 0, 0));
+		this.showAllFilterPointBtn.setFocusPainted(false);
+		this.showAllFilterPointBtn.setBounds(106, 536, 210, 42);
+		this.slidePanel.add(this.showAllFilterPointBtn);
+
 		this.doneBtn = new JButton(ViewStringLiterals.DONE);
 		this.doneBtn.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 3));
 		this.doneBtn.setBackground(Color.WHITE);
@@ -397,15 +480,39 @@ public class MapPage extends JPanel {
 		this.doneBtn.setFocusPainted(false);
 		this.doneBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				mapMapDisplayPanel.hideAllFilteredPoint();
 				hideFilterPanel();
 			}
 		});
-		this.doneBtn.setBounds(160, 580, 100, 40);
+		this.doneBtn.setBounds(158, 594, 100, 40);
 		this.slidePanel.add(this.doneBtn);
 		
-		this.filterScrollPane = new JScrollPane();
-		this.filterScrollPane.setBounds(70, 10, 310, 450);
+		this.selectedFilterLabel = new JLabel(ViewStringLiterals.SELECTED_FILTER + ":");
+		this.selectedFilterLabel.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.selectedFilterLabel.setForeground(new Color(0x5b1010));
+		this.selectedFilterLabel.setBounds(70, 10, 157, 30);
+		this.slidePanel.add(this.selectedFilterLabel);
+		
+		this.filterType = new JLabel();
+		this.filterType.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.filterType.setForeground(new Color(0x5b1010));
+		this.filterType.setBounds(227, 10, 163, 30);
+		this.slidePanel.add(this.filterType);
+
+		this.noDataForFilter = new JLabel(ViewStringLiterals.NO_DATA_AVAILABLE);
+		this.noDataForFilter.setFont(new Font("Meiryo", Font.PLAIN, 22));
+		this.noDataForFilter.setForeground(new Color(0x5b1010));
+		this.noDataForFilter.setBounds(70, 300, 300, 30);
+		this.noDataForFilter.setVisible(false);
+		this.slidePanel.add(this.noDataForFilter);
+
+		this.filteredScrollPanel = new JPanel();
+		this.filteredScrollPanel.setLayout(null);
+
+		this.filterScrollPane = new JScrollPane(filteredScrollPanel);
+		this.filterScrollPane.setBounds(70, 70, 310, 450);
 		this.filterScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 2));
+		this.filterScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.slidePanel.add(this.filterScrollPane);
 	}
 
@@ -447,7 +554,10 @@ public class MapPage extends JPanel {
 
 		DefaultComboBoxModel model = new DefaultComboBoxModel(mapList.toArray());
 		this.comboBox.setModel(model);
+		
+		this.setFilterButtons();
 	}
+
 	/**
 	 * Method displayPointInTextfield.
 	 * @param locationType String
@@ -520,6 +630,7 @@ public class MapPage extends JPanel {
 		this.isCampusMap = false;
 		this.slidePanel.setLocation(359, 0);
 		this.showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
+		this.showAllFilterPointBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
 		/*if(this.mapMapDisplayPanel != null){
 			this.mapMapDisplayPanel.displayPoint();
 		}*/
@@ -553,6 +664,9 @@ public class MapPage extends JPanel {
 				animate.setAnimationPanel(this, slidePanel, 355, 10);
 				animate.startAnimationLeft();
 				slidePanelIsOpen = true;
+				
+				animateRightPanel.setAnimationPanel(this, rightPanel, 10, 355);
+				animateRightPanel.startAnimationRight();
 			}
 		}
 	}
@@ -566,6 +680,9 @@ public class MapPage extends JPanel {
 			animate.setAnimationPanel(this, slidePanel, 10, 355);
 			animate.startAnimationRight();
 			slidePanelIsOpen = false;
+			
+			animateRightPanel.setAnimationPanel(this, rightPanel, 335, 10);
+			animateRightPanel.startAnimationLeft();
 		}
 	}
 	
@@ -590,9 +707,132 @@ public class MapPage extends JPanel {
 		}
 	}
 
+	/**
+	 * Method addGraphPoints.
+	 * @param ArrayList<Point> graphPoints
+	 * Adds all the graph points on the map display panel
+	 */
 	public void addGraphPoints(ArrayList<Point> graphPoints) {
 		if(this.mapMapDisplayPanel != null){
 			this.mapMapDisplayPanel.addGraphPoints(graphPoints);
 		}
+	}
+
+	/**
+	 * Method populateFilteredList.
+	 * @param ArrayList<Point> graphPoints
+	 * 		  String pointType
+	 * Updates the filter list point and displays them on the map.
+	 */
+	public void populateFilteredList(ArrayList<Point> filteredPoints, String pointType) {
+		if(this.mapMapDisplayPanel != null){
+			this.mapMapDisplayPanel.updateFilterPoints(filteredPoints, pointType);
+		}
+		
+		if(this.filteredScrollPanel.getComponentCount() != 0){
+			this.filteredScrollPanel.removeAll();
+		}
+		this.filteredScrollPanel.revalidate();
+		this.filterScrollPane.revalidate();
+		this.filterScrollPane.repaint();
+
+		if(filteredPoints.size() == 0){
+			this.noDataForFilter.setVisible(true);
+			this.filterScrollPane.setVisible(false);
+			this.showAllFilterPointBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
+			this.mapMapDisplayPanel.hideAllFilteredPoint();
+		} else {
+			this.filterScrollPane.setVisible(true);
+			this.noDataForFilter.setVisible(false);
+			int y = 0;
+			for(int i = 0; i < filteredPoints.size();i++){
+				JLabel btnFilteredPoints = new JLabel();
+				btnFilteredPoints.setFont(new Font("Meiryo", Font.PLAIN, 22));
+				btnFilteredPoints.setForeground(new Color(0x5b1010));
+				btnFilteredPoints.setText(filteredPoints.get(i).x + "," + filteredPoints.get(i).y);
+				btnFilteredPoints.setBounds(10, y, 290, 25);
+				btnFilteredPoints.addMouseListener(new MouseAdapter(){
+					public void mouseClicked(MouseEvent me){
+						filteredListItemClicked((JLabel)me.getSource());
+					}
+				});
+				
+				y += 30;
+				this.filteredScrollPanel.add(btnFilteredPoints);
+			}
+			
+			this.filteredScrollPanel.setPreferredSize(new Dimension(250,filteredPoints.size() * 30));
+			this.filteredScrollPanel.revalidate();
+			
+			this.filterScrollPane.revalidate();
+			this.filterScrollPane.repaint();
+			
+			this.showAllFilterPointBtn.setText(ViewStringLiterals.HIDE_LOCATIONS);
+			this.mapMapDisplayPanel.showAllFilteredPoint();
+		}
+	}
+	
+	/**
+	 * Method resetShowAllLocations.
+	 * @param none
+	 * This method is called to reset the text on the button whenever a filter is selected.
+	 */
+	public void resetShowAllLocations(){
+		this.showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
+	}
+	
+	/**
+	 * Method setFilterButtons.
+	 * @param none
+	 * This method sets selected button enabled depending upon the type of map being displayed.
+	 */
+	public void setFilterButtons(){
+		if(this.isCampusMap == true){
+			this.vendingBtn.setEnabled(false);
+			this.classroomBtn.setEnabled(false);
+			this.stairsBtn.setEnabled(false);
+			this.elevatorBtn.setEnabled(false);
+			this.mensRestroomBtn.setEnabled(false);
+			this.womensRestroomBtn.setEnabled(false);
+			this.officeBtn.setEnabled(false);
+			this.cafeBtn.setEnabled(false);
+			
+			this.buildingBtn.setEnabled(true);
+			this.parkingLotBtn.setEnabled(true);
+		} else {
+			this.vendingBtn.setEnabled(true);
+			this.classroomBtn.setEnabled(true);
+			this.stairsBtn.setEnabled(true);
+			this.elevatorBtn.setEnabled(true);
+			this.mensRestroomBtn.setEnabled(true);
+			this.womensRestroomBtn.setEnabled(true);
+			this.officeBtn.setEnabled(true);
+			this.cafeBtn.setEnabled(true);
+			
+			this.buildingBtn.setEnabled(false);
+			this.parkingLotBtn.setEnabled(false);
+		}
+	}
+	
+	/**
+	 * Method filteredListItemClicked.
+	 * @param JLabel pointSelected
+	 * This method sends the selected item in the list to the map display panel
+	 * for displaying and highlights selected item in the scrollabel list.
+	 */
+	public void filteredListItemClicked(JLabel pointSelected){
+		String tempString = pointSelected.getText();
+		String[] tempArray = tempString.split(",");
+		Point tempPoint = new Point(Integer.parseInt(tempArray[0]), Integer.parseInt(tempArray[1]));
+		showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
+		showAllFilterPointBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
+		mapMapDisplayPanel.displaySelectedFilterPoint(tempPoint);
+		
+		for(int i= 0 ; i < this.filteredScrollPanel.getComponentCount(); i++){
+			((JLabel)this.filteredScrollPanel.getComponent(i)).setBackground(null);
+		}
+		
+		pointSelected.setBackground(Color.LIGHT_GRAY);
+		pointSelected.setOpaque(true);
 	}
 }
