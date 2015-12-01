@@ -9,6 +9,7 @@ public class ImageURLS {
 	public static final String BACK_BUTTON = filePath+"back_btn.png";
 	public static final String WPI_SMALL_LOGO = filePath+"wpi_small_logo.png";
 	public static final String MINIMIZE_BUTTON = filePath+"minimize_btn.png";
+	public static final String MAXIMIZE_BUTTON = filePath+"maximize_btn.png";
 	public static final String CLOSE_BUTTON = filePath+"close_btn.png";
 	public static final String ZOOM_IN_BUTTON = filePath+"zoom_in_btn.png";
 	public static final String ZOOM_OUT_BUTTON = filePath+"zoom_out_btn.png";

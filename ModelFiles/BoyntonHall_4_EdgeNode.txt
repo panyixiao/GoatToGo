@@ -1,5 +1,5 @@
 NODES
-1 870 781 0 BoyntonHall 4 Waypoint
+1 870 781 0 BoyntonHall 4 Stairs
 2 870 750 0 BoyntonHall 4 Waypoint
 3 870 651 0 BoyntonHall 4 Waypoint
 4 870 619 0 BoyntonHall 4 Waypoint
@@ -18,13 +18,13 @@ NODES
 33 333 715 0 BoyntonHall 4 Waypoint
 34 333 854 0 BoyntonHall 4 Waypoint
 35 446 854 0 BoyntonHall 4 Waypoint
-36 437 656 0 BoyntonHall 4 Waypoint
+36 437 656 0 BoyntonHall 4 Stairs
 37 432 486 0 BoyntonHall 4 Waypoint
 39 525 151 0 BoyntonHall 4 Classroom
 40 402 139 0 BoyntonHall 4 Classroom
 41 333 246 0 BoyntonHall 4 Classroom
 42 392 211 0 BoyntonHall 4 Classroom
-46 427 386 0 BoyntonHall 4 Classroom
+46 427 386 0 BoyntonHall 4 Elevator
 47 392 386 0 BoyntonHall 4 Classroom
 48 70 191 0 BoyntonHall 4 Classroom
 49 42 83 0 BoyntonHall 4 Classroom
@@ -56,6 +56,7 @@ NODES
 101 266 609 0 BoyntonHall 4 Classroom
 102 109 609 0 BoyntonHall 4 Classroom
 103 109 443 0 BoyntonHall 4 Classroom
+104 627 486 0 BoyntonHall 4 Waypoint
 EDGES
 1 1 2
 2 2 3
@@ -89,8 +90,6 @@ EDGES
 94 7 81
 95 80 4
 96 80 81
-98 83 7
-99 84 8
 100 84 83
 101 88 89
 102 83 87
@@ -117,3 +116,7 @@ EDGES
 123 103 102
 124 103 18
 125 48 103
+126 83 7
+127 10 104
+128 104 84
+129 104 8
