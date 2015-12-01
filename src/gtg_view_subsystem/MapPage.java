@@ -445,6 +445,11 @@ public class MapPage extends JPanel {
 		this.showAllFilterPointBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetShowAllLocations();
+				
+				for(int i= 0 ; i < filteredScrollPanel.getComponentCount(); i++){
+					((JLabel)filteredScrollPanel.getComponent(i)).setBackground(null);
+				}
+
 				if(((JButton)e.getSource()).getText().equals(ViewStringLiterals.SHOW_LOCATIONS)){
 					if(mapMapDisplayPanel != null){
 						if(mapMapDisplayPanel.totalFilteredPoints() != 0){
@@ -549,7 +554,10 @@ public class MapPage extends JPanel {
 
 		DefaultComboBoxModel model = new DefaultComboBoxModel(mapList.toArray());
 		this.comboBox.setModel(model);
+		
+		this.setFilterButtons();
 	}
+
 	/**
 	 * Method displayPointInTextfield.
 	 * @param locationType String
@@ -721,8 +729,6 @@ public class MapPage extends JPanel {
 			this.mapMapDisplayPanel.updateFilterPoints(filteredPoints, pointType);
 		}
 		
-		System.out.println(filteredPoints.size());
-		
 		if(this.filteredScrollPanel.getComponentCount() != 0){
 			this.filteredScrollPanel.removeAll();
 		}
@@ -743,11 +749,11 @@ public class MapPage extends JPanel {
 				JLabel btnFilteredPoints = new JLabel();
 				btnFilteredPoints.setFont(new Font("Meiryo", Font.PLAIN, 22));
 				btnFilteredPoints.setForeground(new Color(0x5b1010));
-				btnFilteredPoints.setText(filteredPoints.get(i).getX() + "," + filteredPoints.get(i).getY());
+				btnFilteredPoints.setText(filteredPoints.get(i).x + "," + filteredPoints.get(i).y);
 				btnFilteredPoints.setBounds(10, y, 290, 25);
 				btnFilteredPoints.addMouseListener(new MouseAdapter(){
 					public void mouseClicked(MouseEvent me){
-						System.out.println(((JLabel)me.getSource()).getText());
+						filteredListItemClicked((JLabel)me.getSource());
 					}
 				});
 				
@@ -755,7 +761,7 @@ public class MapPage extends JPanel {
 				this.filteredScrollPanel.add(btnFilteredPoints);
 			}
 			
-			this.filteredScrollPanel.setPreferredSize(new Dimension(250,filteredPoints.size() * 25));
+			this.filteredScrollPanel.setPreferredSize(new Dimension(250,filteredPoints.size() * 30));
 			this.filteredScrollPanel.revalidate();
 			
 			this.filterScrollPane.revalidate();
@@ -773,5 +779,60 @@ public class MapPage extends JPanel {
 	 */
 	public void resetShowAllLocations(){
 		this.showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
+	}
+	
+	/**
+	 * Method setFilterButtons.
+	 * @param none
+	 * This method sets selected button enabled depending upon the type of map being displayed.
+	 */
+	public void setFilterButtons(){
+		if(this.isCampusMap == true){
+			this.vendingBtn.setEnabled(false);
+			this.classroomBtn.setEnabled(false);
+			this.stairsBtn.setEnabled(false);
+			this.elevatorBtn.setEnabled(false);
+			this.mensRestroomBtn.setEnabled(false);
+			this.womensRestroomBtn.setEnabled(false);
+			this.officeBtn.setEnabled(false);
+			this.cafeBtn.setEnabled(false);
+			
+			this.buildingBtn.setEnabled(true);
+			this.parkingLotBtn.setEnabled(true);
+		} else {
+			this.vendingBtn.setEnabled(true);
+			this.classroomBtn.setEnabled(true);
+			this.stairsBtn.setEnabled(true);
+			this.elevatorBtn.setEnabled(true);
+			this.mensRestroomBtn.setEnabled(true);
+			this.womensRestroomBtn.setEnabled(true);
+			this.officeBtn.setEnabled(true);
+			this.cafeBtn.setEnabled(true);
+			
+			this.buildingBtn.setEnabled(false);
+			this.parkingLotBtn.setEnabled(false);
+		}
+	}
+	
+	/**
+	 * Method filteredListItemClicked.
+	 * @param JLabel pointSelected
+	 * This method sends the selected item in the list to the map display panel
+	 * for displaying and highlights selected item in the scrollabel list.
+	 */
+	public void filteredListItemClicked(JLabel pointSelected){
+		String tempString = pointSelected.getText();
+		String[] tempArray = tempString.split(",");
+		Point tempPoint = new Point(Integer.parseInt(tempArray[0]), Integer.parseInt(tempArray[1]));
+		showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
+		showAllFilterPointBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
+		mapMapDisplayPanel.displaySelectedFilterPoint(tempPoint);
+		
+		for(int i= 0 ; i < this.filteredScrollPanel.getComponentCount(); i++){
+			((JLabel)this.filteredScrollPanel.getComponent(i)).setBackground(null);
+		}
+		
+		pointSelected.setBackground(Color.LIGHT_GRAY);
+		pointSelected.setOpaque(true);
 	}
 }

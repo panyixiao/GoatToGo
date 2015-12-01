@@ -119,6 +119,9 @@ public class MapDataController {
 		
 		switch(mapRequestCommand){
 		case "admin":
+			mainController.mapModel.loadMapLists();
+			LoadInMapNameList();
+			LoadInMapURL();
 			getAllManNameAndURL();
 			break;
 		case "CampusMap":
