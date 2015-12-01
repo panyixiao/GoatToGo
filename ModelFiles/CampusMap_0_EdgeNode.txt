@@ -31,14 +31,11 @@ NODES
 31 347 178 0 CampusMap 0 Building
 32 313 191 0 CampusMap 0 Building
 33 374 302 0 CampusMap 0 Building
-34 394 408 0 CampusMap 0 Building
 35 481 408 0 CampusMap 0 Building
-37 529 554 0 CampusMap 0 Building
 38 380 614 0 CampusMap 0 Building
 40 302 491 0 CampusMap 0 Building
 41 325 391 0 CampusMap 0 Building
 42 218 370 0 CampusMap 0 Building
-43 95 428 0 CampusMap 0 Building
 45 33 666 0 CampusMap 0 Building
 46 83 666 0 CampusMap 0 Building
 47 72 691 0 CampusMap 0 Building
@@ -140,13 +137,9 @@ NODES
 145 347 441 0 CampusMap 0 Waypoint
 146 294 428 0 CampusMap 0 Waypoint
 147 218 415 0 CampusMap 0 Waypoint
-148 166 415 0 CampusMap 0 Waypoint
 149 134 471 0 CampusMap 0 Waypoint
 150 134 522 0 CampusMap 0 Waypoint
-151 166 554 0 CampusMap 0 Waypoint
-152 218 554 0 CampusMap 0 Waypoint
 153 153 581 0 CampusMap 0 Building
-154 196 491 0 CampusMap 0 Waypoint
 155 400 546 0 CampusMap 0 Waypoint
 157 693 644 0 CampusMap 0 Waypoint
 158 686 599 0 CampusMap 0 Waypoint
@@ -180,7 +173,6 @@ NODES
 188 677 491 0 CampusMap 0 Waypoint
 189 667 527 0 CampusMap 0 Waypoint
 190 400 208 0 CampusMap 0 Parking
-191 145 391 0 CampusMap 0 Waypoint
 192 145 370 0 CampusMap 0 Waypoint
 193 145 339 0 CampusMap 0 Waypoint
 194 158 318 0 CampusMap 0 Waypoint
@@ -228,6 +220,12 @@ NODES
 237 523 632 0 CampusMap 0 Waypoint
 238 523 660 0 CampusMap 0 Waypoint
 239 529 681 0 CampusMap 0 Waypoint
+240 201 484 0 CampusMap 0 Waypoint
+241 172 554 0 CampusMap 0 Waypoint
+242 218 561 0 CampusMap 0 Waypoint
+243 275 441 0 CampusMap 0 Waypoint
+244 158 428 0 CampusMap 0 Waypoint
+245 140 398 1 Gym 0 Building
 EDGES
 1 70 71
 2 71 72
@@ -356,19 +354,9 @@ EDGES
 131 144 145
 132 145 146
 133 146 147
-134 147 148
-135 148 149
 136 149 150
-137 150 151
-138 151 152
-139 151 153
-140 43 148
 141 42 147
-142 154 148
-143 154 150
-144 154 151
 145 41 146
-146 34 144
 147 33 143
 148 29 140
 149 114 155
@@ -401,8 +389,6 @@ EDGES
 179 2 175
 180 2 139
 181 28 170
-182 37 169
-183 37 167
 184 90 106
 185 178 179
 186 179 180
@@ -424,7 +410,6 @@ EDGES
 204 26 188
 205 190 138
 206 1 190
-207 191 192
 208 192 193
 209 193 194
 212 196 197
@@ -449,7 +434,6 @@ EDGES
 231 202 205
 232 64 201
 233 64 199
-234 191 148
 235 32 207
 236 31 208
 237 30 208
@@ -476,7 +460,6 @@ EDGES
 259 226 227
 260 227 106
 261 224 108
-262 154 146
 263 113 145
 264 228 229
 265 229 230
@@ -495,3 +478,14 @@ EDGES
 278 238 239
 279 182 237
 280 239 180
+281 150 241
+282 150 240
+283 241 240
+284 242 241
+285 242 234
+286 243 240
+287 245 244
+288 244 149
+289 244 147
+290 192 244
+291 241 153

@@ -247,7 +247,7 @@ public class MainView {
 	 * Called from the MapPage
 	 */
 	public void getListOfBuildings() {
-		ArrayList<String> mapList = this.mainController.getMapList("campus");
+		ArrayList<String> mapList = this.mainController.getMapList("CampusMap");
 		mapPage.displayDropDownList(mapList);
 		
 		this.getMapURL(mapList.get(0));
