@@ -27,8 +27,8 @@ public class MainController{
 	private Hashtable<String, Path> calculationResult;
 	private ArrayList<String> resultMapList;
 	private Path currentPath;
-	private Node startPnt;
-	private Node EndPnt;
+	private Node startNode;
+	private Node endNode;
 	
 	
 	private AdminController userChecker;
@@ -86,13 +86,18 @@ public class MainController{
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		Point targetPnt = new Point();
-		System.out.println("Task Type: " + pntType);
 		
-		// Get a Node here instead of a Point!!!
-		targetPnt = mapModel.validatePoint(mapName, taskPnt.x, taskPnt.y);
-		
-		//mapModel.setStartEndPathPoint(targetPnt, pntType, mapName);
-		//setTempTaskPoint(taskPnt, pntType, mapName);
+		//System.out.println("Task Type: " + pntType);
+		if(pntType.equals("FROM")){
+			startNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
+			targetPnt.x = startNode.getX();
+			targetPnt.y = startNode.getY();
+		}
+		else if(pntType.equals("TO")){
+			endNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
+			targetPnt.x = endNode.getX();
+			targetPnt.y = endNode.getY();
+		}
 		
 		return targetPnt;
 	}
@@ -150,12 +155,14 @@ public class MainController{
 	public boolean getPathData(){
 		//String mapName = "BoyntonHall_1";
 		boolean pathCalculated = false;
-		// calculationResult =  mapModel.MULTILAYERPATH(startNode, endNode);
-		Enumeration<String> calculationResultMapName = calculationResult.keys();
-
-		while(calculationResultMapName.hasMoreElements()) {
-			String mapName = calculationResultMapName.nextElement();
-			resultMapList.add(mapName);
+		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
+		if(pathCalculated){			
+			calculationResult = mapModel.getMapPaths();
+			Enumeration<String> calculationResultMapName = calculationResult.keys();
+			while(calculationResultMapName.hasMoreElements()) {
+				String mapName = calculationResultMapName.nextElement();
+				resultMapList.add(mapName);
+			}			
 		}		
 		return pathCalculated;
 	}
