@@ -77,6 +77,13 @@ public class MapDataController {
 		return success;
 	}
 	
+	public ArrayList<String> getCurrentMapNameList(){
+		return listOfMapName;
+	}
+	public ArrayList<String> getCurrentMapURLList(){
+		return listOfMapURL;
+	}
+	
 	private String changeSeparator(String url){
 		String newUrl=new String();
 		String osName=System.getProperty("os.name");
@@ -130,7 +137,7 @@ public class MapDataController {
 			mainController.mapModel.loadMapLists();
 			LoadInMapNameList();
 			LoadInMapURL();
-			getAllManNameAndURL();
+			getAllMapNameAndURL();
 			break;
 		case "CampusMap":
 			getDesiredMapFromMapList(mapRequestCommand);
@@ -144,7 +151,7 @@ public class MapDataController {
 		}
 	}
 	
-	private void getAllManNameAndURL(){
+	private void getAllMapNameAndURL(){
 		for(String mapName:listOfMapName){
 			listOfMapNameForReturn.add(mapName);
 		}
@@ -331,7 +338,7 @@ public class MapDataController {
 		}else if (i>0){
 			Node n=findNodeInList(i);
 			n.setBuilding(buildingName);
-			n.setFloor(floorNum);
+			n.setFloorNum(floorNum);
 			n.setEntranceID(entranceID);
 			n.setType(pointType);
 			success= true;
@@ -436,7 +443,7 @@ public class MapDataController {
 	}
 	
 	public int CheckPntExistence(Point pnt){
-		int pntID = 0;
+		int pntID = -1;
 		int toleranceRadius = 20;	// 15 pixels
 		for (Node tempN: nodeList){
 			double d = Math.sqrt(Math.pow(pnt.getX() - tempN.getX(), 2) + 
@@ -572,7 +579,7 @@ public class MapDataController {
 	public int getFloorNumofNode(int nodeID){
 		int floorNum = 0;
 		if (this.findNodeInList(nodeID)!=null){
-			floorNum = this.findNodeInList(nodeID).getFloor();
+			floorNum = this.findNodeInList(nodeID).getFloorNum();
 			//waiting for extension of node class;
 			}		
 		return floorNum;

@@ -1,6 +1,5 @@
 NODES
 1 446 133 0 CampusMap 0 Building
-3 640 277 0 CampusMap 0 Building
 5 819 324 0 CampusMap 0 Building
 6 721 297 0 CampusMap 0 Building
 7 996 398 0 CampusMap 0 Building
@@ -113,8 +112,8 @@ NODES
 128 839 1016 0 CampusMap 0 Waypoint
 129 1016 754 0 CampusMap 0 Waypoint
 130 984 747 0 CampusMap 0 Waypoint
-131 721 357 0 CampusMap 0 ParkingLot
-132 759 349 0 CampusMap 0 ParkingLot
+131 721 357 0 CampusMap 0 Waypoint
+132 759 349 0 CampusMap 0 Waypoint
 133 1011 357 0 CampusMap 0 Waypoint
 134 776 462 0 CampusMap 0 Waypoint
 135 753 224 0 CampusMap 0 Waypoint
@@ -155,7 +154,6 @@ NODES
 172 600 408 0 CampusMap 0 Waypoint
 173 612 363 0 CampusMap 0 Waypoint
 174 619 329 0 CampusMap 0 Waypoint
-175 600 302 0 CampusMap 0 Waypoint
 176 560 289 0 CampusMap 0 Waypoint
 177 537 277 0 CampusMap 0 Waypoint
 178 709 707 0 CampusMap 0 Waypoint
@@ -244,12 +242,14 @@ NODES
 267 544 566 2 BoyntonHall 2 Classroom
 268 500 561 1 BoyntonHall 2 Building
 269 523 546 3 BoyntonHall 1 Building
-270 544 535 0 CampusMap 0 Classroom
-271 451 471 0 CampusMap 0 Classroom
-272 414 421 0 CampusMap 0 Classroom
-273 374 441 0 CampusMap 0 Classroom
-274 407 178 0 CampusMap 0 Classroom
-275 744 632 0 CampusMap 0 Classroom
+270 544 535 0 CampusMap 0 Waypoint
+271 451 471 0 CampusMap 0 Waypoint
+272 414 421 0 CampusMap 0 Building
+273 374 441 0 CampusMap 0 Building
+274 407 178 0 CampusMap 0 Waypoint
+275 744 632 0 CampusMap 0 Waypoint
+276 592 302 0 CampusMap 0 Waypoint
+277 645 283 0 CampusMap 0 Building
 EDGES
 1 70 71
 2 71 72
@@ -402,12 +402,9 @@ EDGES
 170 171 172
 171 172 173
 172 173 174
-173 174 175
-174 175 176
 175 176 177
 176 177 139
 177 26 172
-178 3 175
 181 28 170
 184 90 106
 185 178 179
@@ -503,7 +500,6 @@ EDGES
 294 233 245
 295 245 116
 296 246 139
-297 247 175
 298 248 214
 301 250 138
 302 250 216
@@ -546,3 +542,7 @@ EDGES
 342 13 275
 343 275 105
 344 275 104
+345 176 276
+346 276 174
+347 277 276
+348 247 176

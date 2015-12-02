@@ -70,6 +70,7 @@ public class FileProcessing {
 			String line;
 			//Array of map values from master list text file
 			String lines[];
+			int i = 0;
 			try{
 				originalFile = new File(masterMapListURL);
 				tempFile = new File(masterMapListTemp);
@@ -83,9 +84,12 @@ public class FileProcessing {
 						lines = line.split("[\\s+]");
 						//IF the line map name does not equal null and the line map name does not equal map name
 						if(lines[0] != null && !lines[0].equals(mapName)){
-								//THEN re-write line to temporary file
-								System.out.println("line is not search deletion re-write");
-								writer.write(line  + System.getProperty("line.separator"));
+								if( i == 0){
+									writer.write(line);
+								}else{
+									writer.write(System.getProperty("line.separator"));
+									writer.write(line);
+								}		
 						}
 				}
 			}catch(IOException e){
@@ -293,7 +297,7 @@ public class FileProcessing {
 		    			  node.getY() + " " +
 		    			  node.getEntranceID() + " " +
 		    			  node.getBuilding() + " " +
-		    			  node.getFloor() + " " +
+		    			  node.getFloorNum() + " " +
 		    			  node.getType() +
 		    			  System.getProperty("line.separator"));
 		    }
