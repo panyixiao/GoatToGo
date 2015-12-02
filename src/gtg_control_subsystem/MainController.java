@@ -26,7 +26,10 @@ public class MainController{
 
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;
+		
 		mapDataController = new MapDataController(this);
+		userChecker = new AdminController(this);
+         //pathSearchController = new PathSearchController(this);
 	}	
 	
 	/******************************
@@ -121,12 +124,7 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Boolean adminQualification(String userName, String passWord){
-		Boolean isAdmin = false;
-		isAdmin = mapModel.isValidAdmin(userName, passWord);
-		if(!isAdmin){
-			System.out.println("Sorry You are not Admin!");
-			mapModel.printAdmins();
-		}
+		Boolean isAdmin = userChecker.adminQualification(userName, passWord);
 		return isAdmin;
 	}
 	

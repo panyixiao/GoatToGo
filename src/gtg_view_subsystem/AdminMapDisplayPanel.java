@@ -146,8 +146,8 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		panel.add(new JLabel("Type:"));
 		panel.add(pointType);
 
-//		panel.add(new JLabel("Description:"));
-//		panel.add(description);
+		panel.add(new JLabel("Description:"));
+		panel.add(description);
 		if (me.getButton() == MouseEvent.BUTTON1) {
 			switch (this.mode) {
 			case "Create Points":
