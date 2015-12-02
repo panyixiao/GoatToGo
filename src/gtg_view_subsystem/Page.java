@@ -18,8 +18,8 @@ import java.awt.event.MouseMotionAdapter;
 public class Page extends JFrame {
 	private JPanel mainPanel, headerPanel, dragpanel;
 	private JLabel wpiLogoHolder, lblGoattogo;
-	private ImageIcon wpiLogoImage, minimizeBtnImage, closeBtnImage;
-	private JButton minimizeBtn, closeBtn, adminBtn, logoutBtn;
+	private ImageIcon wpiLogoImage, minimizeBtnImage, closeBtnImage,maximizeBtnImage;
+	private JButton minimizeBtn, closeBtn, adminBtn, logoutBtn,maximizeBtn;
 	private MainView parent;
 	private int pX, pY;
 	/**
@@ -58,13 +58,31 @@ public class Page extends JFrame {
 				setState(Frame.ICONIFIED);
 			}
 		});
-		this.minimizeBtn.setBounds(1285, 45, 22, 4);
+		this.minimizeBtn.setBounds(1285, 45, 22, 5);
 		this.minimizeBtn.setContentAreaFilled(false);
 		this.minimizeBtn.setBorder(null);
 		this.minimizeBtnImage = new ImageIcon(ImageURLS.MINIMIZE_BUTTON);
 		this.minimizeBtn.setIcon(this.minimizeBtnImage);
 		this.headerPanel.add(this.minimizeBtn);
 
+		/*this.maximizeBtn = new JButton();
+		this.maximizeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(getExtendedState() != Frame.MAXIMIZED_BOTH) 
+				setExtendedState(Frame.MAXIMIZED_BOTH); 
+				else 
+				setExtendedState(Frame.NORMAL);
+			}
+		});
+		this.maximizeBtn.setBounds(1285, 15, 22, 50);
+		this.maximizeBtn.setContentAreaFilled(false);
+		this.maximizeBtn.setBorder(null);
+		this.maximizeBtnImage = new ImageIcon(ImageURLS.MAXIMIZE_BUTTON);
+		this.maximizeBtn.setIcon(this.maximizeBtnImage);
+		this.headerPanel.add(this.maximizeBtn);
+		*/
+		
+		
 		this.closeBtn = new JButton();
 		this.closeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -88,7 +106,7 @@ public class Page extends JFrame {
 		this.adminBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
 		this.adminBtn.setBackground(null);
 		this.adminBtn.setForeground(Color.WHITE);
-		this.adminBtn.setBounds(1180, 18, 70, 44);
+		this.adminBtn.setBounds(1185, 18, 70, 44);
 		this.adminBtn.setBorder(null);
 		this.adminBtn.setFocusPainted(false);
 		headerPanel.add(this.adminBtn);
@@ -103,7 +121,7 @@ public class Page extends JFrame {
 		this.logoutBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
 		this.logoutBtn.setBackground(null);
 		this.logoutBtn.setForeground(Color.WHITE);
-		this.logoutBtn.setBounds(1180, 18, 70, 44);
+		this.logoutBtn.setBounds(1185, 18, 70, 44);
 		this.logoutBtn.setBorder(null);
 		this.logoutBtn.setFocusPainted(false);
 		this.logoutBtn.setVisible(false);
