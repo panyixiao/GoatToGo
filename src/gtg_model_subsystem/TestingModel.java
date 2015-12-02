@@ -21,17 +21,21 @@ public class TestingModel {
 		//remind alyssa and neha that we need relative path and not absolute
 		
 		//TEST CASE 1
-		//test.loadFiles("BH_Basement");
+		test.loadFiles();
 		//test.printNodes("BH_Basement");
-		/**test.printNodes("BH_Basement");
-		test.setStartEndPathPoint(new Point(590,346), "FROM", "BH_Basement");
-		test.setStartEndPathPoint(new Point(632,189), "TO", "BH_Basement");
-		System.out.println(test.getPath().getStartPoint().getID());
+		//test.setStartEndPathPoint(new Point(605,90), "TO", "BoyntonHall_1");
+		//test.setStartEndPathPoint(new Point(422,615), "FROM", "BoyntonHall_3");
+		Node toNode = test.validatePoint("BoyntonHall_1",605, 90, " ");
+
+		Node fromNode = test.validatePoint("BoyntonHall_3",422, 615, " ");
+		test.multiPathCalculate(fromNode, toNode);
+		//test.printNodes(test.getMapPaths().get("BoyntonHall_1").getWayPoints());
+		/**System.out.println(test.getPath().getStartPoint().getID());
 		System.out.println(test.getPath().getEndPoint().getID());
 		test.testDij("BH_Basement");
 		Point point = test.validatePoint("BH_Basement", 125, 400);
 		System.out.println("Point x: " + point.x + " Point Y: " + point.y);
-		TestController testController = new TestController(test);
-		**/
+		TestController testController = new TestController(test);*/
+		
 	}
 }

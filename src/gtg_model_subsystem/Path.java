@@ -16,6 +16,7 @@ public class Path
 		*/
 		private List<Node> wayPoints;
 		
+		double distance;
 		/**
 		 * Constructor for Path.
 		 * @param startPoint Node
