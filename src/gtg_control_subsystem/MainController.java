@@ -17,6 +17,8 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.Iterator;
+
 public class MainController{
 		
 	public MainModel mapModel;
@@ -84,8 +86,7 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
-		Point targetPnt = new Point();
-		
+		Point targetPnt = new Point();		
 		//System.out.println("Task Type: " + pntType);
 		if(pntType.equals("FROM")){
 			startNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
@@ -127,12 +128,12 @@ public class MainController{
 
 		// Set mapName List
 		path.setArrayOfMapNames(resultMapList);	
-		
+
 		// Set URL of current map
 		int IndexOfMapURL = mapDataController.getCurrentMapNameList().indexOf(requestedMapName);
 		String mapURL = mapDataController.getCurrentMapURLList().get(IndexOfMapURL);		
 		path.setMapURL(mapURL);
-		
+
 		return path;
 	}
 	
@@ -148,11 +149,9 @@ public class MainController{
 			}
 		}		
 		return pntPath;
-	}
-	
+	}	
 	
 	public boolean getPathData(){
-		//String mapName = "BoyntonHall_1";
 		boolean pathCalculated = false;
 		resultMapList=new ArrayList<String>();
 		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
@@ -160,15 +159,16 @@ public class MainController{
 			System.out.println("Path was able to calculate\n");
 			calculationResult = mapModel.getMapPaths();
 			Set<String> calculationResultMapName = calculationResult.keySet();
-			for(String mapName: calculationResultMapName ) {
+			Iterator<String> iterator = calculationResultMapName.iterator();
+			while(iterator.hasNext()){
 				//ArrayList of map names for Neha
+				String mapName = iterator.next();
+				System.out.print(mapName);
 				resultMapList.add(mapName);
-			}
-			System.out.print(resultMapList);
+			}			
 		}
 		return pathCalculated;
-	}
-	
+	}	
 	
 	/******************************
 	 * 
