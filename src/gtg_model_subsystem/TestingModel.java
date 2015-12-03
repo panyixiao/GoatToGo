@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedHashMap;
 /**
  * Separate Main process to test Model subsystem, will be changed later to hook into Controller and view API
  * To run and see what is there so far right click main model -> Run As -> Java Application
@@ -30,10 +31,10 @@ public class TestingModel {
 		//test.setStartEndPathPoint(new Point(422,615), "FROM", "BoyntonHall_3");
 		
 		Node toNode = test.validatePoint("BoyntonHall_1",605, 90, " ");
-		// BH3 TWO NODES TO TEST ON THIS FLOOR TO BH 1 (429 517) (422 615)
+		// BH3 TWO NODES TO TEST ON THI S FLOOR TO BH 1 (429 517) (422 615)
 		Node fromNode = test.validatePoint("BoyntonHall_3",429, 517, " ");
 		test.multiPathCalculate(fromNode, toNode);
-		Hashtable<String,Path> localMapPaths = test.getMapPaths();
+		LinkedHashMap<String,Path> localMapPaths = test.getMapPaths();
 		ArrayList<Path> pathArrayList = new ArrayList<Path>();
 		List<Node> wayPointsList = new ArrayList<Node>();
 		System.out.println("Back to  main");
