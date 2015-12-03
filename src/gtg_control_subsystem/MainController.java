@@ -155,6 +155,7 @@ public class MainController{
 	public boolean getPathData(){
 		//String mapName = "BoyntonHall_1";
 		boolean pathCalculated = false;
+		resultMapList=new ArrayList<String>();
 		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
 		if(pathCalculated){	
 			System.out.println("Path was able to calculate\n");
