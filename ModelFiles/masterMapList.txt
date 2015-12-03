@@ -4,3 +4,8 @@ BoyntonHall_4 images\BH_ThirdFloor.png Floor
 BoyntonHall_2 images\BH_FirstFloor.png Floor
 BoyntonHall_1 images\BH_Basement.png Floor
 PC_1 images\PC_FirstFloor.png Floor
+FL_SubBasement_1 images\FL_SubBasement.PNG Floor
+FL_Basement_2 images\FL_Basement.PNG Floor
+FL_FirstFloor_3 images\FL_FirstFloor.PNG Floor
+FL_SecondFloor_4 images\FL_SecondFloor.PNG Floor
+FL_ThirdFloor_5 images\FL_ThirdFloor.PNG Floor

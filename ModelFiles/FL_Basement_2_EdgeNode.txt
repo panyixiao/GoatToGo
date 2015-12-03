@@ -1,0 +1,163 @@
+NODES
+1 644 165 0 FL_Basement 2 Waypoint
+2 694 165 0 FL_Basement 2 Waypoint
+3 740 165 0 FL_Basement 2 Waypoint
+4 767 165 0 FL_Basement 2 Waypoint
+5 818 165 0 FL_Basement 2 Waypoint
+6 818 187 0 FL_Basement 2 Waypoint
+7 818 264 0 FL_Basement 2 Waypoint
+8 818 321 0 FL_Basement 2 Waypoint
+9 818 351 0 FL_Basement 2 Waypoint
+10 818 419 0 FL_Basement 2 Waypoint
+11 818 481 0 FL_Basement 2 Waypoint
+12 767 481 0 FL_Basement 2 Waypoint
+13 767 506 0 FL_Basement 2 Waypoint
+14 767 572 0 FL_Basement 2 Waypoint
+15 860 572 0 FL_Basement 2 Waypoint
+16 860 733 0 FL_Basement 2 Waypoint
+17 767 733 0 FL_Basement 2 Waypoint
+18 767 860 0 FL_Basement 2 Waypoint
+19 860 860 0 FL_Basement 2 Waypoint
+20 896 860 0 FL_Basement 2 Waypoint
+21 733 733 0 FL_Basement 2 Waypoint
+22 713 740 0 FL_Basement 2 Waypoint
+23 683 740 0 FL_Basement 2 Waypoint
+24 662 733 0 FL_Basement 2 Waypoint
+25 637 733 0 FL_Basement 2 Waypoint
+26 606 733 0 FL_Basement 2 Waypoint
+27 571 733 0 FL_Basement 2 Waypoint
+28 508 733 0 FL_Basement 2 Waypoint
+29 483 733 0 FL_Basement 2 Waypoint
+30 424 733 0 FL_Basement 2 Waypoint
+31 355 733 0 FL_Basement 2 Waypoint
+32 202 733 0 FL_Basement 2 Waypoint
+33 202 626 0 FL_Basement 2 Waypoint
+34 399 626 0 FL_Basement 2 Waypoint
+35 399 584 0 FL_Basement 2 Waypoint
+36 566 584 0 FL_Basement 2 Waypoint
+37 612 584 0 FL_Basement 2 Waypoint
+38 713 584 0 FL_Basement 2 Waypoint
+39 689 98 0 FL_Basement 2 Classroom
+40 694 221 0 FL_Basement 2 Classroom
+41 740 221 0 FL_Basement 2 Classroom
+42 767 120 0 FL_Basement 2 Classroom
+43 854 115 0 FL_Basement 2 Classroom
+44 878 187 0 FL_Basement 2 Classroom
+45 878 264 0 FL_Basement 2 Classroom
+46 767 264 0 FL_Basement 2 Classroom
+47 767 321 0 FL_Basement 2 Classroom
+48 878 351 0 FL_Basement 2 Classroom
+50 756 419 0 FL_Basement 2 Classroom
+51 878 419 0 FL_Basement 2 Classroom
+52 878 481 0 FL_Basement 2 Classroom
+53 945 572 0 FL_Basement 2 Classroom
+54 713 626 0 FL_Basement 2 Classroom
+55 612 607 0 FL_Basement 2 Classroom
+56 566 644 0 FL_Basement 2 Classroom
+57 530 644 0 FL_Basement 2 Classroom
+58 530 697 0 FL_Basement 2 Classroom
+59 530 614 0 FL_Basement 2 Classroom
+60 493 614 0 FL_Basement 2 Classroom
+61 348 652 0 FL_Basement 2 Classroom
+62 399 652 0 FL_Basement 2 Classroom
+63 424 652 0 FL_Basement 2 Classroom
+64 424 626 0 FL_Basement 2 Classroom
+65 424 708 0 FL_Basement 2 Classroom
+66 662 684 0 FL_Basement 2 Classroom
+67 631 684 0 FL_Basement 2 Classroom
+68 606 684 0 FL_Basement 2 Classroom
+69 683 784 0 FL_Basement 2 Classroom
+70 637 784 0 FL_Basement 2 Classroom
+71 508 779 0 FL_Basement 2 Classroom
+72 637 860 0 FL_Basement 2 Classroom
+73 483 779 0 FL_Basement 2 Classroom
+74 355 809 0 FL_Basement 2 Classroom
+75 202 804 0 FL_Basement 2 Classroom
+76 202 584 0 FL_Basement 2 Classroom
+77 719 506 0 FL_Basement 2 Classroom
+EDGES
+1 1 2
+2 2 3
+3 3 4
+4 4 5
+5 5 6
+6 6 7
+7 7 8
+8 8 9
+9 9 10
+10 10 11
+11 11 12
+12 12 13
+13 13 14
+14 14 15
+15 15 16
+16 16 17
+17 17 18
+18 18 19
+19 19 16
+20 19 20
+21 21 22
+22 22 23
+23 23 24
+24 24 25
+25 25 26
+26 26 27
+27 27 28
+28 28 29
+29 29 30
+30 30 31
+31 31 32
+32 32 33
+33 33 34
+34 34 35
+35 35 36
+36 36 37
+37 37 38
+38 38 14
+39 39 2
+40 40 2
+41 3 41
+42 4 42
+43 43 5
+44 6 44
+45 7 45
+46 7 46
+47 8 47
+48 9 48
+49 51 10
+50 10 50
+51 77 13
+52 52 11
+53 53 15
+54 38 54
+55 54 22
+56 21 17
+57 23 69
+58 69 70
+59 70 72
+60 72 18
+61 70 71
+62 28 71
+63 29 73
+64 66 24
+65 25 67
+66 26 68
+67 55 37
+68 36 56
+69 56 27
+70 56 57
+71 57 59
+72 59 60
+73 57 58
+74 65 30
+75 63 64
+76 62 63
+77 65 63
+78 34 62
+79 62 61
+80 61 31
+81 31 74
+82 74 75
+83 75 32
+84 33 76
+85 76 35
