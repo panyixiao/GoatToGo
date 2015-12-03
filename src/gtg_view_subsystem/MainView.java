@@ -138,9 +138,9 @@ public class MainView {
 	public void getPathResult(String mapName) {
 		// 2015-12-01 Yixiao
 		mainController.getPathData();
-		//PathData path = mainController.getPathData(mapName);
-		//showResultPage();
-		//this.resultPage.displayPath(path);
+		PathData path = mainController.getDesiredPath(0);
+		showResultPage();
+		this.resultPage.displayPath(path);
 	}
 
 	/**

@@ -164,8 +164,9 @@ public class MainController{
 			while(calculationResultMapName.hasMoreElements()) {
 				String mapName = calculationResultMapName.nextElement();
 				resultMapList.add(mapName);
-			}			
-		}		
+			}
+			System.out.print(resultMapList);
+		}
 		return pathCalculated;
 	}
 	
