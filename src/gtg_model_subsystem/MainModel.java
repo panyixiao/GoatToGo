@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.util.HashSet;
-
+import java.util.LinkedHashMap;
 /**
  */
 public class MainModel {
@@ -27,12 +27,12 @@ public class MainModel {
 	private FileProcessing fileProcessing;
 	private Map tempMap;
 	private Hashtable<String, Map> mapTable;
-	private Hashtable<String, Path> mapPaths;
+	private LinkedHashMap<String, Path> mapPaths;
 	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
 		mapTable = new Hashtable<String, Map>();
-		mapPaths = new Hashtable<String, Path>();
+		mapPaths = new LinkedHashMap<String, Path>();
 		
 		path = new Path(null, null, null);
 		try {			
@@ -235,6 +235,10 @@ public class MainModel {
 	 */
 	public boolean multiPathCalculate(Node startNode, Node endNode){
 		boolean multiPathCalcSuccess = true;
+		if((startNode == null) || (endNode == null)){
+			multiPathCalcSuccess = false;
+			return multiPathCalcSuccess;
+		}
 		int floorNumber;
 		String campusMap = "CampusMap";
 		ArrayList<String> startBuildingMapNames;
@@ -687,7 +691,7 @@ public class MainModel {
 		}
 		return mapTypes;
 	}
-	public Hashtable<String,Path> getMapPaths(){
+	public LinkedHashMap<String,Path> getMapPaths(){
 		return this.mapPaths;
 	}
 	/**

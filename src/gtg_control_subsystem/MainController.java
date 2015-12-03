@@ -15,16 +15,15 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Enumeration;
-
-
-
+import java.util.LinkedHashMap;
+import java.util.Set;
 public class MainController{
 		
 	public MainModel mapModel;
 	/**/
 	
 	private PathSearchController pathSearchController;
-	private Hashtable<String, Path> calculationResult;
+	private LinkedHashMap<String, Path> calculationResult;
 	private ArrayList<String> resultMapList;
 	private Path currentPath;
 	private Node startNode;
@@ -160,9 +159,9 @@ public class MainController{
 		if(pathCalculated){	
 			System.out.println("Path was able to calculate\n");
 			calculationResult = mapModel.getMapPaths();
-			Enumeration<String> calculationResultMapName = calculationResult.keys();
-			while(calculationResultMapName.hasMoreElements()) {
-				String mapName = calculationResultMapName.nextElement();
+			Set<String> calculationResultMapName = calculationResult.keySet();
+			for(String mapName: calculationResultMapName ) {
+				//ArrayList of map names for Neha
 				resultMapList.add(mapName);
 			}
 			System.out.print(resultMapList);
