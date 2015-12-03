@@ -155,8 +155,10 @@ public class MainController{
 	public boolean getPathData(){
 		//String mapName = "BoyntonHall_1";
 		boolean pathCalculated = false;
+		resultMapList=new ArrayList<String>();
 		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
-		if(pathCalculated){			
+		if(pathCalculated){	
+			System.out.println("Path was able to calculate\n");
 			calculationResult = mapModel.getMapPaths();
 			Enumeration<String> calculationResultMapName = calculationResult.keys();
 			while(calculationResultMapName.hasMoreElements()) {

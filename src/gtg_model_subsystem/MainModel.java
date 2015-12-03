@@ -218,8 +218,7 @@ public class MainModel {
 		
 		//testing for loading of nodes/edges
 		try {
-			runJDijkstra(mapName);
-			
+			//runJDijkstra(mapName);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.toString());
@@ -262,13 +261,14 @@ public class MainModel {
 			int compareFloors = compareFloorNum(startNode, endNode);
 			//Start Floor is higher then end floor go down
 			if(compareFloors == 1 || compareFloors == -1){
-				calculatePathForFloor(startNode, endNode, compareFloors);
+				multiPathCalcSuccess = calculatePathForFloor(startNode, endNode, compareFloors);
 			}
 			//Start floor equals end floor stay and do single path calculate
 			else{
-				path.setStartPoint(startNode);
-				path.setEndPoint(endNode);
-				singlePathCalculate(startNode.getBuilding() + "_" + startNode.getFloorNum());
+				Path tempPath = new Path(null, null, null);
+				tempPath.setStartPoint(startNode);
+				tempPath.setEndPoint(endNode);
+				multiPathCalcSuccess = singlePathCalculate(startNode.getBuilding() + "_" + startNode.getFloorNum(), tempPath);
 			}
 			
 		}
@@ -277,8 +277,6 @@ public class MainModel {
 	private boolean calculatePathForFloor(Node start, Node end, int compareFloors){
 			boolean floorPathCalculateSuccess = true;
 			Path tempPath = new Path(null, null, null);
-			path.setStartPoint(null);
-			path.setEndPoint(null);
 			Node startNode = null;
 			Node endNode =  null;
 			ArrayList<Integer> tempEntIdListStart = new ArrayList<Integer>();
@@ -315,24 +313,36 @@ public class MainModel {
 							}
 						}
 					}
-					if(path.getStartPoint() == null){
+					if(startNode == null){
 						System.out.println("Path is null");
-						path.setStartPoint(start);
 						startNode = start;
+					}else{
+						System.out.println("attempting to set start node");
+						System.out.println("Entrance ID set" + startNode.getEntranceID());
+						startNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
+									startNode.getEntranceID());
 					}
 					for(int entranceID: sameEntIdList){
-						System.out.println("attempting to start endnode");
+						System.out.println("attempting to set endnode");
 						System.out.println("Entrance ID set" + entranceID);
 						endNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
 								  entranceID);
+						
 					}
-					path.setEndPoint(endNode);
+					tempPath.setStartPoint(startNode);
+					tempPath.setEndPoint(endNode);
+					if(tempPath.getStartPoint() == null || tempPath.getEndPoint() == null){
+						System.out.println("one of these is null");
+					}
 					System.out.println("single path calculate");
-					singlePathCalculate(startNode.getBuilding() + "_" + floorNumber);
-					System.out.println("Whoops it broke");
-					path.setStartPoint(getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ tempNumber).getGraph().getNodes(), path.getEndPoint().getEntranceID()));
+					System.out.println("START NODE INFORMATION: " + startNode.getX() +" " +startNode.getY() + " " +startNode.getBuilding() + " " + startNode.getFloorNum());
+					System.out.println("END NODE INFORMATION: " + endNode.getX() +" " +endNode.getY() + " " +endNode.getBuilding() + " " + endNode.getFloorNum());
+					floorPathCalculateSuccess = singlePathCalculate(startNode.getBuilding() + "_" + floorNumber, tempPath);
+					System.out.println("Setting new start point");
+					//path.setStartPoint(getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ tempNumber).getGraph().getNodes(), path.getEndPoint().getEntranceID()));
 					floorNumber--;
-				}
+					tempPath = new Path(null, null, null);
+				}//END FIRST IF
 				//Start floor is less then end floor go up
 				else if(compareFloors == -1){
 					floorNumber++;
@@ -340,12 +350,19 @@ public class MainModel {
 				else{
 					System.out.println("The floor comparison went wrong");
 				}
-					path.setEndPoint(end);
-					path.setStartPoint(getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(), path.getEndPoint().getEntranceID()));
-					System.out.println("FLOOR NUMBER " + floorNumber);
-					singlePathCalculate(startNode.getBuilding() + "_" + floorNumber);
-
 			}
+			startNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
+					startNode.getEntranceID());
+			tempPath.setStartPoint(startNode);
+			tempPath.setEndPoint(end);
+			System.out.println(tempPath.getEndPoint().getEntranceID());
+			System.out.println("FLOOR NUMBER " + floorNumber);
+			System.out.println("NEXT FLOOR: " + start.getBuilding() + "_"+ floorNumber);
+			//System.out.println("New start point" + path.getStartPoint().getBuilding() + " " +path.getStartPoint().getFloorNum() + " " +path.getStartPoint().getFloorNum()
+			//		 + " " +path.getStartPoint().getX() + " " +  path.getStartPoint().getY());
+			floorPathCalculateSuccess = singlePathCalculate(startNode.getBuilding() + "_" + floorNumber, tempPath);
+
+			printMapPaths();
 			return floorPathCalculateSuccess;
 		
 	}
@@ -411,51 +428,60 @@ public class MainModel {
 	 * Method testDij.
 	 * @param mapName String
 	 */
-	public void singlePathCalculate(String mapName){
-		
+	public boolean singlePathCalculate(String mapName, Path tempPath){
+		boolean calculateSuccess = true;
 		//testing for loading of nodes/edges
 		try {
-			runJDijkstra(mapName);
+			calculateSuccess = runJDijkstra(mapName, tempPath);
 			
 		} catch (Exception e) {
+			calculateSuccess = false;
 			// TODO Auto-generated catch block
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
-		
+		return calculateSuccess;
 	}
-	/** Temporary java dijkstra algorithim implemented by Joshua until he speaks with Libin about
-	 *  fixing his up. First set the current maps graph into the algorithim. Next cycle through the nodes
-	 *  and pluck out 
+	/** Dijkstra algorithim
 	 * @param mapName String
 	 */
-	public boolean runJDijkstra(String mapName){
+	public boolean runJDijkstra(String mapName, Path tempPath){
 		boolean dijkstraSuccess = true;
 		//Create object instance with temporary dijkstra algorithim
+		System.out.println("START POINT INFO" +tempPath.getStartPoint().getBuilding() + " " + tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
+		//Edge case where the start and end point equal each other
+		if(tempPath.getStartPoint() == tempPath.getEndPoint()){
+			System.out.println("The points are the same");
+			List<Node> wayPoints = new ArrayList<Node>();
+			wayPoints.add(tempPath.getStartPoint());
+			tempPath.setPath(wayPoints);
+			printNodes(tempPath.getWayPoints());
+			mapPaths.put(mapName, path);
+			return dijkstraSuccess;
+		}
 		JDijkstra dijkstra = new JDijkstra(mapTable.get(mapName).getGraph());
 		System.out.println("Graph is set");
 		//Start the execution with the first starting node
-		System.out.println(path.getStartPoint().getEntranceID() + " X for start path point"+  path.getStartPoint().getX());
-		System.out.println(path.getEndPoint().getEntranceID() + " X for end path point"+  path.getEndPoint().getX());
-		
-		dijkstra.execute(path.getStartPoint());
+		dijkstra.execute(tempPath.getStartPoint());
 		
 		//Store the wayPoints for the map's graph
-		LinkedList<Node> wayPoints = dijkstra.getPath(path.getEndPoint());
+		LinkedList<Node> wayPoints = dijkstra.getPath(tempPath.getEndPoint());
 		
 		//Create the new path with the start point, end point, and way points
-		path.setPath(wayPoints);
-		System.out.println("Attempimpt to print path info" + path.getStartPoint().getX() + path.getEndPoint().getX() + "\n");
-		System.out.println(mapName);
-		//Store the map with the associated path for user
-		if(mapPaths.put(mapName, path) != null){
-			dijkstraSuccess = false;
-			System.out.println("Path already exists for map");
+		tempPath.setPath(wayPoints);
+		if(tempPath.getWayPoints() == null){
+			System.out.println("Something went wrong storing nodes");
+		}
+		else{
+			System.out.println("PATH WAY POINTS: " + mapName);
+			printNodes(tempPath.getWayPoints());
 		}
 		if(!mapPaths.containsKey(mapName)){
+			mapPaths.put(mapName, tempPath);
+			System.out.println("Path for map " + mapName + " does not exist");
+		}else{
 			dijkstraSuccess = false;
 			System.out.println("Path was not successfully placed");
 		}
-		
 		return dijkstraSuccess;
 	}
 	//private calculatePathDistance(LinkedList<Node> wayPoints){
@@ -710,6 +736,12 @@ public class MainModel {
 			}
     	}
 		return 0;
+    }
+    public void printMapPaths(){
+    	for(String s: mapPaths.keySet()){
+    		System.out.println("PRINTING NODE INFO FOR MAP: " + s);
+			printNodes(mapPaths.get(s).getWayPoints());
+    	}
     }
     
 }
