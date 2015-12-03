@@ -162,6 +162,7 @@ public class JDijkstra {
 	    Collections.reverse(path);
 	    return path;
 	  }
+	  
 	  /**
 	   * Create double edge method takes in a coordinategraph and creates a temporary double edge between two points.
 	   * This allows for a complete connection throughout the graph without requiring to save all of the double edges.

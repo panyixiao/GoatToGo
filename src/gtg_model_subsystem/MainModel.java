@@ -5,12 +5,15 @@ import java.awt.geom.Point2D;
 
 
 import java.util.List;
+
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Hashtable;
+import java.util.HashSet;
 
 /**
  */
@@ -18,6 +21,7 @@ public class MainModel {
 	private List<Node> nodes;
 	private List<Edge> edges;
 	private Path path;
+	private Path shortestPath = null;
 	private CoordinateGraph graph;
 	private List<Admin> admins;
 	private FileProcessing fileProcessing;
@@ -28,6 +32,8 @@ public class MainModel {
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
 		mapTable = new Hashtable<String, Map>();
+		mapPaths = new Hashtable<String, Path>();
+		
 		path = new Path(null, null, null);
 		try {			
 			loadMapLists();
@@ -212,60 +218,275 @@ public class MainModel {
 		
 		//testing for loading of nodes/edges
 		try {
-			runJDijkstra(mapName);
-			
+			//runJDijkstra(mapName);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
 		
 	}
-	
-	public boolean multiPathCalculate(String[] mapNames){
+	/**
+	 * calculate the multilayer path between different floors 
+	 * @param mapNames different maps that are going to be calculated
+	 * @param startNode the start Node
+	 * @param endNode the end Node
+	 * @return true if calculate multipath successfully
+	 *         false if calculation fails 
+	 */
+	public boolean multiPathCalculate(Node startNode, Node endNode){
 		boolean multiPathCalcSuccess = true;
-		for(String mapName: mapNames){
-			singlePathCalculate(mapName);
+		int floorNumber;
+		String campusMap = "CampusMap";
+		ArrayList<String> startBuildingMapNames;
+		ArrayList<String> endBuildingMapNames;
+		String startBuilding = startNode.getBuilding();
+		String endBuilding = endNode.getBuilding();
+		//int startNodeEntranceID= startNode.getEntranceID();
+		//IF the two buildings for the nodes are not equal THEN
+		if(!startNode.getBuilding().equals(endNode.getBuilding())){
+			//IF the start building equals the campus map THEN
+			if(startNode.getBuilding().equals(campusMap)){}
+			else{startBuildingMapNames = getBuildingMaps(startNode.getBuilding());}
+			
+			if(endNode.getBuilding().equals(campusMap)){}
+			else{endBuildingMapNames = getBuildingMaps(endNode.getBuilding());}
 		}
-		
+		if(startNode.getBuilding().equals(endNode.getBuilding())){
+			System.out.println("The buildings are the same");
+			startBuildingMapNames = getBuildingMaps(startNode.getBuilding());
+			for(String s: startBuildingMapNames){
+				System.out.println(s);
+			}
+			//Next compare the two floors for the given nodes
+			int compareFloors = compareFloorNum(startNode, endNode);
+			//Start Floor is higher then end floor go down
+			if(compareFloors == 1 || compareFloors == -1){
+				multiPathCalcSuccess = calculatePathForFloor(startNode, endNode, compareFloors);
+			}
+			//Start floor equals end floor stay and do single path calculate
+			else{
+				Path tempPath = new Path(null, null, null);
+				tempPath.setStartPoint(startNode);
+				tempPath.setEndPoint(endNode);
+				multiPathCalcSuccess = singlePathCalculate(startNode.getBuilding() + "_" + startNode.getFloorNum(), tempPath);
+			}
+			
+		}
 		return multiPathCalcSuccess;
+	}
+	private boolean calculatePathForFloor(Node start, Node end, int compareFloors){
+			boolean floorPathCalculateSuccess = true;
+			Path tempPath = new Path(null, null, null);
+			Node startNode = null;
+			Node endNode =  null;
+			ArrayList<Integer> tempEntIdListStart = new ArrayList<Integer>();
+			ArrayList<Integer>  tempEntIdListEnd = new ArrayList<Integer>();
+			HashSet<Integer>	sameEntIdList = new HashSet<Integer>();
+			int floorNumber = start.getFloorNum();
+			int tempNumber;
+			System.out.println(floorNumber);
+			System.out.println(compareFloors);
+			while(floorNumber != end.getFloorNum()){
+				sameEntIdList = new HashSet<Integer>();
+				System.out.println(path.getEndPoint());
+				System.out.println(path.getStartPoint());
+				System.out.println("floors are different");
+				//Start Floor is higher then end floor go down
+				if(compareFloors == 1){
+					System.out.println("Floor is higher\n");
+					tempEntIdListStart = getFloorPathIDs(start.getBuilding(),floorNumber);
+					for(int i : tempEntIdListStart)
+						System.out.println(i);
+					System.out.println("its all set");
+					tempNumber = floorNumber;
+					tempNumber--;
+					System.out.print(tempNumber);
+					tempEntIdListEnd = getFloorPathIDs(end.getBuilding(), tempNumber);
+					System.out.println("printing next floor entrance nodes");
+					for(int i : tempEntIdListEnd)
+						System.out.println(i);
+					for(int i : tempEntIdListStart){
+						for(int j: tempEntIdListEnd){
+							if( i == j){
+								System.out.println("Adding to same ID list" + i);
+								sameEntIdList.add(i);
+							}
+						}
+					}
+					if(startNode == null){
+						System.out.println("Path is null");
+						startNode = start;
+					}else{
+						System.out.println("attempting to set start node");
+						System.out.println("Entrance ID set" + startNode.getEntranceID());
+						startNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
+									startNode.getEntranceID());
+					}
+					for(int entranceID: sameEntIdList){
+						System.out.println("attempting to set endnode");
+						System.out.println("Entrance ID set" + entranceID);
+						endNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
+								  entranceID);
+						
+					}
+					tempPath.setStartPoint(startNode);
+					tempPath.setEndPoint(endNode);
+					if(tempPath.getStartPoint() == null || tempPath.getEndPoint() == null){
+						System.out.println("one of these is null");
+					}
+					System.out.println("single path calculate");
+					System.out.println("START NODE INFORMATION: " + startNode.getX() +" " +startNode.getY() + " " +startNode.getBuilding() + " " + startNode.getFloorNum());
+					System.out.println("END NODE INFORMATION: " + endNode.getX() +" " +endNode.getY() + " " +endNode.getBuilding() + " " + endNode.getFloorNum());
+					floorPathCalculateSuccess = singlePathCalculate(startNode.getBuilding() + "_" + floorNumber, tempPath);
+					System.out.println("Setting new start point");
+					//path.setStartPoint(getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ tempNumber).getGraph().getNodes(), path.getEndPoint().getEntranceID()));
+					floorNumber--;
+					tempPath = new Path(null, null, null);
+				}//END FIRST IF
+				//Start floor is less then end floor go up
+				else if(compareFloors == -1){
+					floorNumber++;
+				}
+				else{
+					System.out.println("The floor comparison went wrong");
+				}
+			}
+			startNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
+					startNode.getEntranceID());
+			tempPath.setStartPoint(startNode);
+			tempPath.setEndPoint(end);
+			System.out.println(tempPath.getEndPoint().getEntranceID());
+			System.out.println("FLOOR NUMBER " + floorNumber);
+			System.out.println("NEXT FLOOR: " + start.getBuilding() + "_"+ floorNumber);
+			//System.out.println("New start point" + path.getStartPoint().getBuilding() + " " +path.getStartPoint().getFloorNum() + " " +path.getStartPoint().getFloorNum()
+			//		 + " " +path.getStartPoint().getX() + " " +  path.getStartPoint().getY());
+			floorPathCalculateSuccess = singlePathCalculate(startNode.getBuilding() + "_" + floorNumber, tempPath);
+
+			printMapPaths();
+			return floorPathCalculateSuccess;
+		
+	}
+	public Node getStartEndPathNode(List<Node> nodes, int entranceID){
+		Node tempNode=null;
+		for(Node node:nodes)
+		{
+			if(node.getEntranceID()==entranceID){
+				tempNode= node;
+			}
+			  
+		}
+		return tempNode;
+	}
+	/**
+	 * get start Node and end Node in a floor 
+	 * @return the start Node and end Node in a floor
+	 */
+	public ArrayList<Integer> getFloorPathIDs(String startFloorName,int floorNumber)
+	{
+		ArrayList<Integer> tempEntIDList = new ArrayList<Integer>();
+		System.out.println(startFloorName + "_" + floorNumber);
+		for(Node node1: mapTable.get(startFloorName + "_" + floorNumber).getGraph().getNodes()){
+			if(node1.getEntranceID() != 0){
+				tempEntIDList.add(node1.getEntranceID());
+			}
+		}
+		return tempEntIDList;
+	}
+	private ArrayList<String> getBuildingMaps(String buildingName){
+		ArrayList<String> listOfFloorMaps = new ArrayList<String>();
+		//start at the ground floor and work our way up
+		for(String mapName : mapTable.keySet()){
+			if(mapName.contains(buildingName +"_")){
+				listOfFloorMaps.add(mapName);
+			}
+		}
+		return listOfFloorMaps;
+	}
+	
+	/**
+	 * compare the floor number of two different floors
+	 * @param node1 the first node that is compared
+	 * @param node2 the second node that is compared
+	 * @return 1 if floor number of the first node is larger than the second node
+	 *         0 if floor number of the first node is smaller than the second node
+	 *         -1 if floor number of the first node id the same as the second node  
+	 */
+	public int compareFloorNum(Node startNode,Node endNode)
+	{
+
+		if(startNode.getFloorNum()>endNode.getFloorNum()){          //go down
+			System.out.println("we need to go down");
+			return 1;
+		}else if(startNode.getFloorNum() == endNode.getFloorNum()){   //same floor
+			return 0;
+		}else{
+			return -1;                                       		//go up
+		}
+			
 	}
 	/**
 	 * Method testDij.
 	 * @param mapName String
 	 */
-	public void singlePathCalculate(String mapName){
-		
+	public boolean singlePathCalculate(String mapName, Path tempPath){
+		boolean calculateSuccess = true;
 		//testing for loading of nodes/edges
 		try {
-			runJDijkstra(mapName);
+			calculateSuccess = runJDijkstra(mapName, tempPath);
 			
 		} catch (Exception e) {
+			calculateSuccess = false;
 			// TODO Auto-generated catch block
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
-		
+		return calculateSuccess;
 	}
-	/** Temporary java dijkstra algorithim implemented by Joshua until he speaks with Libin about
-	 *  fixing his up. First set the current maps graph into the algorithim. Next cycle through the nodes
-	 *  and pluck out 
+	/** Dijkstra algorithim
 	 * @param mapName String
 	 */
-	public void runJDijkstra(String mapName){
+	public boolean runJDijkstra(String mapName, Path tempPath){
+		boolean dijkstraSuccess = true;
 		//Create object instance with temporary dijkstra algorithim
+		System.out.println("START POINT INFO" +tempPath.getStartPoint().getBuilding() + " " + tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
+		//Edge case where the start and end point equal each other
+		if(tempPath.getStartPoint() == tempPath.getEndPoint()){
+			System.out.println("The points are the same");
+			List<Node> wayPoints = new ArrayList<Node>();
+			wayPoints.add(tempPath.getStartPoint());
+			tempPath.setPath(wayPoints);
+			printNodes(tempPath.getWayPoints());
+			mapPaths.put(mapName, path);
+			return dijkstraSuccess;
+		}
 		JDijkstra dijkstra = new JDijkstra(mapTable.get(mapName).getGraph());
-		
+		System.out.println("Graph is set");
 		//Start the execution with the first starting node
-		dijkstra.execute(path.getStartPoint());
+		dijkstra.execute(tempPath.getStartPoint());
 		
 		//Store the wayPoints for the map's graph
-		LinkedList<Node> wayPoints = dijkstra.getPath(path.getEndPoint());
+		LinkedList<Node> wayPoints = dijkstra.getPath(tempPath.getEndPoint());
 		
 		//Create the new path with the start point, end point, and way points
-		path.setPath(wayPoints);
-		//Store the map with the associated path for user
-		mapPaths.put(mapName, path);
+		tempPath.setPath(wayPoints);
+		if(tempPath.getWayPoints() == null){
+			System.out.println("Something went wrong storing nodes");
+		}
+		else{
+			System.out.println("PATH WAY POINTS: " + mapName);
+			printNodes(tempPath.getWayPoints());
+		}
+		if(!mapPaths.containsKey(mapName)){
+			mapPaths.put(mapName, tempPath);
+			System.out.println("Path for map " + mapName + " does not exist");
+		}else{
+			dijkstraSuccess = false;
+			System.out.println("Path was not successfully placed");
+		}
+		return dijkstraSuccess;
 	}
-	
+	//private calculatePathDistance(LinkedList<Node> wayPoints){
+		//for(Node wayPoint: )
+	//}
 	/**
 	 * isValidAdmin method validates if the user that has choosen to login as admin is an admin.
 	 * @param userName the string representation of the login username
@@ -294,7 +515,25 @@ public class MainModel {
 	
 	 * @param mapName String
 	 * @return the more accurate validated point */
+	public Node validatePoint(String mapName, int x, int y, String lastName){
+		Node validatedNode = null;
+		if(mapTable.isEmpty()){
+			System.out.println("MapTable is empty, Validation Failed");
+			return validatedNode;
+		}
+		double currentDiff = 0.0;
+		double previousDiff = Double.POSITIVE_INFINITY;
+		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
+			currentDiff = calculateDistance(node.getX(),x,node.getY(),y);
+			if(currentDiff < previousDiff){
+				previousDiff = currentDiff;
+				validatedNode = node;
+			}				
+		}
+		return validatedNode;
+	}
 	public Point validatePoint(String mapName, int x, int y){
+		
 		Node validatedNode = null;
 		if(mapTable.isEmpty()){
 			Point pnt = new Point();
@@ -303,7 +542,6 @@ public class MainModel {
 		}
 		double currentDiff = 0.0;
 		double previousDiff = Double.POSITIVE_INFINITY;
-		printNodes(mapName);
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			currentDiff = calculateDistance(node.getX(),x,node.getY(),y);
 			if(currentDiff < previousDiff){
@@ -346,7 +584,7 @@ public class MainModel {
 		int count = 0;
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
 			count++;
-			System.out.print(node.getID() + " " + node.getX() + " " + node.getY() + " " + node.getFloor());
+			System.out.print(node.getID() + " " + node.getX() + " " + node.getY() + " " + node.getFloorNum());
 			System.out.println();
 		}
 		System.out.println(count);
@@ -449,7 +687,9 @@ public class MainModel {
 		}
 		return mapTypes;
 	}
-	
+	public Hashtable<String,Path> getMapPaths(){
+		return this.mapPaths;
+	}
 	/**
 	 * Method getNodeList.
 	 * @param mapName String
@@ -496,6 +736,12 @@ public class MainModel {
 			}
     	}
 		return 0;
+    }
+    public void printMapPaths(){
+    	for(String s: mapPaths.keySet()){
+    		System.out.println("PRINTING NODE INFO FOR MAP: " + s);
+			printNodes(mapPaths.get(s).getWayPoints());
+    	}
     }
     
 }

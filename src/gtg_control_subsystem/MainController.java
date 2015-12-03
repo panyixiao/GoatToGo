@@ -13,6 +13,10 @@ import gtg_view_subsystem.PathData;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Enumeration;
+
+
 
 public class MainController{
 		
@@ -20,6 +24,13 @@ public class MainController{
 	/**/
 	
 	private PathSearchController pathSearchController;
+	private Hashtable<String, Path> calculationResult;
+	private ArrayList<String> resultMapList;
+	private Path currentPath;
+	private Node startNode;
+	private Node endNode;
+	
+	
 	private AdminController userChecker;
 	
 	private MapDataController mapDataController;
@@ -54,8 +65,7 @@ public class MainController{
 	}
 	public ArrayList<Point> getDisplayEdge(){
 		return mapDataController.getDisplayEdge();
-	}
-	
+	}	
 	public ArrayList<Point> getFilteredList(String pointType){
 		return mapDataController.getFilteredList(pointType);
 	}
@@ -79,42 +89,86 @@ public class MainController{
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
 		Point targetPnt = new Point();
-		System.out.println("Task Type: " + pntType);	
-		targetPnt = mapModel.validatePoint(mapName, taskPnt.x, taskPnt.y);
-		mapModel.setStartEndPathPoint(targetPnt, pntType, mapName);	
+		
+		//System.out.println("Task Type: " + pntType);
+		if(pntType.equals("FROM")){
+			startNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
+			targetPnt.x = startNode.getX();
+			targetPnt.y = startNode.getY();
+		}
+		else if(pntType.equals("TO")){
+			endNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
+			targetPnt.x = endNode.getX();
+			targetPnt.y = endNode.getY();
+		}
+		
 		return targetPnt;
 	}
-
-	public PathData getPathData(String mapName){
+	
+	public PathData getDesiredPath(int Index){
 		PathData path = new PathData();
-		//String mapName = "BoyntonHall_1";
 		
-	 	mapModel.testDij(mapName);
-	 	Path calculateResult = mapModel.getPath();
-		mapModel.printPath(mapName);
-		if(calculateResult.getWayPoints().isEmpty()){
-			System.out.println("WayPoint list is Empty, Display failed!");
-			return path;
-		}
+		String requestedMapName = resultMapList.get(Index);
+		currentPath = calculationResult.get(requestedMapName);
+
 		// Set StartPnt
 		Point TempStartPnt = new Point();
-		Node TempNode =  calculateResult.getStartPoint();
+		Node TempNode =  currentPath.getStartPoint();
 		TempStartPnt.x = TempNode.getX();
 		TempStartPnt.y = TempNode.getY();		
 		path.setStartPoint(TempStartPnt);
+		
 		// Set EndPnt
-		TempNode = calculateResult.getEndPoint();
+		TempNode = currentPath.getEndPoint();
 		Point TempEndPnt = new Point();
 		TempEndPnt.x = TempNode.getX();
 		TempEndPnt.y = TempNode.getY();
-		path.setEndPoint(TempEndPnt);
-		ArrayList<Point> displayWayPnts = mapModel.convertWayPointsToPoints();
+		path.setEndPoint(TempEndPnt);		
+		
+		// Set wayPoint List
+		ArrayList<Point> displayWayPnts = convertNodeListIntoPointList(currentPath);
 		path.setWayPoints(displayWayPnts);
-		// For Test
-		ArrayList<String> mapNames = new ArrayList<String>();
-		mapNames.add(mapName);		
-		path.setArrayOfMapNames(mapNames);
+
+		// Set mapName List
+		path.setArrayOfMapNames(resultMapList);	
+		
+		// Set URL of current map
+		int IndexOfMapURL = mapDataController.getCurrentMapNameList().indexOf(requestedMapName);
+		String mapURL = mapDataController.getCurrentMapURLList().get(IndexOfMapURL);		
+		path.setMapURL(mapURL);
+		
 		return path;
+	}
+	
+	private ArrayList<Point> convertNodeListIntoPointList(Path inputPath){
+		ArrayList<Point> pntPath = new ArrayList<Point>();
+		List<Node> currentNodePath = inputPath.getWayPoints();
+		if(!currentNodePath.isEmpty()){
+			for(Node nd:currentNodePath){
+				Point pnt = new Point();
+				pnt.x = nd.getX();
+				pnt.y = nd.getY();
+				pntPath.add(pnt);			
+			}
+		}		
+		return pntPath;
+	}
+	
+	
+	public boolean getPathData(){
+		//String mapName = "BoyntonHall_1";
+		boolean pathCalculated = false;
+		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
+		if(pathCalculated){	
+			System.out.println("Path was able to calculate\n");
+			calculationResult = mapModel.getMapPaths();
+			Enumeration<String> calculationResultMapName = calculationResult.keys();
+			while(calculationResultMapName.hasMoreElements()) {
+				String mapName = calculationResultMapName.nextElement();
+				resultMapList.add(mapName);
+			}			
+		}		
+		return pathCalculated;
 	}
 	
 	
@@ -194,7 +248,6 @@ public class MainController{
 		catch(IOException e){
 			System.out.println(e.toString());
 		}
-		
 		return success;
 	}
 
@@ -219,44 +272,19 @@ public class MainController{
 	}
 	
 	public boolean setDescriptionOfNode (int nodeID){
-		/*
-		boolean success=false;
-		if (this.findNodeInList(nodeID)!=null){
-			//this.findNodeInList(nodeID).setDescription();
-			//waiting for extension of node class;
-			success=true;
-			return success;
-		}*/
 		return mapDataController.setDescriptionOfNode(nodeID);
 	}
 	
 	public boolean setEntranceIDOfNode (int nodeID){
-/*		boolean success=false;
-		if (this.findNodeInList(nodeID)!=null){
-			//this.findNodeInList(nodeID).setEntranceID();
-			//waiting for extension of node class;
-			success=true;
-			return success;
-		}*/
 		return mapDataController.setEntranceIDOfNode(nodeID);
 	}
 	
 	public boolean setTypeOfNode (int nodeID){
-/*		boolean success=false;
-		if (this.findNodeInList(nodeID)!=null){
-			//this.findNodeInList(nodeID).setType();
-			//waiting for extension of node class;
-			success=true;
-			return success;
-		}*/
 		return mapDataController.setTypeOfNode(nodeID);
 	}
 	
 	public int getNodeID(Point inputPnt){
-		int NodeID = -1;
-		//NodeID = mapDataController.getNodeID(inputPnt);
-		NodeID = mapDataController.CheckPntExistence(inputPnt);
-		return NodeID;
+		return mapDataController.CheckPntExistence(inputPnt);
 	}
 	
 	public String getNodeBuildingName(int nodeID){
@@ -268,61 +296,22 @@ public class MainController{
 	}
 	
 	public String getDescriptionOfNode (int nodeID){
-	/*	String description=new String();
-		if (this.findNodeInList(nodeID)!=null){
-			//description=this.findNodeInList(nodeID).getDescription();
-			//waiting for extension of node class;
-			return description;
-		}*/
 		return mapDataController.getDescriptionOfNode(nodeID);
 	}
 	
 	public int getEntranceIDOfNode (int nodeID){
-/*		int entranceID=-1;
-		if (this.findNodeInList(nodeID)!=null){
-			//entranceID=this.findNodeInList(nodeID).getEntranceID();
-			//waiting for extension of node class;
-			return entranceID;
-		}*/
 		return mapDataController.getEntranceIDOfNode(nodeID);
 	}
 	
 	public String getTypeOfNode (int nodeID){
-/*		String nodeType=new String();
-		if (this.findNodeInList(nodeID)!=null){
-			//nodeType=this.findNodeInList(nodeID).getType();
-			//waiting for extension of node class;
-			return nodeType;
-		}*/
 		return mapDataController.getTypeOfNode(nodeID);
 	}
 
-	public Point pointMapping(Point inputPnt){		
-		/*Point2D searchingResult = new Point2D.Double(0,0);
-		
-		for (Point2D temPnt : tempPntList){
-			double d = mapModel.calculateDistance(inputPnt.getX(), temPnt.getX(), inputPnt.getY(), temPnt.getY());
-			if(d <= 15){
-				
-				System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
-				searchingResult = temPnt;
-				return searchingResult;
-			}
-		}		
-		System.out.println("Invalid Input!!");*/
+	public Point pointMapping(Point inputPnt){
 		return mapDataController.pointMapping(inputPnt);
 	}
 
-	public Point getLastPnt()
-	{
-		/*Point2D pnt = new Point2D.Double(0,0);
-		if(tempPntList.size()!=0){
-			pnt = tempPntList.get(tempPntList.size()-1);
-			System.out.println("The last Point is: "+pnt.getX()+ "" + pnt.getY());
-			return pnt;
-		}	
-		System.out.println("There is no Pnt in the list!");
-		return pnt;		*/
+	public Point getLastPnt(){
 		return mapDataController.getLastPntInPntList();
 	}
 

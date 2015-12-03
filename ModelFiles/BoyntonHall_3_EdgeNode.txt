@@ -48,7 +48,7 @@ NODES
 78 385 212 0 BoyntonHall 3 Classroom
 82 249 120 0 BoyntonHall 3 Classroom
 83 208 242 0 BoyntonHall 3 Classroom
-84 422 615 0 BoyntonHall 3 Stairs
+84 422 615 3 BoyntonHall 3 Stairs
 87 596 264 0 BoyntonHall 3 Classroom
 89 16 315 0 BoyntonHall 3 Classroom
 90 228 749 0 BoyntonHall 3 Classroom

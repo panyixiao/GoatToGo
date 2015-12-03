@@ -1,5 +1,5 @@
 NODES
-1 907 982 2 BoyntonHall 2 Waypoint
+1 907 982 0 BoyntonHall 2 Waypoint
 2 907 898 0 BoyntonHall 2 Waypoint
 3 907 727 0 BoyntonHall 2 Stairs
 4 869 727 0 BoyntonHall 2 Waypoint
@@ -23,7 +23,7 @@ NODES
 32 371 84 0 BoyntonHall 2 Classroom
 33 422 84 0 BoyntonHall 2 Classroom
 34 422 259 0 BoyntonHall 2 Classroom
-35 384 141 0 BoyntonHall 2 Classroom
+35 384 141 2 BoyntonHall 2 Stairs
 36 497 117 0 BoyntonHall 2 Classroom
 37 546 203 0 BoyntonHall 2 Classroom
 38 474 283 0 BoyntonHall 2 Classroom
@@ -47,7 +47,11 @@ NODES
 68 534 556 0 BoyntonHall 2 Classroom
 70 577 534 0 BoyntonHall 2 Classroom
 71 434 481 0 BoyntonHall 2 Classroom
+<<<<<<< HEAD
 72 406 550 0 BoyntonHall 2 Stairs
+=======
+72 406 550 3 BoyntonHall 2 Stairs
+>>>>>>> refs/remotes/origin/master
 73 262 539 0 BoyntonHall 2 Classroom
 74 262 631 0 BoyntonHall 2 Classroom
 75 262 738 0 BoyntonHall 2 Classroom
@@ -78,7 +82,7 @@ NODES
 102 341 289 0 BoyntonHall 2 Classroom
 103 189 289 0 BoyntonHall 2 Waypoint
 104 122 427 0 BoyntonHall 2 Classroom
-106 429 347 4 BoyntonHall 2 Elevator
+106 429 347 0 BoyntonHall 2 Elevator
 107 555 689 0 BoyntonHall 2 Waypoint
 108 585 689 0 BoyntonHall 2 Waypoint
 109 678 556 0 BoyntonHall 2 Waypoint
@@ -86,7 +90,7 @@ NODES
 111 723 556 0 BoyntonHall 2 Waypoint
 112 728 597 0 BoyntonHall 2 Classroom
 113 806 597 0 BoyntonHall 2 Classroom
-114 371 738 1 BoyntonHall 2 Waypoint
+114 371 738 0 BoyntonHall 2 Waypoint
 115 497 556 0 BoyntonHall 2 Waypoint
 116 497 520 0 BoyntonHall 2 Classroom
 117 896 141 0 BoyntonHall 2 Classroom

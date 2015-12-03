@@ -24,7 +24,11 @@ NODES
 37 583 348 0 BoyntonHall 1 Classroom
 39 487 386 0 BoyntonHall 1 Classroom
 40 487 467 0 BoyntonHall 1 Classroom
+<<<<<<< HEAD
 41 605 90 0 BoyntonHall 1 Classroom
+=======
+41 605 90 1 BoyntonHall 1 Classroom
+>>>>>>> refs/remotes/origin/master
 42 605 279 0 BoyntonHall 1 Waypoint
 45 783 507 0 BoyntonHall 1 Classroom
 46 882 300 0 BoyntonHall 1 Classroom
@@ -40,7 +44,7 @@ NODES
 70 136 419 0 BoyntonHall 1 Classroom
 72 55 374 0 BoyntonHall 1 Classroom
 73 182 413 0 BoyntonHall 1 Classroom
-74 320 614 0 BoyntonHall 1 Stairs
+74 320 614 2 BoyntonHall 1 Stairs
 75 915 806 0 BoyntonHall 1 Stairs
 76 862 790 0 BoyntonHall 1 Waypoint
 80 343 179 0 BoyntonHall 1 Classroom
