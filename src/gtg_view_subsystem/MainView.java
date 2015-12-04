@@ -135,14 +135,22 @@ public class MainView {
 		return pntToBeMapped;
 	}
 
-	public void getPathResult(String mapName) {
-		// 2015-12-01 Yixiao
-		mainController.getPathData();
-		//PathData path = mainController.getPathData(mapName);
-		//showResultPage();
-		//this.resultPage.displayPath(path);
+	public void getPathResult() {
+		boolean pathCalculated = mainController.getPathData();
+		showResultPage();
+		if(pathCalculated == true){
+			PathData path = mainController.getDesiredPath(0);
+			this.resultPage.displayPath(path, 0);
+		} else {
+			//this.resultPage.showErrorPopup();
+		}
 	}
 
+	public void getNextPrevPath(int index){
+		PathData path = mainController.getDesiredPath(index);
+		this.resultPage.displayPath(path, index);
+	}
+	
 	/**
 	 * Method deleteSelectedPoint.
 	 * @param selectedPointType String
