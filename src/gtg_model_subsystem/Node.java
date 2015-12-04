@@ -88,12 +88,12 @@ public class Node
 		}
 
 
-		public int getFloor() {
+		public int getFloorNum() {
 			return floorNum;
 		}
 
 
-		public void setFloor(int floorNum) {
+		public void setFloorNum(int floorNum) {
 			this.floorNum = floorNum;
 		}
 

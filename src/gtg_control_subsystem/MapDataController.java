@@ -338,7 +338,7 @@ public class MapDataController {
 		}else if (i>0){
 			Node n=findNodeInList(i);
 			n.setBuilding(buildingName);
-			n.setFloor(floorNum);
+			n.setFloorNum(floorNum);
 			n.setEntranceID(entranceID);
 			n.setType(pointType);
 			success= true;
@@ -579,7 +579,7 @@ public class MapDataController {
 	public int getFloorNumofNode(int nodeID){
 		int floorNum = 0;
 		if (this.findNodeInList(nodeID)!=null){
-			floorNum = this.findNodeInList(nodeID).getFloor();
+			floorNum = this.findNodeInList(nodeID).getFloorNum();
 			//waiting for extension of node class;
 			}		
 		return floorNum;
