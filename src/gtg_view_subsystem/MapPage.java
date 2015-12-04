@@ -181,7 +181,7 @@ public class MapPage extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//parent.getPathResult();
 				if(selectedPoints.arePointsSelected() == true){
-					parent.getPathResult(currentDisplayedMap);
+					parent.getPathResult();
 				} else {
 					if(selectedPoints.isStartSelected() == false && selectedPoints.isEndSelected() == true) {
 						JOptionPane.showMessageDialog(null, ViewStringLiterals.FROM_POINT_NOT_SET, "INVALID", JOptionPane.ERROR_MESSAGE);
@@ -629,6 +629,7 @@ public class MapPage extends JPanel {
 		this.mapURL = "";
 		this.isCampusMap = false;
 		this.slidePanel.setLocation(359, 0);
+		this.rightPanel.setLocation(0, 0);
 		this.showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
 		this.showAllFilterPointBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
 		/*if(this.mapMapDisplayPanel != null){
