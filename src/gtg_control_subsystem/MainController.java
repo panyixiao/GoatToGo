@@ -15,8 +15,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Enumeration;
-
-
+import java.util.LinkedHashMap;
+import java.util.Set;
+import java.util.Iterator;
 
 public class MainController{
 		
@@ -24,7 +25,7 @@ public class MainController{
 	/**/
 	
 	private PathSearchController pathSearchController;
-	private Hashtable<String, Path> calculationResult;
+	private LinkedHashMap<String, Path> MultilayerPathcalculationResult;
 	private ArrayList<String> resultMapList;
 	private Path currentPath;
 	private Node startNode;
@@ -85,8 +86,7 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
-		Point targetPnt = new Point();
-		
+		Point targetPnt = new Point();		
 		//System.out.println("Task Type: " + pntType);
 		if(pntType.equals("FROM")){
 			startNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
@@ -105,8 +105,9 @@ public class MainController{
 	public PathData getDesiredPath(int Index){
 		PathData path = new PathData();
 		
+		// Get requested path
 		String requestedMapName = resultMapList.get(Index);
-		currentPath = calculationResult.get(requestedMapName);
+		currentPath = MultilayerPathcalculationResult.get(requestedMapName);
 
 		// Set StartPnt
 		Point TempStartPnt = new Point();
@@ -128,12 +129,15 @@ public class MainController{
 
 		// Set mapName List
 		path.setArrayOfMapNames(resultMapList);	
-		
+
+		System.out.println("The requested mapName is: " + requestedMapName);
 		// Set URL of current map
 		int IndexOfMapURL = mapDataController.getCurrentMapNameList().indexOf(requestedMapName);
-		String mapURL = mapDataController.getCurrentMapURLList().get(IndexOfMapURL);		
+		String mapURL = mapDataController.getCurrentMapURLList().get(IndexOfMapURL);	
+
+		System.out.println("The requested mapURL is: " + mapURL);
 		path.setMapURL(mapURL);
-		
+
 		return path;
 	}
 	
@@ -149,26 +153,27 @@ public class MainController{
 			}
 		}		
 		return pntPath;
-	}
-	
+	}	
 	
 	public boolean getPathData(){
-		//String mapName = "BoyntonHall_1";
 		boolean pathCalculated = false;
 		resultMapList=new ArrayList<String>();
 		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
+		
 		if(pathCalculated){	
 			System.out.println("Path was able to calculate\n");
-			calculationResult = mapModel.getMapPaths();
-			Enumeration<String> calculationResultMapName = calculationResult.keys();
-			while(calculationResultMapName.hasMoreElements()) {
-				String mapName = calculationResultMapName.nextElement();
+			MultilayerPathcalculationResult = mapModel.getMapPaths();
+			Set<String> calculationResultMapName = MultilayerPathcalculationResult.keySet();
+			Iterator<String> iterator = calculationResultMapName.iterator();
+			while(iterator.hasNext()){
+				//ArrayList of map names for Neha
+				String mapName = iterator.next();
+				System.out.println(mapName);
 				resultMapList.add(mapName);
 			}			
-		}		
+		}
 		return pathCalculated;
-	}
-	
+	}	
 	
 	/******************************
 	 * 

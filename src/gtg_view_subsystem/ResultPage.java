@@ -188,7 +188,8 @@ public class ResultPage extends JPanel {
 	 * Method displayPath.
 	 * @param path PathData
 	 */
-	public void displayPath(PathData path) {
+	// Adding int Index 2015-12-03 Yixiao Pan
+	public void displayPath(PathData path, int Index) {
 		System.out.println(path.getWayPoints());
 		// TODO Auto-generated method stub
 		Point tempPoint = path.getStartPoint();
@@ -196,12 +197,12 @@ public class ResultPage extends JPanel {
 		tempPoint = path.getEndPoint();
 		this.toTextField.setText(" X:" + (int)tempPoint.getX() + ",  Y:" + (int)tempPoint.getY());
 		
-		this.currentMapName.setText(path.getArrayOfMapNames().get(0));
-		this.totalMaps.setText("1 / " + path.getArrayOfMapNames().size());
+		this.currentMapName.setText(path.getArrayOfMapNames().get(Index));
+		this.totalMaps.setText((Index+1) + " / " + path.getArrayOfMapNames().size());
 		
 		this.mapNamesArray = path.getArrayOfMapNames();
-		String mapURL = this.parent.tempMapURL(this.mapNamesArray.get(0));
-		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, mapNamesArray.get(0), mapURL);
+		String mapURL = this.parent.tempMapURL(this.mapNamesArray.get(Index));
+		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, mapNamesArray.get(Index), mapURL);
 		this.mapPanelHolder.setViewportView(resultMapDisplayPanel);
 		this.currentZoomValue = 1.0;
 		

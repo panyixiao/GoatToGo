@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.util.HashSet;
-
+import java.util.LinkedHashMap;
 /**
  */
 public class MainModel {
@@ -27,12 +27,12 @@ public class MainModel {
 	private FileProcessing fileProcessing;
 	private Map tempMap;
 	private Hashtable<String, Map> mapTable;
-	private Hashtable<String, Path> mapPaths;
+	private LinkedHashMap<String, Path> mapPaths;
 	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
 		mapTable = new Hashtable<String, Map>();
-		mapPaths = new Hashtable<String, Path>();
+		
 		
 		path = new Path(null, null, null);
 		try {			
@@ -235,7 +235,14 @@ public class MainModel {
 	 */
 	public boolean multiPathCalculate(Node startNode, Node endNode){
 		boolean multiPathCalcSuccess = true;
+		if((startNode == null) || (endNode == null)){
+			multiPathCalcSuccess = false;
+			return multiPathCalcSuccess;
+		}
 		int floorNumber;
+		mapPaths = new LinkedHashMap<String, Path>();
+		Path tempPath = new Path(null, null, null);
+
 		String campusMap = "CampusMap";
 		ArrayList<String> startBuildingMapNames;
 		ArrayList<String> endBuildingMapNames;
@@ -265,7 +272,6 @@ public class MainModel {
 			}
 			//Start floor equals end floor stay and do single path calculate
 			else{
-				Path tempPath = new Path(null, null, null);
 				tempPath.setStartPoint(startNode);
 				tempPath.setEndPoint(endNode);
 				multiPathCalcSuccess = singlePathCalculate(startNode.getBuilding() + "_" + startNode.getFloorNum(), tempPath);
@@ -277,6 +283,8 @@ public class MainModel {
 	private boolean calculatePathForFloor(Node start, Node end, int compareFloors){
 			boolean floorPathCalculateSuccess = true;
 			Path tempPath = new Path(null, null, null);
+			mapPaths = new LinkedHashMap<String, Path>();
+
 			Node startNode = null;
 			Node endNode =  null;
 			ArrayList<Integer> tempEntIdListStart = new ArrayList<Integer>();
@@ -454,7 +462,6 @@ public class MainModel {
 			List<Node> wayPoints = new ArrayList<Node>();
 			wayPoints.add(tempPath.getStartPoint());
 			tempPath.setPath(wayPoints);
-			printNodes(tempPath.getWayPoints());
 			mapPaths.put(mapName, path);
 			return dijkstraSuccess;
 		}
@@ -473,7 +480,6 @@ public class MainModel {
 		}
 		else{
 			System.out.println("PATH WAY POINTS: " + mapName);
-			printNodes(tempPath.getWayPoints());
 		}
 		if(!mapPaths.containsKey(mapName)){
 			mapPaths.put(mapName, tempPath);
@@ -687,7 +693,7 @@ public class MainModel {
 		}
 		return mapTypes;
 	}
-	public Hashtable<String,Path> getMapPaths(){
+	public LinkedHashMap<String,Path> getMapPaths(){
 		return this.mapPaths;
 	}
 	/**
