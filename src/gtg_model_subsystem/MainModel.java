@@ -32,7 +32,7 @@ public class MainModel {
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
 		mapTable = new Hashtable<String, Map>();
-		mapPaths = new LinkedHashMap<String, Path>();
+		
 		
 		path = new Path(null, null, null);
 		try {			
@@ -240,6 +240,9 @@ public class MainModel {
 			return multiPathCalcSuccess;
 		}
 		int floorNumber;
+		mapPaths = new LinkedHashMap<String, Path>();
+		Path tempPath = new Path(null, null, null);
+
 		String campusMap = "CampusMap";
 		ArrayList<String> startBuildingMapNames;
 		ArrayList<String> endBuildingMapNames;
@@ -269,7 +272,6 @@ public class MainModel {
 			}
 			//Start floor equals end floor stay and do single path calculate
 			else{
-				Path tempPath = new Path(null, null, null);
 				tempPath.setStartPoint(startNode);
 				tempPath.setEndPoint(endNode);
 				multiPathCalcSuccess = singlePathCalculate(startNode.getBuilding() + "_" + startNode.getFloorNum(), tempPath);
@@ -281,6 +283,8 @@ public class MainModel {
 	private boolean calculatePathForFloor(Node start, Node end, int compareFloors){
 			boolean floorPathCalculateSuccess = true;
 			Path tempPath = new Path(null, null, null);
+			mapPaths = new LinkedHashMap<String, Path>();
+
 			Node startNode = null;
 			Node endNode =  null;
 			ArrayList<Integer> tempEntIdListStart = new ArrayList<Integer>();
@@ -458,7 +462,6 @@ public class MainModel {
 			List<Node> wayPoints = new ArrayList<Node>();
 			wayPoints.add(tempPath.getStartPoint());
 			tempPath.setPath(wayPoints);
-			printNodes(tempPath.getWayPoints());
 			mapPaths.put(mapName, path);
 			return dijkstraSuccess;
 		}
@@ -477,7 +480,6 @@ public class MainModel {
 		}
 		else{
 			System.out.println("PATH WAY POINTS: " + mapName);
-			printNodes(tempPath.getWayPoints());
 		}
 		if(!mapPaths.containsKey(mapName)){
 			mapPaths.put(mapName, tempPath);

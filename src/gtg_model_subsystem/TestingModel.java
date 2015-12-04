@@ -30,9 +30,12 @@ public class TestingModel {
 		//test.setStartEndPathPoint(new Point(605,90), "TO", "BoyntonHall_1");
 		//test.setStartEndPathPoint(new Point(422,615), "FROM", "BoyntonHall_3");
 		
-		Node toNode = test.validatePoint("BoyntonHall_1",605, 90, " ");
+		//Node toNode = test.validatePoint("BoyntonHall_1",605, 90, " ");
 		// BH3 TWO NODES TO TEST ON THI S FLOOR TO BH 1 (429 517) (422 615)
-		Node fromNode = test.validatePoint("BoyntonHall_3",429, 517, " ");
+		//Node fromNode = test.validatePoint("BoyntonHall_3",429, 517, " ");
+		Node toNode = test.validatePoint("CampusMap_0",744, 462, " ");
+		// BH3 TWO NODES TO TEST ON THI S FLOOR TO BH 1 (429 517) (422 615)
+		Node fromNode = test.validatePoint("CampusMap_0",294, 428, " ");
 		test.multiPathCalculate(fromNode, toNode);
 		LinkedHashMap<String,Path> localMapPaths = test.getMapPaths();
 		ArrayList<Path> pathArrayList = new ArrayList<Path>();

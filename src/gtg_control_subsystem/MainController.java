@@ -106,7 +106,7 @@ public class MainController{
 		PathData path = new PathData();
 		
 		// Get requested path
-		String requestedMapName = resultMapList.get(Index);
+		String requestedMapName = resultMapList.get(Index -1);
 		currentPath = MultilayerPathcalculationResult.get(requestedMapName);
 
 		// Set StartPnt
