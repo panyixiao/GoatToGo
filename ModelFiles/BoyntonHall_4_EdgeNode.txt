@@ -18,7 +18,7 @@ NODES
 33 333 715 0 BoyntonHall 4 Waypoint
 34 333 854 0 BoyntonHall 4 Waypoint
 35 446 854 0 BoyntonHall 4 Waypoint
-36 437 656 0 BoyntonHall 4 Stairs
+36 437 656 4 BoyntonHall 4 Stairs
 37 432 486 0 BoyntonHall 4 Waypoint
 39 525 151 0 BoyntonHall 4 Classroom
 40 402 139 0 BoyntonHall 4 Classroom
