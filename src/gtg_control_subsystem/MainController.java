@@ -158,6 +158,9 @@ public class MainController{
 	public boolean getPathData(){
 		boolean pathCalculated = false;
 		resultMapList=new ArrayList<String>();
+		System.out.println("START NODE INFORMATION : " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY());
+		System.out.println("END NODE INFORMATION : " + endNode.getBuilding() + " " + endNode.getFloorNum() + " " + endNode.getX() + " " + endNode.getY());
+
 		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
 		
 		if(pathCalculated){	

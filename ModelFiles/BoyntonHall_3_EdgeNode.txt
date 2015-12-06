@@ -21,7 +21,7 @@ NODES
 28 182 280 0 BoyntonHall 3 Waypoint
 29 182 242 0 BoyntonHall 3 Waypoint
 31 30 155 0 BoyntonHall 3 Waypoint
-33 934 773 0 BoyntonHall 3 Stairs
+33 934 773 4 BoyntonHall 3 Stairs
 34 896 773 0 BoyntonHall 3 Classroom
 35 889 681 0 BoyntonHall 3 Classroom
 37 902 480 0 BoyntonHall 3 Classroom

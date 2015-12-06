@@ -32,7 +32,7 @@ public class MainModel {
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
 		mapTable = new Hashtable<String, Map>();
-		mapPaths = new LinkedHashMap<String, Path>();
+		
 		
 		path = new Path(null, null, null);
 		try {			
@@ -235,11 +235,16 @@ public class MainModel {
 	 */
 	public boolean multiPathCalculate(Node startNode, Node endNode){
 		boolean multiPathCalcSuccess = true;
+		System.out.println("START INFORMATION FROM CONTR: " + startNode.getX() +" " +startNode.getY() + " " +startNode.getBuilding() + " " + startNode.getFloorNum());
+		System.out.println("END NODE INFORMATION FROM CONTR: " + endNode.getX() +" " +endNode.getY() + " " +endNode.getBuilding() + " " + endNode.getFloorNum());
 		if((startNode == null) || (endNode == null)){
 			multiPathCalcSuccess = false;
 			return multiPathCalcSuccess;
 		}
 		int floorNumber;
+		mapPaths = new LinkedHashMap<String, Path>();
+		Path tempPath = new Path(null, null, null);
+
 		String campusMap = "CampusMap";
 		ArrayList<String> startBuildingMapNames;
 		ArrayList<String> endBuildingMapNames;
@@ -265,11 +270,10 @@ public class MainModel {
 			int compareFloors = compareFloorNum(startNode, endNode);
 			//Start Floor is higher then end floor go down
 			if(compareFloors == 1 || compareFloors == -1){
-				multiPathCalcSuccess = calculatePathForFloor(startNode, endNode, compareFloors);
+				multiPathCalcSuccess = calculatePathForFloors(startNode, endNode, compareFloors);
 			}
 			//Start floor equals end floor stay and do single path calculate
 			else{
-				Path tempPath = new Path(null, null, null);
 				tempPath.setStartPoint(startNode);
 				tempPath.setEndPoint(endNode);
 				multiPathCalcSuccess = singlePathCalculate(startNode.getBuilding() + "_" + startNode.getFloorNum(), tempPath);
@@ -278,9 +282,12 @@ public class MainModel {
 		}
 		return multiPathCalcSuccess;
 	}
-	private boolean calculatePathForFloor(Node start, Node end, int compareFloors){
+	private boolean calculatePathForFloors(Node start, Node end, int compareFloors){
 			boolean floorPathCalculateSuccess = true;
 			Path tempPath = new Path(null, null, null);
+			mapPaths = new LinkedHashMap<String, Path>();
+			int endNodeEntID;
+			int startEntID;
 			Node startNode = null;
 			Node endNode =  null;
 			ArrayList<Integer> tempEntIdListStart = new ArrayList<Integer>();
@@ -300,10 +307,73 @@ public class MainModel {
 					System.out.println("Floor is higher\n");
 					tempEntIdListStart = getFloorPathIDs(start.getBuilding(),floorNumber);
 					for(int i : tempEntIdListStart)
-						System.out.println(i);
+						System.out.println("ENTRANCE ID ON THIS FLOOR: " + start.getBuilding() + " " + start.getFloorNum()+ " " + i);
 					System.out.println("its all set");
 					tempNumber = floorNumber;
 					tempNumber--;
+					System.out.print("NEXT FLOOR BELOW: " + tempNumber);
+					tempEntIdListEnd = getFloorPathIDs(end.getBuilding(), tempNumber);
+					System.out.println("printing next floor entrance nodes");
+					for(int i : tempEntIdListEnd)
+						System.out.println(i);
+					for(int i : tempEntIdListStart){
+						for(int j: tempEntIdListEnd){
+							if( i == j){
+								System.out.println("Adding to same Entrance ID list " + i);
+								sameEntIdList.add(i);
+							}
+						}
+					}
+					if(startNode == null){
+						System.out.println("startNode is null");
+						startNode = start;
+					}else{
+						System.out.println("attempting to set start node");
+						System.out.println("START NODE Entrance ID set" + endNode.getEntranceID());
+						startNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
+								endNode.getEntranceID());
+					}
+					if(sameEntIdList.isEmpty()){
+						System.out.println("There are no entrances on the next floor");
+						floorPathCalculateSuccess = false;
+						return floorPathCalculateSuccess;
+					}else{
+						for(int entranceID: sameEntIdList){
+							System.out.println("attempting to set endnode");
+							System.out.println("END NODE Entrance ID set" + entranceID);
+							endNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
+									  entranceID);
+							
+						}
+					}
+					tempPath.setStartPoint(startNode);
+					tempPath.setEndPoint(endNode);
+					if(tempPath.getStartPoint() == null || tempPath.getEndPoint() == null){
+						System.out.println("one of these is null");
+					}
+					System.out.println("single path calculate");
+					System.out.println("START NODE INFORMATION: " + startNode.getX() +" " +startNode.getY() + " " +startNode.getBuilding() + " " + startNode.getFloorNum());
+					System.out.println("END NODE INFORMATION: " + endNode.getX() +" " +endNode.getY() + " " +endNode.getBuilding() + " " + endNode.getFloorNum());
+					if(floorPathCalculateSuccess = singlePathCalculate(startNode.getBuilding() + "_" + floorNumber, tempPath)){
+						System.out.println("Floor path was calculated correctly");
+					}else{
+						System.out.println("Floor path was not calcuated correctly");
+						return floorPathCalculateSuccess;
+					}
+					System.out.println("Setting new start point");
+					floorNumber--;
+					
+					tempPath = new Path(null, null, null);
+				}//END FIRST IF
+				//Start floor is less then end floor go up
+				else if(compareFloors == -1){
+					System.out.println("Floor is higher\n");
+					tempEntIdListStart = getFloorPathIDs(start.getBuilding(),floorNumber);
+					for(int i : tempEntIdListStart)
+						System.out.println("ENTRANCE ID ON THIS FLOOR: " + start.getBuilding() + " " + start.getFloorNum()+ " " + i);
+					System.out.println("its all set");
+					tempNumber = floorNumber;
+					tempNumber++;
 					System.out.print(tempNumber);
 					tempEntIdListEnd = getFloorPathIDs(end.getBuilding(), tempNumber);
 					System.out.println("printing next floor entrance nodes");
@@ -318,20 +388,26 @@ public class MainModel {
 						}
 					}
 					if(startNode == null){
-						System.out.println("Path is null");
+						System.out.println("startNode is null");
 						startNode = start;
 					}else{
 						System.out.println("attempting to set start node");
-						System.out.println("Entrance ID set" + startNode.getEntranceID());
+						System.out.println("START NODE Entrance ID set" + endNode.getEntranceID());
 						startNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
-									startNode.getEntranceID());
+								endNode.getEntranceID());
 					}
-					for(int entranceID: sameEntIdList){
-						System.out.println("attempting to set endnode");
-						System.out.println("Entrance ID set" + entranceID);
-						endNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
-								  entranceID);
-						
+					if(sameEntIdList.isEmpty()){
+						System.out.println("There are no entrances on the next floor");
+						floorPathCalculateSuccess = false;
+						return floorPathCalculateSuccess;
+					}else{
+						for(int entranceID: sameEntIdList){
+							System.out.println("attempting to set endnode");
+							System.out.println("END NODE Entrance ID set" + entranceID);
+							endNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
+									  entranceID);
+							
+						}
 					}
 					tempPath.setStartPoint(startNode);
 					tempPath.setEndPoint(endNode);
@@ -343,20 +419,16 @@ public class MainModel {
 					System.out.println("END NODE INFORMATION: " + endNode.getX() +" " +endNode.getY() + " " +endNode.getBuilding() + " " + endNode.getFloorNum());
 					floorPathCalculateSuccess = singlePathCalculate(startNode.getBuilding() + "_" + floorNumber, tempPath);
 					System.out.println("Setting new start point");
-					//path.setStartPoint(getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ tempNumber).getGraph().getNodes(), path.getEndPoint().getEntranceID()));
-					floorNumber--;
-					tempPath = new Path(null, null, null);
-				}//END FIRST IF
-				//Start floor is less then end floor go up
-				else if(compareFloors == -1){
 					floorNumber++;
+					
+					tempPath = new Path(null, null, null);
 				}
 				else{
 					System.out.println("The floor comparison went wrong");
 				}
 			}
 			startNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
-					startNode.getEntranceID());
+					endNode.getEntranceID());
 			tempPath.setStartPoint(startNode);
 			tempPath.setEndPoint(end);
 			System.out.println(tempPath.getEndPoint().getEntranceID());
@@ -366,7 +438,6 @@ public class MainModel {
 			//		 + " " +path.getStartPoint().getX() + " " +  path.getStartPoint().getY());
 			floorPathCalculateSuccess = singlePathCalculate(startNode.getBuilding() + "_" + floorNumber, tempPath);
 
-			printMapPaths();
 			return floorPathCalculateSuccess;
 		
 	}
@@ -451,15 +522,15 @@ public class MainModel {
 	public boolean runJDijkstra(String mapName, Path tempPath){
 		boolean dijkstraSuccess = true;
 		//Create object instance with temporary dijkstra algorithim
-		System.out.println("START POINT INFO" +tempPath.getStartPoint().getBuilding() + " " + tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
+		System.out.println("START POINT INFO: " +tempPath.getStartPoint().getBuilding() + " " + tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
 		//Edge case where the start and end point equal each other
 		if(tempPath.getStartPoint() == tempPath.getEndPoint()){
 			System.out.println("The points are the same");
 			List<Node> wayPoints = new ArrayList<Node>();
 			wayPoints.add(tempPath.getStartPoint());
 			tempPath.setPath(wayPoints);
-			printNodes(tempPath.getWayPoints());
 			mapPaths.put(mapName, path);
+			printNodes(mapPaths.get(mapName).getWayPoints());
 			return dijkstraSuccess;
 		}
 		JDijkstra dijkstra = new JDijkstra(mapTable.get(mapName).getGraph());
@@ -477,7 +548,6 @@ public class MainModel {
 		}
 		else{
 			System.out.println("PATH WAY POINTS: " + mapName);
-			printNodes(tempPath.getWayPoints());
 		}
 		if(!mapPaths.containsKey(mapName)){
 			mapPaths.put(mapName, tempPath);
