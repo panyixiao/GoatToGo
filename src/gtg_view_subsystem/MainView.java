@@ -138,7 +138,8 @@ public class MainView {
 	public void getPathResult(String mapName) {
 		// 2015-12-01 Yixiao
 		mainController.getPathData();
-		int Index = 1;
+		// Hard coded value
+		int Index = 0;
 		PathData path = mainController.getDesiredPath(Index);
 		showResultPage();
 		this.resultPage.displayPath(path,Index);
