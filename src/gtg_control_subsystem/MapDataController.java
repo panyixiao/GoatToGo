@@ -318,7 +318,7 @@ public class MapDataController {
 	public Boolean addPoint(Point inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
 		int i=CheckPntExistence(inputPnt);
-		if(i==0){
+		if(i<0){
 			
 			int coord_X = (int)inputPnt.getX();
 			int coord_Y = (int)inputPnt.getY();						
@@ -332,10 +332,11 @@ public class MapDataController {
 			}
 			
 			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType, "HELLO"));
-			
 			transferNodeToPnt2D(nodeList);
 			success = true;
-		}else if (i>0){
+			
+		}
+		else{
 			Node n=findNodeInList(i);
 			n.setBuilding(buildingName);
 			n.setFloorNum(floorNum);
@@ -448,7 +449,7 @@ public class MapDataController {
 		for (Node tempN: nodeList){
 			double d = Math.sqrt(Math.pow(pnt.getX() - tempN.getX(), 2) + 
 							     Math.pow(pnt.getY() - tempN.getY(), 2));
-			System.out.println("the distance is : "+d);
+			//System.out.println("the distance is : "+d);
 			if(d <= toleranceRadius){
 				pntID = tempN.getID();
 				System.out.println("Point "+pntID+" is Found in the nodeList!");
