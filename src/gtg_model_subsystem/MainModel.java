@@ -256,18 +256,21 @@ public class MainModel {
 		//int startNodeEntranceID= startNode.getEntranceID();
 		//IF the two buildings for the nodes are not equal THEN
 		if(!start.getBuilding().equals(end.getBuilding())){
-			tempEndNode = getStartEndNodeForCampusMap(end);
-			System.out.println("TEMPENDNODE B:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
-			//Next compare the two floors for the given nodes
-			multiPathCalcSuccess = calculatePathForFloors(start, tempEndNode, 0);
-			tempStartNode = findClosestNodeInBuilding(tempEndNode);
-			compareFloors = compareFloorNum(tempStartNode, end);
-			System.out.println("COMAPRED FLOORS" + compareFloors);
-			System.out.println("TEMPSTARTNODE :" + tempStartNode.getBuilding() + " FLOOR: "  + tempStartNode.getFloorNum() + "X: "+ tempStartNode.getX() + "Y: " + tempStartNode.getY());
-			tempPath = new Path(null, null, null);
-
-			multiPathCalcSuccess = calculatePathForFloors(tempStartNode,end, compareFloors);
-			printMapPaths();
+			if(start.getBuilding().contains("CampusMap")){
+				System.out.println("CampusMap is selected as start.");
+				tempEndNode = getStartEndNodeForCampusMap(end);
+				System.out.println("TEMPENDNODE B:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
+				//Next compare the two floors for the given nodes
+				multiPathCalcSuccess = calculatePathForFloors(start, tempEndNode, 0);
+				tempStartNode = findClosestNodeInBuilding(tempEndNode);
+				compareFloors = compareFloorNum(tempStartNode, end);
+				System.out.println("COMAPRED FLOORS" + compareFloors);
+				System.out.println("TEMPSTARTNODE :" + tempStartNode.getBuilding() + " FLOOR: "  + tempStartNode.getFloorNum() + "X: "+ tempStartNode.getX() + "Y: " + tempStartNode.getY());
+				tempPath = new Path(null, null, null);
+	
+				multiPathCalcSuccess = calculatePathForFloors(tempStartNode,end, compareFloors);
+				printMapPaths();
+			}
 		}
 		if(start.getBuilding().equals(end.getBuilding())){
 			System.out.println("The buildings are the same");
