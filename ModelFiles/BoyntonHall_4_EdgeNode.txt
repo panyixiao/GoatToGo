@@ -58,6 +58,8 @@ NODES
 104 627 486 0 BoyntonHall 4 Waypoint
 105 446 651 0 BoyntonHall 4 Waypoint
 106 333 651 3 BoyntonHall 4 Stairs
+107 923 781 0 BoyntonHall 4 Waypoint
+108 937 836 4 BoyntonHall 4 Stairs
 EDGES
 1 1 2
 2 2 3
@@ -122,3 +124,5 @@ EDGES
 130 37 105
 131 105 35
 132 106 105
+133 1 107
+134 107 108

@@ -1,5 +1,5 @@
 NODES
-1 907 982 0 BoyntonHall 2 Waypoint
+1 907 982 2 BoyntonHall 2 Waypoint
 2 907 898 0 BoyntonHall 2 Waypoint
 3 907 727 0 BoyntonHall 2 Stairs
 4 869 727 0 BoyntonHall 2 Waypoint
@@ -23,7 +23,7 @@ NODES
 32 371 84 0 BoyntonHall 2 Classroom
 33 422 84 0 BoyntonHall 2 Classroom
 34 422 259 0 BoyntonHall 2 Classroom
-35 384 141 2 BoyntonHall 2 Stairs
+35 384 141 0 BoyntonHall 2 Waypoint
 36 497 117 0 BoyntonHall 2 Classroom
 37 546 203 0 BoyntonHall 2 Classroom
 38 474 283 0 BoyntonHall 2 Classroom
@@ -47,7 +47,6 @@ NODES
 68 534 556 0 BoyntonHall 2 Classroom
 70 577 534 0 BoyntonHall 2 Classroom
 71 434 481 0 BoyntonHall 2 Classroom
-72 406 550 3 BoyntonHall 2 Stairs
 73 262 539 0 BoyntonHall 2 Classroom
 74 262 631 0 BoyntonHall 2 Classroom
 75 262 738 0 BoyntonHall 2 Classroom
@@ -88,11 +87,15 @@ NODES
 113 806 597 0 BoyntonHall 2 Classroom
 114 371 738 0 BoyntonHall 2 Waypoint
 115 497 556 0 BoyntonHall 2 Waypoint
-116 497 520 0 BoyntonHall 2 Classroom
 117 896 141 0 BoyntonHall 2 Classroom
 118 1006 141 0 BoyntonHall 2 Classroom
 119 122 597 0 BoyntonHall 2 Waypoint
 120 91 597 0 BoyntonHall 2 Waypoint
+122 329 526 3 BoyntonHall 2 Stairs
+123 406 526 0 BoyntonHall 2 Waypoint
+124 497 526 0 BoyntonHall 2 Classroom
+125 957 667 4 BoyntonHall 2 Stairs
+126 907 667 0 BoyntonHall 2 Waypoint
 EDGES
 1 1 2
 2 2 3
@@ -123,7 +126,6 @@ EDGES
 77 67 70
 78 68 70
 80 71 14
-81 71 72
 82 16 73
 83 73 74
 84 74 75
@@ -162,7 +164,6 @@ EDGES
 122 97 16
 123 98 55
 124 98 57
-125 72 99
 126 38 100
 127 100 89
 128 102 101
@@ -186,7 +187,6 @@ EDGES
 150 57 113
 151 111 57
 152 99 114
-153 116 115
 154 115 68
 155 117 87
 156 118 86
@@ -195,3 +195,10 @@ EDGES
 159 82 120
 160 119 120
 161 120 79
+162 122 123
+163 123 99
+164 123 124
+165 124 115
+166 71 123
+167 125 126
+168 126 3
