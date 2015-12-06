@@ -331,7 +331,7 @@ public class MapDataController {
 				}
 			}
 			
-			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType));
+			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType, "HELLO"));
 			
 			transferNodeToPnt2D(nodeList);
 			success = true;

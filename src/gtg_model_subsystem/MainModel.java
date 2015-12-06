@@ -20,21 +20,16 @@ import java.util.LinkedHashMap;
 public class MainModel {
 	private List<Node> nodes;
 	private List<Edge> edges;
-	private Path path;
 	private Path shortestPath = null;
 	private CoordinateGraph graph;
 	private List<Admin> admins;
 	private FileProcessing fileProcessing;
-	private Map tempMap;
 	private Hashtable<String, Map> mapTable;
 	private LinkedHashMap<String, Path> mapPaths;
 	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
 		mapTable = new Hashtable<String, Map>();
-		
-		
-		path = new Path(null, null, null);
 		try {			
 			loadMapLists();
 			loadAdmin();			
@@ -299,8 +294,6 @@ public class MainModel {
 			System.out.println(compareFloors);
 			while(floorNumber != end.getFloorNum()){
 				sameEntIdList = new HashSet<Integer>();
-				System.out.println(path.getEndPoint());
-				System.out.println(path.getStartPoint());
 				System.out.println("floors are different");
 				//Start Floor is higher then end floor go down
 				if(compareFloors == 1){
@@ -341,6 +334,7 @@ public class MainModel {
 						for(int entranceID: sameEntIdList){
 							System.out.println("attempting to set endnode");
 							System.out.println("END NODE Entrance ID set" + entranceID);
+							System.out.println("End Node Floor Number" + floorNumber);
 							endNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ floorNumber).getGraph().getNodes(),
 									  entranceID);
 							
@@ -437,7 +431,7 @@ public class MainModel {
 			//System.out.println("New start point" + path.getStartPoint().getBuilding() + " " +path.getStartPoint().getFloorNum() + " " +path.getStartPoint().getFloorNum()
 			//		 + " " +path.getStartPoint().getX() + " " +  path.getStartPoint().getY());
 			floorPathCalculateSuccess = singlePathCalculate(startNode.getBuilding() + "_" + floorNumber, tempPath);
-
+			tempPath = new Path(null, null, null);
 			return floorPathCalculateSuccess;
 		
 	}
@@ -527,9 +521,17 @@ public class MainModel {
 		if(tempPath.getStartPoint() == tempPath.getEndPoint()){
 			System.out.println("The points are the same");
 			List<Node> wayPoints = new ArrayList<Node>();
-			wayPoints.add(tempPath.getStartPoint());
+			System.out.println("START POINT INFO: " +tempPath.getStartPoint().getBuilding() + " " + tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
+			Node tempNode = new Node(1,1,1,1,"1",1,"1", "1");
+			tempNode = tempPath.getStartPoint();
+			System.out.println("START POINT INFO: " +tempNode.getBuilding() + " " + tempNode.getY() + " "  + tempNode.getFloorNum());
+			wayPoints.add(tempNode);
 			tempPath.setPath(wayPoints);
-			mapPaths.put(mapName, path);
+			if(tempPath.getWayPoints() == null){
+				System.out.println("We were un-able to add the waypoints");
+			}
+			printNodes(tempPath.getWayPoints());
+			mapPaths.put(mapName, tempPath);
 			printNodes(mapPaths.get(mapName).getWayPoints());
 			return dijkstraSuccess;
 		}
@@ -633,7 +635,7 @@ public class MainModel {
 	 * @param pointType String
 	 * @param mapName String
 	 * @return boolean
-	 */
+
 	public boolean setStartEndPathPoint(Point point, String pointType, String mapName){
 			boolean isSet = false;
 			for(Node node: mapTable.get(mapName).getGraph().getNodes()){
@@ -649,7 +651,7 @@ public class MainModel {
 				}
 			}
 			return isSet;
-	}
+	}	 */
 	/**
 	 * Method printNodes.
 	 * @param mapName String
@@ -692,40 +694,25 @@ public class MainModel {
 		}
 		System.out.println("END OF PRINT ADMIN");
 	}
-	/**
-	 * Method printPath.
-	 * @param mapName String
-	 */
-	public void printPath(String mapName){
-		for(Node node: path.getWayPoints()){
-			System.out.println(node.getID());
-		}
-		System.out.println("END PATH");
-	}
+
 	public void printMaps(){
 		for(String value: mapTable.keySet()){
 			System.out.println(value);
 		}
 	}
 
-	/**
-	 * Method getPath.
-	 * @return Path
-	 */
-	public Path getPath(){
-		return this.path;
-	}
+	
 	/**
 	 * Method convertWayPointsToPoints.
 	 * @return ArrayList<Point>
-	 */
+	
 	public ArrayList<Point> convertWayPointsToPoints(){
 		ArrayList<Point> tempWayPoints = new ArrayList<Point>();
 		for(Node node : path.getWayPoints()){
 			tempWayPoints.add(new Point(node.getX(), node.getY()));
 		}
 		return tempWayPoints;
-	}
+	}*/
 	/**
 	 * Method getArrayOfMapNames.
 	 * @return ArrayList<String>
