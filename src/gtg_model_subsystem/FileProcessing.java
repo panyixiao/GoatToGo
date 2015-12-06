@@ -209,7 +209,7 @@ public class FileProcessing {
 								 lines[6],//type
 								 "");
 			
-			finalDescription = loadDescription("HELLO");
+			finalDescription = loadDescription(lines[7]);
 			node.setDescription(finalDescription);
 			nodes.add(node);
 			return readSuccess;
