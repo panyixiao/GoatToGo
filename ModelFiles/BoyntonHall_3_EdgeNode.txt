@@ -48,7 +48,6 @@ NODES
 78 385 212 0 BoyntonHall 3 Classroom
 82 249 120 0 BoyntonHall 3 Classroom
 83 208 242 0 BoyntonHall 3 Classroom
-84 422 615 3 BoyntonHall 3 Stairs
 87 596 264 0 BoyntonHall 3 Classroom
 89 16 315 0 BoyntonHall 3 Classroom
 90 228 749 0 BoyntonHall 3 Classroom
@@ -85,6 +84,8 @@ NODES
 125 815 88 0 BoyntonHall 3 Classroom
 126 747 88 0 BoyntonHall 3 Classroom
 127 596 81 0 BoyntonHall 3 Classroom
+128 422 574 0 BoyntonHall 3 Waypoint
+129 358 574 3 BoyntonHall 3 Stairs
 EDGES
 1 1 2
 2 2 3
@@ -106,8 +107,6 @@ EDGES
 45 68 65
 46 65 64
 48 64 63
-49 68 84
-50 84 66
 51 66 15
 52 63 14
 66 52 10
@@ -179,3 +178,7 @@ EDGES
 162 119 39
 163 118 37
 164 117 35
+165 66 128
+166 129 128
+167 128 68
+168 120 119
