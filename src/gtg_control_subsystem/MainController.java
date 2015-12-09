@@ -72,10 +72,6 @@ public class MainController{
 		return mapDataController.getClickedBuildingMapName(mouseClickedPnt);
 	}
 	
-	public int getEntranceFloorNum(String mapName){
-		return mapDataController.getEntranceFloorNum(mapName);
-	}
-	
 	/* Not used right now,correspond to getMapList() method. Get the
 	 * 
 	 * 1 Building List

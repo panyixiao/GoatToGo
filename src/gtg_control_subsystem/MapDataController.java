@@ -18,8 +18,8 @@ public class MapDataController {
 	private ArrayList<String> listOfMapName = new ArrayList<String>();
 	private ArrayList<String> listOfMapURL = new ArrayList<String>();
 	
-	private ArrayList<String> listOfMapNameForCurrentPage = new ArrayList<String>();
-	private ArrayList<String> listOfMapURLForCurrentPage = new ArrayList<String>();
+	private ArrayList<String> listOfMapNameForReturn = new ArrayList<String>();
+	private ArrayList<String> listOfMapURLForReturn = new ArrayList<String>();
 	
 	private ArrayList<Node> nodeList = new ArrayList<Node>();
 	private ArrayList<Edge> edgeList = new ArrayList<Edge>();
@@ -117,8 +117,8 @@ public class MapDataController {
 	
 	private void updateMapList(String mapRequestCommand){
 
-		listOfMapNameForCurrentPage.clear();
-		listOfMapURLForCurrentPage.clear();
+		listOfMapNameForReturn.clear();
+		listOfMapURLForReturn.clear();
 		
 		switch(mapRequestCommand){
 		case "admin":
@@ -141,10 +141,10 @@ public class MapDataController {
 	
 	private void getAllMapNameAndURL(){
 		for(String mapName:listOfMapName){
-			listOfMapNameForCurrentPage.add(mapName);
+			listOfMapNameForReturn.add(mapName);
 		}
 		for(String mapURL:listOfMapURL){
-			listOfMapURLForCurrentPage.add(mapURL);
+			listOfMapURLForReturn.add(mapURL);
 		}
 	}
 	
@@ -155,9 +155,9 @@ public class MapDataController {
 			int end = mapName.lastIndexOf("_");
 			buildingName=mapName.substring(0, end);
 			// Check if we have add the building into the list
-			if(!buildingName.equals("CampusMap") && listOfMapNameForCurrentPage.indexOf(buildingName)<0){
-				listOfMapNameForCurrentPage.add(buildingName);
-				listOfMapURLForCurrentPage.add("");
+			if(!buildingName.equals("CampusMap") && listOfMapNameForReturn.indexOf(buildingName)<0){
+				listOfMapNameForReturn.add(buildingName);
+				listOfMapURLForReturn.add("");
 			}
 		}
 	}
@@ -165,24 +165,15 @@ public class MapDataController {
 	private void getDesiredMapFromMapList(String desiredMap){
 		for(String mapName:listOfMapName){
 			String Section_1 ="";
-			Section_1 = getBuildingNameFromMapName(mapName);
-			//System.out.println("Building Name is "+Section_1);
+			int end = mapName.lastIndexOf("_");
+			Section_1=mapName.substring(0, end);
 			if(desiredMap.equals(Section_1)){
-				listOfMapNameForCurrentPage.add(mapName);
+				listOfMapNameForReturn.add(mapName);
 				int mapIndex = listOfMapName.indexOf(mapName);
 				String mapURL = listOfMapURL.get(mapIndex);
-				listOfMapURLForCurrentPage.add(mapURL);
+				listOfMapURLForReturn.add(mapURL);
 			}
 		}
-	}
-	
-	private String getBuildingNameFromMapName(String mapName){
-		String buildingName = "";
-		int end = mapName.lastIndexOf("_");
-		if(end>0){
-			buildingName = mapName.substring(0, end);		
-		}
-		return buildingName;
 	}
 
 	/* Added by  neha. For now this method just pushes the data into the listofMaps and urlsofMaps.
@@ -234,40 +225,20 @@ public class MapDataController {
 	 */
 	public ArrayList<String> getMapList(String mapName){
 		updateMapList(mapName);
-		return listOfMapNameForCurrentPage;
+		return listOfMapNameForReturn;
 	}
 	
 	/* Changed > to >= as index starts from 0 value*/
 	public String getMapURL(String mapName){
 		String mapurl = "";
-		int index = listOfMapNameForCurrentPage.indexOf(mapName);
+		int index = listOfMapNameForReturn.indexOf(mapName);
 		if(index >= 0){
-			mapurl = listOfMapURLForCurrentPage.get(index);
+			mapurl = listOfMapURLForReturn.get(index);
 		}
 		return mapurl;
 	}
 	
 	// 2015-12-08
-	public int getEntranceFloorNum(String mapName){
-		int floorNum = 0;
-		
-		String buildingName = getBuildingNameFromMapName(mapName);
-		if(buildingName.equals("")){
-			buildingName = mapName;
-		}
-		
-		System.out.println("Building Name is "+buildingName);
-		// Hard Coded Value;
-		switch(buildingName){
-		case "BoyntonHall":
-			floorNum = 2;
-			break;
-		default:
-			break;
-		}
-		return floorNum;
-	}
-	
 	public String getClickedBuildingMapName(Point inputPnt){
 		String buildingMapName = null;
 		Node mappingResult = searchingAPointInNodeList(inputPnt);
@@ -291,7 +262,7 @@ public class MapDataController {
 				result = nd;
 				return result;
 			}
-		}
+		}		
 		return result;		
 	}
 	private double getPointDistance(double x1,double y1,double x2, double y2){
