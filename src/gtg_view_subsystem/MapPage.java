@@ -592,6 +592,11 @@ public class MapPage extends JPanel {
 		pntOnGraph = parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
 		return pntOnGraph;
 	}
+	
+	// Yixiao 2015-12-08
+	public String getMouseSelectedBuilding(Point mouseClickedPnt){
+		return parent.getMouseSelectedBuilding(mouseClickedPnt);
+	}
 
 	public void setPoint() {
 		this.mapMapDisplayPanel.displayPoint();

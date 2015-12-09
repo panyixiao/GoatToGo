@@ -38,6 +38,10 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	private ArrayList<Point> filterPoints = new ArrayList<Point>();
 	private boolean showAllFilteredPoints = false;
 	private Point selectedFilterPoint = null;
+	
+	// Yixiao 2015-12-08
+	private Point doubleClickedPoint = new Point();
+	
 	/**
 	 * Create the panel.
 	
@@ -192,6 +196,23 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	@Override
 	public void mouseReleased(MouseEvent me) {
 		this.maybeShowPopup(me);
+	}
+	
+	// Yixiao 2015-12-08
+	@Override
+	public void mouseClicked(MouseEvent me){
+		// Only response to double Click
+		if(me.getClickCount() == 2){
+			doubleClickedPoint.x = me.getX();
+			doubleClickedPoint.y = me.getY();			
+			String correspondMapName = parent.getMouseSelectedBuilding(doubleClickedPoint);
+			if(correspondMapName!=null){
+				parent.updateMapList(correspondMapName);
+			}
+			else{
+				System.out.println("Mouse Double Clicked at: "+me.getX()+" ,"+me.getY());
+			}
+		}
 	}
 
 	/**

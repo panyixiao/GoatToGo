@@ -68,6 +68,10 @@ public class MainController{
 		return mapDataController.getFilteredList(pointType);
 	}
 	
+	public String getMouseSelectedBuilding(Point mouseClickedPnt){
+		return mapDataController.getClickedBuildingMapName(mouseClickedPnt);
+	}
+	
 	/* Not used right now,correspond to getMapList() method. Get the
 	 * 
 	 * 1 Building List
