@@ -303,10 +303,11 @@ public class AdminMapEditPage extends JPanel {
 													  buildingName,
 													  pointType,
 													  pointDescription);
-		pointPositions = this.parent.mainController.getDisplayPnt();		
-		for(Point pnt: pointPositions){
+		pointPositions = this.parent.mainController.getDisplayPnt();
+		System.out.println("Total "+pointPositions.size()+" Points will be draw");
+		/*for(Point pnt: pointPositions){
 			System.out.println(pnt.getX() + "," + pnt.getY());
-		}
+		}*/
 		return success;
 	}
 	
