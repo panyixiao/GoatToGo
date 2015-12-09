@@ -208,9 +208,12 @@ public class FileProcessing {
 								 Integer.parseInt(lines[5]),//floorNum
 								 lines[6],//type
 								 "");
-			
-			finalDescription = loadDescription(lines[7]);
-			node.setDescription(finalDescription);
+			if(lines[7] != ""){
+				finalDescription = loadDescription(lines[7]);
+				node.setDescription(finalDescription);
+			}else{
+				node.setDescription("");
+			}
 			nodes.add(node);
 			return readSuccess;
 	}
@@ -365,13 +368,13 @@ public class FileProcessing {
 			return finalDescription;
 	}
 	private String saveDescription(String nodeDescription){
-		if(nodeDescription.equals("")){
-			System.out.println("The word was blank");
-		}
+		String finalDescription = "";
 		String arrayOfWordsFromDescription[];
-		String finalDescription;
 		StringBuilder buildDescription = new StringBuilder();
 		
+		if(nodeDescription.equals("")){
+			return finalDescription;
+		}
 		arrayOfWordsFromDescription = nodeDescription.split(" ");
 		//Add the each word from description into the node description
 		for(String word : arrayOfWordsFromDescription){
@@ -380,7 +383,7 @@ public class FileProcessing {
 		finalDescription = buildDescription.toString();
 		finalDescription.trim();
 		return finalDescription;
-}
+	}
 	/**
 	 * Method calculateDistance.
 	 * @param x1 double
