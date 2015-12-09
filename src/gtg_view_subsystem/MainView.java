@@ -233,7 +233,8 @@ public class MainView {
 		// 2015-11-27 Yixiao
 		if(!mapList.isEmpty()){
 			mapPage.displayDropDownList(mapList);
-			this.getMapURL(mapList.get(0));
+			// 2015-12-08 Yixiao
+			this.getMapURL(mapList.get(this.mainController.getEntranceFloorNum(mapName)));
 		}
 		// Please create a Inform Box here to inform the user that the map is not exist yet
 	}
