@@ -335,9 +335,9 @@ public class MapDataController {
 				}
 			}
 			
-			System.out.println(pointDescription);
+/*			System.out.println(pointDescription);
 			pointDescription = pointDescription.replace("\\s+", ";");
-			System.out.println(pointDescription);
+			System.out.println(pointDescription);*/
 			
 			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType, pointDescription));
 			transferNodeToPnt2D(nodeList);
