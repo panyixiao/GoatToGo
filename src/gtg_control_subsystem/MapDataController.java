@@ -245,28 +245,13 @@ public class MapDataController {
 		if(mappingResult!=null){
 			String buildingName = mappingResult.getBuilding();
 			// Be sure, this is a building instead of Campus;
-			System.out.println(buildingName);
+			System.out.println(mappingResult.getDescription());
 			if(!buildingName.equals("CampusMap")){
 				getDesiredMapFromMapList(buildingName);
 				return buildingName;
 			}
 		}
 		return buildingMapName;
-	}
-	
-	private Node searchingAPointInNodeList(Point inputPnt){
-		Node result = null;
-		int threshold = 20;
-		for(Node nd:nodeList){
-			if(getPointDistance((double)nd.getX(),(double)nd.getY(),inputPnt.getX(),inputPnt.getY())<threshold){
-				result = nd;
-				return result;
-			}
-		}		
-		return result;		
-	}
-	private double getPointDistance(double x1,double y1,double x2, double y2){
-		return Math.sqrt(Math.pow(x1-x2, 2)+ Math.pow(y1 - y2, 2));		
 	}
 	
 	/* *******************************
@@ -350,6 +335,10 @@ public class MapDataController {
 				}
 			}
 			
+			System.out.println(pointDescription);
+			pointDescription = pointDescription.replace("\\s+", ";");
+			System.out.println(pointDescription);
+			
 			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType, pointDescription));
 			transferNodeToPnt2D(nodeList);
 			success = true;
@@ -362,6 +351,18 @@ public class MapDataController {
 			n.setEntranceID(entranceID);
 			n.setType(pointType);
 			success= true;
+		}
+		return success;
+	}
+	
+	public boolean editExistNode(int nodeID, int entranceID, String pointType, String pointDescription){
+		boolean success = false;
+		Node nd = findNodeInList(nodeID);
+		if(nd!=null){
+			nd.setEntranceID(entranceID);
+			nd.setType(pointType);
+			nd.setDescription(pointDescription);
+			success = true;
 		}
 		return success;
 	}
@@ -451,15 +452,48 @@ public class MapDataController {
 		return searchingResult;
 	}
 	
+	public String getNodeDescription(Point pnt){
+		String description = "";
+		Node nd = findNodeInList(pnt);
+		if(nd!=null){
+			System.out.println(description);
+			description = nd.getDescription();
+		}
+		return description;
+	}
+	
 	private Node findNodeInList (int nodeID) {
-		Node node=null;
 		for (Node n:nodeList) {
-			if (n.getID()==nodeID) {
-				node=n;
-				return node;
+			if (n.getID()==nodeID) {				
+				return n;
 			}
 		}
-		return node;
+		return null;
+	}
+	
+	private Node findNodeInList(Point Inputpnt){
+		for(Node nd:nodeList){
+			if(nd.getX() == Inputpnt.x&&nd.getY() == Inputpnt.y){
+				return nd;
+			}				
+		}
+		return null;
+	}
+	
+	private Node searchingAPointInNodeList(Point inputPnt){
+		Node result = null;
+		int threshold = 20;
+		for(Node nd:nodeList){
+			if(getPointDistance((double)nd.getX(),(double)nd.getY(),inputPnt.getX(),inputPnt.getY())<threshold){
+				result = nd;
+				return result;
+			}
+		}		
+		return result;		
+	}
+	
+	private double getPointDistance(double x1,double y1,double x2, double y2){
+		return Math.sqrt(Math.pow(x1-x2, 2)+ Math.pow(y1 - y2, 2));		
 	}
 	
 	public int CheckPntExistence(Point pnt){
@@ -580,7 +614,7 @@ public class MapDataController {
 	public String getDescriptionOfNode (int nodeID){
 		String description=new String();
 		if (this.findNodeInList(nodeID)!=null){
-			//description=this.findNodeInList(nodeID).getDescription();
+			description=this.findNodeInList(nodeID).getDescription();
 			//waiting for extension of node class;
 			return description;
 		}

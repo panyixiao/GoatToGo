@@ -53,6 +53,10 @@ public class MainController{
 	public String getMapURL(String mapName){
 		return mapDataController.getMapURL(mapName);
 	}
+	
+	public String getPointDescription(Point pnt){
+		return mapDataController.getNodeDescription(pnt);
+	}
 
 	// This 3 function is called each time when View is changing page
 	public Boolean LoadingPntsAndEdges(String mapName){
@@ -268,6 +272,13 @@ public class MainController{
 
 	public Boolean addPoint(Point inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		return mapDataController.addPoint(inputPnt, floorNum, entranceID, buildingName, pointType, pointDescription);
+	}
+	
+	public boolean EditNode(int nodeID, int entranceID, String pointType, String pointDescription){
+		return mapDataController.editExistNode(nodeID,
+											   entranceID,
+											   pointType,
+											   pointDescription);	
 	}
 
 	public Boolean createEdge(Point pnt1, Point pnt2){		

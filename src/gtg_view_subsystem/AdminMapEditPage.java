@@ -305,9 +305,16 @@ public class AdminMapEditPage extends JPanel {
 													  pointDescription);
 		pointPositions = this.parent.mainController.getDisplayPnt();
 		System.out.println("Total "+pointPositions.size()+" Points will be draw");
-		/*for(Point pnt: pointPositions){
-			System.out.println(pnt.getX() + "," + pnt.getY());
-		}*/
+		return success;
+	}
+	
+	// 2015-12-09 Yixiao
+	public boolean EditNode(int nodeID, int entranceID, String pointType, String pointDescription){
+		boolean success = false;
+		success = this.parent.mainController.EditNode(nodeID,
+													  entranceID,
+													  pointType,
+													  pointDescription);		
 		return success;
 	}
 	
