@@ -88,15 +88,9 @@ public class MapDataController {
 		String newUrl=new String();
 		String osName=System.getProperty("os.name");
 		if (osName.contains("Mac")||osName.contains("Linux")){
-			//System.out.println(System.getProperty("file.separator"));
-			//System.out.println(System.getProperty("os.name"));
 			newUrl=url.replace("\\", System.getProperty("file.separator"));
-			//System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
 		} else {
-			//System.out.println(System.getProperty("file.separator"));
-			//System.out.println(System.getProperty("os.name"));
 			newUrl=url;
-			//System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
 		}
 		
 		return newUrl;
@@ -106,15 +100,9 @@ public class MapDataController {
 		String newUrl=new String();
 		String osName=System.getProperty("os.name");
 		if (osName.contains("Mac")||osName.contains("Linux")){
-			//System.out.println(System.getProperty("file.separator"));
-			//System.out.println(System.getProperty("os.name"));
 			newUrl=url.replace(System.getProperty("file.separator"), "\\");
-			//System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
 		} else {
-			//System.out.println(System.getProperty("file.separator"));
-			//System.out.println(System.getProperty("os.name"));
 			newUrl=url;
-			//System.out.println("!!!!!!!!!!!! new URL:"+newUrl);	
 		}
 		return newUrl;
 	}
@@ -248,6 +236,37 @@ public class MapDataController {
 			mapurl = listOfMapURLForReturn.get(index);
 		}
 		return mapurl;
+	}
+	
+	// 2015-12-08
+	public String getClickedBuildingMapName(Point inputPnt){
+		String buildingMapName = null;
+		Node mappingResult = searchingAPointInNodeList(inputPnt);
+		if(mappingResult!=null){
+			String buildingName = mappingResult.getBuilding();
+			// Be sure, this is a building instead of Campus;
+			System.out.println(buildingName);
+			if(!buildingName.equals("CampusMap")){
+				getDesiredMapFromMapList(buildingName);
+				return buildingName;
+			}
+		}
+		return buildingMapName;
+	}
+	
+	private Node searchingAPointInNodeList(Point inputPnt){
+		Node result = null;
+		int threshold = 20;
+		for(Node nd:nodeList){
+			if(getPointDistance((double)nd.getX(),(double)nd.getY(),inputPnt.getX(),inputPnt.getY())<threshold){
+				result = nd;
+				return result;
+			}
+		}		
+		return result;		
+	}
+	private double getPointDistance(double x1,double y1,double x2, double y2){
+		return Math.sqrt(Math.pow(x1-x2, 2)+ Math.pow(y1 - y2, 2));		
 	}
 	
 	/* *******************************

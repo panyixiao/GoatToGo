@@ -216,6 +216,12 @@ public class MainView {
 		}
 	}
 	
+	public String getMouseSelectedBuilding(Point mouseClickedPnt){
+		String correspondMapName = null;
+		correspondMapName = this.mainController.getMouseSelectedBuilding(mouseClickedPnt);
+		return correspondMapName;
+	}
+	
 	/**
 	 * Method getListOfFloors.
 	 * @param mapName String
