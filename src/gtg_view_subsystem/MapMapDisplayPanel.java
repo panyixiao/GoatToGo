@@ -70,7 +70,12 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    	public void actionPerformed(ActionEvent e) {
 	    		startEndPoint = parent.sentPointToModel(startEndPoint, ViewStringLiterals.FROM, map);
 	    		selectedPoints.setStartLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
-	    		parent.displayPointInTextfield(ViewStringLiterals.FROM, startEndPoint.getX(), startEndPoint.getY());
+	    		//parent.displayPointInTextfield(ViewStringLiterals.FROM, startEndPoint.getX(), startEndPoint.getY());
+
+	    		//Yixiao 2015-12-09
+	    		String pointDescription = parent.getPointDescription(startEndPoint);
+	    		parent.displayPointInTextfield(ViewStringLiterals.FROM, pointDescription);
+	    		
 	    		revalidate();
 	    		repaint();
 	    	}
@@ -83,7 +88,12 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    	public void actionPerformed(ActionEvent e) {
 	    		startEndPoint = parent.sentPointToModel(startEndPoint, ViewStringLiterals.TO, map);
 	    		selectedPoints.setEndLocation((int)startEndPoint.getX(), (int)startEndPoint.getY(), map);
-	    		parent.displayPointInTextfield(ViewStringLiterals.TO, startEndPoint.getX(), startEndPoint.getY());
+	    		//parent.displayPointInTextfield(ViewStringLiterals.TO, startEndPoint.getX(), startEndPoint.getY());
+
+	    		//Yixiao 2015-12-09
+	    		String pointDescription = parent.getPointDescription(startEndPoint);
+	    		parent.displayPointInTextfield(ViewStringLiterals.TO, pointDescription);
+	    		
 	    		revalidate();
 	    		repaint();
 	    	}

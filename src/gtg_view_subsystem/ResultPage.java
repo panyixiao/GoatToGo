@@ -225,9 +225,9 @@ public class ResultPage extends JPanel {
 		this.index = currentMapIndex;
 
 		Point tempPoint = path.getStartPoint();
-		this.fromTextField.setText(" X:" + (int)tempPoint.getX() + ",  Y:" + (int)tempPoint.getY());
+		this.fromTextField.setText(parent.getPointDescription(tempPoint));
 		tempPoint = path.getEndPoint();
-		this.toTextField.setText(" X:" + (int)tempPoint.getX() + ",  Y:" + (int)tempPoint.getY());
+		this.toTextField.setText(parent.getPointDescription(tempPoint));
 		
 		this.totalMapsValue = path.getArrayOfMapNames().size();
 		this.currentMapName.setText(path.getArrayOfMapNames().get(currentMapIndex));

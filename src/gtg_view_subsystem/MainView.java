@@ -273,6 +273,10 @@ public class MainView {
 		String mapURL = this.mainController.getMapURL(mapName);
 		return mapURL;
 	}
+	
+	public String getPointDescription(Point pnt){
+		return this.mainController.getPointDescription(pnt);
+	}
 
 	/**
 	 * Method getFilteredList.
