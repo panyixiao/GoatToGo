@@ -31,7 +31,6 @@ public class MainController{
 	private Node startNode;
 	private Node endNode;
 	
-	
 	private AdminController userChecker;
 	
 	private MapDataController mapDataController;
@@ -84,7 +83,7 @@ public class MainController{
 	 * From ModelSubsystem*/
 	public ArrayList<String> getMapData(String mapName){
 		ArrayList<String> mapData= new ArrayList<String>();
-		mapData=mapModel.getArrayOfMapNames();
+		mapData = mapModel.getArrayOfMapNames();
 		return mapData;
 	}
 	
@@ -172,7 +171,7 @@ public class MainController{
 		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
 		
 		if(pathCalculated){	
-			System.out.println("Path was able to calculate\n");
+			System.out.println("Able to calculate Path\n");
 			MultilayerPathcalculationResult = mapModel.getMapPaths();
 			Set<String> calculationResultMapName = MultilayerPathcalculationResult.keySet();
 			Iterator<String> iterator = calculationResultMapName.iterator();
@@ -181,7 +180,7 @@ public class MainController{
 				String mapName = iterator.next();
 				System.out.println(mapName);
 				resultMapList.add(mapName);
-			}			
+			}
 		}
 		return pathCalculated;
 	}	
