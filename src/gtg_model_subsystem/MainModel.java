@@ -1,4 +1,5 @@
 
+
 package gtg_model_subsystem;
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.util.HashSet;
@@ -519,14 +519,17 @@ public class MainModel {
 			calculateSingleFloorPath = false;
 			return calculateSingleFloorPath;
 		}else{
-			for(int entranceID: sameEntIdList){
+			/*for(int entranceID: sameEntIdList){
 				System.out.println("attempting to set endnode");
 				System.out.println("END NODE Entrance ID set" + entranceID);
 				System.out.println("End Node Floor Number" + currentFloorNumber);
 				endNode = getStartEndPathNode(mapTable.get(startNode.getBuilding() + "_"+ currentFloorNumber).getGraph().getNodes(),
 						  entranceID);
 				
-			}
+			}*/
+			endNode = getEndPathNode(mapTable.get(startNode.getBuilding() + "_"+ currentFloorNumber).getGraph().getNodes(),
+					sameEntIdList,currentFloorNumber,mapTable.get(startNode.getBuilding() + "_"+ currentFloorNumber).getGraph());
+		
 		}
 		tempPath.setStartPoint(startNode);
 		tempPath.setEndPoint(endNode);
@@ -558,8 +561,69 @@ public class MainModel {
 			}
 			  
 		}
+		
 		return tempNode;
 	}
+/**
+ * get the nearest entrance that we can go down	
+ * @param nodes nodes on the floor map
+ * @param sameEntIdList entrances that linked to the next floor
+ * @param currentFloorNumber current floor number
+ * @param graph coordinate graph of the map
+ * @return the nearest entrance node that we can go down
+ */
+public Node getEndPathNode(List<Node> nodes, HashSet<Integer> sameEntIdList,int currentFloorNumber,CoordinateGraph graph)
+	{
+		Node node=null;
+		Node tempEndNode=null;
+		double minDistance=0;
+		int counter=0;
+		
+		JDijkstra dijkstra = new JDijkstra(graph);
+
+		Path path=new Path(null,null,null);
+		
+		LinkedList<Node> wayPoints;
+		
+		for(int entranceID: sameEntIdList){
+			
+			System.out.println(entranceID);
+			tempEndNode = getStartEndPathNode(nodes,entranceID);
+			path.setStartPoint(startNode);
+			
+			path.setEndPoint(tempEndNode);
+			
+			dijkstra.execute(path.getStartPoint());
+			wayPoints = dijkstra.getPath(path.getEndPoint());
+			
+			//can go down along the stair directly
+			if(wayPoints==null)
+			{
+			   minDistance=0;
+			   node=tempEndNode;
+			   break;
+			}else{
+			   path.setPath(wayPoints);
+			}
+			
+			if(path.getWayPoints() == null){
+				System.out.println("Something went wrong storing nodes");
+			}else{
+				System.out.println("Good");
+			}
+			
+			if((counter!=0)&&(path.calculatePathDistance()<minDistance)){
+			   minDistance=path.calculatePathDistance();
+			   node=tempEndNode;
+			}else{
+			   minDistance=path.calculatePathDistance();
+			   node=tempEndNode;
+			}
+			counter++;	
+		}
+		return node;
+	}
+	
 	/**
 	 * get start Node and end Node in a floor 
 	 * @return the start Node and end Node in a floor
@@ -928,3 +992,4 @@ public class MainModel {
     }
     
 }
+
