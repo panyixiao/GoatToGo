@@ -1,5 +1,5 @@
-
 package gtg_model_subsystem;
+
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
@@ -281,48 +281,113 @@ public class MainModel {
 				System.out.println("TEMPSTARTNODE :" + tempStartNode.getBuilding() + " FLOOR: "  + tempStartNode.getFloorNum() + "X: "+ tempStartNode.getX() + "Y: " + tempStartNode.getY());
 
 				tempPath = new Path(null, null, null);
-				Node additionNodeforMap = createTemporaryCampusMapNode(tempStartNode);
-				Edge additionEdgeforMap = createTemporaryCampusMapEdge(additionNodeforMap);
-				mapTable.get("CampusMap_0").getGraph().getNodes().add(additionNodeforMap);
-				mapTable.get("CampusMap_0").getGraph().getEdges().add(additionEdgeforMap);
-				multiPathCalcSuccess = pathCampusMapToCampusMap(additionNodeforMap, end);
-
+				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, end);
 			}else if(start.getBuilding().contains("CampusMap") && onCampusMap(end)){
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
-
 			}else if(end.getBuilding().contains("CampusMap") && onCampusMap(start)){
-				multiPathCalcSuccess = pathCampusMapToCampusMap(end, start);
+				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
+			}else if(!end.getBuilding().contains("CampusMap") && !end.getBuilding().contains("CampusMap") && onCampusMap(start) && onCampusMap(end)){
+				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
 		}
 		if(start.getBuilding().equals(end.getBuilding())){
 			System.out.println("The buildings are the same");
-			startBuildingMapNames = getBuildingMaps(start.getBuilding());
-			for(String s: startBuildingMapNames){
-				System.out.println(s);
+			Node exchangeNode = null;
+			Node copyExchange = null;
+			if(onCampusMap(start)){
+				//Edge case in which the start point in on campus map but still for same building
+				System.out.println("Start is on campus");
+				pathCampusMapToCampusMap(start,start);
+				
+				exchangeNode = findClosestNodeInBuilding(start);
+				sameBuildingCalculation(exchangeNode, end);
+				printMapPaths();
 			}
-			//Next compare the two floors for the given nodes
-			compareFloors = compareFloorNum(start, end);
-			//Start Floor is higher then end floor go down
-			if(compareFloors == 1 || compareFloors == -1){
-				multiPathCalcSuccess = calculatePathForFloors(start, end, compareFloors);
+			else if(onCampusMap(end)){
+				//Edge case in which the end node is on campus map but still technically with same building
+				pathCampusMapToCampusMap(end,end);
+				exchangeNode = findClosestNodeInBuilding(end);
+				sameBuildingCalculation(start, exchangeNode);
+			}else{
+				sameBuildingCalculation(start,end);
 			}
-			//Start floor equals end floor stay and do single path calculate
-			else{
-				multiPathCalcSuccess = calculatePathForFloors(start, end, 0);
-			}
+			
 			
 		}
 		return multiPathCalcSuccess;
 	}
+	private boolean sameBuildingCalculation(Node start, Node end){
+		boolean sameBuildingCalc = true;
+		int compareFloors;
+		//Next compare the two floors for the given nodes
+		compareFloors = compareFloorNum(start, end);
+		//Start Floor is higher then end floor go down
+		if(compareFloors == 1 || compareFloors == -1){
+			sameBuildingCalc = calculatePathForFloors(start, end, compareFloors);
+		}
+		//Start floor equals end floor stay and do single path calculate
+		else{
+			sameBuildingCalc = calculatePathForFloors(start, end, 0);
+		}
+		return sameBuildingCalc;
+	}
 	private boolean pathCampusMapToCampusMap(Node start, Node end){
 		boolean pathCampusMapToCampusMapCalculate = true;
-		Node additionNodeforMap = createTemporaryCampusMapNode(end);
-		Edge additionEdgeforMap = createTemporaryCampusMapEdge(additionNodeforMap);
-		mapTable.get("CampusMap_0").getGraph().getNodes().add(additionNodeforMap);
-		mapTable.get("CampusMap_0").getGraph().getEdges().add(additionEdgeforMap);
-		pathCampusMapToCampusMapCalculate = calculatePathForFloors(start, additionNodeforMap, 0);
-		mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionNodeforMap);
-		mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionEdgeforMap);
+		
+		Node additionStartNodeforMap = null;
+		Edge additionStartEdgeforMap = null;
+
+		Node additionEndNodeforMap = null;
+		Edge additionEndEdgeForMap = null;
+		
+		if(start.equals(end)){
+			additionStartNodeforMap = createTemporaryCampusMapNode(start);
+			additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionStartEdgeforMap);
+			pathCampusMapToCampusMapCalculate = calculatePathForFloors(additionStartNodeforMap, end, 0);
+			mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionStartEdgeforMap);
+
+		}
+		else if(!start.getBuilding().contains("CampusMap")){
+			additionStartNodeforMap = createTemporaryCampusMapNode(start);
+			additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionStartEdgeforMap);
+
+			pathCampusMapToCampusMapCalculate = calculatePathForFloors(additionStartNodeforMap, end, 0);
+			mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionStartEdgeforMap);
+
+		}
+		else if(!end.getBuilding().contains("CampusMap")){
+			System.out.println("THE END DOES NOT CONATIN CMAP");
+			additionEndNodeforMap = createTemporaryCampusMapNode(end);
+			additionEndEdgeForMap = createTemporaryCampusMapEdge(additionEndNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionEndNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionEndEdgeForMap);
+
+			pathCampusMapToCampusMapCalculate = calculatePathForFloors(start, additionEndNodeforMap, 0);
+			mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionEndNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionEndEdgeForMap);
+		}
+		else{
+			additionStartNodeforMap = createTemporaryCampusMapNode(start);
+			additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionStartEdgeforMap);
+			additionEndNodeforMap = createTemporaryCampusMapNode(end);
+			additionEndEdgeForMap = createTemporaryCampusMapEdge(additionEndNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionEndNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionEndEdgeForMap);
+			pathCampusMapToCampusMapCalculate = calculatePathForFloors(additionStartNodeforMap, additionEndNodeforMap, 0);
+			mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionStartNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionStartEdgeforMap);
+			mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionEndNodeforMap);
+			mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionEndEdgeForMap);
+		}
+		tempPath = new Path(null, null, null);
 		return pathCampusMapToCampusMapCalculate;
 	}
 	private Edge createTemporaryCampusMapEdge(Node campusMapEndNode){
@@ -751,29 +816,7 @@ public class MainModel {
 		System.out.println(correctedPoint.getX() + " " + correctedPoint.getY());
 		return correctedPoint;
 	}
-	/**
-	 * Method setStartEndPathPoint.
-	 * @param point Point
-	 * @param pointType String
-	 * @param mapName String
-	 * @return boolean
-
-	public boolean setStartEndPathPoint(Point point, String pointType, String mapName){
-			boolean isSet = false;
-			for(Node node: mapTable.get(mapName).getGraph().getNodes()){
-				if((point.x == node.getX()) && (point.y == node.getY()) && (pointType.equals("FROM"))){
-					System.out.println("Set Start point");
-					path.setStartPoint(node);
-					isSet = true;
-				}
-				else if((point.x == node.getX()) && (point.y == node.getY()) && (pointType.equals("TO"))){
-					System.out.println("Set End point");
-					path.setEndPoint(node);
-					isSet = true;
-				}
-			}
-			return isSet;
-	}	 */
+	
 	/**
 	 * Method printNodes.
 	 * @param mapName String
@@ -928,3 +971,6 @@ public class MainModel {
     }
     
 }
+
+    
+
