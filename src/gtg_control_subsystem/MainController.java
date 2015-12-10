@@ -31,7 +31,6 @@ public class MainController{
 	private Node startNode;
 	private Node endNode;
 	
-	
 	private AdminController userChecker;
 	
 	private MapDataController mapDataController;
@@ -53,6 +52,10 @@ public class MainController{
 	public String getMapURL(String mapName){
 		return mapDataController.getMapURL(mapName);
 	}
+	
+	public String getPointDescription(Point pnt){
+		return mapDataController.getNodeDescription(pnt);
+	}
 
 	// This 3 function is called each time when View is changing page
 	public Boolean LoadingPntsAndEdges(String mapName){
@@ -68,6 +71,10 @@ public class MainController{
 		return mapDataController.getFilteredList(pointType);
 	}
 	
+	public String getMouseSelectedBuilding(Point mouseClickedPnt){
+		return mapDataController.getClickedBuildingMapName(mouseClickedPnt);
+	}
+	
 	/* Not used right now,correspond to getMapList() method. Get the
 	 * 
 	 * 1 Building List
@@ -76,7 +83,7 @@ public class MainController{
 	 * From ModelSubsystem*/
 	public ArrayList<String> getMapData(String mapName){
 		ArrayList<String> mapData= new ArrayList<String>();
-		mapData=mapModel.getArrayOfMapNames();
+		mapData = mapModel.getArrayOfMapNames();
 		return mapData;
 	}
 	
@@ -164,7 +171,7 @@ public class MainController{
 		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
 		
 		if(pathCalculated){	
-			System.out.println("Path was able to calculate\n");
+			System.out.println("Able to calculate Path\n");
 			MultilayerPathcalculationResult = mapModel.getMapPaths();
 			Set<String> calculationResultMapName = MultilayerPathcalculationResult.keySet();
 			Iterator<String> iterator = calculationResultMapName.iterator();
@@ -173,7 +180,7 @@ public class MainController{
 				String mapName = iterator.next();
 				System.out.println(mapName);
 				resultMapList.add(mapName);
-			}			
+			}
 		}
 		return pathCalculated;
 	}	
@@ -264,6 +271,13 @@ public class MainController{
 
 	public Boolean addPoint(Point inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		return mapDataController.addPoint(inputPnt, floorNum, entranceID, buildingName, pointType, pointDescription);
+	}
+	
+	public boolean EditNode(int nodeID, int entranceID, String pointType, String pointDescription){
+		return mapDataController.editExistNode(nodeID,
+											   entranceID,
+											   pointType,
+											   pointDescription);	
 	}
 
 	public Boolean createEdge(Point pnt1, Point pnt2){		

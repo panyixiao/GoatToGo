@@ -575,6 +575,18 @@ public class MapPage extends JPanel {
 			break;
 		}
 	}
+	
+	// Yixiao 2015-12-09
+	public void displayPointInTextfield(String locationType, String pntDescription){
+		switch(locationType){
+		case ViewStringLiterals.FROM:
+			fromTextField.setText(pntDescription);
+			break;			
+		case ViewStringLiterals.TO:
+			toTextField.setText(pntDescription);
+			break;
+		}
+	}
 
 	//public void sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
 	//	parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
@@ -591,6 +603,15 @@ public class MapPage extends JPanel {
 		Point pntOnGraph = startEndPoint;
 		pntOnGraph = parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
 		return pntOnGraph;
+	}
+	// Yixiao 2015-12-09
+	public String getPointDescription(Point pnt){
+		return parent.getPointDescription(pnt);
+	}
+	
+	// Yixiao 2015-12-08
+	public String getMouseSelectedBuilding(Point mouseClickedPnt){
+		return parent.getMouseSelectedBuilding(mouseClickedPnt);
 	}
 
 	public void setPoint() {
@@ -750,7 +771,10 @@ public class MapPage extends JPanel {
 				JLabel btnFilteredPoints = new JLabel();
 				btnFilteredPoints.setFont(new Font("Meiryo", Font.PLAIN, 22));
 				btnFilteredPoints.setForeground(new Color(0x5b1010));
-				btnFilteredPoints.setText(filteredPoints.get(i).x + "," + filteredPoints.get(i).y);
+				//btnFilteredPoints.setText(filteredPoints.get(i).x + "," + filteredPoints.get(i).y);
+				// Yixiao 2015-12-09
+				btnFilteredPoints.setText(parent.getPointDescription(filteredPoints.get(i)));
+				
 				btnFilteredPoints.setBounds(10, y, 290, 25);
 				btnFilteredPoints.addMouseListener(new MouseAdapter(){
 					public void mouseClicked(MouseEvent me){
