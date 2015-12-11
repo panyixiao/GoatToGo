@@ -31,13 +31,17 @@ public class PathSearchController {
 		//System.out.println("Task Type: " + pntType);
 		if(pntType.equals("FROM")){
 			startNode = mainController.mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
-			targetPnt.x = startNode.getX();
-			targetPnt.y = startNode.getY();
+			if(startNode!=null){
+				targetPnt.x = startNode.getX();
+				targetPnt.y = startNode.getY();
+			}
 		}
 		else if(pntType.equals("TO")){
 			endNode = mainController.mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
-			targetPnt.x = endNode.getX();
-			targetPnt.y = endNode.getY();
+			if(endNode!=null){
+				targetPnt.x = endNode.getX();
+				targetPnt.y = endNode.getY();
+			}
 		}
 		
 		return targetPnt;
@@ -110,18 +114,19 @@ public class PathSearchController {
 	public boolean getPathData(){
 		boolean pathCalculated = false;
 		resultMapList=new ArrayList<String>();
-		System.out.println("START NODE INFORMATION : " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY());
-		System.out.println("END NODE INFORMATION : " + endNode.getBuilding() + " " + endNode.getFloorNum() + " " + endNode.getX() + " " + endNode.getY());
+		if(startNode!=null && endNode!=null){
 
-		pathCalculated =  mainController.mapModel.multiPathCalculate(startNode, endNode);
+			System.out.println("FROM: " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY() + " " + startNode.getDescription());
+			System.out.println("TO: " + endNode.getBuilding() + " " + endNode.getFloorNum() + " " + endNode.getX() + " " + endNode.getY() + " " + endNode.getDescription()  );
+			pathCalculated =  mainController.mapModel.multiPathCalculate(startNode, endNode);
+		}
 		
 		if(pathCalculated){	
-			System.out.println("Able to calculate Path\n");
+			System.out.println("Hoooooya~~ Path Calculated!\n");
 			MultilayerPathcalculationResult = mainController.mapModel.getMapPaths();
 			Set<String> calculationResultMapName = MultilayerPathcalculationResult.keySet();
 			Iterator<String> iterator = calculationResultMapName.iterator();
 			while(iterator.hasNext()){
-				//ArrayList of map names for Neha
 				String mapName = iterator.next();
 				System.out.println(mapName);
 				resultMapList.add(mapName);
