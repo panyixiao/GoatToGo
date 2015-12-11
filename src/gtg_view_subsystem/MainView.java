@@ -277,6 +277,9 @@ public class MainView {
 	public String getPointDescription(Point pnt){
 		return this.mainController.getPointDescription(pnt);
 	}
+	public String getStartEndNodeDescription(String type){
+		return this.mainController.getStartEndNodeDescription(type);
+	}
 
 	/**
 	 * Method getFilteredList.

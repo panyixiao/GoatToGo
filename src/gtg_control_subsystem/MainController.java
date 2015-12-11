@@ -22,18 +22,19 @@ import java.util.Iterator;
 public class MainController{
 		
 	public MainModel mapModel;
-	/**/
 	
 	private PathSearchController pathSearchController;
+	private MapDataController mapDataController;
+	private AdminController userChecker;
+	
+	// Path Searching Controller Variable
 	private LinkedHashMap<String, Path> MultilayerPathcalculationResult;
 	private ArrayList<String> resultMapList;
 	private Path currentPath;
 	private Node startNode;
 	private Node endNode;
 	
-	private AdminController userChecker;
 	
-	private MapDataController mapDataController;
 
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;
@@ -57,7 +58,7 @@ public class MainController{
 		return mapDataController.getNodeDescription(pnt);
 	}
 
-	// This 3 function is called each time when View is changing page
+	// This 3 functions below should be called each time when View is changing page
 	public Boolean LoadingPntsAndEdges(String mapName){
 		return mapDataController.LoadingPntsAndEdges(mapName);
 	}
@@ -66,7 +67,8 @@ public class MainController{
 	}
 	public ArrayList<Point> getDisplayEdge(){
 		return mapDataController.getDisplayEdge();
-	}	
+	}
+	
 	public ArrayList<Point> getFilteredList(String pointType){
 		return mapDataController.getFilteredList(pointType);
 	}
@@ -147,6 +149,17 @@ public class MainController{
 
 		return path;
 	}
+	
+	public String getStartEndNodeDescription(String pointType){
+		String description = null;
+		if(pointType.equals("FROM")){
+			description = currentPath.getStartPoint().getDescription();
+		}
+		else if(pointType.equals("TO")){
+			description = currentPath.getEndPoint().getDescription();
+		}
+		return description;
+	}	
 	
 	private ArrayList<Point> convertNodeListIntoPointList(Path inputPath){
 		ArrayList<Point> pntPath = new ArrayList<Point>();
