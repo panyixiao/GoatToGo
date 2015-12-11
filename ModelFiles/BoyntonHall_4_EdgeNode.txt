@@ -5,10 +5,10 @@ NODES
 7 664 677 0 BoyntonHall 4 Waypoint WayPoint;
 8 635 677 0 BoyntonHall 4 Waypoint WayPoint;
 9 571 677 0 BoyntonHall 4 Waypoint WayPoint;
-10 557 486 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
+10 557 486 0 BoyntonHall 4 Waypoint WayPoint;
 12 503 435 0 BoyntonHall 4 Waypoint WayPoint;
-13 471 435 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-14 432 435 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
+13 471 435 0 BoyntonHall 4 Waypoint WayPoint;
+14 432 435 0 BoyntonHall 4 Waypoint WayPoint;
 15 392 435 0 BoyntonHall 4 Waypoint WayPoint;
 16 299 435 0 BoyntonHall 4 Waypoint WayPoint;
 17 231 443 0 BoyntonHall 4 Waypoint WayPoint;
@@ -26,7 +26,7 @@ NODES
 49 42 83 0 BoyntonHall 4 Classroom 301A;
 53 843 862 0 BoyntonHall 4 Waypoint WayPoint;
 72 491 715 0 BoyntonHall 4 Classroom 3006;
-73 476 486 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
+73 476 486 0 BoyntonHall 4 Classroom WayPoint;
 76 916 619 0 BoyntonHall 4 Waypoint WayPoint;
 77 983 619 0 BoyntonHall 4 Waypoint WayPoint;
 78 916 688 0 BoyntonHall 4 Classroom 307B;
@@ -53,7 +53,7 @@ NODES
 103 109 443 0 BoyntonHall 4 Classroom Room;301;
 104 627 486 0 BoyntonHall 4 Classroom 309;
 106 333 651 3 BoyntonHall 4 Stairs Stairs;
-107 923 781 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
+107 923 781 0 BoyntonHall 4 Waypoint WayPoint;
 108 937 836 4 BoyntonHall 4 Stairs Stairs;
 109 380 735 0 BoyntonHall 4 Classroom Room;300A;
 110 853 941 0 BoyntonHall 4 Classroom Room;308;
