@@ -1,14 +1,14 @@
 NODES
 1 963 675 0 FullerLab 5 Waypoint NULL;
 2 919 675 0 FullerLab 5 Waypoint NULL;
-3 828 675 0 FullerLab 5 Waypoint NULL;
+3 828 675 0 FullerLab 5 Classroom 310;
 5 665 698 0 FullerLab 5 Waypoint NULL;
 6 665 806 0 FullerLab 5 Waypoint NULL;
-7 665 894 0 FullerLab 5 Waypoint NULL;
+7 665 894 0 FullerLab 5 Classroom 311;
 8 582 894 0 FullerLab 5 Waypoint NULL;
-9 582 806 0 FullerLab 5 Waypoint NULL;
+9 582 806 0 FullerLab 5 Classroom 313;
 10 539 806 0 FullerLab 5 Waypoint NULL;
-11 539 966 0 FullerLab 5 Waypoint NULL;
+11 539 966 0 FullerLab 5 Classroom 312;
 12 576 966 0 FullerLab 5 Waypoint NULL;
 13 665 966 0 FullerLab 5 Waypoint NULL;
 14 582 698 0 FullerLab 5 Waypoint NULL;
@@ -22,30 +22,32 @@ NODES
 22 162 776 0 FullerLab 5 Waypoint NULL;
 23 162 798 0 FullerLab 5 Waypoint NULL;
 24 162 966 0 FullerLab 5 Waypoint NULL;
-25 117 966 0 FullerLab 5 Waypoint NULL;
+25 117 966 0 FullerLab 5 Classroom 320;
 26 117 782 0 FullerLab 5 Waypoint NULL;
-27 117 738 0 FullerLab 5 Waypoint NULL;
+27 117 738 0 FullerLab 5 Stairs NULL;
 28 136 731 0 FullerLab 5 Waypoint NULL;
 29 735 698 0 FullerLab 5 Waypoint NULL;
-30 709 806 0 FullerLab 5 Classroom NULL;
-31 464 766 0 FullerLab 5 Classroom NULL;
+30 709 806 0 FullerLab 5 Classroom 306;
+31 464 766 0 FullerLab 5 Classroom 314;
 32 396 766 0 FullerLab 5 Classroom NULL;
 33 396 731 0 FullerLab 5 Classroom NULL;
-34 362 731 0 FullerLab 5 Classroom NULL;
+34 362 731 0 FullerLab 5 Classroom 315;
 35 310 731 0 FullerLab 5 Classroom NULL;
 36 310 776 0 FullerLab 5 Classroom NULL;
-37 241 776 0 FullerLab 5 Classroom NULL;
+37 241 776 0 FullerLab 5 Classroom 316;
 38 362 825 0 FullerLab 5 Classroom NULL;
 39 290 825 0 FullerLab 5 Waypoint NULL;
-40 241 825 0 FullerLab 5 Waypoint NULL;
+40 241 825 0 FullerLab 5 Classroom 319;
 41 241 966 0 FullerLab 5 Waypoint NULL;
-42 362 925 0 FullerLab 5 Classroom NULL;
+42 362 925 0 FullerLab 5 Classroom 318;
 43 431 825 0 FullerLab 5 Classroom NULL;
-44 431 925 0 FullerLab 5 Classroom NULL;
+44 431 925 0 FullerLab 5 Classroom 317;
+45 629 806 0 FullerLab 5 Classroom 307;
+46 629 698 0 FullerLab 5 Elevator ele;
+47 665 755 0 FullerLab 5 Stairs Stairs;
 EDGES
 1 1 2
 2 2 3
-5 5 6
 6 6 7
 7 7 8
 8 8 9
@@ -69,7 +71,6 @@ EDGES
 26 26 27
 27 27 28
 28 28 21
-29 14 5
 30 26 23
 31 8 12
 32 9 14
@@ -91,3 +92,8 @@ EDGES
 48 38 43
 49 43 44
 50 38 42
+51 45 9
+52 5 46
+53 46 14
+54 5 47
+55 47 6
