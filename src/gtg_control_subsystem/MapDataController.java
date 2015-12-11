@@ -264,11 +264,10 @@ public class MapDataController {
 		this.nodeList.clear();
 		this.edgeList.clear();
 		this.tempPntList.clear();
-		this.tempEdgeList.clear();
-		
+		this.tempEdgeList.clear();		
 		if(mainController.mapModel.loadFiles(mapName)){
 			LoadInNodeList(mapName);
-			LoadInEdgeList(mapName);			 
+			LoadInEdgeList(mapName);	 
 			transferNodeToPnt2D(this.nodeList);
 			transferEdgeToPnt2D(this.edgeList);
 
