@@ -240,7 +240,7 @@ NODES
 264 109 506 0 CampusMap 0 Waypoint WayPoint;
 265 95 554 0 CampusMap 0 Building Morgan;Hall;
 267 544 566 2 BoyntonHall 2 Building Boynton;Hall;
-268 500 561 1 BoyntonHall 1 Building Boynton;Hall;
+268 500 561 1 BoyntonHall 2 Building Boynton;Hall;
 269 523 546 3 BoyntonHall 1 Building Boynton;Hall;
 270 544 535 0 CampusMap 0 Waypoint WayPoint;
 271 451 471 0 CampusMap 0 Waypoint WayPoint;
@@ -249,8 +249,8 @@ NODES
 274 407 178 0 CampusMap 0 Waypoint WayPoint;
 275 744 632 0 CampusMap 0 Waypoint WayPoint;
 276 592 302 0 CampusMap 0 Waypoint WayPoint;
-277 645 283 0 FullerLab 0 Building Fuller;Lab;
-278 645 471 0 CampusMap 0 Waypoint NULL;
+277 645 283 1 FullerLab 4 Building Fuller;Lab;
+278 645 471 0 CampusMap 0 Waypoint WayPoint;
 EDGES
 1 70 71
 2 71 72
