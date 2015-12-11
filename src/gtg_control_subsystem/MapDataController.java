@@ -325,6 +325,14 @@ public class MapDataController {
 		
 	}
 
+	private String newStr (String str) {
+		String newStr = str;
+		if (newStr.trim().isEmpty()) {
+			newStr = "NULL";
+		}
+		return newStr;
+	}
+
 	public Boolean addPoint(Point inputPnt, int floorNum, int entranceID, String buildingName, String pointType, String pointDescription){
 		Boolean success = false;
 		int i=CheckPntExistence(inputPnt);
@@ -345,7 +353,7 @@ public class MapDataController {
 			pointDescription = pointDescription.replace("\\s+", ";");
 			System.out.println(pointDescription);*/
 			
-			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType, pointDescription));
+			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType, newStr(pointDescription)));
 			transferNodeToPnt2D(nodeList);
 			success = true;
 			
@@ -356,6 +364,7 @@ public class MapDataController {
 			n.setFloorNum(floorNum);
 			n.setEntranceID(entranceID);
 			n.setType(pointType);
+			n.setDescription(newStr(pointDescription));
 			success= true;
 		}
 		return success;
@@ -367,7 +376,7 @@ public class MapDataController {
 		if(nd!=null){
 			nd.setEntranceID(entranceID);
 			nd.setType(pointType);
-			nd.setDescription(pointDescription);
+			nd.setDescription(newStr(pointDescription));
 			success = true;
 		}
 		return success;
