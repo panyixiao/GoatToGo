@@ -117,24 +117,30 @@ public class MapDataController {
 	
 	private void updateMapList(String mapRequestCommand){
 
-		listOfMapNameForReturn.clear();
-		listOfMapURLForReturn.clear();
 		
 		switch(mapRequestCommand){
 		case "admin":
+			listOfMapNameForReturn.clear();
+			listOfMapURLForReturn.clear();
 			mainController.mapModel.loadMapLists();
 			LoadInMapNameList();
 			LoadInMapURL();
 			getAllMapNameAndURL();
 			break;
 		case "CampusMap":
-			getDesiredMapFromMapList(mapRequestCommand);
+			listOfMapNameForReturn.clear();
+			listOfMapURLForReturn.clear();
+			updateMapListWithDesiredMapName(mapRequestCommand);
 			addAllBuildingIntoList();
 			break;		
 		// Get All the buildingMap
 		default:
-			getDesiredMapFromMapList(mapRequestCommand);
-			getDesiredMapFromMapList("CampusMap");
+			if(validateBuildingName(mapRequestCommand)){
+				listOfMapNameForReturn.clear();
+				listOfMapURLForReturn.clear();
+				updateMapListWithDesiredMapName(mapRequestCommand);
+				updateMapListWithDesiredMapName("CampusMap");
+			}
 			break;
 		}
 	}
@@ -162,7 +168,7 @@ public class MapDataController {
 		}
 	}
 	
-	private void getDesiredMapFromMapList(String desiredMap){
+	private void updateMapListWithDesiredMapName(String desiredMap){
 		for(String mapName:listOfMapName){
 			String Section_1 ="";
 			int end = mapName.lastIndexOf("_");
@@ -175,13 +181,21 @@ public class MapDataController {
 			}
 		}
 	}
+	
+	private boolean validateBuildingName(String buildingName){
+		boolean buildingMapExist = false;
+		for(String mapName:listOfMapName){
+			String Section_1 ="";
+			int end = mapName.lastIndexOf("_");
+			Section_1=mapName.substring(0, end);
+			if(buildingName.equals(Section_1)){
+				buildingMapExist = true;
+				return buildingMapExist;
+			}
+		}
+		return buildingMapExist;		
+	}
 
-	/* Added by  neha. For now this method just pushes the data into the listofMaps and urlsofMaps.
-	 * Once the model method is available call that method with the same paramaters.
-	 * The model method should return a boolean value:
-	 * True if mapName and mapImageURL are stored succesfully into the .txt file
-	 * False if mapName and mapImageURL are not stored succesfully into the .txt file
-	 */
 	public void addNewMapToList(String mapName){
 		if(listOfMapName.indexOf(mapName)<0){
 			listOfMapName.add(mapName);
@@ -194,12 +208,6 @@ public class MapDataController {
 		}
 	}
 
-	/* Added by  neha. For now this method just deletes the map from listofMaps and urlsofMaps.
-	 * Once the model method is available call that method with the same paramaters.
-	 * The model method should return a boolean value:
-	 * True if mapName and mapImageURL are deleted succesfully from the .txt file
-	 * False if mapName and mapImageURL are not deleted succesfully from the .txt file
-	 */
 	// Remove the map from MapList and MapURLList at the same time;
 	public Boolean removeMapFromList(String mapName){
 		Boolean mapRemoved = false;
@@ -243,12 +251,11 @@ public class MapDataController {
 		String buildingMapName = null;
 		Node mappingResult = searchingAPointInNodeList(inputPnt);
 		if(mappingResult!=null){
-			String buildingName = mappingResult.getBuilding();
+			buildingMapName = mappingResult.getBuilding();
 			// Be sure, this is a building instead of Campus;
 			System.out.println(mappingResult.getDescription());
-			if(!buildingName.equals("CampusMap")){
-				getDesiredMapFromMapList(buildingName);
-				return buildingName;
+			if(!buildingMapName.equals("CampusMap")){
+				return buildingMapName;
 			}
 		}
 		return buildingMapName;
