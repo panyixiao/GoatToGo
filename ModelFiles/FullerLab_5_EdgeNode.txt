@@ -24,7 +24,7 @@ NODES
 24 162 966 0 FullerLab 5 Waypoint NULL;
 25 117 966 0 FullerLab 5 Classroom 320;
 26 117 782 0 FullerLab 5 Waypoint NULL;
-27 117 738 0 FullerLab 5 Stairs NULL;
+27 117 738 2 FullerLab 5 Stairs NULL;
 28 136 731 0 FullerLab 5 Waypoint NULL;
 29 735 698 0 FullerLab 5 Waypoint NULL;
 30 709 806 0 FullerLab 5 Classroom 306;
@@ -44,7 +44,7 @@ NODES
 44 431 925 0 FullerLab 5 Classroom 317;
 45 629 806 0 FullerLab 5 Classroom 307;
 46 629 698 0 FullerLab 5 Elevator ele;
-47 665 755 0 FullerLab 5 Stairs Stairs;
+47 665 755 3 FullerLab 5 Stairs Stairs;
 EDGES
 1 1 2
 2 2 3

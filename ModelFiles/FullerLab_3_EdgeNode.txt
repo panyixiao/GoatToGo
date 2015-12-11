@@ -18,7 +18,7 @@ NODES
 18 753 611 0 FullerLab 3 Classroom 146;
 19 753 635 0 FullerLab 3 Waypoint NULL;
 20 664 635 0 FullerLab 3 Waypoint NULL;
-21 664 687 0 FullerLab 3 Stairs NULL;
+21 664 687 3 FullerLab 3 Stairs NULL;
 22 664 765 0 FullerLab 3 Waypoint NULL;
 23 664 793 0 FullerLab 3 Waypoint NULL;
 24 664 825 0 FullerLab 3 Waypoint NULL;
@@ -49,7 +49,7 @@ NODES
 49 581 635 0 FullerLab 3 Waypoint NULL;
 50 612 635 0 FullerLab 3 Waypoint NULL;
 51 664 83 0 FullerLab 3 Classroom 139;
-52 664 201 0 FullerLab 3 Stairs NULL;
+52 664 201 4 FullerLab 3 Stairs NULL;
 53 721 88 0 FullerLab 3 Classroom 138;
 54 721 186 0 FullerLab 3 Classroom 140;
 55 745 88 0 FullerLab 3 Classroom 137;

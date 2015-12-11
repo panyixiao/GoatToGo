@@ -1,5 +1,5 @@
 NODES
-1 619 181 0 FullerLab 1 Stairs NULL;
+1 619 181 4 FullerLab 1 Stairs NULL;
 2 662 181 0 FullerLab 1 Waypoint NULL;
 3 662 241 0 FullerLab 1 Waypoint NULL;
 4 734 241 0 FullerLab 1 Waypoint NULL;
@@ -50,7 +50,7 @@ NODES
 49 836 968 0 FullerLab 1 Waypoint NULL;
 50 831 870 0 FullerLab 1 Classroom NULL;
 51 831 913 0 FullerLab 1 Classroom A12;
-52 619 668 0 FullerLab 1 Stairs NULL;
+52 619 668 3 FullerLab 1 Stairs NULL;
 EDGES
 1 1 2
 2 2 3

@@ -1,5 +1,5 @@
 NODES
-1 644 165 0 FullerLab 2 Stairs NULL;
+1 644 165 4 FullerLab 2 Stairs NULL;
 2 694 165 0 FullerLab 2 Waypoint NULL;
 3 740 165 0 FullerLab 2 Waypoint NULL;
 4 767 165 0 FullerLab 2 Waypoint NULL;
@@ -51,7 +51,7 @@ NODES
 51 878 419 0 FullerLab 2 Classroom B20;
 52 878 481 0 FullerLab 2 Classroom B19;
 53 945 572 0 FullerLab 2 Classroom NULL;
-54 713 626 0 FullerLab 2 Stairs NULL;
+54 713 626 3 FullerLab 2 Stairs NULL;
 55 612 607 0 FullerLab 2 Elevator NULL;
 56 566 644 0 FullerLab 2 Classroom NULL;
 57 530 644 0 FullerLab 2 Classroom NULL;
@@ -130,7 +130,6 @@ EDGES
 52 52 11
 53 53 15
 54 38 54
-55 54 22
 56 21 17
 57 23 69
 60 72 18
@@ -161,3 +160,4 @@ EDGES
 86 69 78
 87 78 71
 88 78 72
+89 54 22
