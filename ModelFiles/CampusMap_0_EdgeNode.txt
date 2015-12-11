@@ -250,7 +250,7 @@ NODES
 275 744 632 0 CampusMap 0 Waypoint WayPoint;
 276 592 302 0 CampusMap 0 Waypoint WayPoint;
 277 645 283 1 FullerLab 4 Building Fuller;Lab;
-278 645 471 0 CampusMap 0 Waypoint NULL;
+278 645 471 0 CampusMap 0 Waypoint WayPoint;
 EDGES
 1 70 71
 2 71 72
