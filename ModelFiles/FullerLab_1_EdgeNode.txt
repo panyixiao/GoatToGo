@@ -1,5 +1,5 @@
 NODES
-1 619 181 4 FullerLab 1 Stairs NULL;
+1 619 181 4 FullerLab 1 Stairs Stairs;
 2 662 181 0 FullerLab 1 Waypoint NULL;
 3 662 241 0 FullerLab 1 Waypoint NULL;
 4 734 241 0 FullerLab 1 Waypoint NULL;
@@ -24,33 +24,33 @@ NODES
 23 740 146 0 FullerLab 1 Waypoint NULL;
 24 656 90 0 FullerLab 1 Classroom A22;
 25 734 106 0 FullerLab 1 Classroom A21A;
-26 809 106 0 FullerLab 1 Classroom NULL;
+26 809 106 0 FullerLab 1 Waypoint NULL;
 27 880 73 0 FullerLab 1 Classroom A21B;
 28 875 241 0 FullerLab 1 Classroom A19;
 29 780 263 0 FullerLab 1 Classroom A20;
 30 662 284 0 FullerLab 1 Classroom A23;
-31 734 554 0 FullerLab 1 Classroom NULL;
-32 794 554 0 FullerLab 1 Classroom NULL;
+31 734 554 0 FullerLab 1 Waypoint NULL;
+32 794 554 0 FullerLab 1 Waypoint NULL;
 33 907 554 0 FullerLab 1 Classroom A15;
 34 794 466 0 FullerLab 1 Classroom A18;
 35 794 643 0 FullerLab 1 Classroom A14;
 36 848 755 0 FullerLab 1 Classroom A13;
-37 565 613 0 FullerLab 1 Classroom NULL;
-38 565 643 0 FullerLab 1 Elevator NULL;
+37 565 613 0 FullerLab 1 Waypoint NULL;
+38 565 643 0 FullerLab 1 Elevator Elevator;
 39 565 581 0 FullerLab 1 Classroom A05;
 40 514 613 0 FullerLab 1 Classroom A10;
-41 508 715 0 FullerLab 1 Classroom NULL;
+41 508 715 0 FullerLab 1 Waypoint NULL;
 42 591 715 0 FullerLab 1 Classroom A07;
-43 503 870 0 FullerLab 1 Classroom NULL;
-44 591 870 0 FullerLab 1 Classroom NULL;
+43 503 870 0 FullerLab 1 Waypoint NULL;
+44 591 870 0 FullerLab 1 Waypoint NULL;
 45 675 870 0 FullerLab 1 Waypoint NULL;
 46 740 870 0 FullerLab 1 Waypoint NULL;
 47 740 932 0 FullerLab 1 Waypoint NULL;
 48 740 968 0 FullerLab 1 Waypoint NULL;
 49 836 968 0 FullerLab 1 Waypoint NULL;
-50 831 870 0 FullerLab 1 Classroom NULL;
+50 831 870 0 FullerLab 1 Waypoint NULL;
 51 831 913 0 FullerLab 1 Classroom A12;
-52 619 668 3 FullerLab 1 Stairs NULL;
+52 619 668 3 FullerLab 1 Stairs Stairs;
 EDGES
 1 1 2
 2 2 3

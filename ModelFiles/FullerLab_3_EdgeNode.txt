@@ -18,7 +18,7 @@ NODES
 18 753 611 0 FullerLab 3 Classroom 146;
 19 753 635 0 FullerLab 3 Waypoint NULL;
 20 664 635 0 FullerLab 3 Waypoint NULL;
-21 664 687 3 FullerLab 3 Stairs NULL;
+21 664 687 3 FullerLab 3 Stairs Stairs;
 22 664 765 0 FullerLab 3 Waypoint NULL;
 23 664 793 0 FullerLab 3 Waypoint NULL;
 24 664 825 0 FullerLab 3 Waypoint NULL;
@@ -42,14 +42,14 @@ NODES
 42 291 676 0 FullerLab 3 Waypoint NULL;
 43 291 635 0 FullerLab 3 Waypoint NULL;
 44 354 635 0 FullerLab 3 Waypoint NULL;
-45 414 635 0 FullerLab 3 Stairs NULL;
+45 414 635 0 FullerLab 3 Stairs Stairs;
 46 441 635 0 FullerLab 3 Waypoint NULL;
 47 476 635 0 FullerLab 3 Waypoint NULL;
 48 500 635 0 FullerLab 3 Waypoint NULL;
 49 581 635 0 FullerLab 3 Waypoint NULL;
 50 612 635 0 FullerLab 3 Waypoint NULL;
 51 664 83 0 FullerLab 3 Classroom 139;
-52 664 201 4 FullerLab 3 Stairs NULL;
+52 664 201 4 FullerLab 3 Stairs Stairs;
 53 721 88 0 FullerLab 3 Classroom 138;
 54 721 186 0 FullerLab 3 Classroom 140;
 55 745 88 0 FullerLab 3 Classroom 137;
@@ -67,20 +67,20 @@ NODES
 70 705 765 0 FullerLab 3 Classroom 110;
 71 612 661 0 FullerLab 3 Elevator NULL;
 72 705 798 0 FullerLab 3 Classroom 111;
-73 664 850 0 FullerLab 3 Classroom NULL;
+73 664 850 0 FullerLab 3 Waypoint NULL;
 74 705 850 0 FullerLab 3 Classroom 112;
 75 620 850 0 FullerLab 3 Classroom 113;
-76 500 676 0 FullerLab 3 Men's_Restroom NULL;
-77 476 676 0 FullerLab 3 Woman's_Restroom NULL;
-78 414 715 0 FullerLab 3 Classroom NULL;
+76 500 676 0 FullerLab 3 Men's_Restroom Men's_Restroom;
+77 476 676 0 FullerLab 3 Woman's_Restroom Woman's_Restroom;
+78 414 715 0 FullerLab 3 Waypoint NULL;
 79 291 890 0 FullerLab 3 Classroom 122;
-80 291 959 0 FullerLab 3 Classroom NULL;
-81 375 959 0 FullerLab 3 Classroom NULL;
-82 197 959 0 FullerLab 3 Classroom NULL;
-83 234 635 0 FullerLab 3 Classroom NULL;
+80 291 959 0 FullerLab 3 Waypoint NULL;
+81 375 959 0 FullerLab 3 Waypoint NULL;
+82 197 959 0 FullerLab 3 Waypoint NULL;
+83 234 635 0 FullerLab 3 Waypoint NULL;
 84 234 595 0 FullerLab 3 Classroom 121;
 85 141 618 0 FullerLab 3 Classroom 127;
-86 835 515 0 FullerLab 3 Classroom NULL;
+86 835 515 0 FullerLab 3 Waypoint NULL;
 87 790 489 0 FullerLab 3 Classroom 144;
 88 790 515 0 FullerLab 3 Classroom 145;
 89 889 515 0 FullerLab 3 Classroom 129;
@@ -91,7 +91,7 @@ NODES
 94 302 830 0 FullerLab 3 Classroom 120;
 95 302 775 0 FullerLab 3 Classroom 119;
 96 302 739 0 FullerLab 3 Classroom 118;
-97 409 830 0 FullerLab 3 Classroom NULL;
+97 409 830 0 FullerLab 3 Waypoint NULL;
 98 581 748 0 FullerLab 3 Classroom 113;
 EDGES
 1 1 2
