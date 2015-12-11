@@ -122,7 +122,9 @@ public class MapDataController {
 		case "admin":
 			listOfMapNameForReturn.clear();
 			listOfMapURLForReturn.clear();
+			mainController.mapModel.loadMapLists();
 			mainController.mapModel.loadFiles();
+			
 			LoadInMapNameList();
 			LoadInMapURL();
 			getAllMapNameAndURL();

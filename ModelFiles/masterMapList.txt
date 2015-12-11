@@ -8,3 +8,4 @@ FullerLab_2 images\FL_Basement.PNG Floor
 FullerLab_3 images\FL_FirstFloor.PNG Floor
 FullerLab_4 images\FL_SecondFloor.PNG Floor
 FullerLab_5 images\FL_ThirdFloor.PNG Floor
+ProjectCenter_1 images\PC_FirstFloor.png Floor
