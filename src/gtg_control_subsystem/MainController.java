@@ -28,11 +28,11 @@ public class MainController{
 	private AdminController userChecker;
 	
 	// Path Searching Controller Variable
-	private LinkedHashMap<String, Path> MultilayerPathcalculationResult;
+	/*private LinkedHashMap<String, Path> MultilayerPathcalculationResult;
 	private ArrayList<String> resultMapList;
 	private Path currentPath;
 	private Node startNode;
-	private Node endNode;
+	private Node endNode;*/
 	// To be deleted once PathSearchController is done.
 	
 
@@ -97,10 +97,10 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
-		//Point targetPnt = pathSearchController.setTaskPnt(taskPnt, pntType, mapName);
-		//return targetPnt;
+		Point targetPnt = pathSearchController.setTaskPnt(taskPnt, pntType, mapName);
+		return targetPnt;
 		
-		Point targetPnt = new Point();		
+		/*Point targetPnt = new Point();		
 		//System.out.println("Task Type: " + pntType);
 		if(pntType.equals("FROM")){
 			startNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
@@ -113,14 +113,14 @@ public class MainController{
 			targetPnt.y = endNode.getY();
 		}
 		
-		return targetPnt;
+		return targetPnt;*/
 	}
 	
 	public PathData getDesiredPath(int Index){
-		//PathData path = pathSearchController.getDesiredPath(Index);
-		//return path;
+		PathData path = pathSearchController.getDesiredPath(Index);
+		return path;
 		
-		PathData path = new PathData();
+		/*PathData path = new PathData();
 		
 		// Get requested path
 		String requestedMapName = resultMapList.get(Index);
@@ -155,24 +155,24 @@ public class MainController{
 		System.out.println("The requested mapURL is: " + mapURL);
 		path.setMapURL(mapURL);
 
-		return path;
+		return path;*/
 	}
 	
 	public String getStartEndNodeDescription(String pointType){
-		//String description = pathSearchController.getStartEndNodeDescription(pointType);
-		//return description;
+		String description = pathSearchController.getStartEndNodeDescription(pointType);
+		return description;
 		
-		String description = null;
+		/*String description = null;
 		if(pointType.equals("FROM")){
 			description = currentPath.getStartPoint().getDescription();
 		}
 		else if(pointType.equals("TO")){
 			description = currentPath.getEndPoint().getDescription();
 		}
-		return description;
+		return description;*/
 	}	
 	
-	private ArrayList<Point> convertNodeListIntoPointList(Path inputPath){
+	/*private ArrayList<Point> convertNodeListIntoPointList(Path inputPath){
 		//this whole method will be deleted once pathSearchController is done.
 		ArrayList<Point> pntPath = new ArrayList<Point>();
 		List<Node> currentNodePath = inputPath.getWayPoints();
@@ -185,13 +185,13 @@ public class MainController{
 			}
 		}		
 		return pntPath;
-	}	
+	}	*/
 	
 	public boolean getPathData(){
-		//boolean pathCalculated = pathSearchController.getPathData();
-		//return pathCalculated;
+		boolean pathCalculated = pathSearchController.getPathData();
+		return pathCalculated;
 		
-		boolean pathCalculated = false;
+		/*boolean pathCalculated = false;
 		resultMapList=new ArrayList<String>();
 		System.out.println("START NODE INFORMATION : " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY());
 		System.out.println("END NODE INFORMATION : " + endNode.getBuilding() + " " + endNode.getFloorNum() + " " + endNode.getX() + " " + endNode.getY());
@@ -210,7 +210,7 @@ public class MainController{
 				resultMapList.add(mapName);
 			}
 		}
-		return pathCalculated;
+		return pathCalculated;*/
 	}	
 	
 	/******************************
@@ -219,16 +219,16 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Boolean adminQualification(String userName, String passWord){
-		//Boolean isAdmin = userChecker.adminQualification(userName, passWord);
-		//return isAdmin;
+		Boolean isAdmin = userChecker.adminQualification(userName, passWord);
+		return isAdmin;
 		
-		Boolean isAdmin = false;
+		/*Boolean isAdmin = false;
 		isAdmin = mapModel.isValidAdmin(userName, passWord);
 		if(!isAdmin){
 			System.out.println("Sorry You are not Admin!");
 			mapModel.printAdmins();
 		}
-		return isAdmin;
+		return isAdmin;*/
 	}
 	
 	
