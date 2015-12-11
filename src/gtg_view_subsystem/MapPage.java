@@ -774,10 +774,12 @@ public class MapPage extends JPanel {
 				//btnFilteredPoints.setText(filteredPoints.get(i).x + "," + filteredPoints.get(i).y);
 				// Yixiao 2015-12-09
 				btnFilteredPoints.setText(parent.getPointDescription(filteredPoints.get(i)));
-				
+				btnFilteredPoints.setName(Integer.toString((int)filteredPoints.get(i).getX())+","+Integer.toString((int)filteredPoints.get(i).getY()));
 				btnFilteredPoints.setBounds(10, y, 290, 25);
 				btnFilteredPoints.addMouseListener(new MouseAdapter(){
 					public void mouseClicked(MouseEvent me){
+						
+						
 						filteredListItemClicked((JLabel)me.getSource());
 					}
 				});
@@ -846,7 +848,7 @@ public class MapPage extends JPanel {
 	 * for displaying and highlights selected item in the scrollabel list.
 	 */
 	public void filteredListItemClicked(JLabel pointSelected){
-		String tempString = pointSelected.getText();
+		String tempString = pointSelected.getName();
 		String[] tempArray = tempString.split(",");
 		Point tempPoint = new Point(Integer.parseInt(tempArray[0]), Integer.parseInt(tempArray[1]));
 		showHideLocationsBtn.setText(ViewStringLiterals.SHOW_LOCATIONS);
