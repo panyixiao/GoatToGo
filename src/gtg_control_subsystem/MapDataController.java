@@ -225,14 +225,6 @@ public class MapDataController {
 		return mapRemoved;
 	}
 	
-	/* For integration the method return me the hardcoded arraylist.
-	 * Once a method from model is available the method should return me an arrayList of mapnames.
-	 * The input parameter mapName will help us to use the same method in the map page
-	 * i.e if mapName is admin means the list should conatins all the map names
-	 * if mapName is campus then the list will contain all building names
-	 * if mapName is building then the list will contain all the floor names of the building and the campus map also.
-	 * You will have to implement the switch case.
-	 */
 	public ArrayList<String> getMapList(String mapName){
 		updateMapList(mapName);
 		return listOfMapNameForReturn;
