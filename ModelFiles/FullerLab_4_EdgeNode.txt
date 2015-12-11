@@ -33,10 +33,10 @@ NODES
 32 64 690 0 FullerLab 4 Waypoint NULL;
 33 64 650 0 FullerLab 4 Waypoint NULL;
 34 204 650 0 FullerLab 4 Waypoint NULL;
-35 335 650 0 FullerLab 4 Waypoint NULL;
-36 425 650 0 FullerLab 4 Waypoint NULL;
-37 517 650 0 FullerLab 4 Waypoint NULL;
-38 605 650 0 FullerLab 4 Waypoint NULL;
+35 335 650 0 FullerLab 4 Stairs NULL;
+36 425 650 0 FullerLab 4 Stairs NULL;
+37 517 650 0 FullerLab 4 Stairs NULL;
+38 605 650 0 FullerLab 4 Stairs NULL;
 39 635 101 0 FullerLab 4 Classroom 238;
 40 666 194 0 FullerLab 4 Stairs NULL;
 41 690 101 0 FullerLab 4 Classroom 237;
