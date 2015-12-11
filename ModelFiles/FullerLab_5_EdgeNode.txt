@@ -1,5 +1,4 @@
 NODES
-<<<<<<< HEAD
 1 963 675 0 FullerLab 5 Waypoint Waypoint;
 2 919 675 0 FullerLab 5 Waypoint Waypoint;
 3 828 675 0 FullerLab 5 Classroom 310;
@@ -46,51 +45,6 @@ NODES
 45 629 806 0 FullerLab 5 Classroom 307;
 46 629 698 0 FullerLab 5 Elevator ele;
 47 665 755 3 FullerLab 5 Stairs Stairs;
-=======
-1 963 675 0 FullerLab 5 Waypoint WayPoint;
-2 919 675 0 FullerLab 5 Waypoint WayPoint;
-3 828 675 0 FullerLab 5 Waypoint WayPoint;
-5 665 698 0 FullerLab 5 Waypoint WayPoint;
-6 665 806 0 FullerLab 5 Waypoint WayPoint;
-7 665 894 0 FullerLab 5 Waypoint WayPoint;
-8 582 894 0 FullerLab 5 Waypoint WayPoint;
-9 582 806 0 FullerLab 5 Waypoint WayPoint;
-10 539 806 0 FullerLab 5 Waypoint WayPoint;
-11 539 966 0 FullerLab 5 Waypoint WayPoint;
-12 576 966 0 FullerLab 5 Waypoint WayPoint;
-13 665 966 0 FullerLab 5 Waypoint WayPoint;
-14 582 698 0 FullerLab 5 Waypoint WayPoint;
-15 469 698 0 FullerLab 5 Waypoint WayPoint;
-16 396 698 0 FullerLab 5 Waypoint WayPoint;
-17 362 698 0 FullerLab 5 Waypoint WayPoint;
-18 310 698 0 FullerLab 5 Waypoint WayPoint;
-19 200 698 0 FullerLab 5 Waypoint WayPoint;
-20 162 698 0 FullerLab 5 Waypoint WayPoint;
-21 162 731 0 FullerLab 5 Waypoint WayPoint;
-22 162 776 0 FullerLab 5 Waypoint WayPoint;
-23 162 798 0 FullerLab 5 Waypoint WayPoint;
-24 162 966 0 FullerLab 5 Waypoint WayPoint;
-25 117 966 0 FullerLab 5 Waypoint WayPoint;
-26 117 782 0 FullerLab 5 Waypoint WayPoint;
-27 117 738 0 FullerLab 5 Waypoint WayPoint;
-28 136 731 0 FullerLab 5 Waypoint WayPoint;
-29 735 698 0 FullerLab 5 Waypoint WayPoint;
-30 709 806 0 FullerLab 5 Classroom WayPoint;
-31 464 766 0 FullerLab 5 Classroom WayPoint;
-32 396 766 0 FullerLab 5 Classroom WayPoint;
-33 396 731 0 FullerLab 5 Classroom WayPoint;
-34 362 731 0 FullerLab 5 Classroom WayPoint;
-35 310 731 0 FullerLab 5 Classroom WayPoint;
-36 310 776 0 FullerLab 5 Classroom WayPoint;
-37 241 776 0 FullerLab 5 Classroom WayPoint;
-38 362 825 0 FullerLab 5 Classroom WayPoint;
-39 290 825 0 FullerLab 5 Waypoint WayPoint;
-40 241 825 0 FullerLab 5 Waypoint WayPoint;
-41 241 966 0 FullerLab 5 Waypoint WayPoint;
-42 362 925 0 FullerLab 5 Classroom WayPoint;
-43 431 825 0 FullerLab 5 Classroom WayPoint;
-44 431 925 0 FullerLab 5 Classroom WayPoint;
->>>>>>> 7fbedf243856d8b5c6e4228ddbb94305f6221301
 EDGES
 1 1 2
 2 2 3
