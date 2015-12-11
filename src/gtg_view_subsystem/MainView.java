@@ -274,6 +274,7 @@ public class MainView {
 		return mapURL;
 	}
 	
+	// Yixiao 2015-12-10
 	public String getPointDescription(Point pnt){
 		return this.mainController.getPointDescription(pnt);
 	}
