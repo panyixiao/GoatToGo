@@ -1,0 +1,11 @@
+NODES
+1 489 611 1 FullerLab 1 Waypoint TEST;
+2 566 620 0 FullerLab 1 Waypoint NULL;
+3 621 620 0 FullerLab 1 Waypoint NULL;
+4 626 666 0 FullerLab 1 Waypoint NULL;
+5 673 659 2 FullerLab 1 Waypoint TEST;
+EDGES
+1 1 2
+2 2 3
+3 3 4
+4 4 5

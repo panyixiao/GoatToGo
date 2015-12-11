@@ -24,7 +24,7 @@ NODES
 30 364 133 0 CampusMap 0 Building WayPoint;
 31 347 178 0 CampusMap 0 Building WayPoint;
 32 313 191 0 CampusMap 0 Building WayPoint;
-35 481 408 0 ProjectCenter 0 Building Project;Center;
+35 481 408 1 ProjectCenter 1 Building Project;Center;
 38 380 614 0 CampusMap 0 Building WayPoint;
 39 302 599 0 CampusMap 0 Building WayPoint;
 40 302 491 0 CampusMap 0 Building WayPoint;
@@ -249,7 +249,7 @@ NODES
 274 407 178 0 CampusMap 0 Waypoint WayPoint;
 275 744 632 0 CampusMap 0 Waypoint WayPoint;
 276 592 302 0 CampusMap 0 Waypoint WayPoint;
-277 645 283 0 FullerLab 0 Building Fuller;Lab;
+277 645 283 1 FullerLab 1 Building Fuller;Lab;
 EDGES
 1 70 71
 2 71 72

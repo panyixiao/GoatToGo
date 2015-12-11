@@ -1,0 +1,3 @@
+NODES
+1 703 626 2 FullerLab 2 Stairs TEST;
+EDGES

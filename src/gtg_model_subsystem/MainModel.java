@@ -234,6 +234,7 @@ public class MainModel {
 	 *         false if calculation fails 
 	 */
 	public boolean multiPathCalculate(Node start, Node end){
+	
 		boolean multiPathCalcSuccess = true;
 		System.out.println("START INFORMATION FROM CONTR: " + start.getX() +" " +start.getY() + " " +start.getBuilding() + " " + start.getFloorNum());
 		System.out.println("END NODE INFORMATION FROM CONTR: " + end.getX() +" " +end.getY() + " " +end.getBuilding() + " " + end.getFloorNum());
@@ -241,6 +242,7 @@ public class MainModel {
 			multiPathCalcSuccess = false;
 			return multiPathCalcSuccess;
 		}
+		
 		mapPaths = new LinkedHashMap<String, Path>();
 		tempPath = new Path(null, null, null);
 		int compareFloors;
@@ -264,7 +266,7 @@ public class MainModel {
 	
 				multiPathCalcSuccess = calculatePathForFloors(tempStartNode,end, compareFloors);
 				printMapPaths();
-			}else if(end.getBuilding().equals(campusMap) && !onCampusMap(start)){
+			}else if(end.getBuilding().contains(campusMap) && !onCampusMap(start)){
 				tempEndNode = getStartEndNodeForCampusMap(start);
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
 				compareFloors = compareFloorNum(start, tempEndNode);
@@ -292,7 +294,51 @@ public class MainModel {
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && onCampusMap(start) && onCampusMap(end)){
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
+			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && onCampusMap(start) && !onCampusMap(end)){
+				tempEndNode = getStartEndNodeForCampusMap(end);
+				System.out.println("TEMPENDNODE B:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
+				multiPathCalcSuccess = pathCampusMapToCampusMap(start, tempEndNode);
+				tempStartNode = findClosestNodeInBuilding(tempEndNode);
+				compareFloors = compareFloorNum(tempStartNode, end);
+				tempPath = new Path(null, null, null);
+				multiPathCalcSuccess = calculatePathForFloors(tempStartNode, end, compareFloors);
+
+
+			}
+			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && !onCampusMap(start) && onCampusMap(end)){
+				tempStartNode = getStartEndNodeForCampusMap(start);
+				tempEndNode = findClosestNodeInBuilding(tempStartNode);
+				System.out.println("TEMPENDNODE B TESTING:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
+				compareFloors = compareFloorNum(start, tempEndNode);
+				multiPathCalcSuccess = calculatePathForFloors(start, tempEndNode, compareFloors);
+				tempPath = new Path(null, null, null);
+
+				tempStartNode = getStartEndNodeForCampusMap(tempEndNode);
+				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, end);
+			}
 			//Edge case where two points are not on campus map but in seperate buildings
+			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && !onCampusMap(start) && !onCampusMap(end)){
+				tempStartNode = getStartEndNodeForCampusMap(start);
+				tempEndNode = findClosestNodeInBuilding(tempStartNode);
+				compareFloors = compareFloorNum(start, tempEndNode);
+				multiPathCalcSuccess = calculatePathForFloors(start, tempEndNode, compareFloors);
+				tempPath = new Path(null, null, null);
+
+				System.out.println("MULTI PATH CALCULATED GOING TO CAMPUS MAP");
+				tempStartNode = getStartEndNodeForCampusMap(tempEndNode);
+				if(tempStartNode == null)System.out.println("temp start Node not found");
+				tempEndNode = findClosestNodeInBuilding(end);
+				if(tempEndNode == null) System.out.println("TEMP END NODE WAS NOT FOUND");
+				tempEndNode = getStartEndNodeForCampusMap(tempEndNode);
+				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, tempEndNode);
+				tempPath = new Path(null, null, null);
+				
+				System.out.println("MULTI PATH CALCULATED GOING TO END BUILDING MAP");
+				tempStartNode = findClosestNodeInBuilding(tempEndNode);
+				compareFloors = compareFloorNum(tempStartNode, end);
+				multiPathCalcSuccess = calculatePathForFloors(tempStartNode, end, compareFloors);
+			}
+
 		}
 		if(start.getBuilding().equals(end.getBuilding())){
 			System.out.println("The buildings are the same");
