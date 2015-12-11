@@ -318,6 +318,7 @@ public class MainModel {
 			}
 			//Edge case where two points are not on campus map but in seperate buildings
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && !onCampusMap(start) && !onCampusMap(end)){
+				System.out.println("HERE WE GO");
 				tempStartNode = getStartEndNodeForCampusMap(start);
 				tempEndNode = findClosestNodeInBuilding(tempStartNode);
 				compareFloors = compareFloorNum(start, tempEndNode);
