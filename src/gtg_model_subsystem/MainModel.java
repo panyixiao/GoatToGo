@@ -287,21 +287,21 @@ public class MainModel {
 		if(start.getBuilding().equals(end.getBuilding())){
 			System.out.println("The buildings are the same");
 			Node exchangeNode = null;
-			if(onCampusMap(start)){
+			if(onCampusMap(start)  && start.getFloorNum() != 0){
 				//Edge case in which the start point in on campus map but still for same building
 				System.out.println("Start is on campus");
-				pathCampusMapToCampusMap(start,start);
+				multiPathCalcSuccess = pathCampusMapToCampusMap(start,start);
 				exchangeNode = findClosestNodeInBuilding(start);
-				sameBuildingCalculation(exchangeNode, end);
+				multiPathCalcSuccess = sameBuildingCalculation(exchangeNode, end);
 				printMapPaths();
 			}
-			else if(onCampusMap(end)){
+			else if(onCampusMap(end) && end.getFloorNum() != 0){
 				//Edge case in which the end node is on campus map but still technically with same building
-				pathCampusMapToCampusMap(end,end);
+				multiPathCalcSuccess = pathCampusMapToCampusMap(end,end);
 				exchangeNode = findClosestNodeInBuilding(end);
-				sameBuildingCalculation(start, exchangeNode);
+				multiPathCalcSuccess = sameBuildingCalculation(start, exchangeNode);
 			}else{
-				sameBuildingCalculation(start,end);
+				multiPathCalcSuccess = sameBuildingCalculation(start,end);
 			}
 			
 			
@@ -952,6 +952,10 @@ public class MainModel {
     }
     
 }
+
+    
+
+
 
     
 
