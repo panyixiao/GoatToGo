@@ -1,15 +1,16 @@
 package gtg_model_subsystem;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 
 import java.util.List;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import java.util.LinkedHashMap;
 public class MainModel {
 	private List<Node> nodes;
 	private List<Edge> edges;
+	private Path shortestPath = null;
 	private CoordinateGraph graph;
 	private List<Admin> admins;
 	private FileProcessing fileProcessing;
@@ -28,7 +30,6 @@ public class MainModel {
 	private Path tempPath;
 	private Node startNode;
 	private Node endNode;
-	
 	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new FileProcessing();
@@ -39,7 +40,8 @@ public class MainModel {
 			loadAdmin();			
 			loadFiles();
 		} catch (IOException e) {
-			System.out.println(e.toString());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
@@ -56,6 +58,7 @@ public class MainModel {
 			//load maps from master text file
 			masterMapList=fileProcessing.loadMapList();		
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//IF the master map list failed to load THEN
@@ -217,6 +220,7 @@ public class MainModel {
 		try {
 			//runJDijkstra(mapName);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
 		
@@ -231,22 +235,18 @@ public class MainModel {
 	 */
 	public boolean multiPathCalculate(Node start, Node end){
 		boolean multiPathCalcSuccess = true;
-		int compareFloors;
-		final String campusMap = "CampusMap";
-
-		mapPaths = new LinkedHashMap<String, Path>();
-		tempPath = new Path(null, null, null);
-
-		Node tempEndNode;
-		Node tempStartNode;
-		
 		System.out.println("START INFORMATION FROM CONTR: " + start.getX() +" " +start.getY() + " " +start.getBuilding() + " " + start.getFloorNum());
 		System.out.println("END NODE INFORMATION FROM CONTR: " + end.getX() +" " +end.getY() + " " +end.getBuilding() + " " + end.getFloorNum());
 		if((start == null) || (end == null)){
 			multiPathCalcSuccess = false;
 			return multiPathCalcSuccess;
 		}
-
+		mapPaths = new LinkedHashMap<String, Path>();
+		tempPath = new Path(null, null, null);
+		int compareFloors;
+		final String campusMap = "CampusMap";
+		Node tempEndNode;
+		Node tempStartNode;
 		//int startNodeEntranceID= startNode.getEntranceID();
 		//IF the two buildings for the nodes are not equal THEN
 		if(!start.getBuilding().equals(end.getBuilding())){
@@ -291,7 +291,6 @@ public class MainModel {
 				//Edge case in which the start point in on campus map but still for same building
 				System.out.println("Start is on campus");
 				pathCampusMapToCampusMap(start,start);
-				
 				exchangeNode = findClosestNodeInBuilding(start);
 				sameBuildingCalculation(exchangeNode, end);
 				printMapPaths();
@@ -454,29 +453,7 @@ public class MainModel {
 			}//END-WHILE
 			return closestNode;
 	}
-	private Node getStartEndNodeForCampusMap(Node end){
-		int currentFloorDifference;
-		int closestFloor = Integer.MAX_VALUE;
-		Node closestNode = null;
-		campusMapNodeList = new HashMap<Integer,Node>();
-		for(Node node:mapTable.get("CampusMap_0").getGraph().getNodes())
-		{
-			if(end.getBuilding().equals(node.getBuilding()) && node.getEntranceID() != 0){
-				campusMapNodeList.put(node.getEntranceID(),node);
-			}
-			  
-		}
-		for(Integer i : campusMapNodeList.keySet()){
-			if(end.getBuilding().equals(campusMapNodeList.get(i).getBuilding())){
-				currentFloorDifference = Math.abs(campusMapNodeList.get(i).getFloorNum() - end.getFloorNum());
-				if(currentFloorDifference < closestFloor){
-						closestNode = campusMapNodeList.get(i);
-						closestFloor = currentFloorDifference;
-					}//
-				}//
-			}
-		return closestNode;
-	}
+	
 	private boolean calculatePathForFloors(Node start, Node end, int compareFloors){
 			boolean floorPathCalculateSuccess = true;
 			startNode = null;
@@ -532,7 +509,8 @@ public class MainModel {
 			System.out.println(tempPath.getEndPoint().getEntranceID());
 			System.out.println("FLOOR NUMBER " + currentFloorNumber);
 			System.out.println("NEXT FLOOR: " + start.getBuilding() + "_"+ currentFloorNumber);
-		
+			//System.out.println("New start point" + path.getStartPoint().getBuilding() + " " +path.getStartPoint().getFloorNum() + " " +path.getStartPoint().getFloorNum()
+			//		 + " " +path.getStartPoint().getX() + " " +  path.getStartPoint().getY());
 			calculateSingleFloorPath = singlePathCalculate(startNode.getBuilding() + "_" + currentFloorNumber, tempPath);
 			tempPath = new Path(null, null, null);
 			return calculateSingleFloorPath;
@@ -633,6 +611,29 @@ public class MainModel {
 		}
 		return tempEntIDList;
 	}
+	private Node getStartEndNodeForCampusMap(Node end){
+		int currentFloorDifference;
+		int closestFloor = Integer.MAX_VALUE;
+		Node closestNode = null;
+		campusMapNodeList = new HashMap<Integer,Node>();
+		for(Node node:mapTable.get("CampusMap_0").getGraph().getNodes())
+		{
+			if(end.getBuilding().equals(node.getBuilding()) && node.getEntranceID() != 0){
+				campusMapNodeList.put(node.getEntranceID(),node);
+			}
+			  
+		}
+		for(Integer i : campusMapNodeList.keySet()){
+			if(end.getBuilding().equals(campusMapNodeList.get(i).getBuilding())){
+				currentFloorDifference = Math.abs(campusMapNodeList.get(i).getFloorNum() - end.getFloorNum());
+				if(currentFloorDifference < closestFloor){
+						closestNode = campusMapNodeList.get(i);
+						closestFloor = currentFloorDifference;
+					}//
+				}//
+			}
+		return closestNode;
+	}
 	
 	/**
 	 * compare the floor number of two different floors
@@ -667,6 +668,7 @@ public class MainModel {
 			
 		} catch (Exception e) {
 			calculateSuccess = false;
+			// TODO Auto-generated catch block
 			System.out.println(e.toString());
 		}//END CATCH loadNodes/Edges
 		return calculateSuccess;
@@ -815,8 +817,10 @@ public class MainModel {
 	 * @param nodes List<Node>
 	 */
 	public void printNodes(List<Node> nodes){
+		int count = 0;
 		System.out.println("PRINTING NODES");
 		for(Node node: nodes){
+			count++;
 			System.out.print(node.getID() + " " + node.getX() + " " + node.getY());
 			System.out.println();
 		}
@@ -861,7 +865,7 @@ public class MainModel {
 	 */
 	public ArrayList<String> getArrayOfMapNames(){
 		ArrayList<String> tempArrayOfMapNames = new ArrayList<String>();
-		Enumeration<String> e = mapTable.keys();
+		Enumeration e = mapTable.keys();
 		while(e.hasMoreElements()){
 			String mapName = (String) e.nextElement();
 			tempArrayOfMapNames.add(mapName);
