@@ -26,15 +26,6 @@ public class MainController{
 	private MapDataController mapDataController;
 	private PathSearchController pathSearchController;
 	private AdminController userChecker;
-	
-	// Path Searching Controller Variable
-	/*private LinkedHashMap<String, Path> MultilayerPathcalculationResult;
-	private ArrayList<String> resultMapList;
-	private Path currentPath;
-	private Node startNode;
-	private Node endNode;*/
-	// To be deleted once PathSearchController is done.
-	
 
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;
@@ -97,120 +88,19 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
-		Point targetPnt = pathSearchController.setTaskPnt(taskPnt, pntType, mapName);
-		return targetPnt;
-		
-		/*Point targetPnt = new Point();		
-		//System.out.println("Task Type: " + pntType);
-		if(pntType.equals("FROM")){
-			startNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
-			targetPnt.x = startNode.getX();
-			targetPnt.y = startNode.getY();
-		}
-		else if(pntType.equals("TO")){
-			endNode = mapModel.validatePoint(mapName, (int)(taskPnt.getX()),(int)(taskPnt.getY()),"");
-			targetPnt.x = endNode.getX();
-			targetPnt.y = endNode.getY();
-		}
-		
-		return targetPnt;*/
+		return pathSearchController.setTaskPnt(taskPnt, pntType, mapName);
 	}
 	
 	public PathData getDesiredPath(int Index){
-		PathData path = pathSearchController.getDesiredPath(Index);
-		return path;
-		
-		/*PathData path = new PathData();
-		
-		// Get requested path
-		String requestedMapName = resultMapList.get(Index);
-		currentPath = MultilayerPathcalculationResult.get(requestedMapName);
-
-		// Set StartPnt
-		Point TempStartPnt = new Point();
-		Node TempNode =  currentPath.getStartPoint();
-		TempStartPnt.x = TempNode.getX();
-		TempStartPnt.y = TempNode.getY();		
-		path.setStartPoint(TempStartPnt);
-		
-		// Set EndPnt
-		TempNode = currentPath.getEndPoint();
-		Point TempEndPnt = new Point();
-		TempEndPnt.x = TempNode.getX();
-		TempEndPnt.y = TempNode.getY();
-		path.setEndPoint(TempEndPnt);		
-		
-		// Set wayPoint List
-		ArrayList<Point> displayWayPnts = convertNodeListIntoPointList(currentPath);
-		path.setWayPoints(displayWayPnts);
-
-		// Set mapName List
-		path.setArrayOfMapNames(resultMapList);	
-
-		System.out.println("The requested mapName is: " + requestedMapName);
-		// Set URL of current map
-		int IndexOfMapURL = mapDataController.getCurrentMapNameList().indexOf(requestedMapName);
-		String mapURL = mapDataController.getCurrentMapURLList().get(IndexOfMapURL);	
-
-		System.out.println("The requested mapURL is: " + mapURL);
-		path.setMapURL(mapURL);
-
-		return path;*/
+		return pathSearchController.getDesiredPath(Index);
 	}
 	
 	public String getStartEndNodeDescription(String pointType){
-		String description = pathSearchController.getStartEndNodeDescription(pointType);
-		return description;
-		
-		/*String description = null;
-		if(pointType.equals("FROM")){
-			description = currentPath.getStartPoint().getDescription();
-		}
-		else if(pointType.equals("TO")){
-			description = currentPath.getEndPoint().getDescription();
-		}
-		return description;*/
+		return pathSearchController.getStartEndNodeDescription(pointType);
 	}	
-	
-	/*private ArrayList<Point> convertNodeListIntoPointList(Path inputPath){
-		//this whole method will be deleted once pathSearchController is done.
-		ArrayList<Point> pntPath = new ArrayList<Point>();
-		List<Node> currentNodePath = inputPath.getWayPoints();
-		if(!currentNodePath.isEmpty()){
-			for(Node nd:currentNodePath){
-				Point pnt = new Point();
-				pnt.x = nd.getX();
-				pnt.y = nd.getY();
-				pntPath.add(pnt);			
-			}
-		}		
-		return pntPath;
-	}	*/
-	
+		
 	public boolean getPathData(){
-		boolean pathCalculated = pathSearchController.getPathData();
-		return pathCalculated;
-		
-		/*boolean pathCalculated = false;
-		resultMapList=new ArrayList<String>();
-		System.out.println("START NODE INFORMATION : " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY());
-		System.out.println("END NODE INFORMATION : " + endNode.getBuilding() + " " + endNode.getFloorNum() + " " + endNode.getX() + " " + endNode.getY());
-
-		pathCalculated =  mapModel.multiPathCalculate(startNode, endNode);
-		
-		if(pathCalculated){	
-			System.out.println("Able to calculate Path\n");
-			MultilayerPathcalculationResult = mapModel.getMapPaths();
-			Set<String> calculationResultMapName = MultilayerPathcalculationResult.keySet();
-			Iterator<String> iterator = calculationResultMapName.iterator();
-			while(iterator.hasNext()){
-				//ArrayList of map names for Neha
-				String mapName = iterator.next();
-				System.out.println(mapName);
-				resultMapList.add(mapName);
-			}
-		}
-		return pathCalculated;*/
+		return pathSearchController.getPathData();
 	}	
 	
 	/******************************
@@ -219,16 +109,7 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Boolean adminQualification(String userName, String passWord){
-		Boolean isAdmin = userChecker.adminQualification(userName, passWord);
-		return isAdmin;
-		
-		/*Boolean isAdmin = false;
-		isAdmin = mapModel.isValidAdmin(userName, passWord);
-		if(!isAdmin){
-			System.out.println("Sorry You are not Admin!");
-			mapModel.printAdmins();
-		}
-		return isAdmin;*/
+		return userChecker.adminQualification(userName, passWord);
 	}
 	
 	
