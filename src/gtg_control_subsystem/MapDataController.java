@@ -124,6 +124,7 @@ public class MapDataController {
 			listOfMapURLForReturn.clear();
 			mainController.mapModel.loadMapLists();
 			mainController.mapModel.loadFiles();
+			
 			LoadInMapNameList();
 			LoadInMapURL();
 			getAllMapNameAndURL();
