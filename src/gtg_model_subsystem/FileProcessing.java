@@ -208,11 +208,13 @@ public class FileProcessing {
 								 Integer.parseInt(lines[5]),//floorNum
 								 lines[6],//type
 								 "");
-			if(lines[7] != ""){
+			if(lines[7] != " " && lines[7] != "NULL"){
 				finalDescription = loadDescription(lines[7]);
 				node.setDescription(finalDescription);
+			}else if(lines[7] == null){
+				node.setDescription(" ");
 			}else{
-				node.setDescription("");
+				node.setDescription(" ");
 			}
 			nodes.add(node);
 			return readSuccess;

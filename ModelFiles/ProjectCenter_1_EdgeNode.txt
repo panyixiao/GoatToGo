@@ -1,0 +1,11 @@
+NODES
+1 325 225 0 ProjectCenter 1 Waypoint WayPoint;
+2 346 329 0 ProjectCenter 1 Waypoint WayPoint;
+3 585 382 0 ProjectCenter 1 Waypoint WayPoint;
+4 715 340 0 ProjectCenter 1 Waypoint WayPoint;
+5 313 139 1 ProjectCenter 1 Stairs Stairs;
+EDGES
+1 1 2
+2 2 3
+3 3 4
+4 5 1

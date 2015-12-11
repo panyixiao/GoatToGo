@@ -1,69 +1,68 @@
 NODES
-1 870 781 0 BoyntonHall 4 Stairs TEMP;DESCRIPTION;HOLDER;
-2 870 750 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-3 870 651 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-4 870 619 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-7 664 677 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-8 635 677 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-9 571 677 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-10 557 486 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-12 503 435 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-13 471 435 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-14 432 435 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-15 392 435 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-16 299 435 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-17 231 443 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-18 210 443 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-32 307 715 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-33 333 715 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-34 333 854 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-35 446 854 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-37 432 486 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-39 525 151 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-40 402 139 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-41 333 246 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-42 392 211 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-46 427 386 0 BoyntonHall 4 Elevator TEMP;DESCRIPTION;HOLDER;
-47 392 386 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-48 70 191 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-49 42 83 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-53 843 862 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-72 491 715 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-73 476 486 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-76 916 619 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-77 983 619 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-78 916 688 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-79 983 688 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-80 787 619 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-81 787 677 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-83 664 290 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-84 635 290 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-87 774 290 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-88 774 378 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-89 888 300 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-90 937 211 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-91 937 300 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-92 774 109 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-93 787 499 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-94 392 246 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-95 503 344 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-96 503 246 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-97 557 435 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-98 463 344 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-99 109 715 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-100 231 609 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-101 266 609 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-102 109 609 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-103 109 443 0 BoyntonHall 4 Classroom TEMP;DESCRIPTION;HOLDER;
-104 627 486 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-105 446 651 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-106 333 651 3 BoyntonHall 4 Stairs TEMP;DESCRIPTION;HOLDER;
-107 923 781 0 BoyntonHall 4 Waypoint TEMP;DESCRIPTION;HOLDER;
-108 937 836 4 BoyntonHall 4 Stairs TEMP;DESCRIPTION;HOLDER;
+1 870 781 0 BoyntonHall 4 Stairs Stairs;
+2 870 750 0 BoyntonHall 4 Classroom 307A;
+4 870 619 0 BoyntonHall 4 Waypoint WayPoint;
+7 664 677 0 BoyntonHall 4 Waypoint WayPoint;
+8 635 677 0 BoyntonHall 4 Waypoint WayPoint;
+9 571 677 0 BoyntonHall 4 Waypoint WayPoint;
+10 557 486 0 BoyntonHall 4 Waypoint WayPoint;
+12 503 435 0 BoyntonHall 4 Waypoint WayPoint;
+13 471 435 0 BoyntonHall 4 Waypoint WayPoint;
+14 432 435 0 BoyntonHall 4 Waypoint WayPoint;
+15 392 435 0 BoyntonHall 4 Waypoint WayPoint;
+16 299 435 0 BoyntonHall 4 Waypoint WayPoint;
+17 231 443 0 BoyntonHall 4 Waypoint WayPoint;
+18 210 443 0 BoyntonHall 4 Waypoint WayPoint;
+32 307 715 0 BoyntonHall 4 Waypoint WayPoint;
+33 333 715 0 BoyntonHall 4 Waypoint WayPoint;
+37 432 486 0 BoyntonHall 4 Waypoint WayPoint;
+39 525 151 0 BoyntonHall 4 Classroom Room;309C;
+40 402 139 0 BoyntonHall 4 Classroom 304;
+41 333 246 0 BoyntonHall 4 Classroom Room;303;
+42 392 211 0 BoyntonHall 4 Waypoint Waypoint;
+46 427 386 0 BoyntonHall 4 Waypoint WayPoint;
+47 392 386 0 BoyntonHall 4 Waypoint WayPoint;
+48 70 191 0 BoyntonHall 4 Waypoint WayPoint;
+49 42 83 0 BoyntonHall 4 Classroom 301A;
+53 843 862 0 BoyntonHall 4 Waypoint WayPoint;
+72 491 715 0 BoyntonHall 4 Classroom 3006;
+73 476 486 0 BoyntonHall 4 Classroom WayPoint;
+76 916 619 0 BoyntonHall 4 Waypoint WayPoint;
+77 983 619 0 BoyntonHall 4 Waypoint WayPoint;
+78 916 688 0 BoyntonHall 4 Classroom 307B;
+79 983 688 0 BoyntonHall 4 Classroom 307C;
+80 787 619 0 BoyntonHall 4 Waypoint WayPoint;
+81 787 677 0 BoyntonHall 4 Waypoint WayPoint;
+83 664 290 0 BoyntonHall 4 Waypoint WayPoint;
+84 635 290 0 BoyntonHall 4 Waypoint WayPoint;
+87 774 290 0 BoyntonHall 4 Waypoint WayPoint;
+88 774 378 0 BoyntonHall 4 Waypoint WayPoint;
+89 888 300 0 BoyntonHall 4 Waypoint WayPoint;
+90 937 211 0 BoyntonHall 4 Classroom 307D;
+91 937 300 0 BoyntonHall 4 Waypoint WayPoint;
+93 787 499 0 BoyntonHall 4 Classroom 307;
+94 392 246 0 BoyntonHall 4 Waypoint Way;Point;
+95 503 344 0 BoyntonHall 4 Waypoint WayPoint;
+96 503 246 0 BoyntonHall 4 Waypoint WayPoint;
+97 557 435 0 BoyntonHall 4 Waypoint WayPoint;
+98 463 344 0 BoyntonHall 4 Classroom 303A;
+99 109 715 0 BoyntonHall 4 Waypoint WayPoint;
+100 231 609 0 BoyntonHall 4 Waypoint WayPoint;
+101 266 609 0 BoyntonHall 4 Classroom Room;302;
+102 109 609 0 BoyntonHall 4 Waypoint WayPoint;
+103 109 443 0 BoyntonHall 4 Classroom Room;301;
+104 627 486 0 BoyntonHall 4 Classroom 309;
+106 333 651 3 BoyntonHall 4 Stairs Stairs;
+107 923 781 0 BoyntonHall 4 Waypoint WayPoint;
+108 937 836 4 BoyntonHall 4 Stairs Stairs;
+109 380 735 0 BoyntonHall 4 Classroom Room;300A;
+110 853 941 0 BoyntonHall 4 Classroom Room;308;
+111 863 688 0 BoyntonHall 4 Classroom Room;307A;
+112 427 300 0 BoyntonHall 4 Elevator Elevator;
+115 432 651 0 BoyntonHall 4 Waypoint WayPoint;
+116 432 735 0 BoyntonHall 4 Waypoint WayPoint;
 EDGES
 1 1 2
-2 2 3
-3 3 4
 7 7 8
 8 8 9
 9 9 10
@@ -74,8 +73,6 @@ EDGES
 16 16 17
 17 17 18
 32 32 33
-33 33 34
-34 34 35
 46 53 1
 63 46 14
 64 47 15
@@ -98,7 +95,6 @@ EDGES
 104 87 89
 105 90 91
 106 89 91
-107 92 87
 108 88 93
 109 93 80
 110 47 94
@@ -121,8 +117,14 @@ EDGES
 127 10 104
 128 104 84
 129 104 8
-130 37 105
-131 105 35
-132 106 105
 133 1 107
 134 107 108
+135 33 109
+137 53 110
+138 4 111
+139 111 2
+140 112 46
+141 37 115
+142 115 116
+143 109 116
+144 106 115
