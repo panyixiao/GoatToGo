@@ -1,4 +1,5 @@
 NODES
+<<<<<<< HEAD
 1 644 165 4 FullerLab 2 Stairs Stairs;
 2 694 165 0 FullerLab 2 Waypoint Waypoint;
 3 740 165 0 FullerLab 2 Waypoint Waypoint;
@@ -75,6 +76,84 @@ NODES
 76 202 584 0 FullerLab 2 Classroom B17;
 77 719 506 0 FullerLab 2 Classroom B34;
 78 637 784 0 FullerLab 2 Classroom B11;
+=======
+1 644 165 0 FullerLab 2 Waypoint WayPoint;
+2 694 165 0 FullerLab 2 Waypoint WayPoint;
+3 740 165 0 FullerLab 2 Waypoint WayPoint;
+4 767 165 0 FullerLab 2 Waypoint WayPoint;
+5 818 165 0 FullerLab 2 Waypoint WayPoint;
+6 818 187 0 FullerLab 2 Waypoint WayPoint;
+7 818 264 0 FullerLab 2 Waypoint WayPoint;
+8 818 321 0 FullerLab 2 Waypoint WayPoint;
+9 818 351 0 FullerLab 2 Waypoint WayPoint;
+10 818 419 0 FullerLab 2 Waypoint WayPoint;
+11 818 481 0 FullerLab 2 Waypoint WayPoint;
+12 767 481 0 FullerLab 2 Waypoint WayPoint;
+13 767 506 0 FullerLab 2 Waypoint WayPoint;
+14 767 572 0 FullerLab 2 Waypoint WayPoint;
+15 860 572 0 FullerLab 2 Waypoint WayPoint;
+16 860 733 0 FullerLab 2 Waypoint WayPoint;
+17 767 733 0 FullerLab 2 Waypoint WayPoint;
+18 767 860 0 FullerLab 2 Waypoint WayPoint;
+19 860 860 0 FullerLab 2 Waypoint WayPoint;
+20 896 860 0 FullerLab 2 Waypoint WayPoint;
+21 733 733 0 FullerLab 2 Waypoint WayPoint;
+22 713 740 0 FullerLab 2 Waypoint WayPoint;
+23 683 740 0 FullerLab 2 Waypoint WayPoint;
+24 662 733 0 FullerLab 2 Waypoint WayPoint;
+25 637 733 0 FullerLab 2 Waypoint WayPoint;
+26 606 733 0 FullerLab 2 Waypoint WayPoint;
+27 571 733 0 FullerLab 2 Waypoint WayPoint;
+28 508 733 0 FullerLab 2 Waypoint WayPoint;
+29 483 733 0 FullerLab 2 Waypoint WayPoint;
+30 424 733 0 FullerLab 2 Waypoint WayPoint;
+31 355 733 0 FullerLab 2 Waypoint WayPoint;
+32 202 733 0 FullerLab 2 Waypoint WayPoint;
+33 202 626 0 FullerLab 2 Waypoint WayPoint;
+34 399 626 0 FullerLab 2 Waypoint WayPoint;
+35 399 584 0 FullerLab 2 Waypoint WayPoint;
+36 566 584 0 FullerLab 2 Waypoint WayPoint;
+37 612 584 0 FullerLab 2 Waypoint WayPoint;
+38 713 584 0 FullerLab 2 Waypoint WayPoint;
+39 689 98 0 FullerLab 2 Classroom WayPoint;
+40 694 221 0 FullerLab 2 Classroom WayPoint;
+41 740 221 0 FullerLab 2 Classroom WayPoint;
+42 767 120 0 FullerLab 2 Classroom WayPoint;
+43 854 115 0 FullerLab 2 Classroom WayPoint;
+44 878 187 0 FullerLab 2 Classroom WayPoint;
+45 878 264 0 FullerLab 2 Classroom WayPoint;
+46 767 264 0 FullerLab 2 Classroom WayPoint;
+47 767 321 0 FullerLab 2 Classroom WayPoint;
+48 878 351 0 FullerLab 2 Classroom WayPoint;
+50 756 419 0 FullerLab 2 Classroom WayPoint;
+51 878 419 0 FullerLab 2 Classroom WayPoint;
+52 878 481 0 FullerLab 2 Classroom WayPoint;
+53 945 572 0 FullerLab 2 Classroom WayPoint;
+54 713 626 0 FullerLab 2 Classroom WayPoint;
+55 612 607 0 FullerLab 2 Classroom WayPoint;
+56 566 644 0 FullerLab 2 Classroom WayPoint;
+57 530 644 0 FullerLab 2 Classroom WayPoint;
+58 530 697 0 FullerLab 2 Classroom WayPoint;
+59 530 614 0 FullerLab 2 Classroom WayPoint;
+60 493 614 0 FullerLab 2 Classroom WayPoint;
+61 348 652 0 FullerLab 2 Classroom WayPoint;
+62 399 652 0 FullerLab 2 Classroom WayPoint;
+63 424 652 0 FullerLab 2 Classroom WayPoint;
+64 424 626 0 FullerLab 2 Classroom WayPoint;
+65 424 708 0 FullerLab 2 Classroom WayPoint;
+66 662 684 0 FullerLab 2 Classroom WayPoint;
+67 631 684 0 FullerLab 2 Classroom WayPoint;
+68 606 684 0 FullerLab 2 Classroom WayPoint;
+69 683 784 0 FullerLab 2 Classroom WayPoint;
+70 637 784 0 FullerLab 2 Classroom WayPoint;
+71 508 779 0 FullerLab 2 Classroom WayPoint;
+72 637 860 0 FullerLab 2 Classroom WayPoint;
+73 483 779 0 FullerLab 2 Classroom WayPoint;
+74 355 809 0 FullerLab 2 Classroom WayPoint;
+75 202 804 0 FullerLab 2 Classroom WayPoint;
+76 202 584 0 FullerLab 2 Classroom WayPoint;
+77 719 506 0 FullerLab 2 Classroom WayPoint;
+>>>>>>> 7fbedf243856d8b5c6e4228ddbb94305f6221301
 EDGES
 1 1 2
 2 2 3
