@@ -216,6 +216,12 @@ public class MainView {
 		}
 	}
 	
+	public String getMouseSelectedBuilding(Point mouseClickedPnt){
+		String correspondMapName = null;
+		correspondMapName = this.mainController.getMouseSelectedBuilding(mouseClickedPnt);
+		return correspondMapName;
+	}
+	
 	/**
 	 * Method getListOfFloors.
 	 * @param mapName String
@@ -266,6 +272,14 @@ public class MainView {
 	public String tempMapURL(String mapName){
 		String mapURL = this.mainController.getMapURL(mapName);
 		return mapURL;
+	}
+	
+	// Yixiao 2015-12-10
+	public String getPointDescription(Point pnt){
+		return this.mainController.getPointDescription(pnt);
+	}
+	public String getStartEndNodeDescription(String type){
+		return this.mainController.getStartEndNodeDescription(type);
 	}
 
 	/**
