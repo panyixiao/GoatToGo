@@ -23,8 +23,8 @@ public class MainController{
 		
 	public MainModel mapModel;
 	
-	private PathSearchController pathSearchController;
 	private MapDataController mapDataController;
+	private PathSearchController pathSearchController;
 	private AdminController userChecker;
 	
 	// Path Searching Controller Variable
@@ -33,12 +33,14 @@ public class MainController{
 	private Path currentPath;
 	private Node startNode;
 	private Node endNode;
-	
+	// To be deleted once PathSearchController is done.
 	
 
 	public MainController(MainModel mapModel){
 		this.mapModel = mapModel;
 		mapDataController = new MapDataController(this);
+		pathSearchController = new PathSearchController(this, mapDataController); 
+		userChecker = new AdminController(this);
 	}	
 	
 	/******************************
@@ -95,6 +97,9 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
+		//Point targetPnt = pathSearchController.setTaskPnt(taskPnt, pntType, mapName);
+		//return targetPnt;
+		
 		Point targetPnt = new Point();		
 		//System.out.println("Task Type: " + pntType);
 		if(pntType.equals("FROM")){
@@ -112,6 +117,9 @@ public class MainController{
 	}
 	
 	public PathData getDesiredPath(int Index){
+		//PathData path = pathSearchController.getDesiredPath(Index);
+		//return path;
+		
 		PathData path = new PathData();
 		
 		// Get requested path
@@ -151,6 +159,9 @@ public class MainController{
 	}
 	
 	public String getStartEndNodeDescription(String pointType){
+		//String description = pathSearchController.getStartEndNodeDescription(pointType);
+		//return description;
+		
 		String description = null;
 		if(pointType.equals("FROM")){
 			description = currentPath.getStartPoint().getDescription();
@@ -162,6 +173,7 @@ public class MainController{
 	}	
 	
 	private ArrayList<Point> convertNodeListIntoPointList(Path inputPath){
+		//this whole method will be deleted once pathSearchController is done.
 		ArrayList<Point> pntPath = new ArrayList<Point>();
 		List<Node> currentNodePath = inputPath.getWayPoints();
 		if(!currentNodePath.isEmpty()){
@@ -176,6 +188,9 @@ public class MainController{
 	}	
 	
 	public boolean getPathData(){
+		//boolean pathCalculated = pathSearchController.getPathData();
+		//return pathCalculated;
+		
 		boolean pathCalculated = false;
 		resultMapList=new ArrayList<String>();
 		System.out.println("START NODE INFORMATION : " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY());
@@ -204,6 +219,9 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Boolean adminQualification(String userName, String passWord){
+		//Boolean isAdmin = userChecker.adminQualification(userName, passWord);
+		//return isAdmin;
+		
 		Boolean isAdmin = false;
 		isAdmin = mapModel.isValidAdmin(userName, passWord);
 		if(!isAdmin){
