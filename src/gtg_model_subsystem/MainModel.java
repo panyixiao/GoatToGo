@@ -276,13 +276,23 @@ public class MainModel {
 
 				tempPath = new Path(null, null, null);
 				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, end);
-			}else if(start.getBuilding().contains(campusMap) && onCampusMap(end)){
-				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
-			}else if(end.getBuilding().contains(campusMap) && onCampusMap(start)){
-				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
-			}else if(!end.getBuilding().contains(campusMap) && !end.getBuilding().contains("CampusMap") && onCampusMap(start) && onCampusMap(end)){
+			
+			}
+			//Edge case where the start point is on campus map and an end point is selected on building from
+			//campus map view
+			else if(start.getBuilding().contains(campusMap) && onCampusMap(end)){
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
+			//Edge case where the end point is on campusMap and start point is a selected building on campus 
+			//map view
+			else if(end.getBuilding().contains(campusMap) && onCampusMap(start)){
+				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
+			}
+			//Edge case where two selected points are on buildings but in campus map view
+			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && onCampusMap(start) && onCampusMap(end)){
+				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
+			}
+			//Edge case where two points are not on campus map but in seperate buildings
 		}
 		if(start.getBuilding().equals(end.getBuilding())){
 			System.out.println("The buildings are the same");
