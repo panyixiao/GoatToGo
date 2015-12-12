@@ -1,5 +1,7 @@
 package gtg_model_subsystem;
 
+import java.util.HashMap;
+
 
 /**
  */
@@ -13,6 +15,8 @@ public class Map {
 		private String mapName;
 		private String mapType;
 		private String mapImgURL;
+		private HashMap<String,String>campusImageUrl;
+		
 		
 		/**
 		 * Constructor for Map.
@@ -26,6 +30,7 @@ public class Map {
 			this.graph = graph;
 		    this.mapName = mapName;
 		    this.mapType = mapType;
+		    campusImageUrl=new HashMap<String,String>();
 		}
 
 		
@@ -88,4 +93,16 @@ public class Map {
 		public void setMapType(String mapType) {
 			this.mapType = mapType;
 		}
+
+
+		public HashMap<String, String> getCampusImageUrl() {
+			return campusImageUrl;
+		}
+
+
+		public void setCampusImageUrl(String name,String path) {
+			campusImageUrl.put(name, path);
+		}
+        
+		
 }

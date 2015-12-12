@@ -42,6 +42,9 @@ public class FileProcessing {
 				tempMap=new Map(lines[0], null, lines[1],lines[2]);
 				//add the created map into the map list
 				tempMapList.add(tempMap);
+				if(tempMap.getMapName().equals("CampusMap_0")){
+					loadBuildingImageUrl(tempMap);
+				}
 			}
 			buffer.close();
 		}
@@ -50,6 +53,7 @@ public class FileProcessing {
 		}
 		return tempMapList;
 	}
+	
 	/**
 	 * deleteMapFromMaster will take in a map name and delete the given line that is associated with the
 	 * map name given.
@@ -398,4 +402,28 @@ public class FileProcessing {
 	{
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
 	}
+	
+	/**
+	 * load image url of the buildings on campus to a Map
+	 * @param tempMap the campus map that loads building urls
+	 */
+	private void loadBuildingImageUrl(Map tempMap) {
+		String filePath="./images/InfoImage";
+		try {
+			File file = new File(filePath);
+			if (file.isDirectory()) {
+			  String[] filelist = file.list();
+			  for (int i = 0; i < filelist.length; i++) {
+			     File readfile = new File(filePath + "\\" + filelist[i]);
+			     if (!readfile.isDirectory()) {
+			    	System.out.println("name=" + readfile.getName());
+			        System.out.println("path=" + readfile.getPath());
+			        tempMap.setCampusImageUrl(readfile.getName(),readfile.getPath());
+			     }
+			  }
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 }

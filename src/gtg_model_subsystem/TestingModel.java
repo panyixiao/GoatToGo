@@ -40,13 +40,14 @@ public class TestingModel {
 		LinkedHashMap<String,Path> localMapPaths = test.getMapPaths();
 		ArrayList<Path> pathArrayList = new ArrayList<Path>();
 		List<Node> wayPointsList = new ArrayList<Node>();
-		System.out.println("Back to  main");
+		System.out.println("Back to main");
 		for(String mapName: localMapPaths.keySet()){
 			System.out.println(mapName);
 			pathArrayList.add(localMapPaths.get(mapName));
 		}
 		for(Path p: pathArrayList){
 			test.printNodes(p.getWayPoints());
+			System.out.println(p.getDistance());
 			if(p.getWayPoints() == null){
 				System.out.println("There are no waypoints");
 			}
