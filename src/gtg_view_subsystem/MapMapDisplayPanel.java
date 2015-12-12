@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.JOptionPane;
+import javax.swing.JDialog;
 
 /**
  */
@@ -30,6 +32,8 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	private Image locationImage, locationEndImage;
 	private String map;
 	private Point startEndPoint;
+	// Yixiao 2015-12-11
+	private Point mouseClickPoint;	
 	private MapPage parent;
 	private ArrayList<Point> graphPoints = new ArrayList<Point>();
 	private Boolean showLocations = false;
@@ -41,6 +45,7 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	
 	// Yixiao 2015-12-08
 	private Point doubleClickedPoint = new Point();
+	private JMenuItem menuItem_2;
 	
 	/**
 	 * Create the panel.
@@ -99,6 +104,23 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    	}
 	    });
 	    this.popup.add(this.menuItem_1);
+	    
+	    menuItem_2 = new JMenuItem("Show Location Info");
+	    menuItem_2.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+				String correspondMapName = parent.getMouseSelectedBuilding(mouseClickPoint);
+				if(correspondMapName!=null){
+					String mapURL = parent.getBuildingInfoImageURL(correspondMapName);
+					String description = parent.getBuildingInfoDescription(correspondMapName);
+					if(mapURL!=null&&description!=null){
+			    		InfoPage infoPage = new InfoPage(mapURL,description);    		
+			    		JOptionPane.showMessageDialog(null, infoPage, "Information", JOptionPane.PLAIN_MESSAGE,null);	
+					}
+				}  		
+	    	}
+	    });
+	    menuItem_2.setFont(new Font("Dialog", Font.PLAIN, 22));
+	    popup.add(menuItem_2);
 	}
 	    
 	/**
@@ -265,13 +287,14 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	 */
 	private void maybeShowPopup(MouseEvent me) {
         if (me.isPopupTrigger()) {
-            this.popup.show(me.getComponent(), me.getX(), me.getY());
-            
+            this.popup.show(me.getComponent(), me.getX(), me.getY());            
             double scale = super.getScale();
-            if(scale > 1.0){
-            	 this.startEndPoint= new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
+            if(scale != 0 ){
+            	 this.mouseClickPoint= new Point((int)(me.getX() / scale), (int)(me.getY() / scale));
+            	 this.startEndPoint = this.mouseClickPoint;
 			} else {
-				 this.startEndPoint= new Point(me.getX(), me.getY());
+				 this.mouseClickPoint= new Point(me.getX(), me.getY());
+            	 this.startEndPoint =  this.mouseClickPoint;
 			}
         }
     }

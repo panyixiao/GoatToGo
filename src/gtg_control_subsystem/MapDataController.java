@@ -225,14 +225,6 @@ public class MapDataController {
 		return mapRemoved;
 	}
 	
-	/* For integration the method return me the hardcoded arraylist.
-	 * Once a method from model is available the method should return me an arrayList of mapnames.
-	 * The input parameter mapName will help us to use the same method in the map page
-	 * i.e if mapName is admin means the list should conatins all the map names
-	 * if mapName is campus then the list will contain all building names
-	 * if mapName is building then the list will contain all the floor names of the building and the campus map also.
-	 * You will have to implement the switch case.
-	 */
 	public ArrayList<String> getMapList(String mapName){
 		updateMapList(mapName);
 		return listOfMapNameForReturn;
@@ -259,8 +251,45 @@ public class MapDataController {
 			if(!buildingMapName.equals("CampusMap")){
 				return buildingMapName;
 			}
+			buildingMapName = null;
 		}
 		return buildingMapName;
+	}
+	
+	public String getBuildingInfoImageURL(String buildingName){
+		String imageURL = null;
+		switch(buildingName){
+		case "BoyntonHall":
+			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
+			break;
+		case "FullerLab":
+			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
+			break;
+		case "ProjectCenter":
+			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
+			break;
+		}
+		
+		return imageURL;	
+	}
+	
+	public String getBuildingInfoDescription(String buildingName){
+		String buildingDescription = null;
+		switch(buildingName){
+		case "BoyntonHall":
+			buildingDescription = "Dedicated in 1868, Boynton Hall is WPI's first building. It was named for John Boynton, a prosperous tinware manufacturer who founded WPI in 1865. Boynton gave his life's savings of $100,000 to create WPI on the condition that the citizens of Worcester provide the land and granite for the building. It was designed by noted architect Stephen Earle (his son, Ralph, would become WPI's sixth president) and originally contained classrooms and labs. Its clock tower became a symbol of WPI¡¯s commitment to classroom theory and learning as part of the Two Towers philosophy of balancing theory and practice. Today, Boynton is WPI's main administration building and houses offices of the president, the provost, financial services, and marketing and communications.";    		
+			break;
+		case "FullerLab":
+			buildingDescription = "Built in 1990, Fuller Labs was named for George F. Fuller, former chairman of Wyman-Gordon Co. and a longtime WPI trustee. Fuller is home to the Computer Science Department as well as the Computing and Communications Center and Academic Technology Center. It serves as the heart of WPI¡¯s high-speed computer network, which reaches every classroom, lab, office, and residence hall room on campus, as well as off-campus fraternity and sorority houses.";    		
+			break;
+		case "ProjectCenter":
+			buildingDescription = "The Worcester Community Project Center (WCPC) is an off-campus project center. The WCPC offers students the opportunity to become integrated with ¡°their¡± community without leaving their ¡°campus¡± residence. Students will commute to work at the Worcester Community Project Center offices in the Printers Building or at their sponsoring organization in downtown Worcester.";    		
+			break;
+		case "GordanLibrary":
+			buildingDescription = "The Gordon Library is a dynamic study and learning center on the WPI campus. Designed with the needs of our users in mind, the library provides spaces, resources, and experiences to support their various academic pursuits.";    		
+			break;
+		}
+		return buildingDescription;
 	}
 	
 	/* *******************************

@@ -70,6 +70,14 @@ public class MainController{
 		return mapDataController.getClickedBuildingMapName(mouseClickedPnt);
 	}
 	
+	public String getBuildingInfoImageURL(String buildingName){
+		return mapDataController.getBuildingInfoImageURL(buildingName);
+	}
+	
+	public String getBuildingInfoDescription(String buildingName){
+		return mapDataController.getBuildingInfoDescription(buildingName);		
+	}
+	
 	/* Not used right now,correspond to getMapList() method. Get the
 	 * 
 	 * 1 Building List
