@@ -247,7 +247,6 @@ public class MapDataController {
 		if(mappingResult!=null){
 			buildingMapName = mappingResult.getBuilding();
 			// Be sure, this is a building instead of Campus;
-			//System.out.println(mappingResult.getDescription());
 			if(!buildingMapName.equals("CampusMap")){
 				return buildingMapName;
 			}
@@ -277,16 +276,16 @@ public class MapDataController {
 		String buildingDescription = null;
 		switch(buildingName){
 		case "BoyntonHall":
-			buildingDescription = "Dedicated in 1868, Boynton Hall is WPI's first building. It was named for John Boynton, a prosperous tinware manufacturer who founded WPI in 1865. Boynton gave his life's savings of $100,000 to create WPI on the condition that the citizens of Worcester provide the land and granite for the building. It was designed by noted architect Stephen Earle (his son, Ralph, would become WPI's sixth president) and originally contained classrooms and labs. Its clock tower became a symbol of WPI¡¯s commitment to classroom theory and learning as part of the Two Towers philosophy of balancing theory and practice. Today, Boynton is WPI's main administration building and houses offices of the president, the provost, financial services, and marketing and communications.";    		
+			buildingDescription = "Dedicated in 1868, Boynton Hall is WPI's first building."+"\r\n"+ "It was named for John Boynton, a prosperous tinware manufacturer who founded WPI in 1865. Boynton gave his life's savings of $100,000 to create WPI on the condition that the citizens of Worcester provide the land and granite for the building. It was designed by noted architect Stephen Earle (his son, Ralph, would become WPI's sixth president) and originally contained classrooms and labs. Its clock tower became a symbol of WPI¡¯s commitment to classroom theory and learning as part of the Two Towers philosophy of balancing theory and practice."+"\r\n"+ "Today, Boynton is WPI's main administration building and houses offices of the president, the provost, financial services, and marketing and communications.";    		
 			break;
 		case "FullerLab":
-			buildingDescription = "Built in 1990, Fuller Labs was named for George F. Fuller, former chairman of Wyman-Gordon Co. and a longtime WPI trustee. Fuller is home to the Computer Science Department as well as the Computing and Communications Center and Academic Technology Center. It serves as the heart of WPI¡¯s high-speed computer network, which reaches every classroom, lab, office, and residence hall room on campus, as well as off-campus fraternity and sorority houses.";    		
+			buildingDescription = "Built in 1990, Fuller Labs was named for George F. Fuller, former chairman of Wyman-Gordon Co. and a longtime WPI trustee."+"\r\n"+"Fuller is home to the Computer Science Department as well as the Computing and Communications Center and Academic Technology Center. It serves as the heart of WPI¡¯s high-speed computer network, which reaches every classroom, lab, office, and residence hall room on campus, as well as off-campus fraternity and sorority houses.";    		
 			break;
 		case "ProjectCenter":
-			buildingDescription = "The Worcester Community Project Center (WCPC) is an off-campus project center. The WCPC offers students the opportunity to become integrated with ¡°their¡± community without leaving their ¡°campus¡± residence. Students will commute to work at the Worcester Community Project Center offices in the Printers Building or at their sponsoring organization in downtown Worcester.";    		
+			buildingDescription = "The Worcester Community Project Center (WCPC) is an off-campus project center."+"\r\n"+ "The WCPC offers students the opportunity to become integrated with ¡°their¡± community without leaving their ¡°campus¡± residence. Students will commute to work at the Worcester Community Project Center offices in the Printers Building or at their sponsoring organization in downtown Worcester.";    		
 			break;
 		case "GordanLibrary":
-			buildingDescription = "The Gordon Library is a dynamic study and learning center on the WPI campus. Designed with the needs of our users in mind, the library provides spaces, resources, and experiences to support their various academic pursuits.";    		
+			buildingDescription = "The Gordon Library is a dynamic study and learning center on the WPI campus."+"\r\n"+ "Designed with the needs of our users in mind, the library provides spaces, resources, and experiences to support their various academic pursuits.";    		
 			break;
 		}
 		return buildingDescription;
@@ -345,9 +344,6 @@ public class MapDataController {
 	private void transferEdgeToPnt2D(List<Edge> targetList){
 		tempEdgeList.clear();
 		for(Edge eg:targetList){
-			//Point2D pnt_1 = new Point2D.Double(eg.getSource().getX(),eg.getSource().getY());
-			//Point2D pnt_2 = new Point2D.Double(eg.getDestination().getX(),eg.getDestination().getY());
-			
 			Point pnt_1 = new Point(eg.getSource().getX(),eg.getSource().getY());
 			Point pnt_2 = new Point(eg.getDestination().getX(),eg.getDestination().getY());
 			tempEdgeList.add(pnt_1);
@@ -379,10 +375,6 @@ public class MapDataController {
 					coord_Y = nd.getY();					
 				}
 			}
-			
-/*			System.out.println(pointDescription);
-			pointDescription = pointDescription.replace("\\s+", ";");
-			System.out.println(pointDescription);*/
 			
 			nodeList.add(new Node(this.getMaxNodeID()+1, coord_X, coord_Y, entranceID, buildingName, floorNum, pointType, newStr(pointDescription)));
 			transferNodeToPnt2D(nodeList);
@@ -530,7 +522,7 @@ public class MapDataController {
 	
 	private Node searchingAPointInNodeList(Point inputPnt){
 		Node result = null;
-		int threshold = 40;
+		int threshold = 20;
 		for(Node nd:nodeList){
 			if(getPointDistance((double)nd.getX(),(double)nd.getY(),inputPnt.getX(),inputPnt.getY())<threshold){
 				result = nd;

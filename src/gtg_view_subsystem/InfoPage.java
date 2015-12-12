@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.swing.BoxLayout;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JSplitPane;
+import javax.swing.JScrollPane;
 
 public class InfoPage extends JPanel {
 	
@@ -52,16 +54,46 @@ public class InfoPage extends JPanel {
         	@Override
         	public Dimension getPreferredSize(){
         		Dimension size = super.getPreferredSize();
-        		size.width = 150;
-        		size.height = image.getHeight();
+        		size.width = 200;
+        		size.height = image.getHeight()+100;
         		return size;
         	}
         };
-        splitPane.setRightComponent(textArea);
         textArea.setText(Description);	
         textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setAutoscrolls(true);
         
-        splitPane.setEnabled(false);        
+        JScrollPane sp = new JScrollPane(textArea){
+            public Dimension getPreferredSize(){
+    		Dimension size = super.getPreferredSize();
+    		size.width = 200;
+    		size.height = image.getHeight();
+    		return size;
+    		}
+    	};
+        sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        //sp.setViewportView(textArea);
+        sp.setEnabled(true);
+        
+        splitPane.setRightComponent(sp);
+        
+        /*JLabel textArea = new JLabel(){
+        	@Override
+        	public Dimension getPreferredSize(){
+        		Dimension size = super.getPreferredSize();
+        		size.width = 200;
+        		size.height = image.getHeight();
+        		return size;
+        		}
+        	};
+
+         //String labelText = String.format("<html><div WIDTH=%d>%s</div><html>", textArea.getWidth(), Description);
+         textArea.setText("<html>"+Description+"<html>");
+         //textArea.setText(labelText);         
+         splitPane.setRightComponent(textArea);*/
+         
+         splitPane.setEnabled(false);
 	}
 	
 	
