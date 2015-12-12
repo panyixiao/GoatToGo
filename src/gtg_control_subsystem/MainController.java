@@ -70,6 +70,14 @@ public class MainController{
 		return mapDataController.getClickedBuildingMapName(mouseClickedPnt);
 	}
 	
+	public String getBuildingInfoImageURL(String buildingName){
+		return mapDataController.getBuildingInfoImageURL(buildingName);
+	}
+	
+	public String getBuildingInfoDescription(String buildingName){
+		return mapDataController.getBuildingInfoDescription(buildingName);		
+	}
+	
 	/* Not used right now,correspond to getMapList() method. Get the
 	 * 
 	 * 1 Building List
@@ -185,14 +193,16 @@ public class MainController{
 		return mapDataController.addPoint(inputPnt, floorNum, entranceID, buildingName, pointType, pointDescription);
 	}
 	
-	public boolean EditNode(int nodeID, int entranceID, String pointType, String pointDescription){
+	public boolean EditNode(int nodeID, String BuildingName, int floorNum, int entranceID, String pointType,String pointDescription){
 		return mapDataController.editExistNode(nodeID,
+											   BuildingName,
+											   floorNum,				
 											   entranceID,
 											   pointType,
 											   pointDescription);	
 	}
 
-	public Boolean createEdge(Point pnt1, Point pnt2){		
+	public Boolean createEdge(Point pnt1, Point pnt2){
 		return mapDataController.createEdge(pnt1, pnt2);
 	}
 

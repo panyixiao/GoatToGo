@@ -1,7 +1,7 @@
 NODES
 1 446 133 0 CampusMap 0 Building Goddrd;Hall;
 5 819 324 0 CampusMap 0 Building Phi;Gamma;Delta;
-6 721 297 0 CampusMap 0 Building Kaven;Hall;
+6 721 297 0 KavenHall 0 Building Kaven;Hall;
 7 996 398 0 CampusMap 0 Building Theta;Chi;
 9 979 491 0 CampusMap 0 Building Zeta;Psi;
 10 972 527 0 CampusMap 0 Building Lambda;Chi;Alpha;
@@ -14,23 +14,23 @@ NODES
 18 839 872 0 CampusMap 0 Building Sigma;Phi;Kappa;
 19 759 843 0 CampusMap 0 Building Alpha;Chi;Rho;
 20 677 788 0 CampusMap 0 Building Sigma;Phi;Epsilon;
-21 653 671 0 CampusMap 0 Building Skull;Tomb;
+21 653 671 0 SkullTomb 0 Building Skull;Tomb;
 22 653 837 0 CampusMap 0 Building Sigma;Phi;Epsilon;
 23 560 843 0 CampusMap 0 Building 16;Elbridge;
 24 571 906 0 CampusMap 0 Building Phi;Sigma;Sigma;
 25 436 788 0 CampusMap 0 Building Student;Development;and;Counseling;Centeer;
 26 640 415 0 Library 0 Building Gordon;Library;
-28 544 462 0 CampusMap 0 Building Power;House;
+28 544 462 0 PowerHouse 0 Building Power;House;
 30 364 133 0 CampusMap 0 Building Higgins;House;
 31 347 178 0 CampusMap 0 Building Higgins;House;
 32 313 191 0 CampusMap 0 Building Higgins;House;
-35 481 408 0 ProjectCenter 0 Building Project;Center;
-38 380 614 0 CampusMap 0 Building Alden;Memorial;
+35 481 408 1 ProjectCenter 0 Building Project;Center;
+38 380 614 0 AldenMemorial 0 Building Alden;Memorial;
 39 302 599 0 CampusMap 0 Building Ellsworth;Apartments;
 40 302 491 0 CampusMap 0 Building Bartlett;Center;
 41 325 391 0 CampusMap 0 Building Alumni;Gym;
-42 218 370 0 CampusMap 0 Building Harrington;Auditorium;
-43 95 428 0 CampusMap 0 Building Sport&Rereeation;Center;
+42 218 370 0 HarringtonAuditorium 0 Building Harrington;Auditorium;
+43 95 428 0 Gym 0 Building Sport&Rereeation;Center;
 47 72 691 0 CampusMap 0 Building 26;Hackfeld;
 48 109 747 0 CampusMap 0 Building 25;Trowbridge;
 49 145 889 0 CampusMap 0 Building 20;Trowbridgr;Road;
@@ -122,7 +122,7 @@ NODES
 138 487 214 0 CampusMap 0 Waypoint WayPoint;
 139 487 247 0 CampusMap 0 Waypoint WayPoint;
 140 476 297 0 CampusMap 0 Waypoint WayPoint;
-141 470 370 0 CampusMap 0 Waypoint WayPoint;
+141 470 370 0 Fountain 0 Waypoint Fountain;
 142 422 363 0 CampusMap 0 Waypoint WayPoint;
 143 374 357 0 CampusMap 0 Waypoint WayPoint;
 144 364 403 0 CampusMap 0 Waypoint WayPoint;
@@ -211,17 +211,17 @@ NODES
 234 892 506 0 CampusMap 0 Building 10;Faraday;
 235 902 441 0 CampusMap 0 Waypoint WayPoint;
 236 897 471 0 CampusMap 0 Building 10;Faraday;
-237 819 471 0 CampusMap 0 Building East;Hall;
+237 819 471 0 EastHall 0 Building East;Hall;
 238 810 540 0 CampusMap 0 Waypoint WayPoint;
-239 819 506 0 CampusMap 0 Building East;Hall;
+239 819 506 0 EastHall 0 Building East;Hall;
 240 109 632 0 CampusMap 0 Waypoint WayPoint;
 241 103 671 0 CampusMap 0 Waypoint WayPoint;
 242 72 660 0 CampusMap 0 Building Stoddard;Complex;
 243 57 632 0 CampusMap 0 Waypoint WayPoint;
 244 41 671 0 CampusMap 0 Building Health;Center;
 245 247 554 0 CampusMap 0 Waypoint WayPoint;
-246 529 242 0 CampusMap 0 Building AK;LAB;
-247 571 262 0 CampusMap 0 Building AK;LAB;
+246 529 242 0 AtwaterKent 0 Building AK;LAB;
+247 571 262 0 AtwaterKent 0 Building AK;LAB;
 248 380 297 0 CampusMap 0 Building Rubin;Compus;Center;
 250 431 214 0 CampusMap 0 Waypoint WayPoint;
 251 414 302 0 CampusMap 0 Waypoint WayPoint;
@@ -240,17 +240,18 @@ NODES
 264 109 506 0 CampusMap 0 Waypoint WayPoint;
 265 95 554 0 CampusMap 0 Building Morgan;Hall;
 267 544 566 2 BoyntonHall 2 Building Boynton;Hall;
-268 500 561 1 BoyntonHall 1 Building Boynton;Hall;
+268 500 561 1 BoyntonHall 2 Building Boynton;Hall;
 269 523 546 3 BoyntonHall 1 Building Boynton;Hall;
 270 544 535 0 CampusMap 0 Waypoint WayPoint;
 271 451 471 0 CampusMap 0 Waypoint WayPoint;
-272 414 421 0 CampusMap 0 Building Higgins;Laboratories;
-273 374 441 0 CampusMap 0 Building Higgins;Laboratories;
+272 414 421 0 HigginsLab 0 Building Higgins;Laboratories;
+273 374 441 0 HigginsLab 0 Building Higgins;Laboratories;
 274 407 178 0 CampusMap 0 Waypoint WayPoint;
 275 744 632 0 CampusMap 0 Waypoint WayPoint;
 276 592 302 0 CampusMap 0 Waypoint WayPoint;
-277 645 283 0 FullerLab 0 Building Fuller;Lab;
-278 645 471 0 CampusMap 0 Waypoint NULL;
+277 645 283 1 FullerLab 4 Building Fuller;Lab;
+278 645 471 0 CampusMap 0 Waypoint WayPoint;
+279 487 391 1 ProjectCenter 1 Building ProjectCenter;
 EDGES
 1 70 71
 2 71 72
@@ -416,8 +417,6 @@ EDGES
 190 182 168
 191 21 179
 192 109 82
-193 141 183
-196 35 185
 197 141 185
 199 186 187
 200 187 188
@@ -546,7 +545,7 @@ EDGES
 346 276 174
 347 277 276
 348 247 176
-349 141 35
-350 35 183
 351 257 278
 352 278 188
+353 183 141
+354 279 141

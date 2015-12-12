@@ -17,7 +17,6 @@ public class MainView {
 	private LoginPage loginPage = new LoginPage(this);
 	private JPanel currentPage = new JPanel();
 	private AdminMapEditPage adminMapPage; 
-	//= new AdminMapEditPage(this);
 	private AddDeleteMapPage addDeleteMapPage = new AddDeleteMapPage(this);
 
 	public MainController mainController;
@@ -280,6 +279,14 @@ public class MainView {
 	}
 	public String getStartEndNodeDescription(String type){
 		return this.mainController.getStartEndNodeDescription(type);
+	}
+	// Yixiao 2015-12-11
+	public String getBuildingInfoImageURL(String buildingName){
+		return this.mainController.getBuildingInfoImageURL(buildingName);
+		
+	}
+	public String getBuildingInfoDescription(String buildingName){
+		return this.mainController.getBuildingInfoDescription(buildingName);		
 	}
 
 	/**
