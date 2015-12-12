@@ -193,14 +193,16 @@ public class MainController{
 		return mapDataController.addPoint(inputPnt, floorNum, entranceID, buildingName, pointType, pointDescription);
 	}
 	
-	public boolean EditNode(int nodeID, int entranceID, String pointType, String pointDescription){
+	public boolean EditNode(int nodeID, String BuildingName, int floorNum, int entranceID, String pointType,String pointDescription){
 		return mapDataController.editExistNode(nodeID,
+											   BuildingName,
+											   floorNum,				
 											   entranceID,
 											   pointType,
 											   pointDescription);	
 	}
 
-	public Boolean createEdge(Point pnt1, Point pnt2){		
+	public Boolean createEdge(Point pnt1, Point pnt2){
 		return mapDataController.createEdge(pnt1, pnt2);
 	}
 

@@ -227,7 +227,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 					}
 					// Otherwise, edit current point
 					else{
-						adminViewPageHandle.EditNode(NodeID, newEnterenceId, newType, newDescription);						
+						adminViewPageHandle.EditNode(NodeID, newBuilding,floorNum, newEnterenceId, newType, newDescription);						
 					}
 					System.out.println("Building: " + this.building);
 					System.out.println("Floor: " + this.floor);

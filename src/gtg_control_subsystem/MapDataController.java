@@ -247,7 +247,7 @@ public class MapDataController {
 		if(mappingResult!=null){
 			buildingMapName = mappingResult.getBuilding();
 			// Be sure, this is a building instead of Campus;
-			System.out.println(mappingResult.getDescription());
+			//System.out.println(mappingResult.getDescription());
 			if(!buildingMapName.equals("CampusMap")){
 				return buildingMapName;
 			}
@@ -401,10 +401,12 @@ public class MapDataController {
 		return success;
 	}
 	
-	public boolean editExistNode(int nodeID, int entranceID, String pointType, String pointDescription){
+	public boolean editExistNode(int nodeID, String BuildingName, int floorNum, int entranceID, String pointType,String pointDescription){
 		boolean success = false;
 		Node nd = findNodeInList(nodeID);
 		if(nd!=null){
+			nd.setBuilding(BuildingName);
+			nd.setFloorNum(floorNum);
 			nd.setEntranceID(entranceID);
 			nd.setType(pointType);
 			nd.setDescription(newStr(pointDescription));
@@ -528,7 +530,7 @@ public class MapDataController {
 	
 	private Node searchingAPointInNodeList(Point inputPnt){
 		Node result = null;
-		int threshold = 20;
+		int threshold = 40;
 		for(Node nd:nodeList){
 			if(getPointDistance((double)nd.getX(),(double)nd.getY(),inputPnt.getX(),inputPnt.getY())<threshold){
 				result = nd;

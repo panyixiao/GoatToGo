@@ -108,13 +108,19 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    menuItem_2 = new JMenuItem("Show Location Info");
 	    menuItem_2.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
-				String correspondMapName = parent.getMouseSelectedBuilding(mouseClickPoint);
-				if(correspondMapName!=null){
-					String mapURL = parent.getBuildingInfoImageURL(correspondMapName);
-					String description = parent.getBuildingInfoDescription(correspondMapName);
+				String buildingName = parent.getMouseSelectedBuilding(mouseClickPoint);
+				System.out.print(buildingName);
+				if(buildingName!=null){
+					String mapURL = parent.getBuildingInfoImageURL(buildingName);
+					String description = parent.getBuildingInfoDescription(buildingName);					 
+		    		String title = "Information of "+buildingName;
 					if(mapURL!=null&&description!=null){
-			    		InfoPage infoPage = new InfoPage(mapURL,description);    		
-			    		JOptionPane.showMessageDialog(null, infoPage, "Information", JOptionPane.PLAIN_MESSAGE,null);	
+			    		InfoPage infoPage = new InfoPage(mapURL,description); 
+			    		JOptionPane.showMessageDialog(null, infoPage, title, JOptionPane.PLAIN_MESSAGE,null);	
+					}
+					else{
+						String message = "Here is "+buildingName;
+						JOptionPane.showMessageDialog(null, message, title, JOptionPane.PLAIN_MESSAGE,null);
 					}
 				}  		
 	    	}
