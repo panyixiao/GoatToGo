@@ -20,7 +20,7 @@ NODES
 19 542 226 0 ProjectCenter 2 Classroom 214;
 20 450 197 0 ProjectCenter 2 Classroom 213;
 21 404 358 0 ProjectCenter 2 Classroom 210A;
-22 310 309 2 ProjectCenter 2 Stairs STAIRS;
+22 310 309 2 ProjectCenter 2 Stairs Stairs;
 23 39 240 0 ProjectCenter 2 Classroom 212A;
 24 234 247 0 ProjectCenter 2 Classroom 212;
 25 110 423 0 ProjectCenter 2 Classroom 211;

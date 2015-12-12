@@ -1,11 +1,11 @@
 NODES
-1 341 131 2 ProjectCenter 1 Waypoint Waypoint;
+1 341 131 2 ProjectCenter 1 Stairs Stairs;
 2 341 306 0 ProjectCenter 1 Waypoint Waypoint;
 3 585 306 0 ProjectCenter 1 Waypoint Waypoint;
 4 798 306 0 ProjectCenter 1 Waypoint Waypoint;
 5 874 306 0 ProjectCenter 1 Classroom 109A;
 6 208 306 0 ProjectCenter 1 Waypoint Waypoint;
-7 57 306 1 ProjectCenter 1 Waypoint Waypoint;
+7 57 306 0 ProjectCenter 1 Waypoint Waypoint;
 8 57 416 0 ProjectCenter 1 Classroom 102;
 9 57 573 0 ProjectCenter 1 Waypoint Waypoint;
 10 57 869 0 ProjectCenter 1 Waypoint Waypoint;
@@ -39,6 +39,7 @@ NODES
 38 920 940 0 ProjectCenter 1 Classroom 100A;
 39 782 520 0 ProjectCenter 1 Classroom 100C;
 40 974 676 0 ProjectCenter 1 Classroom 112;
+41 542 1007 1 ProjectCenter 1 Waypoint Front;Door;
 EDGES
 1 1 2
 2 2 3
@@ -82,3 +83,4 @@ EDGES
 41 27 40
 42 2 15
 43 6 2
+44 20 41
