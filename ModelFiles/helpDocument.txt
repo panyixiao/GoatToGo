@@ -1,0 +1,61 @@
+<html>
+<head>
+</head>
+<body style="font-size:24;">
+<span style="" bold="" text-decoration="" underline="">&nbsp;
+<span style="font-weight: bold; text-decoration:underline;">How to Select Start and End location</span></span>
+<br>
+<br>
+&nbsp;1. Use the Select Building/Select Floor dropdown list to navigate through the list of available maps.
+<br>
+&nbsp;2. To select a source/start or destination/end location right click on the image and select an item from the list.
+<br>
+<br>
+<span style="" bold="" text-decoration="" underline="">&nbsp;
+<span style="font-weight: bold; text-decoration:underline;">Areas of Interest</span></span>
+<br>
+<br>
+&nbsp;1. Click on the filters on the right side to see list of all filtered locations.
+<br>
+&nbsp;2. To change a filter click on any other available filter values.
+<br>
+&nbsp;3. To view the location on the map select any item from the filter list.
+<br>
+&nbsp;4. To dismiss the filter panel click on "Done" button.
+<br>
+<br>
+<span style="" bold="" text-decoration="" underline="">&nbsp;
+<span style="font-weight: bold; text-decoration:underline;">Additional Information on buildings.</span></span>
+<br>
+<br>
+&nbsp;To see more information related to bulding when on campus map right click and select "See building info". You can see the building image and some textual information realted to the building.
+<br>
+<br>
+<span style="" bold="" text-decoration="" underline="">&nbsp;
+<span style="font-weight: bold; text-decoration:underline;">Following the direction instructions</span></span>
+<br>
+<br>
+&nbsp;1. Once source and destination locations are selected click on the GET Directions buttons.
+<br>
+&nbsp;2. Follow the route as highlighted in the map.
+<br>
+&nbsp;3. To navigate through different maps in the highlighted route click on the next and previous buttons.
+<br>
+&nbsp;4. You can select different source and destination by clicking on the New Search button.
+<br>
+<br>
+<span style="" bold="" text-decoration="" underline="">&nbsp;
+<span style="font-weight: bold; text-decoration:underline;">Admin</span></span>
+<br>
+<br>
+&nbsp;1. To edit map and locations inside a map you need a valid admin credentials.
+<br>
+&nbsp;2. Click on the Admin button in the menu bar to view the admin login page.
+<br>
+&nbsp;3. You can see various options as Add, Delete, Edit and Preview for a map. To edit a map click on the edit button.
+<br>
+&nbsp;4. In the edit page, you can add/delete locations, set differrnt attributes etc.
+<br>
+&nbsp;5. After the map is edited click on the Save button.
+</body>
+</html>
