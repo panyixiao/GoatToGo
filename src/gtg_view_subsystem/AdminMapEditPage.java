@@ -309,9 +309,11 @@ public class AdminMapEditPage extends JPanel {
 	}
 	
 	// 2015-12-09 Yixiao
-	public boolean EditNode(int nodeID, int entranceID, String pointType, String pointDescription){
+	public boolean EditNode(int nodeID, String BuildingName, int floorNum, int entranceID, String pointType,String pointDescription){
 		boolean success = false;
 		success = this.parent.mainController.EditNode(nodeID,
+													  BuildingName,
+													  floorNum,
 													  entranceID,
 													  pointType,
 													  pointDescription);		
