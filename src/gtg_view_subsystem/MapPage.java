@@ -604,6 +604,12 @@ public class MapPage extends JPanel {
 		pntOnGraph = parent.sentPointToModel(startEndPoint, selectedPointType, mapName);
 		return pntOnGraph;
 	}
+	
+	/**
+	 * Method getPointDescription.
+	 * @param point Point
+	 * Fetches the textual information related to the point.
+	 */
 	// Yixiao 2015-12-09
 	public String getPointDescription(Point pnt){
 		return parent.getPointDescription(pnt);

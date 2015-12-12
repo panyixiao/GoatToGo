@@ -12,12 +12,25 @@ public class Animate {
     private int from;
     private int to;
     private MapPage parent;
-
     private long startTime;
 
+    /**
+	 * Method Animate
+	 * @param none
+	 * Empty constructor.
+	 */
     public Animate() {
     }
 
+    /**
+	 * Method setAnimationPanel
+	 * @param parent MapPage
+	 * 		  panel JPanel
+	 * 		  from int
+	 * 		  to int
+	 * This method initilaizes the panel to be moved.
+	 * Stores the from and to location for animation effect.
+	 */
     public void setAnimationPanel(MapPage parent, JPanel panel, int from, int to){
     	this.parent = parent;
     	this.panel = panel;
@@ -26,6 +39,11 @@ public class Animate {
     	
     }
 
+    /**
+	 * Method startAnimationLeft
+	 * @param none
+	 * Slides the panel to the left.
+	 */
     public void startAnimationLeft() {
     	parent.animationStarted();
     	Timer timer = new Timer(0, new ActionListener() {
@@ -43,6 +61,11 @@ public class Animate {
        
     }
     
+    /**
+   	 * Method startAnimationRight
+   	 * @param none
+   	 * Slides the panel to the right.
+   	 */
     public void startAnimationRight() {
     	parent.animationStarted();
     	Timer timer = new Timer(0, new ActionListener() {
