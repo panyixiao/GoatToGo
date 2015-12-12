@@ -132,7 +132,7 @@ public class MapPage extends JPanel {
 		this.add(this.rightlayeredPane);
 
 		this.slidePanel = new JPanel();
-		this.slidePanel.setBounds(359, 0, 405, 650);
+		this.slidePanel.setBounds(0, 0, 405, 650);
 		this.slidePanel.setBackground(new Color(0xf0e6e6));
 		this.slidePanel.setLayout(null);
 		this.rightlayeredPane.add(this.slidePanel, new Integer(1));
@@ -161,18 +161,18 @@ public class MapPage extends JPanel {
 		});
 		this.comboBox.setBackground(null);
 		this.comboBox.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
-		this.comboBox.setBounds(15, 96, 271, 53);
+		this.comboBox.setBounds(15, 96, 310, 53);
 		this.rightPanel.add(this.comboBox);
 		
 		this.fromLabel = new JLabel(ViewStringLiterals.FROM + " :");
 		this.fromLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.fromLabel.setBounds(25, 222, 98, 25);
+		this.fromLabel.setBounds(15, 222, 98, 25);
 		this.fromLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.fromLabel);
 
 		this.toLabel = new JLabel(ViewStringLiterals.TO + " :");
 		this.toLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.toLabel.setBounds(25, 343, 57, 25);
+		this.toLabel.setBounds(15, 343, 57, 25);
 		this.toLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.toLabel);
 
@@ -197,7 +197,7 @@ public class MapPage extends JPanel {
 		});
 		this.getDirectionsBtn.setContentAreaFilled(false);
 		this.getDirectionsBtn.setBorder(null);
-		this.getDirectionsBtn.setBounds(122, 495, 173, 42);
+		this.getDirectionsBtn.setBounds(80, 495, 173, 42);
 		this.getDirectionsBtnImage = new ImageIcon(ImageURLS.GET_DIRECTIONS_BUTTON);
 		this.getDirectionsBtn.setIcon(this.getDirectionsBtnImage);
 		this.rightPanel.add(this.getDirectionsBtn);
@@ -225,13 +225,13 @@ public class MapPage extends JPanel {
 		this.showHideLocationsBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
 		this.showHideLocationsBtn.setForeground(new Color(204, 0, 0));
 		this.showHideLocationsBtn.setFocusPainted(false);
-		this.showHideLocationsBtn.setBounds(105, 550, 210, 42);
+		this.showHideLocationsBtn.setBounds(63, 550, 210, 42);
 		this.rightPanel.add(this.showHideLocationsBtn);
 
 		this.fromTextField = new JTextField();
 		this.fromTextField.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.fromTextField.setEditable(false);
-		this.fromTextField.setBounds(25, 263, 261, 47);
+		this.fromTextField.setBounds(15, 263, 290, 47);
 		this.fromTextField.setColumns(10);
 		this.fromTextField.setForeground(new Color(0x5b1010));
 		this.fromTextField.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
@@ -249,7 +249,7 @@ public class MapPage extends JPanel {
 				}
 			}
 		});
-		this.fromClearBtn.setBounds(295, 275, 20, 20);
+		this.fromClearBtn.setBounds(315, 275, 20, 20);
 		this.fromClearBtn.setContentAreaFilled(false);
 		this.fromClearBtn.setBorder(null);
 		this.fromClearBtnImage = new ImageIcon(ImageURLS.CLEAR_BUTTON);
@@ -261,7 +261,7 @@ public class MapPage extends JPanel {
 		this.toTextField.setForeground(new Color(0x5b1010));
 		this.toTextField.setEditable(false);
 		this.toTextField.setColumns(10);
-		this.toTextField.setBounds(25, 384, 261, 47);
+		this.toTextField.setBounds(15, 384, 290, 47);
 		this.toTextField.setBorder(BorderFactory.createLineBorder(new Color(0x5b1010),3));
 		this.rightPanel.add(this.toTextField);
 
@@ -277,7 +277,7 @@ public class MapPage extends JPanel {
 				}
 			}
 		});
-		this.toClearBtn.setBounds(295, 395, 20, 20);
+		this.toClearBtn.setBounds(315, 395, 20, 20);
 		this.toClearBtn.setContentAreaFilled(false);
 		this.toClearBtn.setBorder(null);
 		this.toClearBtnImage = new ImageIcon(ImageURLS.CLEAR_BUTTON);
@@ -313,7 +313,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.classroomBtn.setBounds(0, 70, 50, 50);
+		this.classroomBtn.setBounds(0, 75, 50, 50);
 		this.classroomBtn.setContentAreaFilled(false);
 		this.classroomBtn.setBorder(null);
 		this.classroomBtnImage = new ImageIcon(ImageURLS.CLASSROOM_BUTTON);
@@ -328,7 +328,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.elevatorBtn.setBounds(0, 130, 50, 50);
+		this.elevatorBtn.setBounds(0, 140, 50, 50);
 		this.elevatorBtn.setContentAreaFilled(false);
 		this.elevatorBtn.setBorder(null);
 		this.elevatorBtnImage = new ImageIcon(ImageURLS.ELEVATOR_BUTTON);
@@ -343,7 +343,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.mensRestroomBtn.setBounds(0, 190, 50, 50);
+		this.mensRestroomBtn.setBounds(0, 205, 50, 50);
 		this.mensRestroomBtn.setContentAreaFilled(false);
 		this.mensRestroomBtn.setBorder(null);
 		this.mensRestroomBtnImage = new ImageIcon(ImageURLS.MENS_RESTROOM_BUTTON);
@@ -358,7 +358,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.womensRestroomBtn.setBounds(0, 250, 50, 50);
+		this.womensRestroomBtn.setBounds(0, 270, 50, 50);
 		this.womensRestroomBtn.setContentAreaFilled(false);
 		this.womensRestroomBtn.setBorder(null);
 		this.womensRestroomBtnImage = new ImageIcon(ImageURLS.WOMENS_RESTROOM_BUTTON);
@@ -373,7 +373,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.buildingBtn.setBounds(0, 310, 50, 50);
+		this.buildingBtn.setBounds(0, 335, 50, 50);
 		this.buildingBtn.setContentAreaFilled(false);
 		this.buildingBtn.setBorder(null);
 		this.buildingBtnImage = new ImageIcon(ImageURLS.BUILDING_BUTTON);
@@ -388,7 +388,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.vendingBtn.setBounds(0, 370, 50, 50);
+		this.vendingBtn.setBounds(0, 400, 50, 50);
 		this.vendingBtn.setContentAreaFilled(false);
 		this.vendingBtn.setBorder(null);
 		this.vendingBtnImage = new ImageIcon(ImageURLS.VENDING_BUTTON);
@@ -403,7 +403,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.parkingLotBtn.setBounds(0, 430, 50, 50);
+		this.parkingLotBtn.setBounds(0, 465, 50, 50);
 		this.parkingLotBtn.setContentAreaFilled(false);
 		this.parkingLotBtn.setBorder(null);
 		this.parkingLotBtnImage = new ImageIcon(ImageURLS.PARKING_LOT_BUTTON);
@@ -418,7 +418,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.officeBtn.setBounds(0, 490, 50, 50);
+		this.officeBtn.setBounds(0, 530, 50, 50);
 		this.officeBtn.setContentAreaFilled(false);
 		this.officeBtn.setBorder(null);
 		this.officeBtnImage = new ImageIcon(ImageURLS.OFFICE_BUTTON);
@@ -433,7 +433,7 @@ public class MapPage extends JPanel {
 				showFilterPanel();
 			}
 		});
-		this.stairsBtn.setBounds(0, 550, 50, 50);
+		this.stairsBtn.setBounds(0, 595, 50, 50);
 		this.stairsBtn.setContentAreaFilled(false);
 		this.stairsBtn.setBorder(null);
 		this.stairsBtnImage = new ImageIcon(ImageURLS.STAIRS_BUTTON);
@@ -490,19 +490,19 @@ public class MapPage extends JPanel {
 		this.selectedFilterLabel = new JLabel(ViewStringLiterals.SELECTED_FILTER + ":");
 		this.selectedFilterLabel.setFont(new Font("Meiryo", Font.PLAIN, 20));
 		this.selectedFilterLabel.setForeground(new Color(0x5b1010));
-		this.selectedFilterLabel.setBounds(70, 10, 157, 30);
+		this.selectedFilterLabel.setBounds(70, 10, 142, 30);
 		this.slidePanel.add(this.selectedFilterLabel);
 		
 		this.filterType = new JLabel();
 		this.filterType.setFont(new Font("Meiryo", Font.PLAIN, 20));
 		this.filterType.setForeground(new Color(0x5b1010));
-		this.filterType.setBounds(227, 10, 163, 30);
+		this.filterType.setBounds(90, 40, 290, 30);
 		this.slidePanel.add(this.filterType);
 
 		this.noDataForFilter = new JLabel(ViewStringLiterals.NO_DATA_AVAILABLE);
 		this.noDataForFilter.setFont(new Font("Meiryo", Font.PLAIN, 22));
 		this.noDataForFilter.setForeground(new Color(0x5b1010));
-		this.noDataForFilter.setBounds(70, 300, 300, 30);
+		this.noDataForFilter.setBounds(110, 280, 246, 30);
 		this.noDataForFilter.setVisible(false);
 		this.slidePanel.add(this.noDataForFilter);
 
@@ -510,7 +510,7 @@ public class MapPage extends JPanel {
 		this.filteredScrollPanel.setLayout(null);
 
 		this.filterScrollPane = new JScrollPane(filteredScrollPanel);
-		this.filterScrollPane.setBounds(70, 70, 310, 450);
+		this.filterScrollPane.setBounds(70, 85, 310, 440);
 		this.filterScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 2));
 		this.filterScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.slidePanel.add(this.filterScrollPane);
