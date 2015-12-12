@@ -113,24 +113,24 @@ public class ResultPage extends JPanel {
 
 		this.fromLabel = new JLabel(ViewStringLiterals.FROM + " :");
 		this.fromLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.fromLabel.setBounds(15, 105, 98, 25);
+		this.fromLabel.setBounds(30, 41, 98, 25);
 		this.fromLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.fromLabel);
 		
 		this.fromLocationIcon = new JLabel();
-		this.fromLocationIcon.setBounds(370, 105, 20, 25);
+		this.fromLocationIcon.setBounds(30, 80, 20, 25);
 		this.fromLocationIconImage = new ImageIcon(ImageURLS.LOCATION_IMAGE);
 		this.fromLocationIcon.setIcon(this.fromLocationIconImage);
 		this.rightPanel.add(this.fromLocationIcon);
 
 		this.toLabel = new JLabel(ViewStringLiterals.TO + " :");
 		this.toLabel.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.toLabel.setBounds(50, 160, 57, 25);
+		this.toLabel.setBounds(30, 165, 57, 25);
 		this.toLabel.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.toLabel);
 		
 		this.toLocationIcon = new JLabel();
-		this.toLocationIcon.setBounds(370, 165, 20, 25);
+		this.toLocationIcon.setBounds(30, 201, 20, 25);
 		this.toLocationIconImage = new ImageIcon(ImageURLS.LOCATION_END_ICON);
 		this.toLocationIcon.setIcon(this.toLocationIconImage);
 		this.rightPanel.add(this.toLocationIcon);
@@ -138,7 +138,7 @@ public class ResultPage extends JPanel {
 		this.fromTextField = new JTextField();
 		this.fromTextField.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.fromTextField.setEditable(false);
-		this.fromTextField.setBounds(105, 94, 254, 47);
+		this.fromTextField.setBounds(60, 70, 310, 47);
 		this.fromTextField.setColumns(10);
 		this.fromTextField.setForeground(new Color(0x5b1010));
 		this.fromTextField.setBorder(null);
@@ -148,7 +148,7 @@ public class ResultPage extends JPanel {
 		this.toTextField.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.toTextField.setEditable(false);
 		this.toTextField.setColumns(10);
-		this.toTextField.setBounds(105, 155, 255, 47);
+		this.toTextField.setBounds(60, 191, 310, 47);
 		this.toTextField.setForeground(new Color(0x5b1010));
 		this.toTextField.setBorder(null);
 		this.rightPanel.add(this.toTextField);
@@ -160,7 +160,7 @@ public class ResultPage extends JPanel {
 				parent.getNextPrevPath(index);
 			}
 		});
-		this.nextBtn.setBounds(320, 300, 56, 90);
+		this.nextBtn.setBounds(330, 300, 56, 90);
 		this.nextBtn.setContentAreaFilled(false);
 		this.nextBtn.setBorder(null);
 		this.nextBtnImage = new ImageIcon(ImageURLS.NEXT_BUTTON);
@@ -175,7 +175,7 @@ public class ResultPage extends JPanel {
 				parent.getNextPrevPath(index);
 			}
 		});
-		this.previousBtn.setBounds(30, 300, 58, 90);
+		this.previousBtn.setBounds(15, 300, 58, 90);
 		this.previousBtn.setContentAreaFilled(false);
 		this.previousBtn.setBorder(null);
 		this.previousBtnImage = new ImageIcon(ImageURLS.PREVIOUS_BUTTON);
@@ -183,9 +183,10 @@ public class ResultPage extends JPanel {
 		this.rightPanel.add(this.previousBtn);
 		
 		this.currentMapName = new JTextField();
+		this.currentMapName.setBackground(null);
 		this.currentMapName.setEditable(false);
 		this.currentMapName.setFont(new Font("Meiryo", Font.PLAIN, 20));
-		this.currentMapName.setBounds(100, 310, 204, 37);
+		this.currentMapName.setBounds(75, 320, 255, 37);
 		this.currentMapName.setForeground(new Color(0x5b1010));
 		this.currentMapName.setBorder(null);
 		this.currentMapName.setHorizontalAlignment(JTextField.CENTER);
@@ -193,10 +194,11 @@ public class ResultPage extends JPanel {
 		this.currentMapName.setColumns(10);
 		
 		this.totalMaps = new JTextField();
+		this.totalMaps.setBackground(null);
 		this.totalMaps.setEditable(false);
 		this.totalMaps.setFont(new Font("Meiryo", Font.PLAIN, 16));
 		this.totalMaps.setForeground(new Color(0x5b1010));
-		this.totalMaps.setBounds(150, 355, 98, 26);
+		this.totalMaps.setBounds(160, 355, 98, 26);
 		this.totalMaps.setBorder(null);
 		this.totalMaps.setHorizontalAlignment(JTextField.CENTER);
 		this.rightPanel.add(this.totalMaps);
