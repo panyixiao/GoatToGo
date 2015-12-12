@@ -438,5 +438,7 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 		this.showLocations = false;
 		revalidate();
 		repaint();
+		
+		super.customScrollRect(selectedFilterPoint);
 	}
 }

@@ -238,7 +238,8 @@ public class ResultPage extends JPanel {
 		this.currentZoomValue = 1.0;
 		
 		this.resultMapDisplayPanel.displayPoints(path.getWayPoints());
-		
+		this.resultMapDisplayPanel.customScrollRect();
+
 		if(totalMapsValue == 1){
 			this.nextBtn.setEnabled(false);
 			this.previousBtn.setEnabled(false);
