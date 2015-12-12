@@ -176,22 +176,47 @@ public class Page extends JFrame {
 		this.mainPanel.repaint();
 	}
 	
+	/**
+	 * Method hideAdminButton.
+	 * @param none
+	 * This method hides the admin button when the user is already logged in as admin.
+	 */
 	public void hideAdminButton(){
 		this.adminBtn.setVisible(false);
 	}
 	
+	/**
+	 * Method showAdminButton.
+	 * @param none
+	 * This method shows the admin button on all the pages of a normal user.
+	 */
 	public void showAdminButton(){
 		this.adminBtn.setVisible(true);
 	}
 	
+	/**
+	 * Method showLogoutButton.
+	 * @param none
+	 * This method shows the logout button so that admin can logout.
+	 * This button is shown for add/delete map and edit map page.
+	 */
 	public void showLogoutButton(){
 		this.logoutBtn.setVisible(true);
 	}
 	
+	/**
+	 * Method hideLogoutButton.
+	 * @param none
+	 */
 	public void hideLogoutButton(){
 		this.logoutBtn.setVisible(false);
 	}
 	
+	/**
+	 * Method showHelpPopup.
+	 * @param none
+	 * Create the UI to display the help document.
+	 */
 	public void showHelpPopup(){
 		if(helpContent.equals("")){
 			this.helpContent = loadHelpFile();
@@ -207,6 +232,11 @@ public class Page extends JFrame {
 		}
 	}
 	
+	/**
+	 * Method loadHelpFile.
+	 * @param none
+	 * Loads the help document only for the first time.
+	 */
 	public String loadHelpFile(){
 		String helpFileURL = "ModelFiles"+System.getProperty("file.separator")+ "helpDocument.txt";
 		File file = null;

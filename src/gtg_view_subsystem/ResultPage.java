@@ -260,6 +260,11 @@ public class ResultPage extends JPanel {
 		}
 	}
 	
+	/*
+	 * Method pathNotAvailable.
+	 * @param none
+	 * This method displays error text in the map area if path is not available
+	 */
 	public void pathNotAvailable(){
 		this.noPathAvailable.setVisible(true);
 		this.fromTextField.setText("");
