@@ -199,8 +199,8 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
 		JViewport viewPort = this.mapPanelHolder.getViewport();
         if (viewPort != null) {
             Rectangle view = viewPort.getViewRect();
-            view.x = scrollPoint.x - 20;
-            view.y = scrollPoint.y - 20;
+            view.x = scrollPoint.x - 50;
+            view.y = scrollPoint.y - 50;
 
             this.scrollRectToVisible(view);
         }
