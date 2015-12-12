@@ -24,7 +24,10 @@ NODES
 30 364 133 0 CampusMap 0 Building Higgins;House;
 31 347 178 0 CampusMap 0 Building Higgins;House;
 32 313 191 0 CampusMap 0 Building Higgins;House;
+<<<<<<< HEAD
 35 481 408 1 ProjectCenter 0 Building Project;Center;
+=======
+>>>>>>> 967654bd67c2be712652909ed668a98e6cd3546a
 38 380 614 0 CampusMap 0 Building Alden;Memorial;
 39 302 599 0 CampusMap 0 Building Ellsworth;Apartments;
 40 302 491 0 CampusMap 0 Building Bartlett;Center;
@@ -251,6 +254,7 @@ NODES
 276 592 302 0 CampusMap 0 Waypoint WayPoint;
 277 645 283 1 FullerLab 4 Building Fuller;Lab;
 278 645 471 0 CampusMap 0 Waypoint WayPoint;
+279 487 391 1 ProjectCenter 1 Building ProjectCenter;
 EDGES
 1 70 71
 2 71 72
@@ -416,8 +420,6 @@ EDGES
 190 182 168
 191 21 179
 192 109 82
-193 141 183
-196 35 185
 197 141 185
 199 186 187
 200 187 188
@@ -546,7 +548,7 @@ EDGES
 346 276 174
 347 277 276
 348 247 176
-349 141 35
-350 35 183
 351 257 278
 352 278 188
+353 183 141
+354 279 141
