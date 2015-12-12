@@ -613,6 +613,13 @@ public class MapPage extends JPanel {
 	public String getMouseSelectedBuilding(Point mouseClickedPnt){
 		return parent.getMouseSelectedBuilding(mouseClickedPnt);
 	}
+	// Yixiao 2015-12-11
+	public String getBuildingInfoImageURL(String buildingName){
+		return parent.getBuildingInfoImageURL(buildingName);
+	}
+	public String getBuildingInfoDescription(String buildingName){
+		return parent.getBuildingInfoDescription(buildingName);
+	}
 
 	public void setPoint() {
 		this.mapMapDisplayPanel.displayPoint();
