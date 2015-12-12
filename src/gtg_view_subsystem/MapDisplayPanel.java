@@ -190,4 +190,19 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
 		// TODO Auto-generated method stub
 		return this.scale;
 	}
+	
+	/**
+	 * Method customScrollRect
+	 * @param scrollPoint
+	 */
+	public void customScrollRect(Point scrollPoint){
+		JViewport viewPort = this.mapPanelHolder.getViewport();
+        if (viewPort != null) {
+            Rectangle view = viewPort.getViewRect();
+            view.x = scrollPoint.x - 20;
+            view.y = scrollPoint.y - 20;
+
+            this.scrollRectToVisible(view);
+        }
+	}
 }

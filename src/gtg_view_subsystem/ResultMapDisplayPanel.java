@@ -119,4 +119,13 @@ public class ResultMapDisplayPanel extends MapDisplayPanel{
 		repaint();
 		
 	}
+	
+	/**
+	 * Method customScrollRect.
+	 * @param none
+	 * This method shows the rectnagle area of the map for the start location
+	 */
+	public void customScrollRect(){
+		super.customScrollRect(pathPoints.get(0));
+	}
 }
