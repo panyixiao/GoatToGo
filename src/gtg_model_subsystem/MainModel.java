@@ -25,6 +25,7 @@ public class MainModel {
 	private ProcessingSystem fileProcessing;
 	private Hashtable<String, Map> mapTable;
 	private MultiPath multiPath;
+	
 	public MainModel(){
 		admins = new ArrayList<Admin>();
 		fileProcessing = new ProcessingSystem("file");

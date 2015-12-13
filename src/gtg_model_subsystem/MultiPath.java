@@ -50,7 +50,6 @@ public class MultiPath {
 		final String campusMap = "CampusMap";
 		Node tempEndNode;
 		Node tempStartNode;
-		//int startNodeEntranceID= startNode.getEntranceID();
 		//IF the two buildings for the nodes are not equal THEN
 		if(!start.getBuilding().equals(end.getBuilding())){
 			if(start.getBuilding().contains(campusMap) && !onCampusMap(end)){
