@@ -139,7 +139,10 @@ public class MainView {
 		showResultPage();
 		if(pathCalculated == true){
 			PathData path = mainController.getDesiredPath(0);
+			double pathLength = mainController.getPathLength();
+			int pathTime = mainController.getEstimateTime();
 			this.resultPage.displayPath(path, 0);
+			this.resultPage.displayTimeDistance(pathLength, pathTime);
 		} else {
 			//this.resultPage.showErrorPopup();
 		}

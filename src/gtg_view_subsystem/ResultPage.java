@@ -20,11 +20,11 @@ import java.awt.event.ActionEvent;
 /**
  */
 public class ResultPage extends JPanel {
-	private JTextField fromTextField, toTextField, currentMapName, totalMaps;
+	private JTextField fromTextField, toTextField, currentMapName, totalMaps, totalDistanceValue, totalTimeValue;
 	private JPanel leftPanel, rightPanel;
 	private JButton zoomInBtn, zoomOutBtn, newSearchBtn, nextBtn ,previousBtn;
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, newSearchBtnImage, nextBtnImage, previousBtnImage, fromLocationIconImage, toLocationIconImage;
-	private JLabel fromLabel, toLabel, noPathAvailable, fromLocationIcon, toLocationIcon;
+	private JLabel fromLabel, toLabel, noPathAvailable, fromLocationIcon, toLocationIcon, totalDistance, totalTime;
 	private MainView parent;
 	private JScrollPane mapPanelHolder;
 	private JLayeredPane layeredPane;
@@ -204,6 +204,36 @@ public class ResultPage extends JPanel {
 		this.rightPanel.add(this.totalMaps);
 		this.totalMaps.setColumns(10);
 
+		this.totalDistance = new JLabel(ViewStringLiterals.TOTAL_DISTANCE + " :");
+		this.totalDistance.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.totalDistance.setBounds(30, 425, 173, 25);
+		this.totalDistance.setForeground(new Color(0x5b1010));
+		this.rightPanel.add(this.totalDistance);
+		
+		this.totalTime = new JLabel(ViewStringLiterals.TOTAL_TIME + " :");
+		this.totalTime.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.totalTime.setBounds(71, 487, 132, 25);
+		this.totalTime.setForeground(new Color(0x5b1010));
+		this.rightPanel.add(this.totalTime);
+
+		this.totalDistanceValue = new JTextField();
+		this.totalDistanceValue.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.totalDistanceValue.setEditable(false);
+		this.totalDistanceValue.setBounds(210, 415, 190, 47);
+		this.totalDistanceValue.setColumns(10);
+		this.totalDistanceValue.setForeground(new Color(0x5b1010));
+		this.totalDistanceValue.setBorder(null);
+		this.rightPanel.add(this.totalDistanceValue);
+
+		this.totalTimeValue = new JTextField();
+		this.totalTimeValue.setFont(new Font("Meiryo", Font.PLAIN, 24));
+		this.totalTimeValue.setEditable(false);
+		this.totalTimeValue.setColumns(10);
+		this.totalTimeValue.setBounds(210, 476, 190, 47);
+		this.totalTimeValue.setForeground(new Color(0x5b1010));
+		this.totalTimeValue.setBorder(null);
+		this.rightPanel.add(this.totalTimeValue);
+
 		this.newSearchBtn = new JButton();
 		this.newSearchBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -269,7 +299,51 @@ public class ResultPage extends JPanel {
 		this.noPathAvailable.setVisible(true);
 		this.fromTextField.setText("");
 		this.toTextField.setText("");
+		this.totalDistanceValue.setText("");
+		this.totalTimeValue.setText("");
 		this.nextBtn.setEnabled(false);
 		this.previousBtn.setEnabled(false);
+	}
+	
+	/*
+	 * Method timeConversion.
+	 * @param totalSeconds int
+	 * This method converts the seconds into hours, minutes, second
+	 */
+	private static String timeConversion(int totalSeconds) {
+		String time = "";
+	    final int MINUTES_IN_AN_HOUR = 60;
+	    final int SECONDS_IN_A_MINUTE = 60;
+
+	    int seconds = totalSeconds % SECONDS_IN_A_MINUTE;
+	    int totalMinutes = totalSeconds / SECONDS_IN_A_MINUTE;
+	    int minutes = totalMinutes % MINUTES_IN_AN_HOUR;
+	    int hours = totalMinutes / MINUTES_IN_AN_HOUR;
+
+	    if(hours != 0){
+	    	time += hours + " hr ";
+	    }
+	    
+	    if(minutes != 0){
+	    	time += minutes + " min ";
+	    }
+	    
+	    if(seconds != 0){
+	    	time += seconds + " sec ";
+	    }
+	    return time;
+	}
+
+	/*
+	 * Method displayTimeDistance.
+	 * @param pathTime int
+	 * 		  pathLength double
+	 * This method displays the total time and distance for the calculated path
+	 */
+	public void displayTimeDistance(double pathLength, int pathTime) {
+		double distance = Math.floor(pathLength * 100) / 100;
+
+		this.totalDistanceValue.setText("" + distance);
+		this.totalTimeValue.setText(timeConversion(pathTime));
 	}
 }
