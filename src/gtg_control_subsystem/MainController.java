@@ -7,7 +7,7 @@ import java.io.IOException;
 import gtg_model_subsystem.MainModel;
 import gtg_model_subsystem.Node;
 import gtg_model_subsystem.Edge;
-import gtg_model_subsystem.Path;
+import gtg_model_subsystem.MapPath;
 
 import gtg_view_subsystem.PathData;
 

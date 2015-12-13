@@ -2,6 +2,8 @@ package gtg_model_subsystem;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedWriter;
@@ -16,13 +18,14 @@ import java.util.logging.Logger;
  */
 public class FileProcessing implements ProcessingSystemType {
 	
+	
 	/**
 	 * The method loadMapList load maps from master map list stored in masterMapList.txt
 	 * @return master map list * @throws IOException */
 	public ArrayList<Map> loadMapList()
 	{
 		//Get the master map list text file reference
-		String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
+		
 		//reading each map into line
 		String line;
 		//array of stored types for each map
@@ -34,7 +37,7 @@ public class FileProcessing implements ProcessingSystemType {
 		ArrayList<Map> tempMapList = null;
 		
 		try{
-			file = new File(masterMapListURL);
+			file = new File(ModelFileURLS.masterMapListURL);
 			buffer = new BufferedReader(new FileReader(file));
 			tempMapList = new ArrayList<Map>();
 			
@@ -67,8 +70,6 @@ public class FileProcessing implements ProcessingSystemType {
 			boolean deleteSuccess = true;
 			boolean firstLine = true;
 			//String references to master list and a temporary written master list file
-			final String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
-			final String masterMapListTemp = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList_temp.txt";
 			
 			//variables for manipulation
 			File originalFile = null;
@@ -80,8 +81,8 @@ public class FileProcessing implements ProcessingSystemType {
 			//Array of map values from master list text file
 			String lines[];
 			try{
-				originalFile = new File(masterMapListURL);
-				tempFile = new File(masterMapListTemp);
+				originalFile = new File(ModelFileURLS.masterMapListURL);
+				tempFile = new File(ModelFileURLS.masterMapListTemp);
 				reader = new BufferedReader(new FileReader(originalFile));
 				writer = new BufferedWriter(new FileWriter(tempFile));
 				//WHILE a line exists in master list text file
@@ -129,10 +130,10 @@ public class FileProcessing implements ProcessingSystemType {
 	public boolean saveMapToMaster(String mapName, String mapImgURL, String mapType){
 			boolean writeSuccess = true;
 			try{
+				
 				//Get the master map list text file reference
-				final String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
 				//Create a file writer that will write to file, append value set to true to append to end of document
-				FileWriter fstream = new FileWriter(masterMapListURL, true);
+				FileWriter fstream = new FileWriter(ModelFileURLS.masterMapListURL, true);
 				//Create a buffered writer for the file stream index
 			    BufferedWriter out = new BufferedWriter(fstream);
 			    //Write newly created map to end of master map list
@@ -156,7 +157,7 @@ public class FileProcessing implements ProcessingSystemType {
 	 *         will not return false
 	 */
 	public boolean readGraphInformation(List<Node> nodes, List<Edge> edges, String mapName){
-		String mapGraphInformationURL = "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
+		String mapGraphInformationURL = ModelFileURLS.s + "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
 		boolean readSuccess = true;
 		int nodeOrEdge = 0;
 		File file = new File(mapGraphInformationURL);
@@ -293,9 +294,9 @@ public class FileProcessing implements ProcessingSystemType {
 	 */
 	public boolean readAdmin(List<Admin> admins){
 		boolean readAdminSuccess = true;
-		String adminURL = "ModelFiles"+System.getProperty("file.separator")+"adminFile.txt";
+		
 		try{
-		File file = new File(adminURL);
+		File file = new File(ModelFileURLS.adminURL);
 		BufferedReader buffer = new BufferedReader(new FileReader(file));
 		String line;
 		String[] lines;
@@ -316,7 +317,7 @@ public class FileProcessing implements ProcessingSystemType {
 	}
 	public boolean saveGraphInformation(List<Node> nodes, List<Edge> edges, String mapName){
 		boolean saveGraphInformationSucess = true;
-		String mapGraphInformationURL = "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
+		String mapGraphInformationURL = ModelFileURLS.s+"ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
 		try{
 		    FileWriter fstream = new FileWriter(mapGraphInformationURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
@@ -418,7 +419,7 @@ public class FileProcessing implements ProcessingSystemType {
 		Logger logger = Logger.getLogger(logName);
 		FileHandler fh;
 		try {
-			fh = new FileHandler("ModelFiles"+System.getProperty("file.separator") + logName + ".log" );
+			fh = new FileHandler(ModelFileURLS.s+"ModelFiles"+System.getProperty("file.separator") + logName + ".log" );
 			logger.addHandler(fh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fh.setFormatter(formatter);
