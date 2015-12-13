@@ -112,7 +112,7 @@ public class MainController{
 	}
 	
 	public double getPathLength(){
-		return pathSearchController.getPathLength();
+		return pathSearchController.getPathLength()/2;
 	}
 	
 	public int getEstimateTime(){
