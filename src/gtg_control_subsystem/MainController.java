@@ -71,6 +71,7 @@ public class MainController{
 	}
 	
 	public String getBuildingInfoImageURL(String buildingName){
+		//String imageURL = mapModel.
 		return mapDataController.getBuildingInfoImageURL(buildingName);
 	}
 	
@@ -109,7 +110,15 @@ public class MainController{
 		
 	public boolean getPathData(){
 		return pathSearchController.getPathData();
-	}	
+	}
+	
+	public double getPathLength(){
+		return pathSearchController.getPathLength();
+	}
+	
+	public int getEstimateTime(){
+		return pathSearchController.getEstimateTime();
+	}
 	
 	/******************************
 	 * 
