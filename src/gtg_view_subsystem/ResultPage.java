@@ -341,9 +341,8 @@ public class ResultPage extends JPanel {
 	 * This method displays the total time and distance for the calculated path
 	 */
 	public void displayTimeDistance(double pathLength, int pathTime) {
-		double distance = Math.floor(pathLength * 100) / 100;
-
-		this.totalDistanceValue.setText("" + distance);
+		int distance = (int) Double.parseDouble(""+pathLength);
+		this.totalDistanceValue.setText("" + distance + " " + ViewStringLiterals.METERS);
 		this.totalTimeValue.setText(timeConversion(pathTime));
 	}
 }

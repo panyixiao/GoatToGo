@@ -67,4 +67,5 @@ public class ViewStringLiterals {
 	public static final String SUB_BASEMENT = "SubBasement";
 	public static final String TOTAL_DISTANCE = "Total Distance";
 	public static final String TOTAL_TIME = "Total Time";
+	public static final String METERS = "Meters";
 }
