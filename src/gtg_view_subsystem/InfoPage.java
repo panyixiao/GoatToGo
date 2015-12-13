@@ -67,7 +67,7 @@ public class InfoPage extends JPanel {
         	@Override
         	 public Dimension getPreferredSize(){
          		Dimension size = super.getPreferredSize();
-         		size.width = 200;
+         		size.width = 205;
          		size.height = image.getHeight();
          		return size;
          		}

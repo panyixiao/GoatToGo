@@ -31,7 +31,7 @@ public class MainController{
 		this.mapModel = mapModel;
 		mapDataController = new MapDataController(this);
 		pathSearchController = new PathSearchController(this, mapDataController); 
-		userChecker = new AdminController(this);
+		userChecker = new AdminController(this);		
 	}	
 	
 	/******************************
@@ -71,7 +71,6 @@ public class MainController{
 	}
 	
 	public String getBuildingInfoImageURL(String buildingName){
-		//String imageURL = mapModel.
 		return mapDataController.getBuildingInfoImageURL(buildingName);
 	}
 	

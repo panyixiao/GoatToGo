@@ -6,6 +6,7 @@ import java.awt.Point;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.HashMap;
 
 import gtg_model_subsystem.Node;
 import gtg_model_subsystem.Edge;
@@ -26,12 +27,14 @@ public class MapDataController {
 	private ArrayList<Point> tempPntList  = new ArrayList<Point>();
 	private ArrayList<Point> tempEdgeList = new ArrayList<Point>();
 	
+	private HashMap<String, String> InfoImageTable;
+	
 	// Constructor
 	public MapDataController(MainController controlInterface){
 		mainController = controlInterface;
 		LoadInMapNameList();	
 		LoadInMapURL();
-
+		InfoImageTable = mainController.mapModel.getCampusImageUrl();
 	}
 	
 	/* *******************************
@@ -257,19 +260,9 @@ public class MapDataController {
 	
 	public String getBuildingInfoImageURL(String buildingName){
 		String imageURL = null;
-		switch(buildingName){
-		case "BoyntonHall":
-			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
-			break;
-		case "FullerLab":
-			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
-			break;
-		case "ProjectCenter":
-			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
-			break;
-		}
-		
-		return imageURL;	
+		String keyValue = buildingName + ".jpg";
+		imageURL = InfoImageTable.get(keyValue);
+		return imageURL;
 	}
 	
 	public String getBuildingInfoDescription(String buildingName){
