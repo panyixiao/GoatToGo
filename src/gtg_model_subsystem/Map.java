@@ -15,7 +15,7 @@ public class Map {
 		private String mapName;
 		private String mapType;
 		private String mapImgURL;
-		private HashMap<String,String>campusImageUrl;
+		private HashMap<String,String>infoImageUrl;
 		
 		
 		/**
@@ -30,7 +30,7 @@ public class Map {
 			this.graph = graph;
 		    this.mapName = mapName;
 		    this.mapType = mapType;
-		    campusImageUrl=new HashMap<String,String>();
+		    infoImageUrl=new HashMap<String,String>();
 		}
 
 		
@@ -96,12 +96,12 @@ public class Map {
 
 
 		public HashMap<String, String> getCampusImageUrl() {
-			return campusImageUrl;
+			return infoImageUrl;
 		}
 
 
 		public void setCampusImageUrl(String name,String path) {
-			campusImageUrl.put(name, path);
+			infoImageUrl.put(name, path);
 		}
         
 		
