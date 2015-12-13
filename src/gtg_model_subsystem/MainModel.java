@@ -26,9 +26,10 @@ public class MainModel {
 	private MultiPath multiPath;
 	
 	public MainModel(){
-		admins = new ArrayList<Admin>();
+		admins = AdminList.getInstance();
+		mapTable = MapTable.getInstance();
 		fileProcessing = new ProcessingSystem("file");
-		mapTable = new Hashtable<String, Map>();
+		
 		loadMapLists();
 		loadAdmin();			
 		loadFiles();
@@ -309,13 +310,7 @@ public class MainModel {
 		}
 		System.out.println("END PRINT EDGES");
 	}
-	public void printAdmins(){
-		for(Admin admin: admins){
-			System.out.print(admin.getUsername()+ " " + admin.getPassword());
-			System.out.println();
-		}
-		System.out.println("END OF PRINT ADMIN");
-	}
+	
 
 	public void printMaps(){
 		for(String value: mapTable.keySet()){
