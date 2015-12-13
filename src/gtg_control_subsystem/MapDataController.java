@@ -6,6 +6,7 @@ import java.awt.Point;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.HashMap;
 
 import gtg_model_subsystem.Node;
 import gtg_model_subsystem.Edge;
@@ -26,12 +27,14 @@ public class MapDataController {
 	private ArrayList<Point> tempPntList  = new ArrayList<Point>();
 	private ArrayList<Point> tempEdgeList = new ArrayList<Point>();
 	
+	private HashMap<String, String> InfoImageTable;
+	
 	// Constructor
 	public MapDataController(MainController controlInterface){
 		mainController = controlInterface;
 		LoadInMapNameList();	
 		LoadInMapURL();
-
+		InfoImageTable = mainController.mapModel.getCampusImageUrl();
 	}
 	
 	/* *******************************
@@ -123,12 +126,12 @@ public class MapDataController {
 			listOfMapNameForReturn.clear();
 			listOfMapURLForReturn.clear();
 			mainController.mapModel.loadMapLists();
-			mainController.mapModel.loadFiles();
-			
+			mainController.mapModel.loadFiles();			
 			LoadInMapNameList();
 			LoadInMapURL();
 			getAllMapNameAndURL();
 			break;
+			
 		case "CampusMap":
 			listOfMapNameForReturn.clear();
 			listOfMapURLForReturn.clear();
@@ -257,26 +260,16 @@ public class MapDataController {
 	
 	public String getBuildingInfoImageURL(String buildingName){
 		String imageURL = null;
-		switch(buildingName){
-		case "BoyntonHall":
-			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
-			break;
-		case "FullerLab":
-			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
-			break;
-		case "ProjectCenter":
-			imageURL = "images" + System.getProperty("file.separator") + "InfoImage" + System.getProperty("file.separator") + buildingName + ".jpg";    		
-			break;
-		}
-		
-		return imageURL;	
+		String keyValue = buildingName + ".jpg";
+		imageURL = InfoImageTable.get(keyValue);
+		return imageURL;
 	}
 	
 	public String getBuildingInfoDescription(String buildingName){
 		String buildingDescription = null;
 		switch(buildingName){
 		case "BoyntonHall":
-			buildingDescription = "Dedicated in 1868, Boynton Hall is WPI's first building."+"\r\n"+ "It was named for John Boynton, a prosperous tinware manufacturer who founded WPI in 1865. Boynton gave his life's savings of $100,000 to create WPI on the condition that the citizens of Worcester provide the land and granite for the building. It was designed by noted architect Stephen Earle (his son, Ralph, would become WPI's sixth president) and originally contained classrooms and labs. Its clock tower became a symbol of WPI¡¯s commitment to classroom theory and learning as part of the Two Towers philosophy of balancing theory and practice."+"\r\n"+ "Today, Boynton is WPI's main administration building and houses offices of the president, the provost, financial services, and marketing and communications.";    		
+			buildingDescription = "Dedicated in 1868, Boynton Hall is WPI's first building."+"\r\n"+ "It was named for John Boynton, a prosperous tinware manufacturer who founded WPI in 1865. Boynton gave his life's savings of $100,000 to create WPI on the condition that the citizens of Worcester provide the land and granite for the building. It was designed by noted architect Stephen Earle (his son, Ralph, would become WPI's sixth president) and originally contained classrooms and labs. Its clock tower became a symbol of WPI¡¯s commitment to classroom theory and learning as part of the Two Towers philosophy of balancing theory and practice."+"\r\n"+ "Today, Boynton is WPI's main administration building and houses offices of the president, the provost, financial services and marketing and communications.";    		
 			break;
 		case "FullerLab":
 			buildingDescription = "Built in 1990, Fuller Labs was named for George F. Fuller, former chairman of Wyman-Gordon Co. and a longtime WPI trustee."+"\r\n"+"Fuller is home to the Computer Science Department as well as the Computing and Communications Center and Academic Technology Center. It serves as the heart of WPI¡¯s high-speed computer network, which reaches every classroom, lab, office, and residence hall room on campus, as well as off-campus fraternity and sorority houses.";    		
