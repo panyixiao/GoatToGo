@@ -183,7 +183,8 @@ public class MainController{
 								  nodeToBeSaved, 
 								  edgeToBeSaved);
 		}
-		catch(IOException e){
+		catch(Exception e){
+			success = false;
 			System.out.println(e.toString());
 		}
 		return success;
