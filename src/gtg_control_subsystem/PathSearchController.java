@@ -28,7 +28,7 @@ public class PathSearchController {
 		mainController = controlInterface;
 		mapDataController = mapDataComponent;
 		pathTotalLength = 0;
-		walkingSpeed = 4; // Pixel/sec
+		walkingSpeed = 2; // Pixel/sec
 	}
 	
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
