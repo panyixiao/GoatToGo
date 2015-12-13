@@ -227,7 +227,7 @@ public class AdminMapEditPage extends JPanel {
 		
 		this.nbrBtn =new JRadioButton();
 		this.nbrBtn.setText("Create Neighbors");
-		this.nbrBtn.setBounds(55, 440, 253, 75);
+		this.nbrBtn.setBounds(55, 420, 253, 75);
 		this.nbrBtn.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.nbrBtn.setBackground(null);
 		this.nbrBtn.addActionListener(changeMode);

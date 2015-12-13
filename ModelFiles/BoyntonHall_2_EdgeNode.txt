@@ -85,7 +85,6 @@ NODES
 111 723 556 0 BoyntonHall 2 Waypoint Waypoint;
 112 728 597 0 BoyntonHall 2 Classroom BH;105;
 113 806 597 0 BoyntonHall 2 Classroom BH;103;
-114 371 738 1 BoyntonHall 2 Waypoint Front;Door;
 115 497 556 0 BoyntonHall 2 Waypoint Waypoint;
 117 896 141 0 BoyntonHall 2 Classroom BH;102;
 118 1006 141 0 BoyntonHall 2 Classroom BH;102A;
@@ -96,6 +95,7 @@ NODES
 124 497 526 0 BoyntonHall 2 Classroom BH;107A;
 125 957 667 4 BoyntonHall 2 Stairs STAIRS;
 126 907 667 0 BoyntonHall 2 Waypoint Waypoint;
+127 406 829 1 BoyntonHall 2 Waypoint Front;Door;
 EDGES
 1 1 2
 2 2 3
@@ -186,7 +186,6 @@ EDGES
 149 98 113
 150 57 113
 151 111 57
-152 99 114
 154 115 68
 155 117 87
 156 118 86
@@ -202,3 +201,4 @@ EDGES
 166 71 123
 167 125 126
 168 126 3
+169 99 127
