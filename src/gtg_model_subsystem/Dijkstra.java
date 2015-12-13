@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 /**
  */
-public class JDijkstra {
+public class Dijkstra {
 	  private List<Node> nodes;
 	  private List<Edge> edges;
 	  private Set<Node> settledNodes;
@@ -21,7 +21,7 @@ public class JDijkstra {
 	   * Constructor for JDijkstra.
 	   * @param graph CoordinateGraph
 	   */
-	  public JDijkstra(CoordinateGraph graph) {
+	  public Dijkstra(CoordinateGraph graph) {
 	    // create a copy of the array so that we can operate on this array
 	    this.nodes = new ArrayList<Node>(graph.getNodes());
 	    //this.edges = new ArrayList<Edge>(graph.getEdges());

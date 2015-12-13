@@ -23,7 +23,7 @@ public class MainModel {
 	private Path shortestPath = null;
 	private CoordinateGraph graph;
 	private List<Admin> admins;
-	private FileProcessing fileProcessing;
+	private ProcessingSystem fileProcessing;
 	private Hashtable<String, Map> mapTable;
 	private LinkedHashMap<String, Path> mapPaths;
 	private HashMap<Integer,Node>campusMapNodeList;
@@ -32,18 +32,12 @@ public class MainModel {
 	private Node endNode;
 	public MainModel(){
 		admins = new ArrayList<Admin>();
-		fileProcessing = new FileProcessing();
+		fileProcessing = new ProcessingSystem("file");
 		mapTable = new Hashtable<String, Map>();
-		campusMapNodeList = new HashMap<Integer,Node>();
-		try {			
-			loadMapLists();
-			loadAdmin();			
-			loadFiles();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		campusMapNodeList = new HashMap<Integer,Node>();			
+		loadMapLists();
+		loadAdmin();			
+		loadFiles();
 	}
     
 	/**
@@ -54,20 +48,15 @@ public class MainModel {
 	public boolean loadMapLists()
 	{
 		ArrayList<Map> masterMapList=null;
-		try {
-			//load maps from master text file
-			masterMapList=fileProcessing.loadMapList();		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//load maps from master text file
+		masterMapList=fileProcessing.loadMapList();		
+		
 		//IF the master map list failed to load THEN
 		if(masterMapList==null){
 			return false;
 		} else{
 			//access each map and store it into map table
 			for(Map map:masterMapList){
-				System.out.println(map.getMapName());
 				mapTable.put(map.getMapName(), map);
 			}
 			
@@ -124,7 +113,7 @@ public class MainModel {
 			for(String mapName: mapTable.keySet()){
 				mapCreated = createMapGraph(mapName);
 			}
-		}catch(IOException e){
+		}catch(Exception e){
 			System.out.println(e.toString());
 		}		
 		return mapCreated;		
@@ -137,18 +126,14 @@ public class MainModel {
 	 */
 	public boolean loadFiles(String mapName){
 		boolean mapCreated = false;
-		try{
-			mapCreated = createMapGraph(mapName);
-		}catch(IOException e){
-			System.out.println(e.toString());
-		}		
+		mapCreated = createMapGraph(mapName);
 		return mapCreated;		
 	}
 	/**
 	 * Method loadAdmin.
 	 * @throws IOException
 	 */
-	public void loadAdmin() throws IOException{
+	public void loadAdmin(){
 		fileProcessing.readAdmin(admins);
 	}
 	
@@ -158,7 +143,7 @@ public class MainModel {
 	 * @return boolean
 	 * @throws IOException
 	 */
-	public boolean createMapGraph(String mapName) throws IOException{
+	public boolean createMapGraph(String mapName){
 		
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
@@ -188,7 +173,7 @@ public class MainModel {
 	
 	
 	 * @return true of write was successful, false otherwise * @throws IOException */
-	public boolean saveMapGraph(String mapName, List<Node> tempNodeList, List<Edge> tempEdgeList) throws IOException{	
+	public boolean saveMapGraph(String mapName, List<Node> tempNodeList, List<Edge> tempEdgeList){	
 			//Generate a new coordinate graph to be saved by admin
 			graph = new CoordinateGraph(tempNodeList, tempEdgeList);
 			//STORE it as the new graph
@@ -200,7 +185,7 @@ public class MainModel {
 				fileProcessing.saveGraphInformation(mapTable.get(mapName).getGraph().getNodes(), 
 													mapTable.get(mapName).getGraph().getEdges(), 
 													mapName);
-			}catch(IOException e){
+			}catch(Exception e){
 				//Signal input output error to controller based on false
 				System.out.println(e.toString());
 				return false;
@@ -253,15 +238,11 @@ public class MainModel {
 		//IF the two buildings for the nodes are not equal THEN
 		if(!start.getBuilding().equals(end.getBuilding())){
 			if(start.getBuilding().contains(campusMap) && !onCampusMap(end)){
-				System.out.println("CampusMap is selected as start.");
 				tempEndNode = getStartEndNodeForCampusMap(end);
-				System.out.println("TEMPENDNODE B:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
 				//Next compare the two floors for the given nodes
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, tempEndNode);
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
 				compareFloors = compareFloorNum(tempStartNode, end);
-				System.out.println("COMAPRED FLOORS" + compareFloors);
-				System.out.println("TEMPSTARTNODE :" + tempStartNode.getBuilding() + " FLOOR: "  + tempStartNode.getFloorNum() + "X: "+ tempStartNode.getX() + "Y: " + tempStartNode.getY());
 				tempPath = new Path(null, null, null);
 	
 				multiPathCalcSuccess = calculatePathForFloors(tempStartNode,end, compareFloors);
@@ -721,7 +702,7 @@ public class MainModel {
 		boolean calculateSuccess = true;
 		//testing for loading of nodes/edges
 		try {
-			calculateSuccess = runJDijkstra(mapName, tempPath);
+			calculateSuccess = runDijkstra(mapName, tempPath);
 			
 		} catch (Exception e) {
 			calculateSuccess = false;
@@ -733,7 +714,7 @@ public class MainModel {
 	/** Dijkstra algorithim
 	 * @param mapName String
 	 */
-	public boolean runJDijkstra(String mapName, Path tempPath){
+	public boolean runDijkstra(String mapName, Path tempPath){
 		boolean dijkstraSuccess = true;
 		//Create object instance with temporary dijkstra algorithim
 		System.out.println("START POINT INFO: " +tempPath.getStartPoint().getBuilding() + " " +tempPath.getStartPoint().getFloorNum() + " "+ tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
@@ -756,7 +737,7 @@ public class MainModel {
 			printNodes(mapPaths.get(mapName).getWayPoints());
 			return dijkstraSuccess;
 		}
-		JDijkstra dijkstra = new JDijkstra(mapTable.get(mapName).getGraph());
+		Dijkstra dijkstra = new Dijkstra(mapTable.get(mapName).getGraph());
 		System.out.println("Graph is set");
 		//Start the execution with the first starting node
 		dijkstra.execute(tempPath.getStartPoint());

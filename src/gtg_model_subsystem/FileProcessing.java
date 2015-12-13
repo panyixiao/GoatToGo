@@ -8,14 +8,18 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.Logger;
+
 /**
  */
-public class FileProcessing {
+public class FileProcessing implements ProcessingSystemType {
 	
 	/**
 	 * The method loadMapList load maps from master map list stored in masterMapList.txt
 	 * @return master map list * @throws IOException */
-	public ArrayList<Map> loadMapList() throws IOException
+	public ArrayList<Map> loadMapList()
 	{
 		//Get the master map list text file reference
 		String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
@@ -49,7 +53,7 @@ public class FileProcessing {
 			buffer.close();
 		}
 		catch(IOException e){
-			System.out.println(e.toString());
+			logError(e.toString());
 		}
 		return tempMapList;
 	}
@@ -59,12 +63,12 @@ public class FileProcessing {
 	 * map name given.
 	 * @param mapName the name of the map needs to be deleted from masterMapList.txt
 	 * @return true if delete succeeded false otherwise * @throws IOException  */
-	public boolean deleteMapFromMaster(String mapName) throws IOException{
+	public boolean deleteMapFromMaster(String mapName){
 			boolean deleteSuccess = true;
 			boolean firstLine = true;
 			//String references to master list and a temporary written master list file
-			String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
-			String masterMapListTemp = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList_temp.txt";
+			final String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
+			final String masterMapListTemp = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList_temp.txt";
 			
 			//variables for manipulation
 			File originalFile = null;
@@ -99,11 +103,16 @@ public class FileProcessing {
 				}
 			}catch(IOException e){
 				//CATCH failure and set the delete success to false
-				System.out.println(e.toString());
+				logError(e.toString());
 				deleteSuccess = false;
 			} finally{
-				writer.close();
-				reader.close();
+				try {
+					writer.close();
+					reader.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					logError(e.toString());
+				}
 				//DELETE original master list file
 				originalFile.delete();
 				//RE-NAME new temp list to master list
@@ -117,12 +126,11 @@ public class FileProcessing {
 	 * @param mapType the type of map that we are saving (IE possible campus map).	
 	 * @param mapImgURL String
 	 * @return true if write was successful false if write failed. * @throws IOException */
-	public boolean saveMapToMaster(String mapName, String mapImgURL, String mapType) throws IOException{
+	public boolean saveMapToMaster(String mapName, String mapImgURL, String mapType){
 			boolean writeSuccess = true;
 			try{
 				//Get the master map list text file reference
-				String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
-				System.out.println(masterMapListURL);
+				final String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
 				//Create a file writer that will write to file, append value set to true to append to end of document
 				FileWriter fstream = new FileWriter(masterMapListURL, true);
 				//Create a buffered writer for the file stream index
@@ -133,7 +141,7 @@ public class FileProcessing {
 			}
 			catch(IOException e){
 				//Print out error if either map file does not exist
-				System.out.println(e.toString());
+				logError(e.toString());
 				//return false for failure
 				writeSuccess = false;
 			}
@@ -146,9 +154,8 @@ public class FileProcessing {
 	 * @param mapName the mapName specifies which map is loaded
 	 * @return true if creating file or readind nodes,edges successful
 	 *         will not return false
-	 * @throws IOException
 	 */
-	public boolean readGraphInformation(List<Node> nodes, List<Edge> edges, String mapName)throws IOException{
+	public boolean readGraphInformation(List<Node> nodes, List<Edge> edges, String mapName){
 		String mapGraphInformationURL = "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
 		boolean readSuccess = true;
 		int nodeOrEdge = 0;
@@ -162,7 +169,6 @@ public class FileProcessing {
 		}else{
 			try{
 				//file exists,begin reading
-				System.out.println("Reading instead");
 				buffer = new BufferedReader(new FileReader(file));
 				//read line from file
 				while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
@@ -184,9 +190,14 @@ public class FileProcessing {
 					}
 				}
 			}catch(IOException E){
-				System.out.println(E.toString());
+				logError(E.toString());
 			}finally{
-				buffer.close();
+				try {
+					buffer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					logError(e.toString());
+				}
 			}
 		}
 		return readSuccess;
@@ -241,11 +252,11 @@ public class FileProcessing {
 			Node tempNode2 = getNode(nodes, Integer.parseInt(lines[2]));
 			//one of the nodes in the edge does not exist
 			if(tempNode1 == null){
-				System.out.println("Node1  could not be read for edge");
+				logError("Node1  could not be read for edge");
 				readSuccess = false;
 			}
 			if(tempNode2 == null){
-				System.out.println("Node2  could not be read for edge");
+				logError("Node2  could not be read for edge");
 				readSuccess = false;
 			}
 			//construct an edge
@@ -280,7 +291,8 @@ public class FileProcessing {
 	 * @param admins List<Admin>
 	 * @throws IOException
 	 */
-	public void readAdmin(List<Admin> admins) throws IOException{
+	public boolean readAdmin(List<Admin> admins){
+		boolean readAdminSuccess = true;
 		String adminURL = "ModelFiles"+System.getProperty("file.separator")+"adminFile.txt";
 		try{
 		File file = new File(adminURL);
@@ -297,10 +309,13 @@ public class FileProcessing {
 		}
 		buffer.close();
 		}catch(IOException e){
-			System.out.println(e.toString());
+			logError(e.toString());
+			readAdminSuccess = false;
 		}
+		return readAdminSuccess;
 	}
-	public void saveGraphInformation(List<Node> nodes, List<Edge> edges, String mapName) throws IOException{
+	public boolean saveGraphInformation(List<Node> nodes, List<Edge> edges, String mapName){
+		boolean saveGraphInformationSucess = true;
 		String mapGraphInformationURL = "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
 		try{
 		    FileWriter fstream = new FileWriter(mapGraphInformationURL, false);
@@ -317,7 +332,6 @@ public class FileProcessing {
 		    			  saveDescription(node.getDescription()) +
 		    			  System.getProperty("line.separator"));
 		    }
-		    System.out.println("File Node Write Success!");
 
 		    out.write("EDGES" + System.getProperty("line.separator"));
 		    for(Edge edge: edges){
@@ -326,13 +340,13 @@ public class FileProcessing {
 		    	edge.getDestination().getID() + 
 		    	System.getProperty("line.separator"));
 		    }
-		    System.out.println("File Edge Write Success!");
-
 		    out.close();
 
 		}catch(IOException E){
-			System.out.println(E.toString());
+			saveGraphInformationSucess = false;
+			logError(E.toString());
 		}
+		return saveGraphInformationSucess;
 	}
 	
 	/**
@@ -347,8 +361,7 @@ public class FileProcessing {
 			try{
 				file.createNewFile();
 			}catch(IOException e){
-				System.out.println(e.toString());
-				
+				logError(e.toString());
 			}
 		}
 		else{
@@ -357,9 +370,6 @@ public class FileProcessing {
 		return createFile;
 	}
 	private String loadDescription(String readLineDescription){
-			if(readLineDescription.equals("")){
-				System.out.println("The word was blank");
-			}
 			String arrayOfWordsFromDescription[];
 			String finalDescription;
 			StringBuilder buildDescription = new StringBuilder();
@@ -403,6 +413,24 @@ public class FileProcessing {
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
 	}
 	
+	public void logError(String error){
+		final String logName = "GTGLog";
+		Logger logger = Logger.getLogger(logName);
+		FileHandler fh;
+		try {
+			fh = new FileHandler("ModelFiles"+System.getProperty("file.separator") + logName + ".log" );
+			logger.addHandler(fh);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fh.setFormatter(formatter);
+			logger.info(error);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			}
 	/**
 	 * load image url of the buildings on campus to a Map
 	 * @param tempMap the campus map that loads building urls
@@ -416,14 +444,12 @@ public class FileProcessing {
 			  for (int i = 0; i < filelist.length; i++) {
 			     File readfile = new File(filePath + "\\" + filelist[i]);
 			     if (!readfile.isDirectory()) {
-			    	System.out.println("name=" + readfile.getName());
-			        System.out.println("path=" + readfile.getPath());
 			        tempMap.setCampusImageUrl(readfile.getName(),readfile.getPath());
 			     }
 			  }
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logError(e.toString());
 		}
     }
 }
