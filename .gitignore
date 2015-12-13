@@ -1,0 +1,5 @@
+# Compiled source ignores that we are not#
+###################
+*.class
+*.o
+*.so

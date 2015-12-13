@@ -47,7 +47,7 @@ public class FileProcessing implements ProcessingSystemType {
 				//add the created map into the map list
 				tempMapList.add(tempMap);
 				if(tempMap.getMapName().equals("CampusMap_0")){
-					loadBuildingImageUrl(tempMap);
+					loadInfoImageUrl(tempMap);
 				}
 			}
 			buffer.close();
@@ -432,10 +432,10 @@ public class FileProcessing implements ProcessingSystemType {
 		}
 			}
 	/**
-	 * load image url of the buildings on campus to a Map
-	 * @param tempMap the campus map that loads building urls
+	 * load urls of the information images on campus to the campus map
+	 * @param tempMap the campus map that loads information urls
 	 */
-	private void loadBuildingImageUrl(Map tempMap) {
+	public void loadInfoImageUrl(Map tempMap) {
 		String filePath="./images/InfoImage";
 		try {
 			File file = new File(filePath);

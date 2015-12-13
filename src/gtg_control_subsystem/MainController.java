@@ -31,7 +31,7 @@ public class MainController{
 		this.mapModel = mapModel;
 		mapDataController = new MapDataController(this);
 		pathSearchController = new PathSearchController(this, mapDataController); 
-		userChecker = new AdminController(this);
+		userChecker = new AdminController(this);		
 	}	
 	
 	/******************************
@@ -109,7 +109,15 @@ public class MainController{
 		
 	public boolean getPathData(){
 		return pathSearchController.getPathData();
-	}	
+	}
+	
+	public double getPathLength(){
+		return pathSearchController.getPathLength()/2;
+	}
+	
+	public int getEstimateTime(){
+		return pathSearchController.getEstimateTime();
+	}
 	
 	/******************************
 	 * 
