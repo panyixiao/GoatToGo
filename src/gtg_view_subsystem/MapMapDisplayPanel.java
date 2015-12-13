@@ -37,7 +37,7 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	private MapPage parent;
 	private ArrayList<Point> graphPoints = new ArrayList<Point>();
 	private Boolean showLocations = false;
-	private int circleWidthHeight = 10;
+	private int circleWidthHeight = 12;
 	private String filterType = "";
 	private ArrayList<Point> filterPoints = new ArrayList<Point>();
 	private boolean showAllFilteredPoints = false;
@@ -157,43 +157,43 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
     	
 		switch(this.filterType){
 	    	case ViewStringLiterals.OFFICE:
-	    			g2.setColor(Color.BLUE);
+	    			g2.setColor(new Color(255, 0, 153));
 	    		break;
 	    		
 	    	case ViewStringLiterals.BUILDING:
-	    			g2.setColor(Color.CYAN);
+	    			g2.setColor(new Color(255, 0 , 0));
 	    		break;
 	    	
 	    	case ViewStringLiterals.PARKING_LOT:
-	    			g2.setColor(Color.PINK);
+	    			g2.setColor(new Color(71, 209, 255));
 	    		break;
 	    		
 	    	case ViewStringLiterals.CAFE:
-	    			g2.setColor(Color.BLUE);
+	    			g2.setColor(new Color(255, 71, 117));
 	    		break;
 	    		
 	    	case ViewStringLiterals.ELEVATOR:
-	    			g2.setColor(Color.GREEN);
+	    			g2.setColor(new Color(0, 153, 77));
 	    		break;
 	    		
 	    	case ViewStringLiterals.STAIRS:
-	    			g2.setColor(Color.MAGENTA);
+	    			g2.setColor(new Color(0, 0, 153));
 	    		break;
 	    		
 	    	case ViewStringLiterals.MENS_RESTROOM:
-	    			g2.setColor(Color.ORANGE);
+	    			g2.setColor(new Color(245, 61, 0));
 	    		break;
 	    		
 	    	case ViewStringLiterals.WOMENS_RESTROOM:
-	    			g2.setColor(Color.YELLOW);
+	    			g2.setColor(new Color(255, 255, 0));
 	    		break;
 	    		
 	    	case ViewStringLiterals.VENDING:
-	    			g2.setColor(Color.BLUE);
+	    			g2.setColor(new Color(128, 0, 255));
 	    		break;
 	    		
 	    	case ViewStringLiterals.CLASSROOM:
-	    			g2.setColor(Color.PINK);
+	    			g2.setColor(new Color(204, 153, 51));
 	    		break;
 	    	}
     		
@@ -438,5 +438,7 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 		this.showLocations = false;
 		revalidate();
 		repaint();
+		
+		super.customScrollRect(selectedFilterPoint);
 	}
 }

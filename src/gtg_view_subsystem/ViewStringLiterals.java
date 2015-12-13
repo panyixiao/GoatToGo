@@ -58,4 +58,11 @@ public class ViewStringLiterals {
 	public static final String VENDING = "Vending";
 	public static final String WAYPOINT = "Waypoint";
 	public static final String NO_PATH_AVAILABLE = "Unable to find the route. Please try new search.";
+	public static final String FIRST_FLOOR = "FirstFloor";
+	public static final String SECOND_FLOOR = "SecondFloor";
+	public static final String THIRD_FLOOR = "ThirdFloor";
+	public static final String FOURTH_FLOOR = "FourthFloor";
+	public static final String FIFTH_FLOOR = "FifthFloor";
+	public static final String BASEMENT = "Basement";
+	public static final String SUB_BASEMENT = "SubBasement";
 }

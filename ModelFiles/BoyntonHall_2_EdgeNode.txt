@@ -1,5 +1,5 @@
 NODES
-1 907 982 2 BoyntonHall 2 Waypoint Waypoint;
+1 907 982 2 BoyntonHall 2 Waypoint Front;Stair;
 2 907 898 0 BoyntonHall 2 Waypoint Waypoint;
 3 907 727 0 BoyntonHall 2 Stairs Stairs;
 4 869 727 0 BoyntonHall 2 Waypoint Waypoint;
@@ -13,25 +13,25 @@ NODES
 16 262 427 0 BoyntonHall 2 Waypoint Waypoint;
 19 122 298 0 BoyntonHall 2 Waypoint Waypoint;
 20 56 298 0 BoyntonHall 2 Waypoint Waypoint;
-21 40 122 0 BoyntonHall 2 Classroom 116;
-22 107 122 0 BoyntonHall 2 Classroom 117;
-23 172 122 0 BoyntonHall 2 Classroom 118;
+21 40 122 0 BoyntonHall 2 Classroom BH;116;
+22 107 122 0 BoyntonHall 2 Classroom BH;117;
+23 172 122 0 BoyntonHall 2 Classroom BH;118;
 24 56 248 0 BoyntonHall 2 Waypoint Waypoint;
 25 122 248 0 BoyntonHall 2 Waypoint Waypoint;
 26 189 248 0 BoyntonHall 2 Waypoint Waypoint;
-31 329 84 0 BoyntonHall 2 Classroom 100Y;
+31 329 84 0 BoyntonHall 2 Classroom BH;100Y;
 32 371 84 0 BoyntonHall 2 Waypoint Waypoint;
-33 422 84 0 BoyntonHall 2 Classroom 100C;
+33 422 84 0 BoyntonHall 2 Classroom BH;100C;
 34 422 259 0 BoyntonHall 2 Waypoint Waypoint;
 35 384 141 0 BoyntonHall 2 Waypoint Waypoint;
-36 497 117 0 BoyntonHall 2 Classroom 104B;
+36 497 117 0 BoyntonHall 2 Classroom BH;104B;
 37 546 203 0 BoyntonHall 2 Waypoint Waypoint;
-38 474 283 0 BoyntonHall 2 Classroom 104A;
+38 474 283 0 BoyntonHall 2 Classroom BH;104A;
 39 505 248 0 BoyntonHall 2 Waypoint Waypoint;
 41 699 198 0 BoyntonHall 2 Waypoint Waypoint;
 42 739 221 0 BoyntonHall 2 Waypoint Waypoint;
 43 774 221 0 BoyntonHall 2 Waypoint Waypoint;
-44 792 141 0 BoyntonHall 2 Classroom 104A;
+44 792 141 0 BoyntonHall 2 Classroom BH;104A;
 46 762 370 0 BoyntonHall 2 Waypoint Waypoint;
 49 864 347 0 BoyntonHall 2 Waypoint Waypoint;
 50 1006 347 0 BoyntonHall 2 Waypoint Waypoint;
@@ -41,23 +41,23 @@ NODES
 59 699 508 0 BoyntonHall 2 Waypoint Waypoint;
 63 577 481 0 BoyntonHall 2 Waypoint Waypoint;
 64 585 597 0 BoyntonHall 2 Waypoint Waypoint;
-65 611 689 0 BoyntonHall 2 Classroom 108;
-66 522 689 0 BoyntonHall 2 Classroom 109;
+65 611 689 0 BoyntonHall 2 Classroom BH;108;
+66 522 689 0 BoyntonHall 2 Classroom BH;109;
 67 555 597 0 BoyntonHall 2 Waypoint Waypoint;
 68 534 556 0 BoyntonHall 2 Waypoint Waypoint;
-70 577 534 0 BoyntonHall 2 Classroom 107;
+70 577 534 0 BoyntonHall 2 Classroom BH;107;
 71 434 481 0 BoyntonHall 2 Waypoint Waypoint;
 73 262 539 0 BoyntonHall 2 Waypoint Waypoint;
 74 262 631 0 BoyntonHall 2 Waypoint Waypoint;
-75 262 738 0 BoyntonHall 2 Classroom 112;
-76 189 579 0 BoyntonHall 2 Classroom 111;
+75 262 738 0 BoyntonHall 2 Classroom BH;112;
+76 189 579 0 BoyntonHall 2 Classroom BH;111;
 77 115 643 0 BoyntonHall 2 Waypoint Waypoint;
-78 122 754 0 BoyntonHall 2 Classroom 113;
+78 122 754 0 BoyntonHall 2 Classroom BH;113;
 79 71 643 0 BoyntonHall 2 Waypoint Waypoint;
-80 40 738 0 BoyntonHall 2 Classroom 114;
-81 32 481 0 BoyntonHall 2 Classroom 115;
+80 40 738 0 BoyntonHall 2 Classroom BH;114;
+81 32 481 0 BoyntonHall 2 Classroom BH;115;
 82 91 566 0 BoyntonHall 2 Waypoint Waypoint;
-85 1006 579 0 BoyntonHall 2 Classroom 101A;
+85 1006 579 0 BoyntonHall 2 Classroom BH;101A;
 86 1006 233 0 BoyntonHall 2 Waypoint Waypoint;
 87 864 233 0 BoyntonHall 2 Waypoint Waypoint;
 88 864 427 0 BoyntonHall 2 Waypoint Waypoint;
@@ -65,37 +65,37 @@ NODES
 90 657 534 0 BoyntonHall 2 Waypoint Waypoint;
 91 723 481 0 BoyntonHall 2 Waypoint Waypoint;
 92 723 508 0 BoyntonHall 2 Waypoint Waypoint;
-93 762 304 0 BoyntonHall 2 Classroom 104C;
+93 762 304 0 BoyntonHall 2 Classroom BH;104C;
 94 546 248 0 BoyntonHall 2 Waypoint Waypoint;
-95 699 248 0 BoyntonHall 2 Classroom 104;
+95 699 248 0 BoyntonHall 2 Classroom BH;104;
 96 739 198 0 BoyntonHall 2 Waypoint Waypoint;
 97 384 427 0 BoyntonHall 2 Waypoint Waypoint;
 98 817 520 0 BoyntonHall 2 Waypoint Waypoint;
 99 406 667 0 BoyntonHall 2 Waypoint Waypoint;
 100 474 370 0 BoyntonHall 2 Waypoint Waypoint;
 101 288 289 0 BoyntonHall 2 Waypoint Waypoint;
-102 341 289 0 BoyntonHall 2 Classroom 119A;
+102 341 289 0 BoyntonHall 2 Classroom BH;119A;
 103 189 289 0 BoyntonHall 2 Waypoint Waypoint;
-104 122 427 0 BoyntonHall 2 Classroom 110;
+104 122 427 0 BoyntonHall 2 Classroom BH;110;
 106 429 347 0 BoyntonHall 2 Elevator Elevator;
 107 555 689 0 BoyntonHall 2 Waypoint Waypoint;
 108 585 689 0 BoyntonHall 2 Waypoint Waypoint;
 109 678 556 0 BoyntonHall 2 Waypoint Waypoint;
-110 678 597 0 BoyntonHall 2 Classroom 105A;
+110 678 597 0 BoyntonHall 2 Classroom BH;105A;
 111 723 556 0 BoyntonHall 2 Waypoint Waypoint;
-112 728 597 0 BoyntonHall 2 Classroom 105;
-113 806 597 0 BoyntonHall 2 Classroom 103;
-114 371 738 1 BoyntonHall 2 Waypoint Waypoint;
+112 728 597 0 BoyntonHall 2 Classroom BH;105;
+113 806 597 0 BoyntonHall 2 Classroom BH;103;
 115 497 556 0 BoyntonHall 2 Waypoint Waypoint;
-117 896 141 0 BoyntonHall 2 Classroom 102;
-118 1006 141 0 BoyntonHall 2 Classroom 102A;
+117 896 141 0 BoyntonHall 2 Classroom BH;102;
+118 1006 141 0 BoyntonHall 2 Classroom BH;102A;
 119 122 597 0 BoyntonHall 2 Waypoint Waypoint;
 120 91 597 0 BoyntonHall 2 Waypoint Waypoint;
 122 329 526 3 BoyntonHall 2 Stairs STAIRS;
 123 406 526 0 BoyntonHall 2 Waypoint Waypoint00A;
-124 497 526 0 BoyntonHall 2 Classroom 107A;
+124 497 526 0 BoyntonHall 2 Classroom BH;107A;
 125 957 667 4 BoyntonHall 2 Stairs STAIRS;
 126 907 667 0 BoyntonHall 2 Waypoint Waypoint;
+127 406 829 1 BoyntonHall 2 Waypoint Front;Door;
 EDGES
 1 1 2
 2 2 3
@@ -186,7 +186,6 @@ EDGES
 149 98 113
 150 57 113
 151 111 57
-152 99 114
 154 115 68
 155 117 87
 156 118 86
@@ -202,3 +201,4 @@ EDGES
 166 71 123
 167 125 126
 168 126 3
+169 99 127

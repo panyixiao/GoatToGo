@@ -1,5 +1,6 @@
 package gtg_view_subsystem;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -8,10 +9,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  */
@@ -19,9 +25,11 @@ public class Page extends JFrame {
 	private JPanel mainPanel, headerPanel, dragpanel;
 	private JLabel wpiLogoHolder, lblGoattogo;
 	private ImageIcon wpiLogoImage, minimizeBtnImage, closeBtnImage;
-	private JButton minimizeBtn, closeBtn, adminBtn, logoutBtn;
+	private JButton minimizeBtn, closeBtn, adminBtn, logoutBtn, helpBtn;
 	private MainView parent;
 	private int pX, pY;
+	private BufferedReader buffer;
+	private String helpContent = "";
 	/**
 	 * Create the frame.
 	 * @param mainView 
@@ -78,6 +86,27 @@ public class Page extends JFrame {
 		this.closeBtn.setIcon(this.closeBtnImage);
 		this.headerPanel.add(this.closeBtn);
 		
+		String helpText = "<html><u>" + "Help" +"</u></html>";
+		this.helpBtn = new JButton(helpText);
+		this.helpBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 try {
+					 File myFile = new File("ModelFiles"+System.getProperty("file.separator")+ "GoattoGoUserManual.pdf");
+				        Desktop.getDesktop().open(myFile);
+				    } catch (IOException ex) {
+				        // no application registered for PDFs
+				    	showHelpPopup();
+				    }
+			}
+		});
+		this.helpBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.helpBtn.setBackground(null);
+		this.helpBtn.setForeground(Color.WHITE);
+		this.helpBtn.setBounds(1180, 18, 70, 44);
+		this.helpBtn.setBorder(null);
+		this.helpBtn.setFocusPainted(false);
+		headerPanel.add(this.helpBtn);
+
 		String adminText = "<html><u>" + ViewStringLiterals.ADMIN +"</u></html>";
 		this.adminBtn = new JButton(adminText);
 		this.adminBtn.addActionListener(new ActionListener() {
@@ -88,7 +117,7 @@ public class Page extends JFrame {
 		this.adminBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
 		this.adminBtn.setBackground(null);
 		this.adminBtn.setForeground(Color.WHITE);
-		this.adminBtn.setBounds(1180, 18, 70, 44);
+		this.adminBtn.setBounds(1100, 18, 70, 44);
 		this.adminBtn.setBorder(null);
 		this.adminBtn.setFocusPainted(false);
 		headerPanel.add(this.adminBtn);
@@ -103,12 +132,12 @@ public class Page extends JFrame {
 		this.logoutBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));
 		this.logoutBtn.setBackground(null);
 		this.logoutBtn.setForeground(Color.WHITE);
-		this.logoutBtn.setBounds(1180, 18, 70, 44);
+		this.logoutBtn.setBounds(1100, 18, 70, 44);
 		this.logoutBtn.setBorder(null);
 		this.logoutBtn.setFocusPainted(false);
 		this.logoutBtn.setVisible(false);
 		headerPanel.add(this.logoutBtn);
-		
+
 		this.dragpanel = new JPanel();
 		this.dragpanel.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
@@ -123,7 +152,7 @@ public class Page extends JFrame {
                 pY=mouseEvent.getY();
 			}
 		});
-		this.dragpanel.setBounds(0, 0, 1178, 67);
+		this.dragpanel.setBounds(0, 0, 1095, 67);
 		this.dragpanel.setBackground(null);
 		headerPanel.add(this.dragpanel);
 
@@ -155,19 +184,87 @@ public class Page extends JFrame {
 		this.mainPanel.repaint();
 	}
 	
+	/**
+	 * Method hideAdminButton.
+	 * @param none
+	 * This method hides the admin button when the user is already logged in as admin.
+	 */
 	public void hideAdminButton(){
 		this.adminBtn.setVisible(false);
 	}
 	
+	/**
+	 * Method showAdminButton.
+	 * @param none
+	 * This method shows the admin button on all the pages of a normal user.
+	 */
 	public void showAdminButton(){
 		this.adminBtn.setVisible(true);
 	}
 	
+	/**
+	 * Method showLogoutButton.
+	 * @param none
+	 * This method shows the logout button so that admin can logout.
+	 * This button is shown for add/delete map and edit map page.
+	 */
 	public void showLogoutButton(){
 		this.logoutBtn.setVisible(true);
 	}
 	
+	/**
+	 * Method hideLogoutButton.
+	 * @param none
+	 */
 	public void hideLogoutButton(){
 		this.logoutBtn.setVisible(false);
+	}
+	
+	/**
+	 * Method showHelpPopup.
+	 * @param none
+	 * Create the UI to display the help document.
+	 */
+	public void showHelpPopup(){
+		if(helpContent.equals("")){
+			this.helpContent = loadHelpFile();
+			if(this.helpContent.equals("FileNotFound")){
+				JOptionPane.showMessageDialog(this, "Help not available");
+			}else {
+				HelpPage helpPage = new HelpPage(helpContent); 
+				JOptionPane.showMessageDialog(this, helpPage, "HELP", JOptionPane.PLAIN_MESSAGE,null);
+			}
+		} else {
+			HelpPage helpPage = new HelpPage(helpContent); 
+			JOptionPane.showMessageDialog(this, helpPage, "HELP", JOptionPane.PLAIN_MESSAGE,null);
+		}
+	}
+	
+	/**
+	 * Method loadHelpFile.
+	 * @param none
+	 * Loads the help document only for the first time.
+	 */
+	public String loadHelpFile(){
+		String helpFileURL = "ModelFiles"+System.getProperty("file.separator")+ "helpDocument.txt";
+		File file = null;
+		buffer = null;
+		String line;
+		String helpContent = "";
+		try{
+			file = new File(helpFileURL);
+			buffer = new BufferedReader(new FileReader(file));
+			 if (file.exists()) {
+				 while((line = buffer.readLine()) != null){
+					 helpContent += line;
+				 }
+			 }else {
+				 helpContent = "FileNotFound";  
+			 }
+		}catch (Exception ex) {
+			 System.out.println("Unable to load file");
+			 helpContent = "FileNotFound"; 
+		 }
+		return helpContent;
 	}
 }

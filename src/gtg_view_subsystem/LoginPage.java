@@ -103,10 +103,20 @@ public class LoginPage extends JPanel {
 		this.add(backgroundHolder);
 	}
 	
+	/**
+	 * Method showInvalidUsernameDialog.
+	 * @param none
+	 * Displays error popup when username and passoword is not correct
+	 */
 	public void showInvalidUsernameDialog(){
 		JOptionPane.showMessageDialog(null, ViewStringLiterals.USERNAME_PASSWORD_NOT_CORRECT, "INVALID", JOptionPane.ERROR_MESSAGE);
 	}
 
+	/**
+	 * Method reset.
+	 * @param none
+	 * Reset the fields when the page is displayed again.
+	 */
 	public void reset(){
 		this.usernameTextField.setText("");
 		this.passwordTextField.setText("");
