@@ -21,9 +21,14 @@ public class PathSearchController {
 	private Node startNode;
 	private Node endNode;
 	
+	private double pathTotalLength;
+	private int walkingSpeed;
+	
 	public PathSearchController(MainController controlInterface, MapDataController mapDataComponent) {
 		mainController = controlInterface;
 		mapDataController = mapDataComponent;
+		pathTotalLength = 0;
+		walkingSpeed = 4; // Pixel/sec
 	}
 	
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
@@ -86,6 +91,25 @@ public class PathSearchController {
 		return path;
 	}
 	
+	private void calculatePathTotalLength(){
+		pathTotalLength = 0;
+		for(String mapName:resultMapList){
+			double pathPartLength = MultilayerPathcalculationResult.get(mapName).getDistance();
+			pathTotalLength += pathPartLength;
+		}	
+		
+		System.out.println("Total Length: "+pathTotalLength);
+		System.out.println("Estimate walking time: "+(int)(pathTotalLength/walkingSpeed)+ " sec");
+	}
+	
+	public double getPathLength(){	
+		return pathTotalLength;
+	}
+	
+	public int getEstimateTime(){
+		return (int)(pathTotalLength/walkingSpeed);
+	}
+	
 	public String getStartEndNodeDescription(String pointType){
 		String description = null;
 		if(pointType.equals("FROM")){
@@ -113,6 +137,7 @@ public class PathSearchController {
 	
 	public boolean getPathData(){
 		boolean pathCalculated = false;
+		pathTotalLength = 0;
 		resultMapList=new ArrayList<String>();
 		if(startNode!=null && endNode!=null){
 
@@ -131,6 +156,7 @@ public class PathSearchController {
 				System.out.println(mapName);
 				resultMapList.add(mapName);
 			}
+			calculatePathTotalLength();
 		}
 		return pathCalculated;
 	}	
