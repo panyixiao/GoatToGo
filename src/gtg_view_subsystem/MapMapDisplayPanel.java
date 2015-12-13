@@ -109,13 +109,13 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	    menuItem_2.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
 				String buildingName = parent.getMouseSelectedBuilding(mouseClickPoint);
-				System.out.print(buildingName);
+				//System.out.println(buildingName);
 				if(buildingName!=null){
 					String mapURL = parent.getBuildingInfoImageURL(buildingName);
 					String description = parent.getBuildingInfoDescription(buildingName);					 
-		    		String title = "Information of "+buildingName;
+		    		String title = "Info Page";
 					if(mapURL!=null&&description!=null){
-			    		InfoPage infoPage = new InfoPage(mapURL,description); 
+			    		InfoPage infoPage = new InfoPage(buildingName,mapURL,description); 
 			    		JOptionPane.showMessageDialog(null, infoPage, title, JOptionPane.PLAIN_MESSAGE,null);	
 					}
 					else{
