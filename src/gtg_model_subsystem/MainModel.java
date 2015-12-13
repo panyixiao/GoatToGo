@@ -365,7 +365,7 @@ public class MainModel {
 		}
 		return mapTypes;
 	}
-	public LinkedHashMap<String,Path> getMapPaths(){
+	public LinkedHashMap<String,MapPath> getMapPaths(){
 		return this.multiPath.getMapPaths();
 	}
 	/**

@@ -9,19 +9,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MultiPath {
-	private LinkedHashMap<String, Path> mapPaths;
+	private LinkedHashMap<String, MapPath> mapPaths;
 	private Hashtable<String, Map> mapTable;
 	private HashMap<Integer,Node>campusMapNodeList;
 
-	private Path tempPath;
+	private MapPath tempPath;
 	private Node startNode;
 	private Node endNode;
 
 	public MultiPath(){
-		mapPaths = new LinkedHashMap<String, Path>();
+		mapPaths = new LinkedHashMap<String, MapPath>();
 		mapTable = new Hashtable<String, Map>();
 		campusMapNodeList = new HashMap<Integer,Node>();
-		tempPath = new Path(null, null, null);
+		tempPath = new MapPath(null, null, null);
 		startNode = null;
 		endNode = null;
 	}
@@ -44,8 +44,8 @@ public class MultiPath {
 			return multiPathCalcSuccess;
 		}
 		
-		mapPaths = new LinkedHashMap<String, Path>();
-		tempPath = new Path(null, null, null);
+		mapPaths = new LinkedHashMap<String, MapPath>();
+		tempPath = new MapPath(null, null, null);
 		int compareFloors;
 		final String campusMap = "CampusMap";
 		Node tempEndNode;
@@ -58,7 +58,7 @@ public class MultiPath {
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, tempEndNode);
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
 				compareFloors = compareFloorNum(tempStartNode, end);
-				tempPath = new Path(null, null, null);
+				tempPath = new MapPath(null, null, null);
 	
 				multiPathCalcSuccess = calculatePathForFloors(tempStartNode,end, compareFloors);
 				printMapPaths();
@@ -72,7 +72,7 @@ public class MultiPath {
 				tempStartNode = getStartEndNodeForCampusMap(tempEndNode);
 				System.out.println("TEMPSTARTNODE :" + tempStartNode.getBuilding() + " FLOOR: "  + tempStartNode.getFloorNum() + "X: "+ tempStartNode.getX() + "Y: " + tempStartNode.getY());
 
-				tempPath = new Path(null, null, null);
+				tempPath = new MapPath(null, null, null);
 				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, end);
 			
 			}
@@ -96,7 +96,7 @@ public class MultiPath {
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, tempEndNode);
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
 				compareFloors = compareFloorNum(tempStartNode, end);
-				tempPath = new Path(null, null, null);
+				tempPath = new MapPath(null, null, null);
 				multiPathCalcSuccess = calculatePathForFloors(tempStartNode, end, compareFloors);
 
 
@@ -107,7 +107,7 @@ public class MultiPath {
 				System.out.println("TEMPENDNODE B TESTING:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
 				compareFloors = compareFloorNum(start, tempEndNode);
 				multiPathCalcSuccess = calculatePathForFloors(start, tempEndNode, compareFloors);
-				tempPath = new Path(null, null, null);
+				tempPath = new MapPath(null, null, null);
 
 				tempStartNode = getStartEndNodeForCampusMap(tempEndNode);
 				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, end);
@@ -119,7 +119,7 @@ public class MultiPath {
 				tempEndNode = findClosestNodeInBuilding(tempStartNode);
 				compareFloors = compareFloorNum(start, tempEndNode);
 				multiPathCalcSuccess = calculatePathForFloors(start, tempEndNode, compareFloors);
-				tempPath = new Path(null, null, null);
+				tempPath = new MapPath(null, null, null);
 
 				System.out.println("MULTI PATH CALCULATED GOING TO CAMPUS MAP");
 				tempStartNode = getStartEndNodeForCampusMap(tempEndNode);
@@ -128,7 +128,7 @@ public class MultiPath {
 				if(tempEndNode == null) System.out.println("TEMP END NODE WAS NOT FOUND");
 				tempEndNode = getStartEndNodeForCampusMap(tempEndNode);
 				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, tempEndNode);
-				tempPath = new Path(null, null, null);
+				tempPath = new MapPath(null, null, null);
 				
 				System.out.println("MULTI PATH CALCULATED GOING TO END BUILDING MAP");
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
@@ -232,7 +232,7 @@ public class MultiPath {
 			mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionEndNodeforMap);
 			mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionEndEdgeForMap);
 		}
-		tempPath = new Path(null, null, null);
+		tempPath = new MapPath(null, null, null);
 		return pathCampusMapToCampusMapCalculate;
 	}
 	private Edge createTemporaryCampusMapEdge(Node campusMapEndNode){
@@ -365,7 +365,7 @@ public class MultiPath {
 			//System.out.println("New start point" + path.getStartPoint().getBuilding() + " " +path.getStartPoint().getFloorNum() + " " +path.getStartPoint().getFloorNum()
 			//		 + " " +path.getStartPoint().getX() + " " +  path.getStartPoint().getY());
 			calculateSingleFloorPath = singlePathCalculate(startNode.getBuilding() + "_" + currentFloorNumber, tempPath);
-			tempPath = new Path(null, null, null);
+			tempPath = new MapPath(null, null, null);
 			return calculateSingleFloorPath;
 		}
 		
@@ -431,7 +431,7 @@ public class MultiPath {
 		System.out.println("Setting new start point");
 
 		
-		tempPath = new Path(null, null, null);
+		tempPath = new MapPath(null, null, null);
 		return calculateSingleFloorPath;
 	}
 	public Node getStartEndPathNode(List<Node> nodes, int entranceID){
@@ -512,7 +512,7 @@ public class MultiPath {
 	 * Method testDij.
 	 * @param mapName String
 	 */
-	public boolean singlePathCalculate(String mapName, Path tempPath){
+	public boolean singlePathCalculate(String mapName, MapPath tempPath){
 		boolean calculateSuccess = true;
 		//testing for loading of nodes/edges
 		try {
@@ -528,7 +528,7 @@ public class MultiPath {
 	/** Dijkstra algorithim
 	 * @param mapName String
 	 */
-	public boolean runDijkstra(String mapName, Path tempPath){
+	public boolean runDijkstra(String mapName, MapPath tempPath){
 		boolean dijkstraSuccess = true;
 		//Create object instance with temporary dijkstra algorithim
 		System.out.println("START POINT INFO: " +tempPath.getStartPoint().getBuilding() + " " +tempPath.getStartPoint().getFloorNum() + " "+ tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
@@ -580,7 +580,7 @@ public class MultiPath {
 		}
 		return dijkstraSuccess;
 	}
-	public LinkedHashMap<String, Path> getMapPaths(){
+	public LinkedHashMap<String, MapPath> getMapPaths(){
 			return this.mapPaths;
 	}
 	/**

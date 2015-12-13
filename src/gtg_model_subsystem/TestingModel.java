@@ -37,15 +37,15 @@ public class TestingModel {
 		// BH3 TWO NODES TO TEST ON THI S FLOOR TO BH 1 (429 517) (422 615)
 		Node fromNode = test.validatePoint("CampusMap_0",294, 428, " ");
 		test.multiPathCalculate(fromNode, toNode);
-		LinkedHashMap<String,Path> localMapPaths = test.getMapPaths();
-		ArrayList<Path> pathArrayList = new ArrayList<Path>();
+		LinkedHashMap<String,MapPath> localMapPaths = test.getMapPaths();
+		ArrayList<MapPath> pathArrayList = new ArrayList<MapPath>();
 		List<Node> wayPointsList = new ArrayList<Node>();
 		System.out.println("Back to main");
 		for(String mapName: localMapPaths.keySet()){
 			System.out.println(mapName);
 			pathArrayList.add(localMapPaths.get(mapName));
 		}
-		for(Path p: pathArrayList){
+		for(MapPath p: pathArrayList){
 			test.printNodes(p.getWayPoints());
 			System.out.println(p.getDistance());
 			if(p.getWayPoints() == null){

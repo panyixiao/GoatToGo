@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Set;
 
 import gtg_model_subsystem.Node;
-import gtg_model_subsystem.Path;
+import gtg_model_subsystem.MapPath;
 import gtg_view_subsystem.PathData;
 
 public class PathSearchController {
 	private MainController mainController;
 	private MapDataController mapDataController;
 	
-	private LinkedHashMap<String, Path> MultilayerPathcalculationResult;
+	private LinkedHashMap<String, MapPath> MultilayerPathcalculationResult;
 	private ArrayList<String> resultMapList;
-	private Path currentPath;
+	private MapPath currentPath;
 	private Node startNode;
 	private Node endNode;
 	
@@ -121,7 +121,7 @@ public class PathSearchController {
 		return description;
 	}	
 	
-	private ArrayList<Point> convertNodeListIntoPointList(Path inputPath){
+	private ArrayList<Point> convertNodeListIntoPointList(MapPath inputPath){
 		ArrayList<Point> pntPath = new ArrayList<Point>();
 		List<Node> currentNodePath = inputPath.getWayPoints();
 		if(!currentNodePath.isEmpty()){
