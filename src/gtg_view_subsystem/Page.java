@@ -1,5 +1,6 @@
 package gtg_view_subsystem;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 
 /**
  */
@@ -88,7 +90,13 @@ public class Page extends JFrame {
 		this.helpBtn = new JButton(helpText);
 		this.helpBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showHelpPopup();
+				 try {
+					 File myFile = new File("ModelFiles"+System.getProperty("file.separator")+ "GoattoGoUserManual.pdf");
+				        Desktop.getDesktop().open(myFile);
+				    } catch (IOException ex) {
+				        // no application registered for PDFs
+				    	showHelpPopup();
+				    }
 			}
 		});
 		this.helpBtn.setFont(new Font("Meiryo", Font.PLAIN, 20));

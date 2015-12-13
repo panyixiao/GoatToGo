@@ -11,7 +11,7 @@ NODES
 14 473 445 0 BoyntonHall 3 Waypoint Waypoint;
 15 429 445 0 BoyntonHall 3 Waypoint Waypoint;
 17 298 480 0 BoyntonHall 3 Waypoint Waypoint;
-18 271 480 0 BoyntonHall 3 Waypoint Waypoint;
+18 271 480 0 BoyntonHall 3 Vending Vending;
 20 266 749 0 BoyntonHall 3 Waypoint Waypoint;
 22 141 749 0 BoyntonHall 3 Waypoint Waypoint;
 23 16 749 0 BoyntonHall 3 Classroom BH;224;
