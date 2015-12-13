@@ -5,7 +5,6 @@ import java.awt.geom.Point2D;
 
 
 import java.util.List;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -421,6 +420,15 @@ public class MainModel {
 		return 0;
     }
     
+    /**
+     * get the Info Image urls of campus
+     * @return info images of campus map
+     */
+    public HashMap<String,String> getCampusImageUrl()
+    {
+    	HashMap<String,String> imageUrls=mapTable.get("CampusMap_0").getCampusImageUrl();
+    	return imageUrls;
+    }
     
 }
 
