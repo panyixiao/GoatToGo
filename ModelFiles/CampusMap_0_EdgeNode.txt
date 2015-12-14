@@ -121,7 +121,7 @@ NODES
 138 487 214 0 CampusMap 0 Waypoint WayPoint;
 139 487 247 0 CampusMap 0 Waypoint WayPoint;
 140 476 297 0 CampusMap 0 Waypoint WayPoint;
-141 470 370 0 Fountain 0 Waypoint Fountain;
+141 470 370 0 CampusMap 0 Waypoint Fountain;
 142 422 363 0 CampusMap 0 Waypoint WayPoint;
 143 374 357 0 CampusMap 0 Waypoint WayPoint;
 144 364 403 0 CampusMap 0 Waypoint WayPoint;
@@ -240,7 +240,7 @@ NODES
 265 95 554 0 CampusMap 0 Building Morgan;Hall;
 267 544 566 2 BoyntonHall 3 Building Boynton;Hall;
 268 500 561 1 BoyntonHall 3 Building Boynton;Hall;
-269 523 546 3 BoyntonHall 2 Building Boynton;Hall;
+269 523 546 3 BoyntonHall 4 Building Boynton;Hall;
 270 544 535 0 CampusMap 0 Waypoint WayPoint;
 271 451 471 0 CampusMap 0 Waypoint WayPoint;
 272 414 421 0 HigginsLab 0 Building Higgins;Laboratories;
