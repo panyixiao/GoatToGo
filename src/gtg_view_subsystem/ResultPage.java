@@ -262,10 +262,12 @@ public class ResultPage extends JPanel {
 		this.toTextField.setText(parent.getStartEndNodeDescription("TO"));
 		
 		this.totalMapsValue = path.getArrayOfMapNames().size();
-		this.currentMapName.setText(path.getArrayOfMapNames().get(currentMapIndex));
+		this.currentMapName.setText(parent.mapNameToHuman(path.getArrayOfMapNames().get(currentMapIndex)));
+		this.currentMapName.setName(path.getArrayOfMapNames().get(currentMapIndex));
 		this.totalMaps.setText((currentMapIndex + 1) + " / " + this.totalMapsValue);
+		
 
-		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, this.currentMapName.getText(), path.getMapURL());
+		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, this.currentMapName.getName(), path.getMapURL());
 		this.mapPanelHolder.setViewportView(resultMapDisplayPanel);
 		this.currentZoomValue = 1.0;
 		

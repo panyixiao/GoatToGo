@@ -30,7 +30,7 @@ import javax.swing.JComboBox;
 public class MapPage extends JPanel {
 	private JTextField fromTextField, toTextField;
 	private JPanel leftPanel, rightPanel, slidePanel, filteredScrollPanel;
-	private JButton zoomInBtn, zoomOutBtn, getDirectionsBtn, fromClearBtn, toClearBtn, showHideLocationsBtn;
+	private JButton zoomInBtn, zoomOutBtn, getDirectionsBtn, fromClearBtn, toClearBtn, showHideLocationsBtn,returnCampusBrn;
 	private JButton cafeBtn, classroomBtn, elevatorBtn, mensRestroomBtn, womensRestroomBtn, officeBtn, vendingBtn, parkingLotBtn, stairsBtn, doneBtn, buildingBtn, showAllFilterPointBtn;
 	private ImageIcon zoomInBtnImage, zoomOutBtnImage, getDirectionsBtnImage, fromClearBtnImage, toClearBtnImage;
 	private ImageIcon cafeBtnImage, classroomBtnImage, elevatorBtnImage, mensRestroomBtnImage, womensRestroomBtnImage, officeBtnImage, vendingBtnImage, parkingLotBtnImage, stairsBtnImage, buildingBtnImage;
@@ -52,6 +52,7 @@ public class MapPage extends JPanel {
 	private String currentDisplayedMap = "";
 	private String mapURL = "";
 	private Boolean isCampusMap = false;
+	private ArrayList<String> systemMapName, displayMapName;
 	/**
 	 * Create the panel.
 	 * @param mainView 
@@ -156,7 +157,9 @@ public class MapPage extends JPanel {
 		this.comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				 JComboBox cb = (JComboBox)ae.getSource();
-			     updateMapList((String)cb.getSelectedItem());
+				 String human = (String)cb.getSelectedItem();
+				 String system = getSelectedSystem(human);
+			     updateMapList(system);
 			}
 		});
 		this.comboBox.setBackground(null);
@@ -228,6 +231,22 @@ public class MapPage extends JPanel {
 		this.showHideLocationsBtn.setBounds(63, 550, 210, 42);
 		this.rightPanel.add(this.showHideLocationsBtn);
 
+		this.returnCampusBrn = new JButton("Return to Campus");
+		this.returnCampusBrn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				 updateMapList("Campus_0");
+			}
+		});
+		this.returnCampusBrn.setBorder(BorderFactory.createLineBorder(new Color(0xc30e2d), 3));
+		
+		this.returnCampusBrn.setBackground(null);
+		this.returnCampusBrn.setFont(new Font("Meiryo", Font.PLAIN, 20));
+		this.returnCampusBrn.setForeground(new Color(204, 0, 0));
+		this.returnCampusBrn.setFocusPainted(false);
+		this.returnCampusBrn.setBounds(63, 600, 210, 42);
+		this.rightPanel.add(this.returnCampusBrn);
+		
+		
 		this.fromTextField = new JTextField();
 		this.fromTextField.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.fromTextField.setEditable(false);
@@ -533,6 +552,7 @@ public class MapPage extends JPanel {
 			this.mapPanelHolder.setVisible(true);
 			this.currentZoomValue = 1.0;
 		}
+		this.returnCampusBrn.setVisible(!this.isCampusMap);
 	}
 
 	/**
@@ -541,6 +561,8 @@ public class MapPage extends JPanel {
 	 * This method updates the mapList when a building is selected in the campus map.
 	 */
 	public void displayDropDownList(ArrayList<String> mapList){
+		this.systemMapName = mapList;
+		this.displayMapName = AllMapNamesToHuman(mapList);
 		this.currentDisplayedMap = mapList.get(0);
 		
 		int pos = this.currentDisplayedMap.toLowerCase().indexOf(("campus").toLowerCase());
@@ -552,7 +574,7 @@ public class MapPage extends JPanel {
 			this.dropDownLabel.setText(ViewStringLiterals.SELECT_FLOOR + ": ");
 		}
 
-		DefaultComboBoxModel model = new DefaultComboBoxModel(mapList.toArray());
+		DefaultComboBoxModel model = new DefaultComboBoxModel(this.displayMapName.toArray());
 		this.comboBox.setModel(model);
 		
 		this.setFilterButtons();
@@ -875,4 +897,19 @@ public class MapPage extends JPanel {
 		pointSelected.setBackground(Color.LIGHT_GRAY);
 		pointSelected.setOpaque(true);
 	}
+	public ArrayList<String> AllMapNamesToHuman (ArrayList<String> mapName){
+		ArrayList<String> humanName = new ArrayList<String>();
+		
+	for(int i = 0; i<mapName.size(); i++){
+		
+		humanName.add(parent.mapNameToHuman(mapName.get(i)));
+	}
+		return humanName;
+	}
+	public String getSelectedSystem(String s){
+		int i = this.displayMapName.lastIndexOf(s);
+		return this.systemMapName.get(i);
+	}
 }
+
+
