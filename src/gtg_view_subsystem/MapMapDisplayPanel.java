@@ -137,11 +137,11 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-    	if(this.selectedPoints.getStartMapName() == this.map){
+    	if(this.selectedPoints.getStartMapName().equals(this.map)){
     		g2.drawImage(this.locationImage, (int)this.selectedPoints.getStartX() - 10, (int)this.selectedPoints.getStartY() - 25, 20, 25, null);
     	}
     	
-    	if(this.selectedPoints.getEndMapName() == this.map){
+    	if(this.selectedPoints.getEndMapName().equals(this.map)){
     		g2.drawImage(this.locationEndImage, (int)this.selectedPoints.getEndX() - 10, (int)this.selectedPoints.getEndY() - 25, 20, 25, null);
     	}
     	
@@ -310,16 +310,16 @@ public class MapMapDisplayPanel extends MapDisplayPanel{
 	 * @param location String
 	 */
 	public void deletePoint(String location) {
-		if(location == ViewStringLiterals.FROM){
-			if(this.selectedPoints.getStartMapName() == this.map){
+		if(location.equals(ViewStringLiterals.FROM)){
+			if(this.selectedPoints.getStartMapName().equals(this.map)){
 				this.selectedPoints.resetStart();
 				this.revalidate();
 				this.repaint();
 			} else {
 				this.selectedPoints.resetStart();
 			}
-		} else if(location == ViewStringLiterals.TO){
-			if(this.selectedPoints.getEndMapName() == this.map){
+		} else if(location.equals(ViewStringLiterals.TO)){
+			if(this.selectedPoints.getEndMapName().equals(this.map)){
 				this.selectedPoints.resetEnd();
 				this.revalidate();
 				this.repaint();
