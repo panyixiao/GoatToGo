@@ -37,7 +37,6 @@ public class MainModel {
     
 	/**
 	 * Load maps from master map text file and store into table of maps
-	
 	 * @return true if load and store the map table successfully
 	 * 		   false if maps does not exist */
 	public boolean loadMapLists()
@@ -199,12 +198,12 @@ public class MainModel {
 	 *         false if calculation fails 
 	 */
 	public boolean multiPathCalculate(Node start, Node end){
-		boolean multiPathCalculateSucess = true;
+		boolean multiPathCalculateSuccess = true;
 		System.out.println(start.getBuilding() + start.getFloorNum());
 		System.out.println(end.getBuilding() +  end.getFloorNum());
 		multiPath = new MultiPath();
-		multiPathCalculateSucess = multiPath.multiPathCalculate(start, end, mapTable);
-		return multiPathCalculateSucess;
+		multiPathCalculateSuccess = multiPath.multiPathCalculate(start, end, mapTable);
+		return multiPathCalculateSuccess;
 	}
 	
 	//private calculatePathDistance(LinkedList<Node> wayPoints){

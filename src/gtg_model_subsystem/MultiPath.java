@@ -53,6 +53,7 @@ public class MultiPath {
 		//IF the two buildings for the nodes are not equal THEN
 		if(!start.getBuilding().equals(end.getBuilding())){
 			if(start.getBuilding().contains(campusMap) && !onCampusMap(end)){
+				System.out.println("ITS HAPPENING HERE");
 				tempEndNode = getStartEndNodeForCampusMap(end);
 				//Next compare the two floors for the given nodes
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, tempEndNode);
@@ -63,6 +64,7 @@ public class MultiPath {
 				multiPathCalcSuccess = calculatePathForFloors(tempStartNode,end, compareFloors);
 				printMapPaths();
 			}else if(end.getBuilding().contains(campusMap) && !onCampusMap(start)){
+				System.out.println("NO ITS HERE1");
 				tempEndNode = getStartEndNodeForCampusMap(start);
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
 				compareFloors = compareFloorNum(start, tempEndNode);
@@ -79,18 +81,22 @@ public class MultiPath {
 			//Edge case where the start point is on campus map and an end point is selected on building from
 			//campus map view
 			else if(start.getBuilding().contains(campusMap) && onCampusMap(end)){
+				System.out.println("NO ITS HERe2");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
 			//Edge case where the end point is on campusMap and start point is a selected building on campus 
 			//map view
 			else if(end.getBuilding().contains(campusMap) && onCampusMap(start)){
+				System.out.println("NO ITS HERE3");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
 			//Edge case where two selected points are on buildings but in campus map view
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && onCampusMap(start) && onCampusMap(end)){
+				System.out.println("NO ITS HERE4");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && onCampusMap(start) && !onCampusMap(end)){
+				System.out.println("NO ITS HERE5");
 				tempEndNode = getStartEndNodeForCampusMap(end);
 				System.out.println("TEMPENDNODE B:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, tempEndNode);
@@ -102,6 +108,7 @@ public class MultiPath {
 
 			}
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && !onCampusMap(start) && onCampusMap(end)){
+				System.out.println("NO ITS HERE6");
 				tempStartNode = getStartEndNodeForCampusMap(start);
 				tempEndNode = findClosestNodeInBuilding(tempStartNode);
 				System.out.println("TEMPENDNODE B TESTING:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
@@ -114,6 +121,7 @@ public class MultiPath {
 			}
 			//Edge case where two points are not on campus map but in seperate buildings
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && !onCampusMap(start) && !onCampusMap(end)){
+				System.out.println("NO ITS HERE7");
 				System.out.println("HERE WE GO");
 				tempStartNode = getStartEndNodeForCampusMap(start);
 				tempEndNode = findClosestNodeInBuilding(tempStartNode);
@@ -140,20 +148,25 @@ public class MultiPath {
 		if(start.getBuilding().equals(end.getBuilding())){
 			System.out.println("The buildings are the same");
 			Node exchangeNode = null;
-			if(onCampusMap(start)  && start.getFloorNum() != 0){
+			if((onCampusMap(start)  && start.getFloorNum() != 0) && (!onCampusMap(end) && end.getFloorNum() != 0)){
 				//Edge case in which the start point in on campus map but still for same building
 				System.out.println("Start is on campus");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start,start);
 				exchangeNode = findClosestNodeInBuilding(start);
 				multiPathCalcSuccess = sameBuildingCalculation(exchangeNode, end);
-				printMapPaths();
 			}
-			else if(onCampusMap(end) && end.getFloorNum() != 0){
+			else if((onCampusMap(end) && end.getFloorNum() != 0)  && (!onCampusMap(start) && start.getFloorNum() != 0)){
+				System.out.println("End is on campus map");
 				//Edge case in which the end node is on campus map but still technically with same building
-				multiPathCalcSuccess = pathCampusMapToCampusMap(end,end);
 				exchangeNode = findClosestNodeInBuilding(end);
 				multiPathCalcSuccess = sameBuildingCalculation(start, exchangeNode);
-			}else{
+				multiPathCalcSuccess = pathCampusMapToCampusMap(end,end);		
+			}
+			else if((onCampusMap(end) && end.getFloorNum() != 0)  && (onCampusMap(start) && start.getFloorNum() != 0)){
+				multiPathCalcSuccess = pathCampusMapToCampusMap(start,end);
+			}
+			else{
+				System.out.println("They are both in same building but not on campus map");
 				multiPathCalcSuccess = sameBuildingCalculation(start,end);
 			}
 			
@@ -185,17 +198,18 @@ public class MultiPath {
 		Node additionEndNodeforMap = null;
 		Edge additionEndEdgeForMap = null;
 		
-		if(start.equals(end)){
-			additionStartNodeforMap = createTemporaryCampusMapNode(start);
-			additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
-			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
-			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionStartEdgeforMap);
-			pathCampusMapToCampusMapCalculate = calculatePathForFloors(additionStartNodeforMap, end, 0);
-			mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionStartNodeforMap);
-			mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionStartEdgeforMap);
+		//if(start.equals(end)){
+			//System.out.println("START EQUALS END");
+			//additionStartNodeforMap = createTemporaryCampusMapNode(start);
+			//additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
+			//mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
+			//mapTable.get("CampusMap_0").getGraph().getEdges().add(additionStartEdgeforMap);
+			//pathCampusMapToCampusMapCalculate = calculatePathForFloors(additionStartNodeforMap, end, 0);
+			//mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionStartNodeforMap);
+			//mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionStartEdgeforMap);
 
-		}
-		else if(!start.getBuilding().contains("CampusMap")){
+		//}
+		if(!start.getBuilding().contains("CampusMap")){
 			additionStartNodeforMap = createTemporaryCampusMapNode(start);
 			additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
 			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
@@ -219,11 +233,16 @@ public class MultiPath {
 		}
 		else{
 			additionStartNodeforMap = createTemporaryCampusMapNode(start);
+			System.out.println("ADDIDTINON  START NODE FOR MAP GOOD");
 			additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
+			System.out.println("ADDIDTINON  START EDGE FOR MAP GOOD");
 			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
 			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionStartEdgeforMap);
 			additionEndNodeforMap = createTemporaryCampusMapNode(end);
+			System.out.println("ADDIDTINON  END NODE FOR MAP GOOD");
+
 			additionEndEdgeForMap = createTemporaryCampusMapEdge(additionEndNodeforMap);
+			System.out.println("ADDIDTINON  END EDGE FOR MAP GOOD");
 			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionEndNodeforMap);
 			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionEndEdgeForMap);
 			pathCampusMapToCampusMapCalculate = calculatePathForFloors(additionStartNodeforMap, additionEndNodeforMap, 0);
@@ -269,7 +288,6 @@ public class MultiPath {
 							break;
 				}
 			}
-			System.out.println("Temporary path node was not able to be craeted");
 			return temporaryCampusMapNode;
 	}
 	private boolean onCampusMap(Node end){
