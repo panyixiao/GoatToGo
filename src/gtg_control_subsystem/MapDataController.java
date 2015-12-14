@@ -19,7 +19,6 @@ public class MapDataController {
 	private ArrayList<String> listOfMapName = new ArrayList<String>();
 	private ArrayList<String> listOfMapURL = new ArrayList<String>();
 	
-	private ArrayList<String> listOfMapNameForShow = new ArrayList<String>();
 	private ArrayList<String> listOfMapNameForReturn = new ArrayList<String>();
 	private ArrayList<String> listOfMapURLForReturn = new ArrayList<String>();
 	
