@@ -39,8 +39,8 @@ public class MainController{
 	 * 		  Map Page interface
 	 * 
 	 *******************************/
-	public ArrayList<String> getMapList(String mapName){
-		return mapDataController.getMapList(mapName);
+	public ArrayList<String> getMapList(String mapRequestCommand){
+		return mapDataController.getMapList(mapRequestCommand);
 	}
 	
 	public String getMapURL(String mapName){
@@ -78,17 +78,6 @@ public class MainController{
 		return mapDataController.getBuildingInfoDescription(buildingName);		
 	}
 	
-	/* Not used right now,correspond to getMapList() method. Get the
-	 * 
-	 * 1 Building List
-	 * 2 Floor List
-	 * 
-	 * From ModelSubsystem*/
-	public ArrayList<String> getMapData(String mapName){
-		ArrayList<String> mapData= new ArrayList<String>();
-		mapData = mapModel.getArrayOfMapNames();
-		return mapData;
-	}
 	
 	/******************************
 	 * 
@@ -96,6 +85,7 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
+		mapName = mapDataController.translateMapNameFromString2Num(mapName);
 		return pathSearchController.setTaskPnt(taskPnt, pntType, mapName);
 	}
 	
@@ -119,6 +109,13 @@ public class MainController{
 		return pathSearchController.getEstimateTime();
 	}
 	
+	public String translateMapNameFromNum2String(String mapName){
+		return mapDataController.translateMapNameFromNum2String(mapName);
+	}
+	public String translateMapNameFromString2Num(String mapName){
+		return mapDataController.translateMapNameFromString2Num(mapName);
+	}
+	
 	/******************************
 	 * 
 	 * 		  Admin Control
@@ -135,10 +132,8 @@ public class MainController{
 	 * 
 	 *******************************/
 	public Boolean addNewMap(String mapName, String mapImageURL, String mapType){
+		mapName = mapDataController.translateMapNameFromString2Num(mapName);
 		boolean mapSaved = false;
-		System.out.println(mapName);
-		System.out.println(mapImageURL);
-		System.out.println(mapType);
 		try{
 			if(mapDataController.mapIsInTheOldList(mapName)){
 				System.out.println("Map already in the old list");
@@ -149,11 +144,7 @@ public class MainController{
 			if(markPos>0){
 				mapImageURL = mapImageURL.substring(markPos);
 			}		
-			
-			System.out.println(mapName);
-			System.out.println(mapImageURL);
-			System.out.println(mapType);
-			
+						
 			if(mapModel.saveNewMap(mapName, mapDataController.changeBackSeparator(mapImageURL), mapType)){
 				mapDataController.addNewMapToList(mapName);
 				mapDataController.addNewMapURLToList(mapImageURL);
@@ -168,6 +159,7 @@ public class MainController{
 	}
 	
 	public Boolean deleteMap(String mapName){
+		mapName = mapDataController.translateMapNameFromString2Num(mapName);
 		boolean mapDeleted = false;
 		try{
 			if(mapModel.deleteMap(mapName)){
@@ -182,6 +174,7 @@ public class MainController{
 	}
 
 	public Boolean createCoordinateGraph(String mapName){
+		mapName = mapDataController.translateMapNameFromString2Num(mapName);
 		Boolean success = false;
 		try{
 			List<Node> nodeToBeSaved =  mapDataController.getNodeList();
