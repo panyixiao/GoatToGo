@@ -19,7 +19,6 @@ public class MapDataController {
 	private ArrayList<String> listOfMapName = new ArrayList<String>();
 	private ArrayList<String> listOfMapURL = new ArrayList<String>();
 	
-	private ArrayList<String> listOfMapNameForShow = new ArrayList<String>();
 	private ArrayList<String> listOfMapNameForReturn = new ArrayList<String>();
 	private ArrayList<String> listOfMapURLForReturn = new ArrayList<String>();
 	
@@ -388,17 +387,17 @@ public class MapDataController {
 		this.edgeList.clear();
 		this.tempPntList.clear();
 		this.tempEdgeList.clear();		
-		if(mainController.mapModel.loadFiles(mapName)){
+		try{
 			LoadInNodeList(mapName);
-			LoadInEdgeList(mapName);	 
+			LoadInEdgeList(mapName);
 			transferNodeToPnt2D(this.nodeList);
 			transferEdgeToPnt2D(this.edgeList);
 			return true;
-		}
-		else{
-			System.out.println("Loading File failed");
+		}catch(Exception e){
+			System.out.println(e.toString());
 			return false;
 		}
+
 	}
 	
 	private void LoadInNodeList(String mapName){
