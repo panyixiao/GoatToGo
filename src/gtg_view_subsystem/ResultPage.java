@@ -59,16 +59,18 @@ public class ResultPage extends JPanel {
 		this.noPathAvailable = new JLabel(ViewStringLiterals.NO_PATH_AVAILABLE);
 		this.noPathAvailable.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.noPathAvailable.setForeground(new Color(0x5b1010));
-		this.noPathAvailable.setBounds(350, 310, 250, 30);
+		this.noPathAvailable.setBounds(350, 310, 522, 30);
 		this.noPathAvailable.setVisible(false);
 		this.layeredPane.add(this.noPathAvailable, new Integer(1));
 
 		this.zoomInBtn = new JButton();
 		zoomInBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(currentZoomValue + zoomFactor <= MAX_ZOOM_IN){
-					currentZoomValue = currentZoomValue + zoomFactor;
-					resultMapDisplayPanel.setScale(currentZoomValue);
+				if(resultMapDisplayPanel != null){
+					if(currentZoomValue + zoomFactor <= MAX_ZOOM_IN){
+						currentZoomValue = currentZoomValue + zoomFactor;
+						resultMapDisplayPanel.setScale(currentZoomValue);
+					}
 				}
 			}
 		});
@@ -82,9 +84,11 @@ public class ResultPage extends JPanel {
 		this.zoomOutBtn = new JButton();
 		zoomOutBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(currentZoomValue - zoomFactor >= MAX_ZOOM_OUT){
-					currentZoomValue = currentZoomValue - zoomFactor;
-					resultMapDisplayPanel.setScale(currentZoomValue);
+				if(resultMapDisplayPanel != null){
+					if(currentZoomValue - zoomFactor >= MAX_ZOOM_OUT){
+						currentZoomValue = currentZoomValue - zoomFactor;
+						resultMapDisplayPanel.setScale(currentZoomValue);
+					}
 				}
 			}
 		});

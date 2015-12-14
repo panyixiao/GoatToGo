@@ -144,7 +144,7 @@ public class MainView {
 			this.resultPage.displayPath(path, 0);
 			this.resultPage.displayTimeDistance(pathLength, pathTime);
 		} else {
-			//this.resultPage.showErrorPopup();
+			this.resultPage.pathNotAvailable();
 		}
 	}
 
