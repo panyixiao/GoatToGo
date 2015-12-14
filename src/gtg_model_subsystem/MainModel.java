@@ -200,6 +200,8 @@ public class MainModel {
 	 */
 	public boolean multiPathCalculate(Node start, Node end){
 		boolean multiPathCalculateSucess = true;
+		System.out.println(start.getBuilding() + start.getFloorNum());
+		System.out.println(end.getBuilding() +  end.getFloorNum());
 		multiPath = new MultiPath();
 		multiPathCalculateSucess = multiPath.multiPathCalculate(start, end, mapTable);
 		return multiPathCalculateSucess;
