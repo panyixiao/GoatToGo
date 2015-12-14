@@ -22,13 +22,13 @@ public class PathSearchController {
 	private Node endNode;
 	
 	private double pathTotalLength;
-	private int walkingSpeed;
+	private double walkingSpeed;
 	
 	public PathSearchController(MainController controlInterface, MapDataController mapDataComponent) {
 		mainController = controlInterface;
 		mapDataController = mapDataComponent;
 		pathTotalLength = 0;
-		walkingSpeed = 2; // Pixel/sec
+		walkingSpeed = 1.5; // Pixel/sec
 	}
 	
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
@@ -99,7 +99,7 @@ public class PathSearchController {
 			double pathPartLength = MultilayerPathcalculationResult.get(mapName).getDistance();
 			String buildingName = mapName.substring(0, mapName.lastIndexOf("_"));
 			if(!buildingName.equals("CampusMap")){
-				pathPartLength /=5;
+				pathPartLength /=10;
 			}
 			
 			pathTotalLength += pathPartLength;
