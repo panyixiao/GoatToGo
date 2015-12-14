@@ -169,6 +169,7 @@ public class FileProcessing implements ProcessingSystemType {
 			return true;
 		}else{
 			try{
+				System.out.println("Reading Instead");
 				//file exists,begin reading
 				buffer = new BufferedReader(new FileReader(file));
 				//read line from file
