@@ -112,9 +112,15 @@ public class ResultMapDisplayPanel extends MapDisplayPanel{
 	 * @param arrayOfPoints ArrayList<Point>
 	 */
 	public void displayPoints(ArrayList<Point> arrayOfPoints) {
-		System.out.println("inside display Points");
-		// TODO Auto-generated method stub
 		pathPoints = arrayOfPoints;
+		if(pathPoints.size() == 1){
+			int startX = pathPoints.get(0).x;
+			int startY = pathPoints.get(0).y;
+			Point tempPoint = new Point();
+			tempPoint.x = startX;
+			tempPoint.y = startY + 10;
+			pathPoints.add(tempPoint);
+		}
 		revalidate();
 		repaint();
 		
