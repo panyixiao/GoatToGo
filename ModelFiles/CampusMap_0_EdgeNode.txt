@@ -252,6 +252,7 @@ NODES
 278 645 471 0 CampusMap 0 Waypoint WayPoint;
 279 487 391 1 ProjectCenter 3 Building ProjectCenter;
 280 667 277 5 FullerLab 2 Building FullerLab;
+281 677 302 0 CampusMap 0 Waypoint NULL;
 EDGES
 1 70 71
 2 71 72
@@ -550,3 +551,6 @@ EDGES
 353 183 141
 354 279 141
 355 135 280
+356 280 281
+357 281 6
+358 281 174

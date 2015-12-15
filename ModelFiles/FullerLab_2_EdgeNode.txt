@@ -73,8 +73,11 @@ NODES
 74 355 809 0 FullerLab 2 Office FL;B16;
 75 202 804 0 FullerLab 2 Waypoint Waypoint;
 76 202 584 0 FullerLab 2 Office FL;B17;
-77 719 506 0 FullerLab 2 Office FL;B34;
+77 719 506 0 FullerLab 2 Waypoint NULL;
 78 637 784 0 FullerLab 2 Office FL;B11;
+79 606 548 7 FullerLab 2 Waypoint waypoint;
+80 662 453 0 FullerLab 2 Classroom Upper;Fuller;
+81 676 481 0 FullerLab 2 Waypoint NULL;
 EDGES
 1 1 2
 2 2 3
@@ -161,3 +164,6 @@ EDGES
 87 78 71
 88 78 72
 89 54 22
+90 79 37
+91 80 81
+92 81 77

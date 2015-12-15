@@ -94,6 +94,15 @@ NODES
 97 409 830 0 FullerLab 3 Waypoint Waypoint;
 98 581 748 0 FullerLab 3 Office FL;113;
 99 705 635 0 FullerLab 0 Vending Vending;
+100 425 595 6 FullerLab 3 Waypoint WayPoint;
+101 517 595 0 FullerLab 3 Waypoint NULL;
+102 525 562 0 FullerLab 3 Waypoint NULL;
+103 441 562 0 FullerLab 3 Waypoint NULL;
+104 601 595 7 FullerLab 3 Waypoint NULL;
+105 500 496 0 FullerLab 3 Classroom Upper;Fuller;
+106 607 489 0 FullerLab 3 Waypoint NULL;
+107 581 535 0 FullerLab 3 Waypoint Waypoint;
+108 557 550 0 FullerLab 3 Waypoint NULL;
 EDGES
 1 1 2
 2 2 3
@@ -193,3 +202,12 @@ EDGES
 98 98 25
 99 19 99
 100 99 20
+101 100 101
+102 101 102
+103 100 45
+104 103 100
+105 104 101
+107 105 103
+108 107 106
+109 107 108
+110 108 102
