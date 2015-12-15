@@ -160,7 +160,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 				boolean createNewPoint = true;
 				// Get original Data
 				if(NodeID>0){
-					System.out.println("Get Original Data of current point");
+					//System.out.println("Get Original Data of current point");
 					createNewPoint = false;
 					String Origin_BuildingName = adminViewPageHandle.getNodeBuildingName(NodeID);
 					int Origin_FloorNum = adminViewPageHandle.getNodeFloorNum(NodeID);
@@ -229,11 +229,11 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 					else{
 						adminViewPageHandle.EditNode(NodeID, newBuilding,floorNum, newEnterenceId, newType, newDescription);						
 					}
-					System.out.println("Building: " + this.building);
-					System.out.println("Floor: " + this.floor);
-					System.out.println("Description: " + description.getText());
-					System.out.println("Exit ID: " + entranceId.getText());
-					System.out.println("Type: " + newType);
+					//System.out.println("Building: " + this.building);
+					//System.out.println("Floor: " + this.floor);
+					//System.out.println("Description: " + description.getText());
+					//System.out.println("Exit ID: " + entranceId.getText());
+					//System.out.println("Type: " + newType);
 				}
 				break;
 
@@ -286,7 +286,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 				break;
 
 			default:
-				System.out.println("No mode selected, Please select a mode");
+				//System.out.println("No mode selected, Please select a mode");
 			}
 
 		} else if (me.getButton() == MouseEvent.BUTTON3) {
@@ -329,7 +329,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 				this.newStart = new Point(0, 0);
 				this.newEnd = new Point(0, 0);
 			} else {
-				System.out.println("Please select a start Point first!");
+				//System.out.println("Please select a start Point first!");
 			}
 		}
 		revalidate();
@@ -346,7 +346,7 @@ public class AdminMapDisplayPanel extends MapDisplayPanel {
 		Point result = adminViewPageHandle.checkPoint(p);
 		if (result.getX() != 0) {
 			this.newStart = result;
-			System.out.println("New start" + this.newStart);
+			//System.out.println("New start" + this.newStart);
 		}
 	}
 

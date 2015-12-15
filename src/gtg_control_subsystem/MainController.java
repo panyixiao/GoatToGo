@@ -136,7 +136,7 @@ public class MainController{
 		boolean mapSaved = false;
 		try{
 			if(mapDataController.mapIsInTheOldList(mapName)){
-				System.out.println("Map already in the old list");
+				//System.out.println("Map already in the old list");
 				return mapSaved;
 			}
 			
@@ -153,7 +153,7 @@ public class MainController{
 			}
 		}
 		catch(IOException e){
-			System.out.println(e.toString());
+			//System.out.println(e.toString());
 		}
 		
 		return mapSaved;
@@ -169,7 +169,7 @@ public class MainController{
 			}
 		}
 		catch(Exception e){
-			System.out.println(e.toString());	
+			//System.out.println(e.toString());	
 		}
 		return mapDeleted;
 	}
@@ -187,7 +187,7 @@ public class MainController{
 		}
 		catch(Exception e){
 			success = false;
-			System.out.println(e.toString());
+			//System.out.println(e.toString());
 		}
 		return success;
 	}

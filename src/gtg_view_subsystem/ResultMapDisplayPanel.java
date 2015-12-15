@@ -83,10 +83,10 @@ public class ResultMapDisplayPanel extends MapDisplayPanel{
             this.locationImage = ImageIO.read(new File(ImageURLS.LOCATION_IMAGE));
         }
         catch(MalformedURLException mue) {
-            System.out.println("URL trouble: " + mue.getMessage());
+            //System.out.println("URL trouble: " + mue.getMessage());
         }
         catch(IOException ioe) {
-        	System.out.println("read trouble: " + ioe.getMessage());
+        	//System.out.println("read trouble: " + ioe.getMessage());
         }
 	}
 
@@ -100,10 +100,10 @@ public class ResultMapDisplayPanel extends MapDisplayPanel{
             this.locationEndImage = ImageIO.read(new File(ImageURLS.LOCATION_END_ICON));
         }
         catch(MalformedURLException mue) {
-            System.out.println("URL trouble: " + mue.getMessage());
+            //System.out.println("URL trouble: " + mue.getMessage());
         }
         catch(IOException ioe) {
-        	System.out.println("read trouble: " + ioe.getMessage());
+        	//System.out.println("read trouble: " + ioe.getMessage());
         }
 	}
 
