@@ -379,8 +379,8 @@ public class MultiPath {
 	private boolean calculateSingleFloorPath(Node start, Node end, int currentFloorNumber, int nextFloorNumber){
 		boolean calculateSingleFloorPath = true;
 		ArrayList<Integer> tempEntIdListStart = new ArrayList<Integer>();
-		ArrayList<Integer>  tempEntIdListEnd = new ArrayList<Integer>();
-		HashSet<Integer>	sameEntIdList = new HashSet<Integer>();
+		ArrayList<Integer> tempEntIdListEnd = new ArrayList<Integer>();
+		HashSet<Integer> sameEntIdList = new HashSet<Integer>();
 		tempEntIdListStart = getFloorPathIDs(start.getBuilding(),currentFloorNumber);
 		
 		if(currentFloorNumber == nextFloorNumber){
