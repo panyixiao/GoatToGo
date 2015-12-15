@@ -179,7 +179,7 @@ public class ResultPage extends JPanel {
 				parent.getNextPrevPath(index);
 			}
 		});
-		this.previousBtn.setBounds(15, 300, 58, 90);
+		this.previousBtn.setBounds(10, 300, 58, 90);
 		this.previousBtn.setContentAreaFilled(false);
 		this.previousBtn.setBorder(null);
 		this.previousBtnImage = new ImageIcon(ImageURLS.PREVIOUS_BUTTON);
@@ -190,7 +190,7 @@ public class ResultPage extends JPanel {
 		this.currentMapName.setBackground(null);
 		this.currentMapName.setEditable(false);
 		this.currentMapName.setFont(new Font("Meiryo", Font.PLAIN, 20));
-		this.currentMapName.setBounds(75, 320, 255, 37);
+		this.currentMapName.setBounds(70, 320, 260, 37);
 		this.currentMapName.setForeground(new Color(0x5b1010));
 		this.currentMapName.setBorder(null);
 		this.currentMapName.setHorizontalAlignment(JTextField.CENTER);
@@ -272,6 +272,7 @@ public class ResultPage extends JPanel {
 		
 
 		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, this.currentMapName.getName(), path.getMapURL());
+		this.resultMapDisplayPanel.setVisible(true);
 		this.mapPanelHolder.setViewportView(resultMapDisplayPanel);
 		this.currentZoomValue = 1.0;
 		
@@ -309,6 +310,7 @@ public class ResultPage extends JPanel {
 		this.totalTimeValue.setText("");
 		this.nextBtn.setEnabled(false);
 		this.previousBtn.setEnabled(false);
+		this.resultMapDisplayPanel.setVisible(false);
 	}
 	
 	/*

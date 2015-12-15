@@ -103,7 +103,11 @@ public class AddDeleteMapPage extends JPanel{
 		this.deleteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(mapList.getSelectedIndex() != -1){
-					parent.deleteMap(mapList.getSelectedValue().toString());
+					int result = JOptionPane.showConfirmDialog(null, ViewStringLiterals.DELETE_MAP_CONFIRM_MESSAGE + " " + mapList.getSelectedValue().toString() + "?",ViewStringLiterals.DELETE_MAP,
+							JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION){
+						parent.deleteMap(mapList.getSelectedValue().toString());
+					}
 				} else {
 					JOptionPane.showMessageDialog(((JButton)e.getSource()).getParent(), ViewStringLiterals.MAP_NOT_SELECTED, "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
@@ -326,6 +330,7 @@ public class AddDeleteMapPage extends JPanel{
 		this.mapList.setListData(listofMaps.toArray());
 		this.mapListscrollPane.revalidate();
 		this.mapListscrollPane.repaint();
+		this.mapPreviewHolder.setIcon(null);
 	}
 
 	/*
