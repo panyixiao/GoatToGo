@@ -15,7 +15,7 @@ NODES
 23 240 325 0 BoyntonHall 2 Classroom BH;015;
 26 373 291 0 BoyntonHall 2 Waypoint Waypoint;
 27 385 308 0 BoyntonHall 2 Waypoint Waypoint;
-28 409 374 0 BoyntonHall 2 Elevator ELEVATOR;
+28 409 374 0 BoyntonHall 2 Elevator Elevator;
 29 480 213 0 BoyntonHall 2 Classroom BH;009;
 30 516 279 0 BoyntonHall 2 Waypoint Waypoint;
 31 583 279 0 BoyntonHall 2 Classroom BH;008;

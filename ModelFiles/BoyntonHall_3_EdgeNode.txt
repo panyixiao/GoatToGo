@@ -90,10 +90,10 @@ NODES
 118 1006 141 0 BoyntonHall 3 Classroom BH;102A;
 119 122 597 0 BoyntonHall 3 Waypoint Waypoint;
 120 91 597 0 BoyntonHall 3 Waypoint Waypoint;
-122 329 526 3 BoyntonHall 3 Stairs STAIRS;
+122 329 526 3 BoyntonHall 3 Stairs Stairs;
 123 406 526 0 BoyntonHall 3 Waypoint Waypoint00A;
 124 497 526 0 BoyntonHall 3 Classroom BH;107A;
-125 957 667 4 BoyntonHall 3 Stairs STAIRS;
+125 957 667 4 BoyntonHall 3 Stairs Stairs;
 126 907 667 0 BoyntonHall 3 Waypoint Waypoint;
 127 406 829 1 BoyntonHall 3 Waypoint Front;Door;
 EDGES
