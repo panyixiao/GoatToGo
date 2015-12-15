@@ -59,7 +59,7 @@ public class ResultPage extends JPanel {
 		this.noPathAvailable = new JLabel(ViewStringLiterals.NO_PATH_AVAILABLE);
 		this.noPathAvailable.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.noPathAvailable.setForeground(new Color(0x5b1010));
-		this.noPathAvailable.setBounds(350, 310, 522, 30);
+		this.noPathAvailable.setBounds(250, 310, 522, 30);
 		this.noPathAvailable.setVisible(false);
 		this.layeredPane.add(this.noPathAvailable, new Integer(1));
 
@@ -210,13 +210,13 @@ public class ResultPage extends JPanel {
 
 		this.totalDistance = new JLabel(ViewStringLiterals.TOTAL_DISTANCE + " :");
 		this.totalDistance.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.totalDistance.setBounds(30, 425, 173, 25);
+		this.totalDistance.setBounds(10, 425, 217, 25);
 		this.totalDistance.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.totalDistance);
 		
 		this.totalTime = new JLabel(ViewStringLiterals.TOTAL_TIME + " :");
 		this.totalTime.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.totalTime.setBounds(71, 487, 132, 25);
+		this.totalTime.setBounds(10, 487, 185, 25);
 		this.totalTime.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.totalTime);
 
