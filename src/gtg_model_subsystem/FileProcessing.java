@@ -2,8 +2,11 @@ package gtg_model_subsystem;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedWriter;
@@ -18,45 +21,58 @@ import java.util.logging.Logger;
  */
 public class FileProcessing implements ProcessingSystemType {
 	
+	ErrorLog logError = new ErrorLog();
 	
 	/**
 	 * The method loadMapList load maps from master map list stored in masterMapList.txt
-	 * @return master map list * @throws IOException */
+	 * @return master map list * @throws IOException 
+	*/
 	public ArrayList<Map> loadMapList()
 	{
-		//Get the master map list text file reference
-		
-		//reading each map into line
 		String line;
-		//array of stored types for each map
 		String[] lines;
+		
 		File file = null;
 		BufferedReader buffer = null;
 		Map tempMap = null;
+		
 		//the maps from the master map list text file reference
 		ArrayList<Map> tempMapList = null;
 		
 		try{
+			//CREATE an object with the master map list url location
 			file = new File(ModelFileURLS.masterMapListURL);
+			//CREATE a buffered reader which can read the file
 			buffer = new BufferedReader(new FileReader(file));
+			//CREATE a temporary arraylist of maps
 			tempMapList = new ArrayList<Map>();
 			
+			//WHILE there is a line to be read from the file AND the line is not blank THEN
 			while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
+				//Trim the extra space off the end of a line
 				line.trim();
+				
+				//IF the line equals blank then something went wrong and break
 				if(line.equals("")){break;}
+				
+				//Split the line into multiple strings based on space
 				lines = line.split("[\\s+]");
+				
 				//create a Map using stored types(name,graph,img url,type) for each map
 				tempMap=new Map(lines[0], null, lines[1],lines[2]);
+				
 				//add the created map into the map list
 				tempMapList.add(tempMap);
+				
 				if(tempMap.getMapName().equals("CampusMap_0")){
 					loadInfoImageUrl(tempMap);
 				}
 			}
+			//close the buffer
 			buffer.close();
 		}
 		catch(IOException e){
-			logError(e.toString());
+			logError.logError((e.toString()));
 		}
 		return tempMapList;
 	}
@@ -104,7 +120,7 @@ public class FileProcessing implements ProcessingSystemType {
 				}
 			}catch(IOException e){
 				//CATCH failure and set the delete success to false
-				logError(e.toString());
+				logError.logError(e.toString());
 				deleteSuccess = false;
 			} finally{
 				try {
@@ -112,7 +128,7 @@ public class FileProcessing implements ProcessingSystemType {
 					reader.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					logError(e.toString());
+					logError.logError(e.toString());
 				}
 				//DELETE original master list file
 				originalFile.delete();
@@ -131,6 +147,7 @@ public class FileProcessing implements ProcessingSystemType {
 			boolean writeSuccess = true;
 			try{
 				
+				copyFile(mapImgURL, "images"+ System.getProperty("file.separator") + mapName + ".png");
 				//Get the master map list text file reference
 				//Create a file writer that will write to file, append value set to true to append to end of document
 				FileWriter fstream = new FileWriter(ModelFileURLS.masterMapListURL, true);
@@ -142,7 +159,7 @@ public class FileProcessing implements ProcessingSystemType {
 			}
 			catch(IOException e){
 				//Print out error if either map file does not exist
-				logError(e.toString());
+				logError.logError(e.toString());
 				//return false for failure
 				writeSuccess = false;
 			}
@@ -192,13 +209,13 @@ public class FileProcessing implements ProcessingSystemType {
 					}
 				}
 			}catch(IOException E){
-				logError(E.toString());
+				logError.logError(E.toString());
 			}finally{
 				try {
 					buffer.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					logError(e.toString());
+					logError.logError(e.toString());
 				}
 			}
 		}
@@ -254,11 +271,11 @@ public class FileProcessing implements ProcessingSystemType {
 			Node tempNode2 = getNode(nodes, Integer.parseInt(lines[2]));
 			//one of the nodes in the edge does not exist
 			if(tempNode1 == null){
-				logError("Node1  could not be read for edge");
+				logError.logError("Node1  could not be read for edge");
 				readSuccess = false;
 			}
 			if(tempNode2 == null){
-				logError("Node2  could not be read for edge");
+				logError.logError("Node2  could not be read for edge");
 				readSuccess = false;
 			}
 			//construct an edge
@@ -311,7 +328,7 @@ public class FileProcessing implements ProcessingSystemType {
 		}
 		buffer.close();
 		}catch(IOException e){
-			logError(e.toString());
+			logError.logError(e.toString());
 			readAdminSuccess = false;
 		}
 		return readAdminSuccess;
@@ -346,7 +363,7 @@ public class FileProcessing implements ProcessingSystemType {
 
 		}catch(IOException E){
 			saveGraphInformationSucess = false;
-			logError(E.toString());
+			logError.logError(E.toString());
 		}
 		return saveGraphInformationSucess;
 	}
@@ -363,7 +380,7 @@ public class FileProcessing implements ProcessingSystemType {
 			try{
 				file.createNewFile();
 			}catch(IOException e){
-				logError(e.toString());
+				logError.logError(e.toString());
 			}
 		}
 		else{
@@ -415,24 +432,7 @@ public class FileProcessing implements ProcessingSystemType {
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
 	}
 	
-	public void logError(String error){
-		final String logName = "GTGLog";
-		Logger logger = Logger.getLogger(logName);
-		FileHandler fh;
-		try {
-			fh = new FileHandler(ModelFileURLS.s+"ModelFiles"+System.getProperty("file.separator") + logName + ".log" );
-			logger.addHandler(fh);
-			SimpleFormatter formatter = new SimpleFormatter();
-			fh.setFormatter(formatter);
-			logger.info(error);
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			}
+	
 	/**
 	 * load urls of the information images on campus to the campus map
 	 * @param tempMap the campus map that loads information urls
@@ -451,7 +451,30 @@ public class FileProcessing implements ProcessingSystemType {
 			  }
 			}
 		} catch (Exception e) {
-			logError(e.toString());
+			logError.logError(e.toString());
 		}
     }
+	/**
+	 * The copyFile method will take in two string paths, 
+	 * and copy the files from one path to another into the given file project folder
+	 */
+	public void copyFile(String copyFilePath, String destFilePath){
+		
+			//Get the paths for each of the files
+		 	Path FROM = Paths.get(copyFilePath);
+		    Path TO = Paths.get(destFilePath);
+		    
+		    //overwrite existing file, if exists
+		    CopyOption[] options = new CopyOption[]{
+		      StandardCopyOption.REPLACE_EXISTING,
+		      StandardCopyOption.COPY_ATTRIBUTES
+		    };
+		    
+		    try {
+				Files.copy(FROM, TO, options);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				logError.logError(e.toString());
+			}
+	}
 }
