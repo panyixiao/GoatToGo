@@ -463,8 +463,36 @@ public class AdminMapEditPage extends JPanel {
 		String floorId ="";
 		int end = mapName.lastIndexOf("_");
 		floorId=mapName.substring(end+1);
-		return floorId;
+		int translatedFloorNum = 0;
+		switch(floorId){
+		case "SubBasement":
+			translatedFloorNum = 1;
+			break;
+		case "Basement":
+			translatedFloorNum = 2;
+			break;
+		case "FirstFloor":
+			translatedFloorNum = 3;
+			break;
+		case "SecondFloor":
+			translatedFloorNum = 4;
+			break;
+		case "ThirdFloor":
+			translatedFloorNum = 5;
+			break;
+		case "FourthFloor":
+			translatedFloorNum = 6;
+			break;
+		case "FifthFloor":
+			translatedFloorNum = 7;
+			break;
+		default:
+			translatedFloorNum = 0;
+			break;
+		}		
+		return Integer.toString(translatedFloorNum);
 	}
+	
 	public String getBuilding(){
 		return this.buildingName;
 	}

@@ -45,8 +45,8 @@ NODES
 45 629 806 0 FullerLab 5 Classroom FL;307;
 46 629 698 0 FullerLab 5 Elevator Elevator;
 47 665 755 3 FullerLab 5 Stairs Stairs;
-48 646 299 4 FullerLab 0 Stairs Stairs;
-49 646 478 0 FullerLab 0 Office Emergency;Generator;
+48 646 299 4 FullerLab 5 Stairs Stairs;
+49 646 478 0 FullerLab 5 Office Emergency;Generator;
 EDGES
 1 1 2
 2 2 3
