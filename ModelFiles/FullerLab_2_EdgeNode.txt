@@ -52,7 +52,7 @@ NODES
 52 878 481 0 FullerLab 2 Office FL;B19;
 53 945 572 5 FullerLab 2 Waypoint Entrance;
 54 713 626 3 FullerLab 2 Stairs Stairs;
-55 612 607 0 FullerLab 2 Elevator NULL;
+55 612 607 0 FullerLab 2 Elevator Elevator;
 56 566 644 0 FullerLab 2 Waypoint Waypoint;
 57 530 644 0 FullerLab 2 Waypoint Waypoint;
 58 530 697 0 FullerLab 2 Woman's_Restroom Woman's_Restroom;

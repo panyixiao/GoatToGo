@@ -126,7 +126,7 @@ NODES
 143 374 357 0 CampusMap 0 Waypoint WayPoint;
 144 364 403 0 CampusMap 0 Waypoint WayPoint;
 145 347 441 0 CampusMap 0 Waypoint WayPoint;
-146 294 428 0 CampusMap 0 ParkingLot Parking;Lot;
+146 294 428 0 CampusMap 0 ParkingLot ParkingLot;
 147 218 415 0 CampusMap 0 Waypoint WayPoint;
 148 166 415 0 CampusMap 0 Waypoint WayPoint;
 149 134 471 0 CampusMap 0 Waypoint WayPoint;
