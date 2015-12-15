@@ -4,11 +4,11 @@ NODES
 3 828 675 0 FullerLab 5 Classroom FL;310;
 5 665 698 0 FullerLab 5 Waypoint Waypoint;
 6 665 806 0 FullerLab 5 Waypoint Waypoint;
-7 665 894 0 FullerLab 5 Classroom FL;311;
+7 665 894 0 FullerLab 5 Office FL;311;
 8 582 894 0 FullerLab 5 Waypoint Waypoint;
 9 582 806 0 FullerLab 5 Classroom FL;313;
 10 539 806 0 FullerLab 5 Waypoint Waypoint;
-11 539 966 0 FullerLab 5 Classroom FL;312;
+11 539 966 0 FullerLab 5 Office FL;312;
 12 576 966 0 FullerLab 5 Waypoint Waypoint;
 13 665 966 0 FullerLab 5 Waypoint Waypoint;
 14 582 698 0 FullerLab 5 Waypoint Waypoint;
@@ -37,14 +37,16 @@ NODES
 37 241 776 0 FullerLab 5 Classroom FL;316;
 38 362 825 0 FullerLab 5 Waypoint Waypoint;
 39 290 825 0 FullerLab 5 Waypoint Waypoint;
-40 241 825 0 FullerLab 5 Classroom FL;319;
+40 241 825 0 FullerLab 5 Office FL;319;
 41 241 966 0 FullerLab 5 Waypoint Waypoint;
-42 362 925 0 FullerLab 5 Classroom FL;318;
+42 362 925 0 FullerLab 5 Office FL;318;
 43 431 825 0 FullerLab 5 Waypoint Waypoint;
-44 431 925 0 FullerLab 5 Classroom FL;317;
+44 431 925 0 FullerLab 5 Office FL;317;
 45 629 806 0 FullerLab 5 Classroom FL;307;
 46 629 698 0 FullerLab 5 Elevator Elevator;
 47 665 755 3 FullerLab 5 Stairs Stairs;
+48 646 299 4 FullerLab 0 Stairs Stairs;
+49 646 478 0 FullerLab 0 Office Emergency;Generator;
 EDGES
 1 1 2
 2 2 3
@@ -97,3 +99,4 @@ EDGES
 53 46 14
 54 5 47
 55 47 6
+56 48 49
