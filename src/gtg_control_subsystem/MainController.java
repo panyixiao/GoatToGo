@@ -139,12 +139,13 @@ public class MainController{
 				System.out.println("Map already in the old list");
 				return mapSaved;
 			}
+			
 			// Generate a relative filePath:
-			int markPos = mapImageURL.lastIndexOf("images");
+			/*int markPos = mapImageURL.lastIndexOf("images");
 			if(markPos>0){
 				mapImageURL = mapImageURL.substring(markPos);
-			}		
-						
+			}*/
+			
 			if(mapModel.saveNewMap(mapName, mapDataController.changeBackSeparator(mapImageURL), mapType)){
 				mapDataController.addNewMapToList(mapName);
 				mapDataController.addNewMapURLToList(mapImageURL);
@@ -167,7 +168,7 @@ public class MainController{
 				mapDeleted = true;
 			}
 		}
-		catch(IOException e){
+		catch(Exception e){
 			System.out.println(e.toString());	
 		}
 		return mapDeleted;
