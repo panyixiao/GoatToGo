@@ -59,16 +59,18 @@ public class ResultPage extends JPanel {
 		this.noPathAvailable = new JLabel(ViewStringLiterals.NO_PATH_AVAILABLE);
 		this.noPathAvailable.setFont(new Font("Meiryo", Font.PLAIN, 24));
 		this.noPathAvailable.setForeground(new Color(0x5b1010));
-		this.noPathAvailable.setBounds(350, 310, 250, 30);
+		this.noPathAvailable.setBounds(250, 310, 522, 30);
 		this.noPathAvailable.setVisible(false);
 		this.layeredPane.add(this.noPathAvailable, new Integer(1));
 
 		this.zoomInBtn = new JButton();
 		zoomInBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(currentZoomValue + zoomFactor <= MAX_ZOOM_IN){
-					currentZoomValue = currentZoomValue + zoomFactor;
-					resultMapDisplayPanel.setScale(currentZoomValue);
+				if(resultMapDisplayPanel != null){
+					if(currentZoomValue + zoomFactor <= MAX_ZOOM_IN){
+						currentZoomValue = currentZoomValue + zoomFactor;
+						resultMapDisplayPanel.setScale(currentZoomValue);
+					}
 				}
 			}
 		});
@@ -82,9 +84,11 @@ public class ResultPage extends JPanel {
 		this.zoomOutBtn = new JButton();
 		zoomOutBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(currentZoomValue - zoomFactor >= MAX_ZOOM_OUT){
-					currentZoomValue = currentZoomValue - zoomFactor;
-					resultMapDisplayPanel.setScale(currentZoomValue);
+				if(resultMapDisplayPanel != null){
+					if(currentZoomValue - zoomFactor >= MAX_ZOOM_OUT){
+						currentZoomValue = currentZoomValue - zoomFactor;
+						resultMapDisplayPanel.setScale(currentZoomValue);
+					}
 				}
 			}
 		});
@@ -206,13 +210,13 @@ public class ResultPage extends JPanel {
 
 		this.totalDistance = new JLabel(ViewStringLiterals.TOTAL_DISTANCE + " :");
 		this.totalDistance.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.totalDistance.setBounds(30, 425, 173, 25);
+		this.totalDistance.setBounds(10, 425, 217, 25);
 		this.totalDistance.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.totalDistance);
 		
 		this.totalTime = new JLabel(ViewStringLiterals.TOTAL_TIME + " :");
 		this.totalTime.setFont(new Font("Meiryo", Font.PLAIN, 24));
-		this.totalTime.setBounds(71, 487, 132, 25);
+		this.totalTime.setBounds(10, 487, 185, 25);
 		this.totalTime.setForeground(new Color(0x5b1010));
 		this.rightPanel.add(this.totalTime);
 
@@ -262,10 +266,12 @@ public class ResultPage extends JPanel {
 		this.toTextField.setText(parent.getStartEndNodeDescription("TO"));
 		
 		this.totalMapsValue = path.getArrayOfMapNames().size();
-		this.currentMapName.setText(path.getArrayOfMapNames().get(currentMapIndex));
+		this.currentMapName.setText(parent.mapNameToHuman(path.getArrayOfMapNames().get(currentMapIndex)));
+		this.currentMapName.setName(path.getArrayOfMapNames().get(currentMapIndex));
 		this.totalMaps.setText((currentMapIndex + 1) + " / " + this.totalMapsValue);
+		
 
-		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, this.currentMapName.getText(), path.getMapURL());
+		this.resultMapDisplayPanel = new ResultMapDisplayPanel(this, this.mapPanelHolder, this.currentMapName.getName(), path.getMapURL());
 		this.mapPanelHolder.setViewportView(resultMapDisplayPanel);
 		this.currentZoomValue = 1.0;
 		
@@ -341,9 +347,8 @@ public class ResultPage extends JPanel {
 	 * This method displays the total time and distance for the calculated path
 	 */
 	public void displayTimeDistance(double pathLength, int pathTime) {
-		double distance = Math.floor(pathLength * 100) / 100;
-
-		this.totalDistanceValue.setText("" + distance);
+		int distance = (int) Double.parseDouble(""+pathLength);
+		this.totalDistanceValue.setText("" + distance + " " + ViewStringLiterals.METERS);
 		this.totalTimeValue.setText(timeConversion(pathTime));
 	}
 }

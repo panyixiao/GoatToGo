@@ -10,7 +10,8 @@ public class GTGApplication {
 	 * @param args String[]
 	 */
 	public static void main(String[] args) {
-		MainModel mainModel = new MainModel();
+		//Implemented mainModel Singleton
+		MainModel mainModel = MainModel.getInstance();
 
 		MainController mainController = new MainController(mainModel);
 

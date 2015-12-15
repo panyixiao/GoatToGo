@@ -2,6 +2,11 @@ package gtg_model_subsystem;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedWriter;
@@ -16,44 +21,58 @@ import java.util.logging.Logger;
  */
 public class FileProcessing implements ProcessingSystemType {
 	
+	ErrorLog logError = new ErrorLog();
+	
 	/**
 	 * The method loadMapList load maps from master map list stored in masterMapList.txt
-	 * @return master map list * @throws IOException */
+	 * @return master map list * @throws IOException 
+	*/
 	public ArrayList<Map> loadMapList()
 	{
-		//Get the master map list text file reference
-		String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
-		//reading each map into line
 		String line;
-		//array of stored types for each map
 		String[] lines;
+		
 		File file = null;
 		BufferedReader buffer = null;
 		Map tempMap = null;
+		
 		//the maps from the master map list text file reference
 		ArrayList<Map> tempMapList = null;
 		
 		try{
-			file = new File(masterMapListURL);
+			//CREATE an object with the master map list url location
+			file = new File(ModelFileURLS.masterMapListURL);
+			//CREATE a buffered reader which can read the file
 			buffer = new BufferedReader(new FileReader(file));
+			//CREATE a temporary arraylist of maps
 			tempMapList = new ArrayList<Map>();
 			
+			//WHILE there is a line to be read from the file AND the line is not blank THEN
 			while((line = buffer.readLine()) != null && !(line.trim().equals(""))){
+				//Trim the extra space off the end of a line
 				line.trim();
+				
+				//IF the line equals blank then something went wrong and break
 				if(line.equals("")){break;}
+				
+				//Split the line into multiple strings based on space
 				lines = line.split("[\\s+]");
+				
 				//create a Map using stored types(name,graph,img url,type) for each map
 				tempMap=new Map(lines[0], null, lines[1],lines[2]);
+				
 				//add the created map into the map list
 				tempMapList.add(tempMap);
+				
 				if(tempMap.getMapName().equals("CampusMap_0")){
 					loadInfoImageUrl(tempMap);
 				}
 			}
+			//close the buffer
 			buffer.close();
 		}
 		catch(IOException e){
-			logError(e.toString());
+			logError.logError((e.toString()));
 		}
 		return tempMapList;
 	}
@@ -67,8 +86,6 @@ public class FileProcessing implements ProcessingSystemType {
 			boolean deleteSuccess = true;
 			boolean firstLine = true;
 			//String references to master list and a temporary written master list file
-			final String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
-			final String masterMapListTemp = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList_temp.txt";
 			
 			//variables for manipulation
 			File originalFile = null;
@@ -80,8 +97,8 @@ public class FileProcessing implements ProcessingSystemType {
 			//Array of map values from master list text file
 			String lines[];
 			try{
-				originalFile = new File(masterMapListURL);
-				tempFile = new File(masterMapListTemp);
+				originalFile = new File(ModelFileURLS.masterMapListURL);
+				tempFile = new File(ModelFileURLS.masterMapListTemp);
 				reader = new BufferedReader(new FileReader(originalFile));
 				writer = new BufferedWriter(new FileWriter(tempFile));
 				//WHILE a line exists in master list text file
@@ -103,7 +120,7 @@ public class FileProcessing implements ProcessingSystemType {
 				}
 			}catch(IOException e){
 				//CATCH failure and set the delete success to false
-				logError(e.toString());
+				logError.logError(e.toString());
 				deleteSuccess = false;
 			} finally{
 				try {
@@ -111,7 +128,7 @@ public class FileProcessing implements ProcessingSystemType {
 					reader.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					logError(e.toString());
+					logError.logError(e.toString());
 				}
 				//DELETE original master list file
 				originalFile.delete();
@@ -129,19 +146,20 @@ public class FileProcessing implements ProcessingSystemType {
 	public boolean saveMapToMaster(String mapName, String mapImgURL, String mapType){
 			boolean writeSuccess = true;
 			try{
+				String destinationFilePath = "images"+ System.getProperty("file.separator") + mapName + ".png";
+				copyFile(mapImgURL, destinationFilePath);
 				//Get the master map list text file reference
-				final String masterMapListURL = "ModelFiles"+System.getProperty("file.separator")+ "masterMapList.txt";
 				//Create a file writer that will write to file, append value set to true to append to end of document
-				FileWriter fstream = new FileWriter(masterMapListURL, true);
+				FileWriter fstream = new FileWriter(ModelFileURLS.masterMapListURL, true);
 				//Create a buffered writer for the file stream index
 			    BufferedWriter out = new BufferedWriter(fstream);
 			    //Write newly created map to end of master map list
-			    out.write(System.getProperty("line.separator") + mapName + " " + mapImgURL + " " + mapType);
+			    out.write(System.getProperty("line.separator") + mapName + " " + destinationFilePath + " " + mapType);
 			    out.close();
 			}
 			catch(IOException e){
 				//Print out error if either map file does not exist
-				logError(e.toString());
+				logError.logError(e.toString());
 				//return false for failure
 				writeSuccess = false;
 			}
@@ -156,7 +174,7 @@ public class FileProcessing implements ProcessingSystemType {
 	 *         will not return false
 	 */
 	public boolean readGraphInformation(List<Node> nodes, List<Edge> edges, String mapName){
-		String mapGraphInformationURL = "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
+		String mapGraphInformationURL = ModelFileURLS.s + "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
 		boolean readSuccess = true;
 		int nodeOrEdge = 0;
 		File file = new File(mapGraphInformationURL);
@@ -168,6 +186,7 @@ public class FileProcessing implements ProcessingSystemType {
 			return true;
 		}else{
 			try{
+				System.out.println("Reading Instead");
 				//file exists,begin reading
 				buffer = new BufferedReader(new FileReader(file));
 				//read line from file
@@ -190,13 +209,13 @@ public class FileProcessing implements ProcessingSystemType {
 					}
 				}
 			}catch(IOException E){
-				logError(E.toString());
+				logError.logError(E.toString());
 			}finally{
 				try {
 					buffer.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					logError(e.toString());
+					logError.logError(e.toString());
 				}
 			}
 		}
@@ -252,11 +271,11 @@ public class FileProcessing implements ProcessingSystemType {
 			Node tempNode2 = getNode(nodes, Integer.parseInt(lines[2]));
 			//one of the nodes in the edge does not exist
 			if(tempNode1 == null){
-				logError("Node1  could not be read for edge");
+				logError.logError("Node1  could not be read for edge");
 				readSuccess = false;
 			}
 			if(tempNode2 == null){
-				logError("Node2  could not be read for edge");
+				logError.logError("Node2  could not be read for edge");
 				readSuccess = false;
 			}
 			//construct an edge
@@ -293,9 +312,9 @@ public class FileProcessing implements ProcessingSystemType {
 	 */
 	public boolean readAdmin(List<Admin> admins){
 		boolean readAdminSuccess = true;
-		String adminURL = "ModelFiles"+System.getProperty("file.separator")+"adminFile.txt";
+		
 		try{
-		File file = new File(adminURL);
+		File file = new File(ModelFileURLS.adminURL);
 		BufferedReader buffer = new BufferedReader(new FileReader(file));
 		String line;
 		String[] lines;
@@ -309,14 +328,14 @@ public class FileProcessing implements ProcessingSystemType {
 		}
 		buffer.close();
 		}catch(IOException e){
-			logError(e.toString());
+			logError.logError(e.toString());
 			readAdminSuccess = false;
 		}
 		return readAdminSuccess;
 	}
 	public boolean saveGraphInformation(List<Node> nodes, List<Edge> edges, String mapName){
 		boolean saveGraphInformationSucess = true;
-		String mapGraphInformationURL = "ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
+		String mapGraphInformationURL = ModelFileURLS.s+"ModelFiles"+System.getProperty("file.separator")+mapName+"_EdgeNode.txt";
 		try{
 		    FileWriter fstream = new FileWriter(mapGraphInformationURL, false);
 		    BufferedWriter out = new BufferedWriter(fstream);
@@ -344,7 +363,7 @@ public class FileProcessing implements ProcessingSystemType {
 
 		}catch(IOException E){
 			saveGraphInformationSucess = false;
-			logError(E.toString());
+			logError.logError(E.toString());
 		}
 		return saveGraphInformationSucess;
 	}
@@ -361,7 +380,7 @@ public class FileProcessing implements ProcessingSystemType {
 			try{
 				file.createNewFile();
 			}catch(IOException e){
-				logError(e.toString());
+				logError.logError(e.toString());
 			}
 		}
 		else{
@@ -413,24 +432,7 @@ public class FileProcessing implements ProcessingSystemType {
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
 	}
 	
-	public void logError(String error){
-		final String logName = "GTGLog";
-		Logger logger = Logger.getLogger(logName);
-		FileHandler fh;
-		try {
-			fh = new FileHandler("ModelFiles"+System.getProperty("file.separator") + logName + ".log" );
-			logger.addHandler(fh);
-			SimpleFormatter formatter = new SimpleFormatter();
-			fh.setFormatter(formatter);
-			logger.info(error);
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			}
+	
 	/**
 	 * load urls of the information images on campus to the campus map
 	 * @param tempMap the campus map that loads information urls
@@ -449,7 +451,30 @@ public class FileProcessing implements ProcessingSystemType {
 			  }
 			}
 		} catch (Exception e) {
-			logError(e.toString());
+			logError.logError(e.toString());
 		}
     }
+	/**
+	 * The copyFile method will take in two string paths, 
+	 * and copy the files from one path to another into the given file project folder
+	 */
+	public void copyFile(String copyFilePath, String destFilePath){
+		
+			//Get the paths for each of the files
+		 	Path FROM = Paths.get(copyFilePath);
+		    Path TO = Paths.get(destFilePath);
+		    
+		    //overwrite existing file, if exists
+		    CopyOption[] options = new CopyOption[]{
+		      StandardCopyOption.REPLACE_EXISTING,
+		      StandardCopyOption.COPY_ATTRIBUTES
+		    };
+		    
+		    try {
+				Files.copy(FROM, TO, options);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				logError.logError(e.toString());
+			}
+	}
 }

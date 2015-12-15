@@ -8,27 +8,27 @@ import java.util.List;
 import java.util.Set;
 
 import gtg_model_subsystem.Node;
-import gtg_model_subsystem.Path;
+import gtg_model_subsystem.MapPath;
 import gtg_view_subsystem.PathData;
 
 public class PathSearchController {
 	private MainController mainController;
 	private MapDataController mapDataController;
 	
-	private LinkedHashMap<String, Path> MultilayerPathcalculationResult;
+	private LinkedHashMap<String, MapPath> MultilayerPathcalculationResult;
 	private ArrayList<String> resultMapList;
-	private Path currentPath;
+	private MapPath currentPath;
 	private Node startNode;
 	private Node endNode;
 	
 	private double pathTotalLength;
-	private int walkingSpeed;
+	private double walkingSpeed;
 	
 	public PathSearchController(MainController controlInterface, MapDataController mapDataComponent) {
 		mainController = controlInterface;
 		mapDataController = mapDataComponent;
 		pathTotalLength = 0;
-		walkingSpeed = 4; // Pixel/sec
+		walkingSpeed = 1.5; // Pixel/sec
 	}
 	
 	public Point setTaskPnt(Point taskPnt, String pntType, String mapName){
@@ -57,6 +57,7 @@ public class PathSearchController {
 		
 		// Get requested path
 		String requestedMapName = resultMapList.get(Index);
+		requestedMapName = mainController.translateMapNameFromString2Num(requestedMapName);
 		currentPath = MultilayerPathcalculationResult.get(requestedMapName);
 
 		// Set StartPnt
@@ -94,7 +95,13 @@ public class PathSearchController {
 	private void calculatePathTotalLength(){
 		pathTotalLength = 0;
 		for(String mapName:resultMapList){
+			mapName = mainController.translateMapNameFromString2Num(mapName);
 			double pathPartLength = MultilayerPathcalculationResult.get(mapName).getDistance();
+			String buildingName = mapName.substring(0, mapName.lastIndexOf("_"));
+			if(!buildingName.equals("CampusMap")){
+				pathPartLength /=10;
+			}
+			
 			pathTotalLength += pathPartLength;
 		}	
 		
@@ -121,7 +128,7 @@ public class PathSearchController {
 		return description;
 	}	
 	
-	private ArrayList<Point> convertNodeListIntoPointList(Path inputPath){
+	private ArrayList<Point> convertNodeListIntoPointList(MapPath inputPath){
 		ArrayList<Point> pntPath = new ArrayList<Point>();
 		List<Node> currentNodePath = inputPath.getWayPoints();
 		if(!currentNodePath.isEmpty()){
@@ -141,19 +148,20 @@ public class PathSearchController {
 		resultMapList=new ArrayList<String>();
 		if(startNode!=null && endNode!=null){
 
-			System.out.println("FROM: " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY() + " " + startNode.getDescription());
-			System.out.println("TO: " + endNode.getBuilding() + " " + endNode.getFloorNum() + " " + endNode.getX() + " " + endNode.getY() + " " + endNode.getDescription()  );
+			//System.out.println("FROM: " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY() + " " + startNode.getDescription());
+			//System.out.println("TO: " + endNode.getBuilding() + " " + endNode.getFloorNum() + " " + endNode.getX() + " " + endNode.getY() + " " + endNode.getDescription()  );
 			pathCalculated =  mainController.mapModel.multiPathCalculate(startNode, endNode);
 		}
 		
 		if(pathCalculated){	
-			System.out.println("Hoooooya~~ Path Calculated!\n");
+			//System.out.println("Hoooooya~~ Path Calculated!\n");
 			MultilayerPathcalculationResult = mainController.mapModel.getMapPaths();
 			Set<String> calculationResultMapName = MultilayerPathcalculationResult.keySet();
 			Iterator<String> iterator = calculationResultMapName.iterator();
 			while(iterator.hasNext()){
 				String mapName = iterator.next();
-				System.out.println(mapName);
+				//System.out.println(mapName);
+				mapName = mainController.translateMapNameFromNum2String(mapName);
 				resultMapList.add(mapName);
 			}
 			calculatePathTotalLength();

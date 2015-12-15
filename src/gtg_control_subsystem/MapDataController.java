@@ -37,6 +37,92 @@ public class MapDataController {
 		InfoImageTable = mainController.mapModel.getCampusImageUrl();
 	}
 	
+
+	public String translateMapNameFromString2Num(String mapName){
+		String numericName = mapName;
+		int end = mapName.lastIndexOf("_");		
+		if(end<0){
+			return numericName;
+		}		
+		String buildingName = mapName.substring(0, end);
+		String floorNum = mapName.substring(end+1,mapName.length());
+		
+		int translatedFloorNum = 0;
+		switch(floorNum){
+		case "SubBasement":
+			translatedFloorNum = 1;
+			break;
+		case "Basement":
+			translatedFloorNum = 2;
+			break;
+		case "FirstFloor":
+			translatedFloorNum = 3;
+			break;
+		case "SecondFloor":
+			translatedFloorNum = 4;
+			break;
+		case "ThirdFloor":
+			translatedFloorNum = 5;
+			break;
+		case "FourthFloor":
+			translatedFloorNum = 6;
+			break;
+		case "FifthFloor":
+			translatedFloorNum = 7;
+			break;
+		default:
+			translatedFloorNum = 0;
+			break;
+		}
+		
+		numericName = buildingName +"_"+ Integer.toString(translatedFloorNum);
+		
+		return numericName;
+	}
+	
+	public String translateMapNameFromNum2String(String mapName){
+		String stringName = mapName;
+		
+		int end = mapName.lastIndexOf("_");		
+		if(end<0){
+			return stringName;
+		}		
+		String buildingName = mapName.substring(0, end);
+		String floorNum = mapName.substring(end+1,mapName.length());		
+		String translatedFloorName = "Ground";
+		
+		switch(floorNum){
+		case "1":
+			translatedFloorName = "SubBasement";
+			break;
+		case "2":
+			translatedFloorName = "Basement";
+			break;
+		case "3":
+			translatedFloorName = "FirstFloor";
+			break;
+		case "4":
+			translatedFloorName = "SecondFloor";
+			break;
+		case "5":
+			translatedFloorName = "ThirdFloor";
+			break;
+		case "6":
+			translatedFloorName = "FourthFloor";
+			break;
+		case "7":
+			translatedFloorName = "FifthFloor";
+			break;
+		default:
+			translatedFloorName = "Ground";
+			break;
+		}
+		stringName = buildingName +"_"+ translatedFloorName;
+		
+		return stringName;
+		
+	}
+	
 	/* *******************************
 	 * 
 	 * 			Map Manipulation
@@ -119,14 +205,14 @@ public class MapDataController {
 	}
 	
 	private void updateMapList(String mapRequestCommand){
-
 		
 		switch(mapRequestCommand){
 		case "admin":
 			listOfMapNameForReturn.clear();
 			listOfMapURLForReturn.clear();
 			mainController.mapModel.loadMapLists();
-			mainController.mapModel.loadFiles();			
+			mainController.mapModel.loadFiles();	
+			
 			LoadInMapNameList();
 			LoadInMapURL();
 			getAllMapNameAndURL();
@@ -138,7 +224,7 @@ public class MapDataController {
 			updateMapListWithDesiredMapName(mapRequestCommand);
 			addAllBuildingIntoList();
 			break;		
-		// Get All the buildingMap
+
 		default:
 			if(validateBuildingName(mapRequestCommand)){
 				listOfMapNameForReturn.clear();
@@ -152,6 +238,8 @@ public class MapDataController {
 	
 	private void getAllMapNameAndURL(){
 		for(String mapName:listOfMapName){
+			// 2015-12-13
+			mapName = translateMapNameFromNum2String(mapName);	
 			listOfMapNameForReturn.add(mapName);
 		}
 		for(String mapURL:listOfMapURL){
@@ -179,7 +267,10 @@ public class MapDataController {
 			int end = mapName.lastIndexOf("_");
 			Section_1=mapName.substring(0, end);
 			if(desiredMap.equals(Section_1)){
+				// 2015-12-13
+				mapName = translateMapNameFromNum2String(mapName);				
 				listOfMapNameForReturn.add(mapName);
+				mapName = translateMapNameFromString2Num(mapName);
 				int mapIndex = listOfMapName.indexOf(mapName);
 				String mapURL = listOfMapURL.get(mapIndex);
 				listOfMapURLForReturn.add(mapURL);
@@ -228,8 +319,8 @@ public class MapDataController {
 		return mapRemoved;
 	}
 	
-	public ArrayList<String> getMapList(String mapName){
-		updateMapList(mapName);
+	public ArrayList<String> getMapList(String mapRequestCommand){
+		updateMapList(mapRequestCommand);
 		return listOfMapNameForReturn;
 	}
 	
@@ -290,23 +381,23 @@ public class MapDataController {
 	 * 
 	 * ********************************/
 	public Boolean LoadingPntsAndEdges(String mapName){
+		mapName = translateMapNameFromString2Num(mapName);
 		// Clear the temporary node/edge List before add new point into it;
 		this.nodeList.clear();
 		this.edgeList.clear();
 		this.tempPntList.clear();
 		this.tempEdgeList.clear();		
-		if(mainController.mapModel.loadFiles(mapName)){
+		try{
 			LoadInNodeList(mapName);
-			LoadInEdgeList(mapName);	 
+			LoadInEdgeList(mapName);
 			transferNodeToPnt2D(this.nodeList);
 			transferEdgeToPnt2D(this.edgeList);
-
 			return true;
-		}
-		else{
-			System.out.println("Loading File failed");
+		}catch(Exception e){
+			System.out.println(e.toString());
 			return false;
 		}
+
 	}
 	
 	private void LoadInNodeList(String mapName){

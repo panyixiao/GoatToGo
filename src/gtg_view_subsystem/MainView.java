@@ -144,7 +144,7 @@ public class MainView {
 			this.resultPage.displayPath(path, 0);
 			this.resultPage.displayTimeDistance(pathLength, pathTime);
 		} else {
-			//this.resultPage.showErrorPopup();
+			this.resultPage.pathNotAvailable();
 		}
 	}
 
@@ -301,5 +301,24 @@ public class MainView {
 	public void getFilteredList(String pointType) {
 		ArrayList<Point> filteredPoints = this.mainController.getFilteredList(pointType);
 		this.mapPage.populateFilteredList(filteredPoints, pointType);
+	}
+	public String mapNameToHuman (String mapName){
+		String newMap = mapName;
+		if(newMap.contains("Campus"))
+			newMap="Campus Map";
+		else{
+			
+			String[] r = newMap.split("(?=\\p{Upper})");
+			String temp = r[0];
+			for(int x = 1; x<r.length; x++){
+				temp += (" "+ r[x]);
+			}
+			
+			newMap= temp;
+			newMap = newMap.replaceAll("_", " ");
+		}
+		
+	
+		return newMap;
 	}
 }

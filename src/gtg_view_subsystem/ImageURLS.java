@@ -1,9 +1,14 @@
 package gtg_view_subsystem;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  */
 public class ImageURLS {
-	private static final String filePath = "images"+System.getProperty("file.separator")+"UI_icons"+System.getProperty("file.separator");
+	private static final Path currentRelativePath = Paths.get("");
+	private static final String s = currentRelativePath.toAbsolutePath().toString() + System.getProperty("file.separator");
+	private static final String filePath = s + "images"+System.getProperty("file.separator")+"UI_icons"+System.getProperty("file.separator");
 	public static final String LOGIN_BUTTON =filePath +"sign_in_btn.png";
 	public static final String LOGIN_BACKGROUND =filePath+"login_background_new.png";
 	public static final String BACK_BUTTON = filePath+"back_btn.png";
