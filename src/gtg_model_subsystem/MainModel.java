@@ -41,6 +41,10 @@ public class MainModel {
 	//Multipath object that will do all of the required path operations for GTG.
 	private MultiPath multiPath;
 	
+	//Error log object to log all of the errors found in the model
+	private ErrorLog logError = new ErrorLog();
+	
+	
 	private MainModel(){
 		//Singleton instances for the admin list and map table
 		admins = AdminList.getInstance();
@@ -57,12 +61,18 @@ public class MainModel {
 		loadAdmin();			
 		loadFiles();
 	}
+	
 	/**
 	 * The next two methods are place holders to create a singleton instance
 	 */
     private static class MainModelHolder{
     	private static final MainModel mainModel = new MainModel();
     }
+    
+    /**
+     * The getInstance method returns a singleton instance of a MainModel object
+     * @return the singleton instance of the MainModel object
+     */
     public static MainModel getInstance(){
     	return MainModelHolder.mainModel;
     }
@@ -106,7 +116,6 @@ public class MainModel {
 				mapTable.remove(mapName);
 				//REMOVE map from master map list so it will not be re-loaded
 				fileProcessing.deleteMapFromMaster(mapName);
-				System.out.println("Delete Success");
 			}
 			return deleteSuccess;
 	}
@@ -121,7 +130,7 @@ public class MainModel {
 				boolean saveNewMap = true;
 				//IF map does not exist in map table THEN
 				if (mapTable.get(mapName) != null){
-					System.out.println("Map Already exists");
+					logError.logError("Map already exists");
 					saveNewMap = false;
 				}
 				//STORE map in masterMapList 
@@ -131,58 +140,85 @@ public class MainModel {
 				return saveNewMap;
 	}
 	
+	/**
+	 * The method load files will load of the map graphs for each of the master maps from the master map list.
+	 * Calls the createMapGraph method to achieve this.
+	 * @return true if successful and false if otherwise.
+	 */
 	public boolean loadFiles(){
+		//Signal if the map creation was successful or will fail
 		boolean mapCreated = false;
 		try{
+			//FOR EACH map within the master map list
 			for(String mapName: mapTable.keySet()){
+				//CALL the createMapGraph method to load the map
+				//Will return true of false based on success or failure
 				mapCreated = createMapGraph(mapName);
 			}
 		}catch(Exception e){
-			System.out.println(e.toString());
+			//Catch the exception and print it to the er
+			logError.logError((e.toString()));
 		}		
 		return mapCreated;		
 	}
 	
 	/**
-	 * Method loadFiles.
-	 * @param mapName String
-	 * @return boolean
+	 * Method loadFiles calls the createMapGraph method that will create all of the map graphs for each map.
+	 * @param mapName String the name of the map you with to load.
+	 * @return boolean true if successful; false otherwise.
 	 */
 	public boolean loadFiles(String mapName){
 		boolean mapCreated = false;
+		
+		//CALL the createMapGraph method to LOAD and STOR the map information into the map table
 		mapCreated = createMapGraph(mapName);
+		
 		return mapCreated;		
 	}
 	/**
-	 * Method loadAdmin.
-	 * @throws IOException
+	 * Method loadAdmin will load all of the admins that can access the admin feature from the fileprocessing system.
 	 */
 	public void loadAdmin(){
 		fileProcessing.readAdmin(admins);
 	}
 	
 	/**
-	 * Method createMapGraph.
-	 * @param mapName String
-	 * @return boolean
-	 * @throws IOException
+	 * Method createMapGraph will load all of the associated graph information from the processing system of your choice.
+	 * Then it will store the temporary nodes and edges for that graph into the master map table.
+	 * @param mapName String the name of the map you wish to save
+	 * @return boolean returns true if successful; false otherwise
 	 */
 	public boolean createMapGraph(String mapName){
 		
+		//Re-instaniate a new temporary node and edges list
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
+		
+		//Instantiate a boolean object as true for success
 		boolean createMapGraphSuccess = true;
+		
+		//IF the map for the given map name already exists THEN
 		if(!mapTable.containsKey(mapName)){
+			//SIGNAL that it was unsuccessful saving the loaded map into the table
 			createMapGraphSuccess = false;
-			System.out.println("Map does not exist in table");
+			
+			//PRINT it to the error log
+			logError.logError("Map does not exist in table");
+			
+			//RETURN the error
 			return createMapGraphSuccess;
 		}
-		fileProcessing.readGraphInformation(nodes, edges, mapName);
+		else{
+			//LOAD the graph information for the given map into the temporary nodes and edges
+			fileProcessing.readGraphInformation(nodes, edges, mapName);
+			
+			//CREATE a new graph object to store
+			graph = new CoordinateGraph(nodes, edges);
+			
+			//STORE the newly created graph into the map table
+			mapTable.get(mapName).setGraph(graph);
+		}
 		
-		
-		graph = new CoordinateGraph(nodes, edges);
-		mapTable.get(mapName).setGraph(graph);
-
 		return createMapGraphSuccess;
 	}
 	
@@ -194,69 +230,78 @@ public class MainModel {
 	 * @param mapName the name of the map that the nodes and edges belong to
 	 * @param tempPntList the temporary points that need to be converted to nodes and saved.
 	 * @param tempEdgeList the temporary list that has unique node IDs to generate edges.
-	
-	
-	 * @return true of write was successful, false otherwise * @throws IOException */
+	 * @return true of write was successful, false otherwise * @throws IOException 
+	 * 
+	 */
 	public boolean saveMapGraph(String mapName, List<Node> tempNodeList, List<Edge> tempEdgeList){	
-			//Generate a new coordinate graph to be saved by admin
-			graph = new CoordinateGraph(tempNodeList, tempEdgeList);
-			//STORE it as the new graph
-			mapTable.get(mapName).setGraph(graph);
-			//IF the node list is not empty THEN
-
-			try{
-				//STORE the new nodes and edges
-				fileProcessing.saveGraphInformation(mapTable.get(mapName).getGraph().getNodes(), 
-													mapTable.get(mapName).getGraph().getEdges(), 
-													mapName);
-			}catch(Exception e){
-				//Signal input output error to controller based on false
-				System.out.println(e.toString());
-				return false;
-			}
-			System.out.println("File saved successfully");	
 		
-			return true;
+		//Generate a new coordinate graph to be saved by admin
+		graph = new CoordinateGraph(tempNodeList, tempEdgeList);
+		
+		//STORE it as the new graph and override the graph information that was created on load
+		mapTable.get(mapName).setGraph(graph);
+		
+		
+		try{
+			//STORE the new nodes and edges
+			fileProcessing.saveGraphInformation(mapTable.get(mapName).getGraph().getNodes(), 
+												mapTable.get(mapName).getGraph().getEdges(), 
+												mapName);
+		}
+		catch(Exception e){
+			//LOG the error that has occurred during save
+			logError.logError(e.toString());
+			return false;
 		}
 	
+		return true;
+	}
+	
 	/**
-	 * calculate the multilayer path between different floors 
-	 * @param mapNames different maps that are going to be calculated
+	 * The multiPathCalculate method will take in start and end points and run the multiple path algorithim associated with the multiPath object.
+	 * It will then store all associated paths with the start and end location
 	 * @param startNode the start Node
 	 * @param endNode the end Node
-	 * @return true if calculate multipath successfully
+	 * @return true if calculating the multiple paths was successful
 	 *         false if calculation fails 
 	 */
 	public boolean multiPathCalculate(Node start, Node end){
+		
+		//SIGNAL true for the base case
 		boolean multiPathCalculateSuccess = true;
-		System.out.println(start.getBuilding() + start.getFloorNum());
-		System.out.println(end.getBuilding() +  end.getFloorNum());
+
+		//CREATE a new MultiPath object for these two given nodes
 		multiPath = new MultiPath();
+		
+		//RUN the multiPathCalculate method to generate the multiple paths
 		multiPathCalculateSuccess = multiPath.multiPathCalculate(start, end, mapTable);
+		
 		return multiPathCalculateSuccess;
 	}
 	
-	//private calculatePathDistance(LinkedList<Node> wayPoints){
-		//for(Node wayPoint: )
-	//}
 	/**
-	 * isValidAdmin method validates if the user that has choosen to login as admin is an admin.
+	 * isValidAdmin method validates if the user that has chosen to login as admin is an admin.
 	 * @param userName the string representation of the login username
 	 * @param password the string representation of the login password
-	
-	 * @return true if user is admin; otherwise false. */
+	 * @return true if user is admin; otherwise false. 
+	 */
 	public boolean isValidAdmin(String userName, String password){
 		//Assume user is not an admin
 		boolean isAdmin = false;
+		
 		//FOR EACH admin in admin list
 		for(Admin admin: admins){
+			
 			//IF current admin user name EQUALS param username AND admin password EQUALS param password
-			if((admin.getUsername().equals(userName)) && (admin.getPassword().equals(password)))
+			if((admin.getUsername().equals(userName)) && (admin.getPassword().equals(password))){
 				//SET isAdmin as valid
 				isAdmin =true;
+			}
 		}
+		
 		return isAdmin;
 	}
+	
 	/**
 	 * Validates the point for the view. By returning a Node for the controller to extract a point.
 	 * Take in x and y values for user chosen node points, then cycle through each node on current coordinate graph node list.
@@ -264,24 +309,45 @@ public class MainModel {
 	 * of both x and y points then set the new validated point as the new closest point.
 	 * @param x the x value for the given point
 	 * @param y the y value for the given point
-	
 	 * @param mapName String
-	 * @return the more accurate validated point */
+	 * @return the more accurate validated point 
+	 */
 	public Node validatePoint(String mapName, int x, int y, String lastName){
+		
+		//CREATE a null validated node to signal a possible failure
 		Node validatedNode = null;
-		if(mapTable.isEmpty()){
-			System.out.println("MapTable is empty, Validation Failed");
-			return validatedNode;
-		}
+		
+		//Create two double variables to get precision in calculating node difference between nodes
 		double currentDiff = 0.0;
 		double previousDiff = Double.POSITIVE_INFINITY;
+		
+		//IF the map table is empty THEN
+		if(mapTable.isEmpty()){
+			
+			//LOG that the map table was empty
+			logError.logError("MapTable is empty, Validation Failed");
+			
+			//RETURN a null node to signal failure
+			return validatedNode;
+		}
+		
+		//FOR EACH node within the map table
 		for(Node node: mapTable.get(mapName).getGraph().getNodes()){
+			
+			//Call the calculateDistance method to run the distance equation between two points
 			currentDiff = calculateDistance(node.getX(),x,node.getY(),y);
+			
+			//IF the current difference is less then the previous difference THEN
 			if(currentDiff < previousDiff){
+				
+				//The node is closer and should be the one requested by the user
 				previousDiff = currentDiff;
+				
+				//SET the closer node as the validated node
 				validatedNode = node;
 			}				
 		}
+		
 		return validatedNode;
 	}
 	public Point validatePoint(String mapName, int x, int y){

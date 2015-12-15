@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class FileProcessing implements ProcessingSystemType {
 	
-	
+	ErrorLog logError = new ErrorLog();
 	/**
 	 * The method loadMapList load maps from master map list stored in masterMapList.txt
 	 * @return master map list * @throws IOException */
@@ -56,7 +56,7 @@ public class FileProcessing implements ProcessingSystemType {
 			buffer.close();
 		}
 		catch(IOException e){
-			logError(e.toString());
+			logError.logError((e.toString()));
 		}
 		return tempMapList;
 	}
@@ -104,7 +104,7 @@ public class FileProcessing implements ProcessingSystemType {
 				}
 			}catch(IOException e){
 				//CATCH failure and set the delete success to false
-				logError(e.toString());
+				logError.logError(e.toString());
 				deleteSuccess = false;
 			} finally{
 				try {
@@ -112,7 +112,7 @@ public class FileProcessing implements ProcessingSystemType {
 					reader.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					logError(e.toString());
+					logError.logError(e.toString());
 				}
 				//DELETE original master list file
 				originalFile.delete();
@@ -142,7 +142,7 @@ public class FileProcessing implements ProcessingSystemType {
 			}
 			catch(IOException e){
 				//Print out error if either map file does not exist
-				logError(e.toString());
+				logError.logError(e.toString());
 				//return false for failure
 				writeSuccess = false;
 			}
@@ -192,13 +192,13 @@ public class FileProcessing implements ProcessingSystemType {
 					}
 				}
 			}catch(IOException E){
-				logError(E.toString());
+				logError.logError(E.toString());
 			}finally{
 				try {
 					buffer.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					logError(e.toString());
+					logError.logError(e.toString());
 				}
 			}
 		}
@@ -254,11 +254,11 @@ public class FileProcessing implements ProcessingSystemType {
 			Node tempNode2 = getNode(nodes, Integer.parseInt(lines[2]));
 			//one of the nodes in the edge does not exist
 			if(tempNode1 == null){
-				logError("Node1  could not be read for edge");
+				logError.logError("Node1  could not be read for edge");
 				readSuccess = false;
 			}
 			if(tempNode2 == null){
-				logError("Node2  could not be read for edge");
+				logError.logError("Node2  could not be read for edge");
 				readSuccess = false;
 			}
 			//construct an edge
@@ -311,7 +311,7 @@ public class FileProcessing implements ProcessingSystemType {
 		}
 		buffer.close();
 		}catch(IOException e){
-			logError(e.toString());
+			logError.logError(e.toString());
 			readAdminSuccess = false;
 		}
 		return readAdminSuccess;
@@ -346,7 +346,7 @@ public class FileProcessing implements ProcessingSystemType {
 
 		}catch(IOException E){
 			saveGraphInformationSucess = false;
-			logError(E.toString());
+			logError.logError(E.toString());
 		}
 		return saveGraphInformationSucess;
 	}
@@ -363,7 +363,7 @@ public class FileProcessing implements ProcessingSystemType {
 			try{
 				file.createNewFile();
 			}catch(IOException e){
-				logError(e.toString());
+				logError.logError(e.toString());
 			}
 		}
 		else{
@@ -415,24 +415,7 @@ public class FileProcessing implements ProcessingSystemType {
 		return Math.sqrt(Math.pow(x2-x1, 2)+ Math.pow(y2 - y1, 2));
 	}
 	
-	public void logError(String error){
-		final String logName = "GTGLog";
-		Logger logger = Logger.getLogger(logName);
-		FileHandler fh;
-		try {
-			fh = new FileHandler(ModelFileURLS.s+"ModelFiles"+System.getProperty("file.separator") + logName + ".log" );
-			logger.addHandler(fh);
-			SimpleFormatter formatter = new SimpleFormatter();
-			fh.setFormatter(formatter);
-			logger.info(error);
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			}
+	
 	/**
 	 * load urls of the information images on campus to the campus map
 	 * @param tempMap the campus map that loads information urls
@@ -451,7 +434,7 @@ public class FileProcessing implements ProcessingSystemType {
 			  }
 			}
 		} catch (Exception e) {
-			logError(e.toString());
+			logError.logError(e.toString());
 		}
     }
 }
