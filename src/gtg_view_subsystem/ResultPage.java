@@ -310,7 +310,9 @@ public class ResultPage extends JPanel {
 		this.totalTimeValue.setText("");
 		this.nextBtn.setEnabled(false);
 		this.previousBtn.setEnabled(false);
-		this.resultMapDisplayPanel.setVisible(false);
+		if(this.resultMapDisplayPanel != null){
+			this.resultMapDisplayPanel.setVisible(false);
+		}
 	}
 	
 	/*
