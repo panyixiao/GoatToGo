@@ -175,10 +175,10 @@ public class MapDisplayPanel extends JPanel implements MouseListener, MouseMotio
             this.image = ImageIO.read(new File(mapurl));
         }
         catch(MalformedURLException mue) {
-            System.out.println("URL trouble: " + mue.getMessage());
+            //System.out.println("URL trouble: " + mue.getMessage());
         }
         catch(IOException ioe) {
-        	System.out.println("read trouble: " + ioe.getMessage());
+        	//System.out.println("read trouble: " + ioe.getMessage());
         }
 	}
 

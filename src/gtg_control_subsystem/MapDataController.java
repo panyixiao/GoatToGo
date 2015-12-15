@@ -145,7 +145,7 @@ public class MapDataController {
 			success=true;
 			return success;
 		}
-		System.out.println("Map list from model is empty!");
+		//System.out.println("Map list from model is empty!");
 		return success;
 	}
 	
@@ -162,7 +162,7 @@ public class MapDataController {
 			success=true;
 			return success;
 		}
-		System.out.println("Map URL list from model is empty!");
+		//System.out.println("Map URL list from model is empty!");
 		return success;
 	}
 	
@@ -314,7 +314,7 @@ public class MapDataController {
 			mapRemoved = true;
 		}
 		else{
-			System.out.print("Can't find map in the MapList");
+			//System.out.print("Can't find map in the MapList");
 		}
 		return mapRemoved;
 	}
@@ -394,7 +394,7 @@ public class MapDataController {
 			transferEdgeToPnt2D(this.edgeList);
 			return true;
 		}catch(Exception e){
-			System.out.println(e.toString());
+			//System.out.println(e.toString());
 			return false;
 		}
 
@@ -500,7 +500,7 @@ public class MapDataController {
 		if (PointID_1>0&&PointID_2>0&&PointID_1!=PointID_2) {
 			for (Edge e:edgeList){
 				if (((e.getSource().getID()==PointID_1)&&(e.getDestination().getID()==PointID_2))||((e.getSource().getID()==PointID_2)&&(e.getDestination().getID()==PointID_1))) {
-					System.out.println("Edge exists!");
+					//System.out.println("Edge exists!");
 					return success;
 				}
 			}
@@ -524,12 +524,12 @@ public class MapDataController {
 		Boolean pointDeleted = false;
 		Node nodeFound=null;
 		if(nodeList.isEmpty()){
-			System.out.println("Node List is empty, nothing to delete.");
+			//System.out.println("Node List is empty, nothing to delete.");
 			return pointDeleted;
 		}
 		int pntID = this.CheckPntExistence(inputPnt);
 		if(pntID == 0){
-			System.out.println("Can't find point in the List, Will not delete any points.");
+			//System.out.println("Can't find point in the List, Will not delete any points.");
 			return pointDeleted;
 		}
 		nodeFound=findNodeInList(pntID);
@@ -548,11 +548,11 @@ public class MapDataController {
 	public boolean deleteEdge(Point2D p){
 		int edgeID = checkIfPointIsInEdge(p);
 		if(edgeID>0){			
-			System.out.println("Edge "+ edgeID+ " will be deleted");
+			//System.out.println("Edge "+ edgeID+ " will be deleted");
 			for (int edgeSeq=edgeList.size()-1; edgeSeq>=0; edgeSeq--){
 				if(edgeList.get(edgeSeq).getEdgeID() == edgeID){
 					edgeList.remove(edgeSeq);	
-					System.out.println("An edge is deleted!");
+					//System.out.println("An edge is deleted!");
 					transferEdgeToPnt2D(edgeList);
 					return true;		
 				}
@@ -567,12 +567,12 @@ public class MapDataController {
 		for (Point temPnt : tempPntList){
 			double d = Math.sqrt(Math.pow(inputPnt.getX()-temPnt.getX(), 2)+ Math.pow(inputPnt.getY() - temPnt.getY(), 2));
 			if(d <= 10){
-				System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
+				//System.out.println("Mapping To Point" + temPnt.getX() + "," + temPnt.getY());
 				searchingResult = temPnt;
 				return searchingResult;
 			}
 		}		
-		System.out.println("Invalid Input!!");
+		//System.out.println("Invalid Input!!");
 		return searchingResult;
 	}
 	
@@ -580,7 +580,7 @@ public class MapDataController {
 		String description = "";
 		Node nd = findNodeInList(pnt);
 		if(nd!=null){
-			System.out.println(description);
+			//System.out.println(description);
 			description = nd.getDescription();
 		}
 		return description;
@@ -629,7 +629,7 @@ public class MapDataController {
 			//System.out.println("the distance is : "+d);
 			if(d <= toleranceRadius){
 				pntID = tempN.getID();
-				System.out.println("Point "+pntID+" is Found in the nodeList!");
+				//System.out.println("Point "+pntID+" is Found in the nodeList!");
 				return pntID;
 			}
 		}
@@ -648,11 +648,11 @@ public class MapDataController {
 			
 			if(Math.abs(ab-(ap+pb))<=5){
 				r=e.getEdgeID();				
-				System.out.println("Point " + p + " belongs to Edge "+r);
+				//System.out.println("Point " + p + " belongs to Edge "+r);
 				return r;
 			}
 		}
-		System.out.println("This Point doesn't belongs to any Edge");
+		//System.out.println("This Point doesn't belongs to any Edge");
 		return r;
 	}
 
@@ -707,10 +707,10 @@ public class MapDataController {
 		Point pnt = new Point(0,0);
 		if(tempPntList.size()!=0){
 			pnt = tempPntList.get(tempPntList.size()-1);
-			System.out.println("The last Point is: "+pnt.getX()+ "" + pnt.getY());
+			//System.out.println("The last Point is: "+pnt.getX()+ "" + pnt.getY());
 			return pnt;
 		}	
-		System.out.println("There is no Pnt in the list!");
+		//System.out.println("There is no Pnt in the list!");
 		return pnt;		
 	}
 	
@@ -718,7 +718,7 @@ public class MapDataController {
 	public int getNodeID(Point inputPnt){
 		int NodeID = -1;
 		if(nodeList.isEmpty()){
-			System.out.println("NodeList is empty, can't find point in NodeList");
+			//System.out.println("NodeList is empty, can't find point in NodeList");
 			return NodeID;
 		}
 		else{
@@ -730,7 +730,7 @@ public class MapDataController {
 				}
 			}
 			
-			System.out.println("Can't find point in NodeList");
+			//System.out.println("Can't find point in NodeList");
 		}		
 		return NodeID;
 	}
