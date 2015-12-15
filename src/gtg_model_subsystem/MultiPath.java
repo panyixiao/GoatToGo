@@ -17,6 +17,7 @@ public class MultiPath {
 	private Node startNode;
 	private Node endNode;
 
+	private ErrorLog logError = new ErrorLog();
 	public MultiPath(){
 		mapPaths = new LinkedHashMap<String, MapPath>();
 		mapTable = new Hashtable<String, Map>();
@@ -37,9 +38,8 @@ public class MultiPath {
 	public boolean multiPathCalculate(Node start, Node end, Hashtable<String, Map> mapTable){
 		this.mapTable = mapTable;
 		boolean multiPathCalcSuccess = true;
-		System.out.println("START INFORMATION FROM CONTR: " + start.getX() +" " +start.getY() + " " +start.getBuilding() + " " + start.getFloorNum());
-		System.out.println("END NODE INFORMATION FROM CONTR: " + end.getX() +" " +end.getY() + " " +end.getBuilding() + " " + end.getFloorNum());
 		if((start == null) || (end == null)){
+			logError.logError("The start and end nodes are null");
 			multiPathCalcSuccess = false;
 			return multiPathCalcSuccess;
 		}
@@ -53,7 +53,6 @@ public class MultiPath {
 		//IF the two buildings for the nodes are not equal THEN
 		if(!start.getBuilding().equals(end.getBuilding())){
 			if(start.getBuilding().contains(campusMap) && !onCampusMap(end)){
-				System.out.println("ITS HAPPENING HERE");
 				tempEndNode = getStartEndNodeForCampusMap(end);
 				//Next compare the two floors for the given nodes
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, tempEndNode);
@@ -64,15 +63,11 @@ public class MultiPath {
 				multiPathCalcSuccess = calculatePathForFloors(tempStartNode,end, compareFloors);
 				printMapPaths();
 			}else if(end.getBuilding().contains(campusMap) && !onCampusMap(start)){
-				System.out.println("NO ITS HERE1");
 				tempEndNode = getStartEndNodeForCampusMap(start);
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
 				compareFloors = compareFloorNum(start, tempEndNode);
-				System.out.println("COMAPRED FLOORS" + compareFloors);
-				System.out.println("TEMPENDNODE B:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
 				multiPathCalcSuccess = calculatePathForFloors(start, tempStartNode, compareFloors);
 				tempStartNode = getStartEndNodeForCampusMap(tempEndNode);
-				System.out.println("TEMPSTARTNODE :" + tempStartNode.getBuilding() + " FLOOR: "  + tempStartNode.getFloorNum() + "X: "+ tempStartNode.getX() + "Y: " + tempStartNode.getY());
 
 				tempPath = new MapPath(null, null, null);
 				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, end);
@@ -81,24 +76,19 @@ public class MultiPath {
 			//Edge case where the start point is on campus map and an end point is selected on building from
 			//campus map view
 			else if(start.getBuilding().contains(campusMap) && onCampusMap(end)){
-				System.out.println("NO ITS HERe2");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
 			//Edge case where the end point is on campusMap and start point is a selected building on campus 
 			//map view
 			else if(end.getBuilding().contains(campusMap) && onCampusMap(start)){
-				System.out.println("NO ITS HERE3");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
 			//Edge case where two selected points are on buildings but in campus map view
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && onCampusMap(start) && onCampusMap(end)){
-				System.out.println("NO ITS HERE4");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, end);
 			}
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && onCampusMap(start) && !onCampusMap(end)){
-				System.out.println("NO ITS HERE5");
 				tempEndNode = getStartEndNodeForCampusMap(end);
-				System.out.println("TEMPENDNODE B:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start, tempEndNode);
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
 				compareFloors = compareFloorNum(tempStartNode, end);
@@ -108,10 +98,8 @@ public class MultiPath {
 
 			}
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && !onCampusMap(start) && onCampusMap(end)){
-				System.out.println("NO ITS HERE6");
 				tempStartNode = getStartEndNodeForCampusMap(start);
 				tempEndNode = findClosestNodeInBuilding(tempStartNode);
-				System.out.println("TEMPENDNODE B TESTING:" + tempEndNode.getBuilding() + " FLOOR: " + tempEndNode.getFloorNum() + "X: "+ tempEndNode.getX() + "Y: " + tempEndNode.getY());
 				compareFloors = compareFloorNum(start, tempEndNode);
 				multiPathCalcSuccess = calculatePathForFloors(start, tempEndNode, compareFloors);
 				tempPath = new MapPath(null, null, null);
@@ -121,24 +109,20 @@ public class MultiPath {
 			}
 			//Edge case where two points are not on campus map but in seperate buildings
 			else if(!end.getBuilding().contains(campusMap) && !start.getBuilding().contains(campusMap) && !onCampusMap(start) && !onCampusMap(end)){
-				System.out.println("NO ITS HERE7");
-				System.out.println("HERE WE GO");
 				tempStartNode = getStartEndNodeForCampusMap(start);
 				tempEndNode = findClosestNodeInBuilding(tempStartNode);
 				compareFloors = compareFloorNum(start, tempEndNode);
 				multiPathCalcSuccess = calculatePathForFloors(start, tempEndNode, compareFloors);
 				tempPath = new MapPath(null, null, null);
 
-				System.out.println("MULTI PATH CALCULATED GOING TO CAMPUS MAP");
 				tempStartNode = getStartEndNodeForCampusMap(tempEndNode);
-				if(tempStartNode == null)System.out.println("temp start Node not found");
+				if(tempStartNode == null)logError.logError("temp start Node not found");
 				tempEndNode = findClosestNodeInBuilding(end);
-				if(tempEndNode == null) System.out.println("TEMP END NODE WAS NOT FOUND");
+				if(tempEndNode == null) logError.logError("TEMP END NODE WAS NOT FOUND");
 				tempEndNode = getStartEndNodeForCampusMap(tempEndNode);
 				multiPathCalcSuccess = pathCampusMapToCampusMap(tempStartNode, tempEndNode);
 				tempPath = new MapPath(null, null, null);
 				
-				System.out.println("MULTI PATH CALCULATED GOING TO END BUILDING MAP");
 				tempStartNode = findClosestNodeInBuilding(tempEndNode);
 				compareFloors = compareFloorNum(tempStartNode, end);
 				multiPathCalcSuccess = calculatePathForFloors(tempStartNode, end, compareFloors);
@@ -146,16 +130,13 @@ public class MultiPath {
 
 		}
 		if(start.getBuilding().equals(end.getBuilding())){
-			System.out.println("The buildings are the same");
 			if((onCampusMap(start)) && (!onCampusMap(end))){
 				//Edge case in which the start point in on campus map but still for same building
-				System.out.println("Start is on campus");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start,start);
 				tempStartNode = findClosestNodeInBuilding(start);
 				multiPathCalcSuccess = sameBuildingCalculation(tempStartNode, end);
 			}
 			else if((onCampusMap(end))  && (!onCampusMap(start))){
-				System.out.println("End is on campus map");
 				//Edge case in which the end node is on campus map but still technically with same building
 				tempEndNode = findClosestNodeInBuilding(end);
 				multiPathCalcSuccess = sameBuildingCalculation(start, tempEndNode);
@@ -172,12 +153,10 @@ public class MultiPath {
 				multiPathCalcSuccess = pathCampusMapToCampusMap(end,end);*/
 			}
 			else if((onCampusMap(end)&& end.getFloorNum() == 0)  && (onCampusMap(start) && start.getFloorNum() == 0)){
-				System.out.println("SAME BUILDING ON CAMPUS MAP");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start,end);
 
 			}
 			else{
-				System.out.println("They are both in same building but not on campus map");
 				multiPathCalcSuccess = sameBuildingCalculation(start,end);
 			}
 			
@@ -221,7 +200,6 @@ public class MultiPath {
 
 		}
 		else if(!end.getBuilding().contains("CampusMap")){
-			System.out.println("THE END DOES NOT CONATIN CMAP");
 			additionEndNodeforMap = createTemporaryCampusMapNode(end);
 			additionEndEdgeForMap = createTemporaryCampusMapEdge(additionEndNodeforMap);
 			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionEndNodeforMap);
@@ -233,16 +211,12 @@ public class MultiPath {
 		}
 		else{
 			additionStartNodeforMap = createTemporaryCampusMapNode(start);
-			System.out.println("ADDIDTINON  START NODE FOR MAP GOOD");
 			additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
-			System.out.println("ADDIDTINON  START EDGE FOR MAP GOOD");
 			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
 			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionStartEdgeforMap);
 			additionEndNodeforMap = createTemporaryCampusMapNode(end);
-			System.out.println("ADDIDTINON  END NODE FOR MAP GOOD");
 
 			additionEndEdgeForMap = createTemporaryCampusMapEdge(additionEndNodeforMap);
-			System.out.println("ADDIDTINON  END EDGE FOR MAP GOOD");
 			mapTable.get("CampusMap_0").getGraph().getNodes().add(additionEndNodeforMap);
 			mapTable.get("CampusMap_0").getGraph().getEdges().add(additionEndEdgeForMap);
 			pathCampusMapToCampusMapCalculate = calculatePathForFloors(additionStartNodeforMap, additionEndNodeforMap, 0);
@@ -334,19 +308,16 @@ public class MultiPath {
 			//Start Floor is higher then end floor go down
 			if(compareFloors == 1){
 				while(currentFloorNumber > end.getFloorNum() ){
-					System.out.println("Floor is lower\n");
 					nextFloorNumber = currentFloorNumber;
 					nextFloorNumber--;
 					floorPathCalculateSuccess = calculateSingleFloorPath(start,end,currentFloorNumber,nextFloorNumber);
 					currentFloorNumber--;
 				}
-					System.out.println("END NODE INFORMATION BEFORE FLOOR :" + end.getBuilding()+ " " +  end.getFloorNum() + " " + end.getX() + " " + end.getY());
 					floorPathCalculateSuccess = calculateSingleFloorPath(start,end,currentFloorNumber,nextFloorNumber);
 			}//END FIRST IF
 			//Start floor is less then end floor go up
 			else if(compareFloors == -1){
 				while(currentFloorNumber < end.getFloorNum()){
-					System.out.println("Floor is higher\n");
 					nextFloorNumber = currentFloorNumber;
 					nextFloorNumber++;
 					floorPathCalculateSuccess = calculateSingleFloorPath(start,end,currentFloorNumber,nextFloorNumber);
@@ -356,7 +327,6 @@ public class MultiPath {
 
 			}
 			else{
-				System.out.println("Floors are same");
 				tempPath.setStartPoint(start);
 				tempPath.setEndPoint(end);
 				floorPathCalculateSuccess = singlePathCalculate(start.getBuilding() + "_" + start.getFloorNum(), tempPath);
@@ -377,76 +347,53 @@ public class MultiPath {
 					endNode.getEntranceID());
 			tempPath.setStartPoint(startNode);
 			tempPath.setEndPoint(end);
-			System.out.println(tempPath.getEndPoint().getEntranceID());
-			System.out.println("FLOOR NUMBER " + currentFloorNumber);
-			System.out.println("NEXT FLOOR: " + start.getBuilding() + "_"+ currentFloorNumber);
-			//System.out.println("New start point" + path.getStartPoint().getBuilding() + " " +path.getStartPoint().getFloorNum() + " " +path.getStartPoint().getFloorNum()
-			//		 + " " +path.getStartPoint().getX() + " " +  path.getStartPoint().getY());
 			calculateSingleFloorPath = singlePathCalculate(startNode.getBuilding() + "_" + currentFloorNumber, tempPath);
 			tempPath = new MapPath(null, null, null);
 			return calculateSingleFloorPath;
 		}
 		
-		for(int i : tempEntIdListStart)
-			System.out.println("ENTRANCE ID ON THIS FLOOR: " + start.getBuilding() + " " + currentFloorNumber + " " + i);
-		System.out.println("its all set");
 		
-		System.out.println("NEXT FLOOR BELOW: " + nextFloorNumber);
 		tempEntIdListEnd = getFloorPathIDs(end.getBuilding(), nextFloorNumber);
 		if(tempEntIdListEnd == null){
-			System.out.println("There are no entrances/exits on floor");
+			logError.logError("There are no entrances/exits on floor");
 			calculateSingleFloorPath = false;
 			return calculateSingleFloorPath;
 		}
-		System.out.println("printing next floor entrance nodes: " + nextFloorNumber);
-		for(int i : tempEntIdListEnd)
-			System.out.println(i);
+		
 		for(int i : tempEntIdListStart){
 			for(int j: tempEntIdListEnd){
 				if( i == j){
-					System.out.println("Adding to same Entrance ID list " + i);
 					sameEntIdList.add(i);
 				}
 			}
 		}
 		if(startNode == null){
-			System.out.println("startNode is null");
+			logError.logError("startNode is null");
 			startNode = start;
 		}else{
-			System.out.println("attempting to set start node");
-			System.out.println("START NODE Entrance ID set" + endNode.getEntranceID());
 			startNode = getStartEndPathNode(mapTable.get(start.getBuilding() + "_"+ currentFloorNumber).getGraph().getNodes(),
 					endNode.getEntranceID());
 		}
 		if(sameEntIdList.isEmpty()){
-			System.out.println("There are no same entrances on the next floor");
+			logError.logError("There are no same entrances on the next floor");
 			calculateSingleFloorPath = false;
 			return calculateSingleFloorPath;
 		}else{
 			for(int entranceID: sameEntIdList){
-				System.out.println("attempting to set endnode");
-				System.out.println("END NODE Entrance ID set" + entranceID);
-				System.out.println("End Node Floor Number" + currentFloorNumber);
 				endNode = getStartEndPathNode(mapTable.get(startNode.getBuilding() + "_"+ currentFloorNumber).getGraph().getNodes(),
 						  entranceID);
-				
 			}
 		}
 		tempPath.setStartPoint(startNode);
 		tempPath.setEndPoint(endNode);
 		if(tempPath.getStartPoint() == null || tempPath.getEndPoint() == null){
-			System.out.println("one of these is null");
+			logError.logError("one of the temp path start or end are null");
 		}
-		System.out.println("single path calculate");
-		System.out.println("START NODE INFORMATION: " + startNode.getX() +" " +startNode.getY() + " " +startNode.getBuilding() + " " + startNode.getFloorNum());
-		System.out.println("END NODE INFORMATION: " + endNode.getX() +" " +endNode.getY() + " " +endNode.getBuilding() + " " + endNode.getFloorNum());
 		if(calculateSingleFloorPath = singlePathCalculate(startNode.getBuilding() + "_" + currentFloorNumber, tempPath)){
-			System.out.println("Floor path was calculated correctly");
 		}else{
-			System.out.println("Floor path was not calcuated correctly");
+			logError.logError("Floor path was not calcuated correctly");
 			return calculateSingleFloorPath;
 		}
-		System.out.println("Setting new start point");
 
 		
 		tempPath = new MapPath(null, null, null);
@@ -470,9 +417,8 @@ public class MultiPath {
 	public ArrayList<Integer> getFloorPathIDs(String startFloorName,int floorNumber)
 	{
 		ArrayList<Integer> tempEntIDList = new ArrayList<Integer>();
-		System.out.println(startFloorName + "_" + floorNumber);
 		if(mapTable.get(startFloorName + "_" + floorNumber).getGraph().getNodes() == null){
-			System.out.println("Nodes do not exist");
+			logError.logError("Nodes do not exist");
 		}
 		for(Node node1: mapTable.get(startFloorName + "_" + floorNumber).getGraph().getNodes()){
 			if(node1.getEntranceID() != 0){
@@ -517,7 +463,6 @@ public class MultiPath {
 	{
 
 		if(startNode.getFloorNum()>endNode.getFloorNum()){          //go down
-			System.out.println("we need to go down");
 			return 1;
 		}else if(startNode.getFloorNum() == endNode.getFloorNum()){   //same floor
 			return 0;
@@ -539,7 +484,7 @@ public class MultiPath {
 		} catch (Exception e) {
 			calculateSuccess = false;
 			// TODO Auto-generated catch block
-			System.out.println(e.toString());
+			logError.logError(e.toString());
 		}//END CATCH loadNodes/Edges
 		return calculateSuccess;
 	}
@@ -549,52 +494,40 @@ public class MultiPath {
 	public boolean runDijkstra(String mapName, MapPath tempPath){
 		boolean dijkstraSuccess = true;
 		//Create object instance with temporary dijkstra algorithim
-		System.out.println("START POINT INFO: " +tempPath.getStartPoint().getBuilding() + " " +tempPath.getStartPoint().getFloorNum() + " "+ tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
 		//Edge case where the start and end point equal each other
 		if(tempPath.getStartPoint() == tempPath.getEndPoint()){
-			System.out.println("The points are the same");
 			List<Node> wayPoints = new ArrayList<Node>();
-			System.out.println("START POINT INFO: " +tempPath.getStartPoint().getBuilding() + " " + tempPath.getStartPoint().getY() + " "  + tempPath.getStartPoint().getFloorNum());
 			Node tempNode = new Node(1,1,1,1,"1",1,"1", "1");
 			tempNode = tempPath.getStartPoint();
-			System.out.println("START POINT INFO: " +tempNode.getBuilding() + " " + tempNode.getY() + " "  + tempNode.getFloorNum());
 			wayPoints.add(tempNode);
 			tempPath.setPath(wayPoints);
 			if(tempPath.getWayPoints() == null){
-				System.out.println("We were un-able to add the waypoints");
+				logError.logError("We were un-able to add the waypoints");
 			}
-			System.out.println("MAP NAME: " + mapName);
 			printNodes(tempPath.getWayPoints());
 			mapPaths.put(mapName, tempPath);
 			printNodes(mapPaths.get(mapName).getWayPoints());
 			return dijkstraSuccess;
 		}
 		Dijkstra dijkstra = new Dijkstra(mapTable.get(mapName).getGraph());
-		System.out.println("Graph is set");
 		//Start the execution with the first starting node
 		dijkstra.execute(tempPath.getStartPoint());
-		System.out.println("temp path START POINT INFO: " + " " +tempPath.getStartPoint().getBuilding() + " " + tempPath.getStartPoint().getFloorNum() + " " + tempPath.getStartPoint().getX() + " " + tempPath.getStartPoint().getY());
 
-		System.out.println("temp path END POINT INFO: " + " " +tempPath.getEndPoint().getBuilding() + " " + tempPath.getEndPoint().getFloorNum() + " " + tempPath.getEndPoint().getX() + " " + tempPath.getEndPoint().getY());
 		//Store the wayPoints for the map's graph
 		LinkedList<Node> wayPoints = dijkstra.getPath(tempPath.getEndPoint());
 		
 		//Create the new path with the start point, end point, and way points
 		tempPath.setPath(wayPoints);
 		if(tempPath.getWayPoints() == null){
-			System.out.println("Something went wrong storing nodes");
+			logError.logError("Something went wrong storing nodes");
 		}
-		else{
-			System.out.println("PATH WAY POINTS: " + mapName);
-			printNodes(tempPath.getWayPoints());
-		}
+		
 		
 		if(!mapPaths.containsKey(mapName)){
 			mapPaths.put(mapName, tempPath);
-			System.out.println("Path for map " + mapName + " does not exist");
 		}else{
 			dijkstraSuccess = false;
-			System.out.println("Path was not successfully placed");
+			logError.logError("Path was not successfully placed");
 		}
 		return dijkstraSuccess;
 	}
