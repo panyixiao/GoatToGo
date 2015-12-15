@@ -15,25 +15,57 @@ import java.util.Hashtable;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 /**
+ * MainModel is the subsystem within GTG that is a facade class as well as a singleton.
+ * This class implements the back end portions of GTG.
  */
 public class MainModel {
+	
+	//Nodes and edges to used for temporary manipulation throughout class
 	private List<Node> nodes;
 	private List<Edge> edges;
+	
+	//The a temporary coordinate graph that can be used to store new graphs
+	//as they are loaded in
 	private CoordinateGraph graph;
+
+	//The main list of admins that are used throughout the application
 	private List<Admin> admins;
+	
+	//The type of processing system we use, this can change since it uses the strategy pattern.
 	private ProcessingSystem fileProcessing;
+	
+	//The main map table that will store all of the string representations for the maps, as well
+	//as the associated Map objects
 	private Hashtable<String, Map> mapTable;
+	
+	//Multipath object that will do all of the required path operations for GTG.
 	private MultiPath multiPath;
 	
-	public MainModel(){
+	private MainModel(){
+		//Singleton instances for the admin list and map table
 		admins = AdminList.getInstance();
 		mapTable = MapTable.getInstance();
+		
+		//Forcing the use of the file processing system
 		fileProcessing = new ProcessingSystem("file");
 		
+		//Load all the required information from the files:
+		//First: the list of maps that will be used in GTG
+		//Second: the admin list
+		//Third: the node and edge text files
 		loadMapLists();
 		loadAdmin();			
 		loadFiles();
 	}
+	/**
+	 * The next two methods are place holders to create a singleton instance
+	 */
+    private static class MainModelHolder{
+    	private static final MainModel mainModel = new MainModel();
+    }
+    public static MainModel getInstance(){
+    	return MainModelHolder.mainModel;
+    }
     
 	/**
 	 * Load maps from master map text file and store into table of maps
@@ -50,7 +82,7 @@ public class MainModel {
 			return false;
 		} else{
 			//access each map and store it into map table
-			for(Map map:masterMapList){
+			for(Map map:fileProcessing.loadMapList()){
 				mapTable.put(map.getMapName(), map);
 			}
 			
@@ -58,12 +90,11 @@ public class MainModel {
 		}
 	}
 	/**
-	 * deleteMap will delete map from the map table and the master list text file
+	 * The deleteMap method will delete map from the map table and the master list text file
 	 * @param mapName the name of the map the admin wishes to delete
-	
-	
-	 * @return true if deletion was successful false otherwise * @throws IOException  */
-	public boolean deleteMap(String mapName) throws IOException{
+	 * @return true if deletion was successful false otherwise * @throws IOException  
+	 * */
+	public boolean deleteMap(String mapName){
 			boolean deleteSuccess = true;
 			if(mapTable.get(mapName) == null){
 				System.out.println("Map does not exist");
@@ -71,7 +102,6 @@ public class MainModel {
 			}
 			//IF map exists in map table THEN
 			if(mapTable.get(mapName) != null){
-				//will this delete from memory??
 				//REMOVE map from map table
 				mapTable.remove(mapName);
 				//REMOVE map from master map list so it will not be re-loaded
@@ -318,19 +348,7 @@ public class MainModel {
 			System.out.println(value);
 		}
 	}
-
 	
-	/**
-	 * Method convertWayPointsToPoints.
-	 * @return ArrayList<Point>
-	
-	public ArrayList<Point> convertWayPointsToPoints(){
-		ArrayList<Point> tempWayPoints = new ArrayList<Point>();
-		for(Node node : path.getWayPoints()){
-			tempWayPoints.add(new Point(node.getX(), node.getY()));
-		}
-		return tempWayPoints;
-	}*/
 	/**
 	 * Method getArrayOfMapNames.
 	 * @return ArrayList<String>

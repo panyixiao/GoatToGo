@@ -3,6 +3,11 @@ package gtg_model_subsystem;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * The ModelFileURLS class is a list of final static file names that are associated with
+ * processing information needed for the model subsystem
+ * 
+ */
 public class ModelFileURLS {
 	public static final Path currentRelativePath = Paths.get("");
 	public static final String s = currentRelativePath.toAbsolutePath().toString() + System.getProperty("file.separator");
