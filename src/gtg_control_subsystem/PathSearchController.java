@@ -25,6 +25,9 @@ public class PathSearchController {
 	private double walkingSpeed;
 	
 	public PathSearchController(MainController controlInterface, MapDataController mapDataComponent) {
+		MultilayerPathcalculationResult = null;
+		resultMapList = null;
+		
 		mainController = controlInterface;
 		mapDataController = mapDataComponent;
 		pathTotalLength = 0;
@@ -54,7 +57,9 @@ public class PathSearchController {
 	
 	public PathData getDesiredPath(int Index){
 		PathData path = new PathData();
-		
+		if(resultMapList.isEmpty()){
+			return path;
+		}
 		// Get requested path
 		String requestedMapName = resultMapList.get(Index);
 		requestedMapName = mainController.translateMapNameFromString2Num(requestedMapName);
@@ -145,15 +150,16 @@ public class PathSearchController {
 	public boolean getPathData(){
 		boolean pathCalculated = false;
 		pathTotalLength = 0;
+		clearOldPathData();
 		resultMapList=new ArrayList<String>();
 		if(startNode!=null && endNode!=null){
 
-			//System.out.println("FROM: " + startNode.getBuilding() + " " + startNode.getFloorNum() + " " + startNode.getX() + " " + startNode.getY() + " " + startNode.getDescription());
-			//System.out.println("TO: " + endNode.getBuilding() + " " + endNode.getFloorNum() + " " + endNode.getX() + " " + endNode.getY() + " " + endNode.getDescription()  );
 			pathCalculated =  mainController.mapModel.multiPathCalculate(startNode, endNode);
 		}
 		
 		if(pathCalculated){	
+			startNode = null;
+			endNode = null;
 			//System.out.println("Hoooooya~~ Path Calculated!\n");
 			MultilayerPathcalculationResult = mainController.mapModel.getMapPaths();
 			Set<String> calculationResultMapName = MultilayerPathcalculationResult.keySet();
@@ -168,5 +174,15 @@ public class PathSearchController {
 		}
 		return pathCalculated;
 	}	
+	
+	private void clearOldPathData(){
+		if(MultilayerPathcalculationResult!=null){
+			MultilayerPathcalculationResult.clear();			
+		}
+		if(resultMapList!=null){
+			resultMapList.clear();			
+		}
+		currentPath = new MapPath(null,null,null);
+	}
 
 }
