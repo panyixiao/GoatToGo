@@ -344,7 +344,7 @@ public class AddDeleteMapPage extends JPanel{
 			ImageIcon mapImage = new ImageIcon(scaled);
 			this.mapPreviewHolder.setIcon(mapImage);
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, ViewStringLiterals.IMAGE_CANNOT_BE_LOADED, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
