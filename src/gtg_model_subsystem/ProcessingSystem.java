@@ -2,6 +2,13 @@ package gtg_model_subsystem;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+
+/**
+ * Builder Design pattern for a company to use their own processing system at run time.
+ * @author JT
+ *
+ */
 public class ProcessingSystem {
 	protected ProcessingSystemType st;
 	public ProcessingSystem(String type){
