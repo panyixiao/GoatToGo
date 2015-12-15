@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class ErrorLog {
+	
 	public void logError(String error){
 		final String logName = "GTGLog";
 		Logger logger = Logger.getLogger(logName);
@@ -28,6 +29,7 @@ public class ErrorLog {
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * Method createFile.
 	 * @param file File

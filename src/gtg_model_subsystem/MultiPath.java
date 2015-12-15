@@ -163,7 +163,7 @@ public class MultiPath {
 			}
 			else if((onCampusMap(end) && end.getFloorNum() != 0)  && (onCampusMap(start) && start.getFloorNum() != 0)){
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start,end);
-				/*TODO
+				/*TODO waiting for libin to finish true shortest path
 				 * multiPathCalcSuccess = pathCampusMapToCampusMap(start,start);
 				tempStartNode = findClosestNodeInBuilding(start);
 				tempEndNode = findClosestNodeInBuilding(end);
@@ -209,17 +209,6 @@ public class MultiPath {
 		Node additionEndNodeforMap = null;
 		Edge additionEndEdgeForMap = null;
 		
-		//if(start.equals(end)){
-			//System.out.println("START EQUALS END");
-			//additionStartNodeforMap = createTemporaryCampusMapNode(start);
-			//additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);
-			//mapTable.get("CampusMap_0").getGraph().getNodes().add(additionStartNodeforMap);
-			//mapTable.get("CampusMap_0").getGraph().getEdges().add(additionStartEdgeforMap);
-			//pathCampusMapToCampusMapCalculate = calculatePathForFloors(additionStartNodeforMap, end, 0);
-			//mapTable.get("CampusMap_0").getGraph().getNodes().remove(additionStartNodeforMap);
-			//mapTable.get("CampusMap_0").getGraph().getEdges().remove(additionStartEdgeforMap);
-
-		//}
 		if(!start.getBuilding().contains("CampusMap")){
 			additionStartNodeforMap = createTemporaryCampusMapNode(start);
 			additionStartEdgeforMap = createTemporaryCampusMapEdge(additionStartNodeforMap);

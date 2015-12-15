@@ -146,15 +146,15 @@ public class FileProcessing implements ProcessingSystemType {
 	public boolean saveMapToMaster(String mapName, String mapImgURL, String mapType){
 			boolean writeSuccess = true;
 			try{
-				
-				copyFile(mapImgURL, "images"+ System.getProperty("file.separator") + mapName + ".png");
+				String destinationFilePath = "images"+ System.getProperty("file.separator") + mapName + ".png";
+				copyFile(mapImgURL, destinationFilePath);
 				//Get the master map list text file reference
 				//Create a file writer that will write to file, append value set to true to append to end of document
 				FileWriter fstream = new FileWriter(ModelFileURLS.masterMapListURL, true);
 				//Create a buffered writer for the file stream index
 			    BufferedWriter out = new BufferedWriter(fstream);
 			    //Write newly created map to end of master map list
-			    out.write(System.getProperty("line.separator") + mapName + " " + mapImgURL + " " + mapType);
+			    out.write(System.getProperty("line.separator") + mapName + " " + destinationFilePath + " " + mapType);
 			    out.close();
 			}
 			catch(IOException e){
