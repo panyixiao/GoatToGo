@@ -23,7 +23,7 @@ NODES
 40 402 139 0 BoyntonHall 5 Classroom BH;304;
 41 333 246 0 BoyntonHall 5 Classroom BH;303;
 42 392 211 0 BoyntonHall 5 Waypoint Waypoint;
-46 427 386 0 BoyntonHall 5 Elevator ELE;
+46 427 386 0 BoyntonHall 5 Elevator Elevator;
 47 392 386 0 BoyntonHall 5 Waypoint Waypoint;
 48 70 191 0 BoyntonHall 5 Waypoint Waypoint;
 49 42 83 0 BoyntonHall 5 Classroom BH;301A;

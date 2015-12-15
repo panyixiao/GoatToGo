@@ -65,7 +65,7 @@ NODES
 65 896 434 0 FullerLab 3 Office FL;130;
 69 874 611 0 FullerLab 3 Office FL;147;
 70 705 765 0 FullerLab 3 Office FL;110;
-71 612 661 0 FullerLab 3 Elevator NULL;
+71 612 661 0 FullerLab 3 Elevator Elevator;
 72 705 798 0 FullerLab 3 Office FL;111;
 73 664 850 0 FullerLab 3 Waypoint Waypoint;
 74 705 850 0 FullerLab 3 Office FL;112;

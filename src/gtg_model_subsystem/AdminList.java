@@ -2,7 +2,11 @@ package gtg_model_subsystem;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Singleton class for the admin list
+ * @author JT
+ *
+ */
 public class AdminList {
 	private AdminList(){}
 	private static class AdminListHolder{
