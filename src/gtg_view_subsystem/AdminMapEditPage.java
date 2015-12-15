@@ -287,7 +287,7 @@ public class AdminMapEditPage extends JPanel {
 		pointPositions = this.parent.mainController.getDisplayPnt();	
 		pointNeighbors = this.parent.mainController.getDisplayEdge();
 		
-		System.out.println(this.modeBtns.getSelection());
+		//System.out.println(this.modeBtns.getSelection());
 	}
 	
 	/**
@@ -304,7 +304,7 @@ public class AdminMapEditPage extends JPanel {
 													  pointType,
 													  pointDescription);
 		pointPositions = this.parent.mainController.getDisplayPnt();
-		System.out.println("Total "+pointPositions.size()+" Points will be draw");
+		//System.out.println("Total "+pointPositions.size()+" Points will be draw");
 		return success;
 	}
 	
@@ -357,9 +357,9 @@ public class AdminMapEditPage extends JPanel {
 		Boolean success = false;
 		success = this.parent.mainController.createEdge(pnt1, pnt2);		
 		pointNeighbors = this.parent.mainController.getDisplayEdge();
-		System.out.println("Edge");
+		//System.out.println("Edge");
 		for(Point pnt: pointNeighbors){	
-			System.out.println(pnt.getX() + "," + pnt.getY());
+			//System.out.println(pnt.getX() + "," + pnt.getY());
 		}
 		return success;
 	}

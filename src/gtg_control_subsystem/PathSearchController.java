@@ -86,12 +86,12 @@ public class PathSearchController {
 		// Set mapName List
 		path.setArrayOfMapNames(resultMapList);	
 
-		System.out.println("The requested mapName is: " + requestedMapName);
+		//System.out.println("The requested mapName is: " + requestedMapName);
 		// Set URL of current map
 		int IndexOfMapURL = mapDataController.getCurrentMapNameList().indexOf(requestedMapName);
 		String mapURL = mapDataController.getCurrentMapURLList().get(IndexOfMapURL);	
 
-		System.out.println("The requested mapURL is: " + mapURL);
+		//System.out.println("The requested mapURL is: " + mapURL);
 		path.setMapURL(mapURL);
 
 		return path;
@@ -110,8 +110,8 @@ public class PathSearchController {
 			pathTotalLength += pathPartLength;
 		}	
 		
-		System.out.println("Total Length: "+pathTotalLength);
-		System.out.println("Estimate walking time: "+(int)(pathTotalLength/walkingSpeed)+ " sec");
+		//System.out.println("Total Length: "+pathTotalLength);
+		//System.out.println("Estimate walking time: "+(int)(pathTotalLength/walkingSpeed)+ " sec");
 	}
 	
 	public double getPathLength(){	

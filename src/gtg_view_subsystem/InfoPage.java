@@ -40,7 +40,7 @@ public class InfoPage extends JPanel {
         // Create splitPane
         JSplitPane splitPane = new JSplitPane();
 		if(!loadImage(ImageURL)){
-			System.out.println("Image Loading Failed, can't create Info page");
+			//System.out.println("Image Loading Failed, can't create Info page");
 			return;
 		}
 		imageHolder = new JPanel(){
@@ -175,10 +175,10 @@ public class InfoPage extends JPanel {
             return true;
         }
         catch(MalformedURLException mue) {
-            System.out.println("URL trouble: " + mue.getMessage());
+            //System.out.println("URL trouble: " + mue.getMessage());
         }
         catch(IOException ioe) {
-        	System.out.println("read trouble: " + ioe.getMessage());        	
+        	//System.out.println("read trouble: " + ioe.getMessage());        	
         }
         return false;
 	}
