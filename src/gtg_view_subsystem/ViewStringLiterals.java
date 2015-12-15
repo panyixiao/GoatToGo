@@ -69,4 +69,6 @@ public class ViewStringLiterals {
 	public static final String TOTAL_TIME = "Total Time";
 	public static final String METERS = "Meters";
 	public static final String IMAGE_CANNOT_BE_LOADED = "Image preview currently not available.";
+	public static final String DELETE_MAP_CONFIRM_MESSAGE = "Are you sure you want to delete";
+	public static final String DELETE_MAP = "Delete Map";
 }
