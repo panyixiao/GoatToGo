@@ -2,6 +2,10 @@ package gtg_model_subsystem;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Interface for builder design pattern
+ */
 interface ProcessingSystemType {
 	ArrayList<Map> loadMapList();
 	boolean readAdmin(List<Admin> admins);
