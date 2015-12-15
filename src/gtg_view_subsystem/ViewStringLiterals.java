@@ -68,4 +68,5 @@ public class ViewStringLiterals {
 	public static final String TOTAL_DISTANCE = "Total Distance";
 	public static final String TOTAL_TIME = "Total Time";
 	public static final String METERS = "Meters";
+	public static final String IMAGE_CANNOT_BE_LOADED = "Image preview currently not available.";
 }
