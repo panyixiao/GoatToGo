@@ -98,7 +98,7 @@ public class MainView {
 	 * @param mapName String
 	 */
 	public void showAdminMapEditPage(String mapName) {
-		System.out.println("(Mainview switchToAdminMapEditPage)" + mapName);
+		////System.out.println("(Mainview switchToAdminMapEditPage)" + mapName);
 		page.removePage(currentPage);
 		adminMapPage = new AdminMapEditPage(this,mapName);
 		adminMapPage.setMapName(mapName);
@@ -127,9 +127,9 @@ public class MainView {
 	public Point sentPointToModel(Point startEndPoint, String selectedPointType, String mapName) {
 		//send the point to controller
 		Point pntToBeMapped = startEndPoint;
-		System.out.println("Selected Point is" + startEndPoint);
-		System.out.println("Selected Point type" + selectedPointType);
-		System.out.println("Selected Map " + mapName);
+		////System.out.println("Selected Point is" + startEndPoint);
+		////System.out.println("Selected Point type" + selectedPointType);
+		////System.out.println("Selected Map " + mapName);
 		pntToBeMapped = this.mainController.setTaskPnt(startEndPoint, selectedPointType, mapName);
 		return pntToBeMapped;
 	}
@@ -158,7 +158,7 @@ public class MainView {
 	 * @param selectedPointType String
 	 */
 	public void deleteSelectedPoint(String selectedPointType) {
-		System.out.println("Point is deleted" + selectedPointType);
+		//System.out.println("Point is deleted" + selectedPointType);
 		this.mapPage.deletePoint(selectedPointType);
 		
 	}
@@ -209,7 +209,7 @@ public class MainView {
 	 * @param mapName String
 	 */
 	public void deleteMap(String mapName) {
-		System.out.println("(Mainview deleteMap)" + mapName);
+		//System.out.println("(Mainview deleteMap)" + mapName);
 		boolean result = this.mainController.deleteMap(mapName);
 		if(result == true){
 			addDeleteMapPage.showMapList(this.mainController.getMapList("admin"));

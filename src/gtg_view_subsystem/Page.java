@@ -262,7 +262,7 @@ public class Page extends JFrame {
 				 helpContent = "FileNotFound";  
 			 }
 		}catch (Exception ex) {
-			 System.out.println("Unable to load file");
+			 //System.out.println("Unable to load file");
 			 helpContent = "FileNotFound"; 
 		 }
 		return helpContent;
