@@ -355,7 +355,7 @@ public class MainModel {
 		Node validatedNode = null;
 		if(mapTable.isEmpty()){
 			Point pnt = new Point();
-			System.out.println("MapTable is empty, Validation Failed");
+			logError.logError("MapTable is empty, Validation Failed");
 			return pnt;
 		}
 		double currentDiff = 0.0;
@@ -368,7 +368,7 @@ public class MainModel {
 			}				
 		}
 		Point correctedPoint = new Point(validatedNode.getX(), validatedNode.getY());
-		System.out.println(correctedPoint.getX() + " " + correctedPoint.getY());
+		logError.logError(correctedPoint.getX() + " " + correctedPoint.getY());
 		return correctedPoint;
 	}
 	
