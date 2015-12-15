@@ -147,23 +147,34 @@ public class MultiPath {
 		}
 		if(start.getBuilding().equals(end.getBuilding())){
 			System.out.println("The buildings are the same");
-			Node exchangeNode = null;
-			if((onCampusMap(start)  && start.getFloorNum() != 0) && (!onCampusMap(end) && end.getFloorNum() != 0)){
+			if((onCampusMap(start)) && (!onCampusMap(end))){
 				//Edge case in which the start point in on campus map but still for same building
 				System.out.println("Start is on campus");
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start,start);
-				exchangeNode = findClosestNodeInBuilding(start);
-				multiPathCalcSuccess = sameBuildingCalculation(exchangeNode, end);
+				tempStartNode = findClosestNodeInBuilding(start);
+				multiPathCalcSuccess = sameBuildingCalculation(tempStartNode, end);
 			}
-			else if((onCampusMap(end) && end.getFloorNum() != 0)  && (!onCampusMap(start) && start.getFloorNum() != 0)){
+			else if((onCampusMap(end))  && (!onCampusMap(start))){
 				System.out.println("End is on campus map");
 				//Edge case in which the end node is on campus map but still technically with same building
-				exchangeNode = findClosestNodeInBuilding(end);
-				multiPathCalcSuccess = sameBuildingCalculation(start, exchangeNode);
+				tempEndNode = findClosestNodeInBuilding(end);
+				multiPathCalcSuccess = sameBuildingCalculation(start, tempEndNode);
 				multiPathCalcSuccess = pathCampusMapToCampusMap(end,end);		
 			}
 			else if((onCampusMap(end) && end.getFloorNum() != 0)  && (onCampusMap(start) && start.getFloorNum() != 0)){
 				multiPathCalcSuccess = pathCampusMapToCampusMap(start,end);
+				/*TODO
+				 * multiPathCalcSuccess = pathCampusMapToCampusMap(start,start);
+				tempStartNode = findClosestNodeInBuilding(start);
+				tempEndNode = findClosestNodeInBuilding(end);
+				compareFloors = compareFloorNum(tempStartNode, tempEndNode);
+				multiPathCalcSuccess = calculatePathForFloors(tempStartNode, tempEndNode, compareFloors);
+				multiPathCalcSuccess = pathCampusMapToCampusMap(end,end);*/
+			}
+			else if((onCampusMap(end)&& end.getFloorNum() == 0)  && (onCampusMap(start) && start.getFloorNum() == 0)){
+				System.out.println("SAME BUILDING ON CAMPUS MAP");
+				multiPathCalcSuccess = pathCampusMapToCampusMap(start,end);
+
 			}
 			else{
 				System.out.println("They are both in same building but not on campus map");
